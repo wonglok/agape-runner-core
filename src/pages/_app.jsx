@@ -10,6 +10,10 @@ import { Loader } from '@react-three/drei'
 import { ToastContainer } from 'react-toastify'
 import { LandingPage } from '@/components/layout/LandingPage'
 import { useReady } from '@/helpers/useScrollStore'
+import { hydration } from '@/auth/GateMethods'
+
+import { GateState } from '@/auth/GateState.ts'
+import { useSnapshot } from 'valtio'
 
 function App({ Component, pageProps = { title: 'index' } }) {
   const router = useRouter()
@@ -35,6 +39,11 @@ function App({ Component, pageProps = { title: 'index' } }) {
       setLoading(true)
     }
   }, [])
+
+  useEffect(() => {
+    hydration()
+  }, [])
+  let gs = useSnapshot(GateState)
 
   //
   return (

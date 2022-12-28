@@ -26,6 +26,8 @@ import { UserEndPoints } from './UserEndPoints'
 const DynamicPage = (props) => {
   //!SECTION
 
+  console.log(props.domainMapping)
+
   return (
     <>
       <group>
@@ -105,46 +107,24 @@ const DynamicPage = (props) => {
 DynamicPage.layout = 'Multiverse'
 
 export async function getServerSidePropsForDynamicPage(context) {
-  //
-  let subdomain = false
-  let type = 'custom-domain'
-  let host = context?.req?.headers?.host || ''
-  if (host && host.includes(`.my.agape.land`)) {
-    type = 'sub-domain'
-    subdomain = host.split('.my.agape.land')[0]
+  let endPoint = UserEndPoints[process.env.NODE_ENV]
+  let response = await fetch(`${endPoint}/domain-of-sites`, {
+    method: 'POST',
+    body: JSON.stringify({
+      domain: context?.req?.headers?.host || '',
+    }),
+  })
+
+  let data = await response.json()
+
+  let domainMapping = false
+  if (response.ok) {
+    domainMapping = data
   }
-
-  if (type == 'custom-domain') {
-    let response = await fetch(
-      `${UserEndPoints[process.env.NODE_ENV]}/domain-of-sites`,
-      {
-        //
-        method: 'GET',
-        headers: {
-          // Authorization: `Bearer ${sToken}`,
-        },
-      }
-    )
-
-    if (response.ok) {
-      let json = await response.json()
-      //
-      console.log(json)
-      //
-    }
-  }
-
-  //
 
   return {
     props: {
-      seo: {
-        //
-      },
-      type,
-      subdomain,
-      host: context?.req?.headers?.host || '',
-      referer: context?.req?.headers?.referer || '',
+      domainMapping,
       title: 'Agape Town - Here we go!',
     }, // will be passed to the page component as props
   }

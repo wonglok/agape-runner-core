@@ -2,5 +2,5 @@ import {
   DynamicPage,
   getServerSidePropsForDynamicPage,
 } from '@/helpers/DynamicPage'
-export { getServerSidePropsForDynamicPage }
+export const getServerSideProps = getServerSidePropsForDynamicPage
 export default DynamicPage
