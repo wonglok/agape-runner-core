@@ -14,6 +14,7 @@ import { Floor } from '@/helpers/Floor'
 // import { Companion } from '@/helpers/Companion'
 import anime from 'animejs'
 import { screenOpacity } from '@/helpers/GLOverlayEffect'
+import { UserEndPoints } from './UserEndPoints'
 
 // import { useMultiverse } from '@/helpers/useMultiverse'
 // import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
@@ -105,16 +106,31 @@ DynamicPage.layout = 'Multiverse'
 
 export async function getServerSidePropsForDynamicPage(context) {
   //
-  let siteID = false
+  let subdomain = false
   let type = 'custom-domain'
   let host = context?.req?.headers?.host || ''
   if (host && host.includes(`.my.agape.land`)) {
     type = 'sub-domain'
-    siteID = host.split('.my.agape.land')[0]
+    subdomain = host.split('.my.agape.land')[0]
   }
 
   if (type == 'custom-domain') {
-    //
+    let response = await fetch(
+      `${UserEndPoints[process.env.NODE_ENV]}/domain-of-sites`,
+      {
+        //
+        method: 'GET',
+        headers: {
+          // Authorization: `Bearer ${sToken}`,
+        },
+      }
+    )
+
+    if (response.ok) {
+      let json = await response.json()
+      //
+      console.log(json)
+    }
   }
 
   return {
@@ -123,7 +139,7 @@ export async function getServerSidePropsForDynamicPage(context) {
         //
       },
       type,
-      siteID,
+      subdomain,
       host: context?.req?.headers?.host || '',
       referer: context?.req?.headers?.referer || '',
       title: 'Agape Town - Here we go!',
