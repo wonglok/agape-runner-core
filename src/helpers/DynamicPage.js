@@ -130,8 +130,11 @@ export async function getServerSidePropsForDynamicPage(context) {
       let json = await response.json()
       //
       console.log(json)
+      //
     }
   }
+
+  //
 
   return {
     props: {
