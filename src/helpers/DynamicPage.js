@@ -9,8 +9,8 @@ import {
 import Router from 'next/router'
 // import { Suspense, useEffect } from 'react'
 import { Floor } from '@/helpers/Floor'
-import { useEffect, useRef } from 'react'
-import { useState } from 'react'
+// import { useEffect, useRef } from 'react'
+// import { useState } from 'react'
 // import { Companion } from '@/helpers/Companion'
 import anime from 'animejs'
 import { screenOpacity } from '@/helpers/GLOverlayEffect'
@@ -105,9 +105,25 @@ DynamicPage.layout = 'Multiverse'
 
 export async function getServerSidePropsForDynamicPage(context) {
   //
+  let siteID = false
+  let type = 'custom-domain'
+  let host = context?.req?.headers?.host || ''
+  if (host && host.includes(`.my.agape.land`)) {
+    type = 'sub-domain'
+    siteID = host.split('.my.agape.land')[0]
+  }
+
+  if (type == 'custom-domain') {
+    //
+  }
 
   return {
     props: {
+      seo: {
+        //
+      },
+      type,
+      siteID,
       host: context?.req?.headers?.host || '',
       referer: context?.req?.headers?.referer || '',
       title: 'Agape Town - Here we go!',
@@ -115,8 +131,6 @@ export async function getServerSidePropsForDynamicPage(context) {
   }
 }
 
-//
-//
 export { DynamicPage }
 
 //
