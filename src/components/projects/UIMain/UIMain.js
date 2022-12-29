@@ -49,195 +49,239 @@ function UIMainContent() {
   //
   return (
     <>
-      <div
-        // - 48px - 30px
-        className='relative w-full text-xs  bordergray-500  '
-        style={{ height: 'calc(100% )' }}
-      >
-        <div className='w-full'>
-          <LeftRight
-            NS={'canvas-control'}
-            left={(leftSize) => (
-              <UpDown
-                NS={'asset-layercanvas'}
-                getDefaultSize={() => {
-                  return window.innerHeight - 175
-                }}
-                up={(sizeTD) => (
-                  <>
-                    <LeftRight
-                      getDefaultSize={() => 300}
-                      NS={'layers-canvas'}
-                      left={() => (
-                        <ENProjectGuard>
-                          <UpDown
-                            getDefaultSize={() => {
-                              return ((window.innerHeight - 175) / 5) * 2.5
-                            }}
-                            NS={'ENSceneOutline-up-down'}
-                            up={(varHeight) => {
-                              return (
-                                <div
-                                  className='w-full'
-                                  style={{ height: varHeight + 'px' }}
-                                >
+      <div className='w-full h-screen'>
+        <div className='w-full text-xs ' style={{ height: '300px' }}>
+          <ENAssetDrawer size={300}></ENAssetDrawer>
+        </div>
+        <ENProjectGuard
+          loading={
+            <div className='flex items-center justify-center w-full h-full bg-gray-300'>
+              <div className='p-2 px-4 bg-gray-100 rounded-full'>
+                Loading...
+              </div>
+            </div>
+          }
+          //
+          placeholder={
+            <div className='flex items-center justify-center w-full h-full bg-gray-300 from-slate-500 to-slate-300 bg-gradient-to-b'>
+              <div className='p-2 px-4 bg-gray-100 rounded-full'>
+                Please Select a GLB File Below to Begin Editing 👇🏼
+              </div>
+            </div>
+          }
+        >
+          {/*  */}
+          <div>
+            <input
+              type='text'
+              placeholder='Scene Outline Search'
+              className='w-full p-2 bg-gray-400 placeholder:text-white'
+              onKeyDown={(ev) => {
+                ev.stopPropagation()
+              }}
+              onInput={(ev) => {
+                setOutlineSerach(ev.target.value)
+              }}
+              value={outlineSearch}
+            ></input>
+          </div>
+          <ENCanvas key='encanvas'></ENCanvas>
+          <OverlayHtml></OverlayHtml>
+          <ENSceneOutline height={1000}></ENSceneOutline>
+          <ENGraph></ENGraph>
+          {/*  */}
+        </ENProjectGuard>
+      </div>
+      {false && (
+        <div
+          // - 48px - 30px
+          className='relative w-full text-xs  bordergray-500  '
+          style={{ height: 'calc(100% )' }}
+        >
+          <div className='w-full'>
+            <LeftRight
+              NS={'canvas-control'}
+              left={(leftSize) => (
+                <UpDown
+                  NS={'asset-layercanvas'}
+                  getDefaultSize={() => {
+                    return window.innerHeight - 175
+                  }}
+                  up={(sizeTD) => (
+                    <>
+                      <LeftRight
+                        getDefaultSize={() => 300}
+                        NS={'layers-canvas'}
+                        left={() => (
+                          <ENProjectGuard>
+                            <UpDown
+                              getDefaultSize={() => {
+                                return ((window.innerHeight - 175) / 5) * 2.5
+                              }}
+                              NS={'ENSceneOutline-up-down'}
+                              up={(varHeight) => {
+                                return (
                                   <div
-                                    style={{ height: '35' + 'px' }}
-                                    className=''
+                                    className='w-full'
+                                    style={{ height: varHeight + 'px' }}
                                   >
-                                    <div>
-                                      <input
-                                        type='text'
-                                        placeholder='Scene Outline Search'
-                                        className='w-full p-2 bg-gray-400 placeholder:text-white'
-                                        onKeyDown={(ev) => {
-                                          ev.stopPropagation()
-                                        }}
-                                        onInput={(ev) => {
-                                          setOutlineSerach(ev.target.value)
-                                        }}
-                                        value={outlineSearch}
-                                      ></input>
+                                    <div
+                                      style={{ height: '35' + 'px' }}
+                                      className=''
+                                    >
+                                      <div>
+                                        <input
+                                          type='text'
+                                          placeholder='Scene Outline Search'
+                                          className='w-full p-2 bg-gray-400 placeholder:text-white'
+                                          onKeyDown={(ev) => {
+                                            ev.stopPropagation()
+                                          }}
+                                          onInput={(ev) => {
+                                            setOutlineSerach(ev.target.value)
+                                          }}
+                                          value={outlineSearch}
+                                        ></input>
+                                      </div>
                                     </div>
+                                    <ENSceneOutline
+                                      height={varHeight - 35}
+                                    ></ENSceneOutline>
                                   </div>
-                                  <ENSceneOutline
-                                    height={varHeight - 35}
-                                  ></ENSceneOutline>
-                                </div>
-                              )
-                            }}
-                            //
-                            down={(varHeight) => {
-                              return (
-                                <div
-                                  className='w-full'
-                                  style={{ height: sizeTD - varHeight + 'px' }}
-                                >
-                                  <div
-                                    style={{ height: '35' + 'px' }}
-                                    className='flex items-center justify-center bg-gray-300'
-                                  >
-                                    <div>Helper</div>
-                                  </div>
+                                )
+                              }}
+                              //
+                              down={(varHeight) => {
+                                return (
                                   <div
                                     className='w-full'
                                     style={{
-                                      height: sizeTD - varHeight - 35 + 'px',
+                                      height: sizeTD - varHeight + 'px',
                                     }}
                                   >
-                                    <div></div>
+                                    <div
+                                      style={{ height: '35' + 'px' }}
+                                      className='flex items-center justify-center bg-gray-300'
+                                    >
+                                      <div>Helper</div>
+                                    </div>
+                                    <div
+                                      className='w-full'
+                                      style={{
+                                        height: sizeTD - varHeight - 35 + 'px',
+                                      }}
+                                    >
+                                      <div></div>
+                                    </div>
                                   </div>
-                                </div>
-                              )
+                                )
+                              }}
+                            ></UpDown>
+                          </ENProjectGuard>
+                        )}
+                        right={(size) => (
+                          <UpDown
+                            NS={'param-graph'}
+                            getDefaultSize={() => {
+                              return ((window.innerHeight - 175) / 5) * 3
                             }}
-                          ></UpDown>
-                        </ENProjectGuard>
-                      )}
-                      right={(size) => (
-                        <UpDown
-                          NS={'param-graph'}
-                          getDefaultSize={() => {
-                            return ((window.innerHeight - 175) / 5) * 3
-                          }}
-                          up={(up) => (
-                            <div
-                              className='relative w-full h-full'
-                              style={{
-                                width:
-                                  window.innerWidth -
-                                  (rightPanelWidth + size) +
-                                  'px',
-                              }}
-                            >
-                              {/* material.agape.json */}
-                              <ENProjectGuard>
-                                <ENCanvas key='encanvas'></ENCanvas>
-                              </ENProjectGuard>
-                              <OverlayHtml></OverlayHtml>
-                            </div>
-                          )}
-                          down={(up) => (
-                            <div
-                              className='w-full'
-                              style={{
-                                height:
-                                  window.innerHeight - drawerSize - up + 'px',
-                              }}
-                            >
-                              <ENProjectGuard
-                                //
-                                loading={
-                                  <div className='flex items-center justify-center w-full h-full bg-gray-300'>
-                                    <div className='p-2 px-4 bg-gray-100 rounded-full'>
-                                      Loading...
-                                    </div>
-                                  </div>
-                                }
-                                //
-                                placeholder={
-                                  <div className='flex items-center justify-center w-full h-full bg-gray-300 from-slate-500 to-slate-300 bg-gradient-to-b'>
-                                    <div className='p-2 px-4 bg-gray-100 rounded-full'>
-                                      Please Select a GLB File Below to Begin
-                                      Editing 👇🏼
-                                    </div>
-                                  </div>
-                                }
+                            up={(up) => (
+                              <div
+                                className='relative w-full h-full'
+                                style={{
+                                  width:
+                                    window.innerWidth -
+                                    (rightPanelWidth + size) +
+                                    'px',
+                                }}
                               >
-                                <ENGraph></ENGraph>
-                              </ENProjectGuard>
-                            </div>
-                          )}
-                        ></UpDown>
-                      )}
-                    ></LeftRight>
-                  </>
-                )}
-                down={(size) => {
-                  setTimeout(() => {
+                                {/* material.agape.json */}
+                                <ENProjectGuard>
+                                  <ENCanvas key='encanvas'></ENCanvas>
+                                </ENProjectGuard>
+                                <OverlayHtml></OverlayHtml>
+                              </div>
+                            )}
+                            down={(up) => (
+                              <div
+                                className='w-full'
+                                style={{
+                                  height:
+                                    window.innerHeight - drawerSize - up + 'px',
+                                }}
+                              >
+                                <ENProjectGuard
+                                  //
+                                  loading={
+                                    <div className='flex items-center justify-center w-full h-full bg-gray-300'>
+                                      <div className='p-2 px-4 bg-gray-100 rounded-full'>
+                                        Loading...
+                                      </div>
+                                    </div>
+                                  }
+                                  //
+                                  placeholder={
+                                    <div className='flex items-center justify-center w-full h-full bg-gray-300 from-slate-500 to-slate-300 bg-gradient-to-b'>
+                                      <div className='p-2 px-4 bg-gray-100 rounded-full'>
+                                        Please Select a GLB File Below to Begin
+                                        Editing 👇🏼
+                                      </div>
+                                    </div>
+                                  }
+                                >
+                                  <ENGraph></ENGraph>
+                                </ENProjectGuard>
+                              </div>
+                            )}
+                          ></UpDown>
+                        )}
+                      ></LeftRight>
+                    </>
+                  )}
+                  down={(size) => {
                     setDrawerSize(window.innerHeight - size)
-                  })
 
-                  return (
-                    <div
-                      className='w-full bg-white'
-                      style={{ height: size + 'px' }}
-                    >
-                      <ENAssetDrawer size={size}></ENAssetDrawer>
-                    </div>
-                  )
-                }}
-              ></UpDown>
-            )}
-            //
-            //
-            right={(size) => {
+                    return (
+                      <div
+                        className='w-full bg-white'
+                        style={{ height: size + 'px' }}
+                      >
+                        <ENAssetDrawer size={size}></ENAssetDrawer>
+                      </div>
+                    )
+                  }}
+                ></UpDown>
+              )}
               //
-              setTimeout(() => {
-                setRightPaneWidth(window.innerWidth - size)
-              })
+              //
+              right={(size) => {
+                //
+                setTimeout(() => {
+                  setRightPaneWidth(window.innerWidth - size)
+                })
 
-              return (
-                <div style={{ height: '100%' }}>
-                  <ENProjectGuard>
-                    <PropTabs
-                      tabs={[
-                        {
-                          name: 'mat',
-                          label: 'Basic Properties',
-                          compo: (
-                            <ENBasicParams key={'matparams'}></ENBasicParams>
-                          ),
-                        },
-                        {
-                          name: 'node',
-                          label: 'Advanced Properties (Overrides)',
-                          compo: <ENParams key={'nodeparams'}></ENParams>,
-                        },
-                      ]}
-                    ></PropTabs>
-                  </ENProjectGuard>
+                return (
+                  <div style={{ height: '100%' }}>
+                    <ENProjectGuard>
+                      <PropTabs
+                        tabs={[
+                          {
+                            name: 'mat',
+                            label: 'Basic Properties',
+                            compo: (
+                              <ENBasicParams key={'matparams'}></ENBasicParams>
+                            ),
+                          },
+                          {
+                            name: 'node',
+                            label: 'Advanced Properties (Overrides)',
+                            compo: <ENParams key={'nodeparams'}></ENParams>,
+                          },
+                        ]}
+                      ></PropTabs>
+                    </ENProjectGuard>
 
-                  {/*
+                    {/*
                   <UpDown
                     NS={'param-graph'}
                     getDefaultSize={() => {
@@ -254,12 +298,13 @@ function UIMainContent() {
                       </ENProjectGuard>
                     )}
                   ></UpDown> */}
-                </div>
-              )
-            }}
-          ></LeftRight>
+                  </div>
+                )
+              }}
+            ></LeftRight>
+          </div>
         </div>
-      </div>
+      )}
 
       {/*  */}
       {/*  */}

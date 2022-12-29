@@ -263,8 +263,8 @@ const useMultiverse = create((set, get) => {
       }
     },
     updatePlayer: (delta) => {
-      if (delta > 1 / 60) {
-        delta = 1 / 60
+      if (delta > 1 / 5) {
+        delta = 1 / 5
       }
 
       let self = get()
@@ -297,8 +297,8 @@ const useMultiverse = create((set, get) => {
       if (self.fwdPressed) {
         self.tempVector
           .set(0, 0, -1)
-          .applyQuaternion(self.controls.object.quaternion)
-        //.applyAxisAngle(self.upVector, angle)
+          // .applyQuaternion(self.controls.object.quaternion)
+          .applyAxisAngle(self.upVector, angle)
         self.player.position.addScaledVector(
           self.tempVector,
           self.playerSpeed * delta
@@ -309,8 +309,8 @@ const useMultiverse = create((set, get) => {
       if (self.bkdPressed) {
         self.tempVector
           .set(0, 0, 1)
-          .applyQuaternion(self.controls.object.quaternion)
-        //.applyAxisAngle(self.upVector, angle)
+          // .applyQuaternion(self.controls.object.quaternion)
+          .applyAxisAngle(self.upVector, angle)
         self.player.position.addScaledVector(
           self.tempVector,
           self.playerSpeed * delta
@@ -321,8 +321,8 @@ const useMultiverse = create((set, get) => {
       if (self.lftPressed) {
         self.tempVector
           .set(-1, 0, 0)
-          .applyQuaternion(self.controls.object.quaternion)
-        //.applyAxisAngle(self.upVector, angle)
+          // .applyQuaternion(self.controls.object.quaternion)
+          .applyAxisAngle(self.upVector, angle)
         self.player.position.addScaledVector(
           self.tempVector,
           self.playerSpeed * delta
@@ -332,8 +332,8 @@ const useMultiverse = create((set, get) => {
       if (self.rgtPressed) {
         self.tempVector
           .set(1, 0, 0)
-          .applyQuaternion(self.controls.object.quaternion)
-        //.applyAxisAngle(self.upVector, angle)
+          // .applyQuaternion(self.controls.object.quaternion)
+          .applyAxisAngle(self.upVector, angle)
         self.player.position.addScaledVector(
           self.tempVector,
           self.playerSpeed * delta
@@ -342,10 +342,9 @@ const useMultiverse = create((set, get) => {
       }
 
       if (self.lftRotPressed) {
-        self.tempVector
-          .set(1, 0, 0)
-          .applyQuaternion(self.controls.object.quaternion)
-
+        self.tempVector.set(1, 0, 0)
+        // .applyQuaternion(self.controls.object.quaternion)
+        //
         self.quaternion.setFromAxisAngle(self.tempVector, 0.1)
         self.controls.object.quaternion.premultiply(self.quaternion)
         self.tempVector.applyQuaternion(self.quaternion)
@@ -362,10 +361,9 @@ const useMultiverse = create((set, get) => {
       }
 
       if (self.rgtRotPressed) {
-        self.tempVector
-          .set(-1, 0, 0)
-          .applyQuaternion(self.controls.object.quaternion)
-
+        self.tempVector.set(-1, 0, 0)
+        // .applyQuaternion(self.controls.object.quaternion)
+        //
         self.quaternion.setFromAxisAngle(self.tempVector, 0.1)
         self.controls.object.quaternion.premultiply(self.quaternion)
         self.tempVector.applyQuaternion(self.quaternion)

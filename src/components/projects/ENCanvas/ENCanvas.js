@@ -28,6 +28,7 @@ import { useEffectNode } from '@/effectnode/store/useEffectNode'
 import { Core } from '@/helpers/Core'
 import { WebGLRenderer } from 'three144'
 import { Scene } from 'three140'
+import { ConnectCameraControlsFPV } from '@/helpers/ConnectCameraControlsFPV'
 //
 
 export function ENCanvas() {
@@ -171,9 +172,10 @@ function Content() {
         <>
           <gridHelper args={[500, 500]}></gridHelper>
           <ConnectKeyboard></ConnectKeyboard>
-          <ConnectCameraControls></ConnectCameraControls>
+          <ConnectCameraControlsFPV></ConnectCameraControlsFPV>
           <ConnectSimulation></ConnectSimulation>
           <Player></Player>
+
           <FloorFlat
             key={activeGLBRuntimeObject.uuid + 'floorflat'}
             name={activeGLBRuntimeObject.uuid}
@@ -184,7 +186,7 @@ function Content() {
       {editorNavigationMode === 'meta' && activeGLBRuntimeObject.scene && (
         <>
           <ConnectKeyboard></ConnectKeyboard>
-          <ConnectCameraControls></ConnectCameraControls>
+          <ConnectCameraControlsFPV></ConnectCameraControlsFPV>
           <ConnectSimulation></ConnectSimulation>
           <Player></Player>
           <FloorObject

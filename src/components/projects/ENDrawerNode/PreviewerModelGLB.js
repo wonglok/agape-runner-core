@@ -22,7 +22,10 @@ export function PreviewerModelGLB({ parent, handle }) {
       {/*  */}
       {url && (
         <>
-          <div className='h-full border-r' style={{ width: '300px' }}>
+          <div
+            className='h-full border-r'
+            style={{ width: '300px', height: '300px' }}
+          >
             <ENModelViewer url={url} />
           </div>
           <div

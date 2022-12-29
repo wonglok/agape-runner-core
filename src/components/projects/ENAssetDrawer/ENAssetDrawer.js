@@ -17,21 +17,21 @@ export function ENAssetDrawer({ size }) {
     load()
   }, [load])
 
-  let [height, setHeight] = useState(100)
+  // let [height, setHeight] = useState(100)
   let barRef = useRef()
-  useEffect(() => {
-    setHeight(window.innerHeight - 54 * 0.0 - 24 - size)
+  // useEffect(() => {
+  //   setHeight(window.innerHeight - 54 * 0.0 - 24 - size)
 
-    let tt = setInterval(() => {
-      if (height !== window.innerHeight - 54 * 0.0 - 24 - size - 0.1) {
-        setHeight(window.innerHeight - 54 * 0.0 - 24 - size - 0.1)
-      }
-    }, 100)
+  //   let tt = setInterval(() => {
+  //     if (height !== window.innerHeight - 54 * 0.0 - 24 - size - 0.1) {
+  //       setHeight(window.innerHeight - 54 * 0.0 - 24 - size - 0.1)
+  //     }
+  //   }, 100)
 
-    return () => {
-      clearInterval(tt)
-    }
-  }, [height, size])
+  //   return () => {
+  //     clearInterval(tt)
+  //   }
+  // }, [height, size])
 
   useEffect(() => {
     //
@@ -62,7 +62,7 @@ export function ENAssetDrawer({ size }) {
     >
       <div
         className='relative flex'
-        style={{ width: '100000vw', height: height + 'px' }}
+        style={{ width: '100000vw', height: size + 'px' }}
       >
         {handleEntry && handleEntry.handle && (
           <ENDrawerNode
