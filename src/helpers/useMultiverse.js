@@ -161,6 +161,8 @@ const useMultiverse = create((set, get) => {
         controls.object.position.fromArray(initPos)
         controls.target.set(lookAt[0], lookAt[1], lookAt[2])
       }
+
+      //
       if (controls.update) {
         controls.update()
       }

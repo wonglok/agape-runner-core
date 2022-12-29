@@ -15,7 +15,7 @@ export function PGPlaces({ content }) {
       <DesktopOnly>
         <StylesDashboard></StylesDashboard>
         <LeftMenu></LeftMenu>
-        <div className='relative h-full max-h-screen ease-soft-in-out xl:ml-68.5 transition-all duration-200'>
+        <div className='relative h-full max-h-screen ease-soft-in-out xl:ml-68.5 '>
           <SectionHeader
             title='Places'
             subTitle='Where you can hangout'

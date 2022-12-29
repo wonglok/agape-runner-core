@@ -6,7 +6,7 @@ export function MyOwnAvatars() {
   let gs = useSnapshot(GateState)
 
   return (
-    <div className='relative h-full max-h-screen ease-soft-in-out xl:ml-68.5 transition-all duration-200'>
+    <div className='relative h-full max-h-screen ease-soft-in-out xl:ml-68.5 '>
       <SectionHeader
         title='Avatars'
         subTitle='Programmable Avatar Apps'
