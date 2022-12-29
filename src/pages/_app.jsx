@@ -1,7 +1,7 @@
 import '@/styles/index.css'
 
 import { useRouter } from 'next/router'
-import { Suspense, useEffect, useMemo } from 'react'
+import { Suspense, useMemo, useEffect } from 'react'
 import Header from '@/config'
 import { Multiverse } from '@/components/layout/Multiverse'
 import { useSystemStore } from '@/helpers/useSystemStore'
