@@ -46,25 +46,24 @@ function App({ Component, pageProps = { title: 'index' } }) {
   }, [])
   let gs = useSnapshot(GateState)
 
-  let [sTokenInURL, setST] = useState(false)
+  let [skip, setST] = useState(false)
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     const sTokenInURL = params.get('token')
 
-    setST(sTokenInURL)
+    if (window.location.pathname === '/' && sTokenInURL) {
+      setST('localonly')
+    }
     //
   }, [])
 
-  if (sTokenInURL) {
-    return <></>
-  }
   return (
     <>
       <Header title={pageProps.title} />
 
       {router && (
         <>
-          {Component.layout === 'Multiverse' && (
+          {Component.layout === 'Multiverse' && skip !== 'localonly' && (
             <>
               <Multiverse router={router} {...pageProps}>
                 <Component router={router} {...pageProps}></Component>
