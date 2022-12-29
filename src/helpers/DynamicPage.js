@@ -107,19 +107,26 @@ const DynamicPage = (props) => {
 DynamicPage.layout = 'Multiverse'
 
 export async function getServerSidePropsForDynamicPage(context) {
-  let endPoint = UserEndPoints[process.env.NODE_ENV]
-  let response = await fetch(`${endPoint}/domain-of-sites`, {
-    method: 'POST',
-    body: JSON.stringify({
-      domain: context?.req?.headers?.host || '',
-    }),
-  })
-
-  let data = await response.json()
-
+  //
   let domainMapping = false
-  if (response.ok) {
-    domainMapping = data
+
+  try {
+    let endPoint = UserEndPoints[process.env.NODE_ENV]
+    let response = await fetch(`${endPoint}/domain-of-sites`, {
+      method: 'POST',
+      body: JSON.stringify({
+        domain: context?.req?.headers?.host || '',
+      }),
+    })
+
+    let data = await response.json()
+
+    if (response.ok) {
+      domainMapping = data
+    }
+  } catch (e) {
+    console.error(e)
+    console.error('seo')
   }
 
   return {
