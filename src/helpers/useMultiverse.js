@@ -79,6 +79,11 @@ const useMultiverse = create((set, get) => {
     lftRotPressed: false,
     rgtRotPressed: false,
 
+    joyStickDown: false,
+    joyStickAngle: 0,
+    joyStickPressure: 0,
+    joyStickSide: 0,
+
     playerVelocity: new Vector3(),
     resetPositon: new Vector3(0, 1, 0),
     upVector: new Vector3(0, 1, 0),
