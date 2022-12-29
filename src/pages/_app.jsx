@@ -1,7 +1,7 @@
 import '@/styles/index.css'
 
 import { useRouter } from 'next/router'
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useMemo } from 'react'
 import Header from '@/config'
 import { Multiverse } from '@/components/layout/Multiverse'
 import { useSystemStore } from '@/helpers/useSystemStore'
@@ -14,6 +14,7 @@ import { hydration } from '@/auth/GateMethods'
 
 import { GateState } from '@/auth/GateState.ts'
 import { useSnapshot } from 'valtio'
+import { useState } from 'react'
 
 function App({ Component, pageProps = { title: 'index' } }) {
   const router = useRouter()
@@ -45,7 +46,18 @@ function App({ Component, pageProps = { title: 'index' } }) {
   }, [])
   let gs = useSnapshot(GateState)
 
-  //
+  let [sTokenInURL, setST] = useState(false)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const sTokenInURL = params.get('token')
+
+    setST(sTokenInURL)
+    //
+  }, [])
+
+  if (sTokenInURL) {
+    return <></>
+  }
   return (
     <>
       <Header title={pageProps.title} />

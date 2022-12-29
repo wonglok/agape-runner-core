@@ -27,9 +27,13 @@ export const hydration = async () => {
       await Router.push(Router.pathname).then(async () => {
         let redir = localStorage.getItem(SESSION_REDIRECT_KEY)
         localStorage.removeItem(SESSION_REDIRECT_KEY)
-        await Router.push(redir)
+        if (redir) {
+          await Router.push(redir)
+        }
       })
     }
+
+    //
     await loadSession()
     GateState.readyStatus = 'done'
   }
