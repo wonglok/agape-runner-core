@@ -11,8 +11,6 @@ export default function Avatars() {
 }
 
 export async function getServerSideProps(context) {
-  //
-
   return {
     props: {
       title: 'Agape Portal',
