@@ -1,11 +1,28 @@
 import { useGLBEditor } from '@/helpers/useGLBEditor'
+import { useEffect, useRef } from 'react'
 
-export function ENOutlineNode({ level = 0, node }) {
+export function ENOutlineNode({ level = 0, node, scrollerRef }) {
   let activeSceneSelection = useGLBEditor((s) => s.activeSceneSelection)
   let setMultipleSelection = useGLBEditor((s) => s.setMultipleSelection)
   let setSelection = useGLBEditor((s) => s.setSelection)
   let outlineSearch = useGLBEditor((s) => s.outlineSearch)
-
+  let refItem = useRef()
+  //
+  useEffect(() => {
+    // function offset(elem) {
+    //   if (!elem) elem = this
+    //   let x = elem.offsetLeft
+    //   let y = elem.offsetTop
+    //   while ((elem = elem.offsetParent)) {
+    //     x += elem.offsetLeft
+    //     y += elem.offsetTop
+    //   }
+    //   return { left: x, top: y }
+    // }
+    // if (scrollerRef?.current && refItem.current) {
+    //   scrollerRef.scrollTop = offset(refItem.current)
+    // }
+  })
   return (
     <>
       {
@@ -21,10 +38,11 @@ export function ENOutlineNode({ level = 0, node }) {
             .toLowerCase()
             .indexOf(outlineSearch.toLowerCase()) !== -1 && (
             <div
+              ref={refItem}
               className={
                 'flex justify-between pl-1 text-xs ' +
                 (activeSceneSelection?.uuid === node.uuid
-                  ? 'bg-teal-200 p-2 text-slate-700 border-slate-700 border-l-2'
+                  ? 'bg-teal-200 p-2 text-slate-700 border-slate-700 border-l-2 '
                   : 'transition-all duration-50 hover:bg-teal-100 hover:p-2')
               }
               onClick={() => {
