@@ -225,7 +225,10 @@ function UIMainContent() {
                     <ENGraph></ENGraph>
                     <div
                       className='absolute top-0 left-0 h-1/5'
-                      style={{ width: `480px`, height: '360px' }}
+                      style={{
+                        width: `${Math.floor(400)}px`,
+                        height: `${Math.floor(300)}px`,
+                      }}
                     >
                       <ENCanvas key='encanvas'></ENCanvas>
                     </div>
