@@ -259,17 +259,6 @@ function UIMainContent() {
           </div>
         </div>
       </div>
-
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/* <ENProjectGuard
-        placeholder={
-          <div className='w-full h-full border-t border-gray-300'></div>
-        }
-      >
-        <ENTimeline></ENTimeline>
-      </ENProjectGuard> */}
     </>
   )
 }
