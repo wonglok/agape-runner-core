@@ -37,7 +37,6 @@ export function UIMain() {
 let tt = 0
 let vv = 0
 
-//
 function UIMainContent() {
   let setRightPaneWidth = useGLBEditor((s) => s.setRightPaneWidth)
   let rightPanelWidth = useGLBEditor((s) => s.rightPanelWidth)
@@ -289,6 +288,7 @@ function UIMainContent() {
                               }}
                               NS={'ENSceneOutline-up-down'}
                               up={(varHeight) => {
+                                //
                                 return (
                                   <div
                                     className='w-full'
