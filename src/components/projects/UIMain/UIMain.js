@@ -175,12 +175,12 @@ function UIMainContent() {
                       </div>
                       <ENSceneOutline key={'outline-1'}></ENSceneOutline>
                     </div>
-                    <div style={{ width: 'calc(100% - 300px - 450px)' }}>
+                    <div style={{ width: 'calc(100% - 300px - 400px)' }}>
                       <ENCanvas key='encanvas'></ENCanvas>
                     </div>
                     <div
                       className='h-full'
-                      style={{ width: '450px', overflow: 'auto' }}
+                      style={{ width: '400px', overflow: 'auto' }}
                     >
                       <ENBasicParams key={'matparams'}></ENBasicParams>
                     </div>
