@@ -176,7 +176,9 @@ function UIMainContent() {
                       <ENSceneOutline key={'outline-1'}></ENSceneOutline>
                     </div>
                     <div style={{ width: 'calc(100% - 300px - 400px)' }}>
-                      <ENCanvas key='encanvas'></ENCanvas>
+                      {workspace === 'layout' && (
+                        <ENCanvas key='encanvas'></ENCanvas>
+                      )}
                     </div>
                     <div
                       className='h-full'
@@ -230,7 +232,9 @@ function UIMainContent() {
                         height: `${Math.floor(300)}px`,
                       }}
                     >
-                      <ENCanvas key='encanvas'></ENCanvas>
+                      {workspace === 'program' && (
+                        <ENCanvas key='encanvas'></ENCanvas>
+                      )}
                     </div>
                   </div>
 
