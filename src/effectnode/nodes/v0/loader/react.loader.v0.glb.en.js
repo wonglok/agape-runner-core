@@ -15,10 +15,10 @@ export async function nodeData({ defaultData, nodeID }) {
     inputs: [
       //
       { _id: getID(), type: 'input', nodeID },
-      { _id: getID(), type: 'input', nodeID },
-      { _id: getID(), type: 'input', nodeID },
-      { _id: getID(), type: 'input', nodeID },
-      { _id: getID(), type: 'input', nodeID },
+      // { _id: getID(), type: 'input', nodeID },
+      // { _id: getID(), type: 'input', nodeID },
+      // { _id: getID(), type: 'input', nodeID },
+      // { _id: getID(), type: 'input', nodeID },
     ],
 
     // at least 1
@@ -26,10 +26,10 @@ export async function nodeData({ defaultData, nodeID }) {
     outputs: [
       //
       { _id: getID(), type: 'output', nodeID },
-      { _id: getID(), type: 'output', nodeID },
-      { _id: getID(), type: 'output', nodeID },
-      { _id: getID(), type: 'output', nodeID },
-      { _id: getID(), type: 'output', nodeID },
+      // { _id: getID(), type: 'output', nodeID },
+      // { _id: getID(), type: 'output', nodeID },
+      // { _id: getID(), type: 'output', nodeID },
+      // { _id: getID(), type: 'output', nodeID },
     ],
 
     //
@@ -148,10 +148,10 @@ export function effect({ node, mini, data, setComponent }) {
   }
 
   node.out0.pulse(<MakeObject key={getID()}></MakeObject>)
-  node.out1.pulse(<MakeObject key={getID()}></MakeObject>)
-  node.out2.pulse(<MakeObject key={getID()}></MakeObject>)
-  node.out3.pulse(<MakeObject key={getID()}></MakeObject>)
-  node.out4.pulse(<MakeObject key={getID()}></MakeObject>)
+  // node.out1.pulse(<MakeObject key={getID()}></MakeObject>)
+  // node.out2.pulse(<MakeObject key={getID()}></MakeObject>)
+  // node.out3.pulse(<MakeObject key={getID()}></MakeObject>)
+  // node.out4.pulse(<MakeObject key={getID()}></MakeObject>)
 
   //
   // //
