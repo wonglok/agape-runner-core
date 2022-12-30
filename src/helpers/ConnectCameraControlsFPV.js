@@ -13,7 +13,7 @@ export function ConnectCameraControlsFPV() {
   useEffect(() => {
     let cleans = []
     let orbit = new OrbitControls(camera, gl.domElement)
-    orbit.maxDistance = 0.01
+    // orbit.maxDistance = 0.01
     setCamera(camera)
     setControls(orbit)
     setOR(orbit)

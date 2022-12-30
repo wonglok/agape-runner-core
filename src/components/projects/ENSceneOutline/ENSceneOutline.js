@@ -3,13 +3,13 @@ import { useGLBEditor } from '@/helpers/useGLBEditor'
 import { UpDown } from '../UIMain/UIMain'
 import { ENOutlineNode } from './ENOutlineNode'
 
-export function ENSceneOutline({ height }) {
+export function ENSceneOutline({}) {
   let activeGLBRuntimeObject = useGLBEditor((s) => s.activeGLBRuntimeObject)
   let outlineSearch = useGLBEditor((s) => s.outlineSearch)
   return (
     <div
       className='w-full px-1 py-12 pt-4 overflow-auto text-xs bg-white'
-      style={{ height: height + 'px' }}
+      style={{ height: 100 + '%' }}
     >
       {activeGLBRuntimeObject?.scene?.children
         .slice()

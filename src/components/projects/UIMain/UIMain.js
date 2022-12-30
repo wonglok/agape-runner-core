@@ -11,6 +11,7 @@ import { ENParams } from '../ENParams/ENParams'
 import { ENProjectGuard } from '../ENProjectGuard/ENProjectGuard'
 import { ENSceneOutline } from '../ENSceneOutline/ENSceneOutline'
 import { PropTabs } from './PropTabs'
+import { getID } from '@/lib/getID'
 // import { ENTimeline } from '../ENTimeline/ENTimeline'
 
 export function UIMain() {
@@ -44,53 +45,175 @@ function UIMainContent() {
   let drawerSize = useGLBEditor((s) => s.drawerSize)
   let setOutlineSerach = useGLBEditor((s) => s.setOutlineSerach)
   let outlineSearch = useGLBEditor((s) => s.outlineSearch)
+  let setWorkspace = useGLBEditor((s) => s.setWorkspace)
+  let workspace = useGLBEditor((s) => s.workspace)
   //
   //
   //
   return (
     <>
-      <div className='w-full h-screen'>
+      <div className='w-full h-screen text-xs'>
+        <div style={{ height: 'calc(100% - 300px)' }}>
+          <div className='' style={{ height: '100%' }}>
+            <div className='flex w-full' style={{ height: '75px' }}>
+              {[
+                {
+                  _id: getID(),
+                  workspace: 'layout',
+                  icon: (
+                    <svg
+                      clipRule='evenodd'
+                      fillRule='evenodd'
+                      strokeLinejoin='round'
+                      strokeMiterlimit='2'
+                      viewBox='0 0 24 24'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path
+                        d='m21 4c0-.478-.379-1-1-1h-16c-.62 0-1 .519-1 1v16c0 .621.52 1 1 1h16c.478 0 1-.379 1-1zm-12.5 15.5h-4v-4h4zm1.5-4h4v4h-4zm9.5 0v4h-4v-4zm-15-5.5h4v4h-4zm5.5 0h4v4h-4zm5.5 0h4v4h-4zm-11-5.5h4v4h-4zm5.5 0h4v4h-4zm5.5 0h4v4h-4z'
+                        fillRule='nonzero'
+                      />
+                    </svg>
+                  ),
+                },
+                {
+                  _id: getID(),
+                  workspace: 'program',
+                  icon: (
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                    >
+                      <path d='M21 4c0-1.104-.896-2-2-2h-15c-1.104 0-2 .896-2 2v15c0 1.104.896 2 2 2h15c1.104 0 2-.896 2-2v-15zm-2 14.25c0 .414-.336.75-.75.75h-13.5c-.414 0-.75-.336-.75-.75v-13.5c0-.414.336-.75.75-.75h13.5c.414 0 .75.336.75.75v13.5zm-9 3.75v1h-1v-1h1zm2 0v1h-1v-1h1zm-4 0v1h-1v-1h1zm6 0v1h-1v-1h1zm2 0v1h-1v-1h1zm-6-22v1h-1v-1h1zm2 0v1h-1v-1h1zm-4 0v1h-1v-1h1zm6 0v1h-1v-1h1zm2 0v1h-1v-1h1zm6 13h1v1h-1v-1zm0-4h1v1h-1v-1zm0-2h1v1h-1v-1zm0 4h1v1h-1v-1zm0 4h1v1h-1v-1zm-22-2h1v1h-1v-1zm0-4h1v1h-1v-1zm0-2h1v1h-1v-1zm0 4h1v1h-1v-1zm0 4h1v1h-1v-1zm17 2h-11v-11h11v11z' />
+                    </svg>
+                  ),
+                },
+              ].map((tab) => {
+                return (
+                  <div
+                    key={`${tab._id}`}
+                    style={{ height: '75px', width: '75px' }}
+                    className={
+                      'flex items-center justify-center text-xs' +
+                      `${tab.workspace === workspace ? ' bg-blue-200' : ''}`
+                    }
+                    onClick={() => {
+                      setWorkspace(tab.workspace)
+                    }}
+                  >
+                    <div style={{ height: '24px', width: '24px' }}>
+                      {tab.icon}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            <div className='' style={{ height: 'calc(100% - 75px)' }}>
+              <ENProjectGuard
+                loading={
+                  <div className='flex items-center justify-center w-full h-full bg-gray-300'>
+                    <div className='p-2 px-4 bg-gray-100 rounded-full'>
+                      Loading...
+                    </div>
+                  </div>
+                }
+                //
+                placeholder={
+                  <div className='flex items-center justify-center w-full h-full bg-gray-300 from-slate-500 to-slate-300 bg-gradient-to-b'>
+                    <div className='p-2 px-4 bg-gray-100 rounded-full'>
+                      Please Select a GLB File Below to Begin Editing 👇🏼
+                    </div>
+                  </div>
+                }
+              >
+                {
+                  <div
+                    className={
+                      'w-full h-full flex relative ' +
+                      (workspace === 'layout' ? 'block' : 'hidden')
+                    }
+                  >
+                    <div style={{ width: '300px', overflow: 'auto' }}>
+                      <div>
+                        <input
+                          type='text'
+                          placeholder='Scene Outline Search'
+                          className='w-full p-2 bg-gray-400 placeholder:text-white'
+                          onKeyDown={(ev) => {
+                            ev.stopPropagation()
+                          }}
+                          onInput={(ev) => {
+                            setOutlineSerach(ev.target.value)
+                          }}
+                          value={outlineSearch}
+                        ></input>
+                      </div>
+                      <ENSceneOutline key={'outline-1'}></ENSceneOutline>
+                    </div>
+                    <div style={{ width: 'calc(100% - 300px - 300px)' }}>
+                      <ENCanvas key='encanvas'></ENCanvas>
+                    </div>
+                    <div
+                      className='h-full'
+                      style={{ width: '300px', overflow: 'auto' }}
+                    >
+                      <ENBasicParams key={'matparams'}></ENBasicParams>
+                    </div>
+                  </div>
+                }
+                {
+                  <div
+                    className={
+                      'relative w-full h-full flex ' +
+                      (workspace === 'program' ? 'block' : 'hidden')
+                    }
+                  >
+                    <div style={{ width: '300px', overflow: 'auto' }}>
+                      <div>
+                        <input
+                          type='text'
+                          placeholder='Scene Outline Search'
+                          className='w-full p-2 bg-gray-400 placeholder:text-white'
+                          onKeyDown={(ev) => {
+                            ev.stopPropagation()
+                          }}
+                          onInput={(ev) => {
+                            setOutlineSerach(ev.target.value)
+                          }}
+                          value={outlineSearch}
+                        ></input>
+                      </div>
+                      <ENSceneOutline key={'outline-2'}></ENSceneOutline>
+                    </div>
+                    <div
+                      style={{
+                        width: 'calc(100% - 300px - 300px)',
+                        position: 'relative',
+                      }}
+                    >
+                      <ENGraph></ENGraph>
+                      <OverlayHtml></OverlayHtml>
+                    </div>
+                    <div
+                      className='h-full'
+                      style={{ width: '300px', overflow: 'auto' }}
+                    >
+                      <ENParams key={'nodeparams'}></ENParams>
+                    </div>
+                  </div>
+                }
+              </ENProjectGuard>
+            </div>
+          </div>
+
+          {/*  */}
+        </div>
         <div className='w-full text-xs ' style={{ height: '300px' }}>
           <ENAssetDrawer size={300}></ENAssetDrawer>
         </div>
-        <ENProjectGuard
-          loading={
-            <div className='flex items-center justify-center w-full h-full bg-gray-300'>
-              <div className='p-2 px-4 bg-gray-100 rounded-full'>
-                Loading...
-              </div>
-            </div>
-          }
-          //
-          placeholder={
-            <div className='flex items-center justify-center w-full h-full bg-gray-300 from-slate-500 to-slate-300 bg-gradient-to-b'>
-              <div className='p-2 px-4 bg-gray-100 rounded-full'>
-                Please Select a GLB File Below to Begin Editing 👇🏼
-              </div>
-            </div>
-          }
-        >
-          {/*  */}
-          <div>
-            <input
-              type='text'
-              placeholder='Scene Outline Search'
-              className='w-full p-2 bg-gray-400 placeholder:text-white'
-              onKeyDown={(ev) => {
-                ev.stopPropagation()
-              }}
-              onInput={(ev) => {
-                setOutlineSerach(ev.target.value)
-              }}
-              value={outlineSearch}
-            ></input>
-          </div>
-          <ENCanvas key='encanvas'></ENCanvas>
-          <OverlayHtml></OverlayHtml>
-          <ENSceneOutline height={1000}></ENSceneOutline>
-          <ENGraph></ENGraph>
-          {/*  */}
-        </ENProjectGuard>
       </div>
       {false && (
         <div

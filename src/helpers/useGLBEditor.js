@@ -38,6 +38,10 @@ let generateInside = (set, get) => {
 
   // console.log('generateInside')
   return {
+    workspace: 'layout',
+    setWorkspace: (v) => {
+      set({ workspace: v })
+    },
     multipleSelection: [],
     setMultipleSelection: (s) => {
       set({ multipleSelection: s })
