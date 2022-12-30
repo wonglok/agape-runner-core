@@ -219,32 +219,41 @@ function UIMainContent() {
                 </div>
                 <div
                   style={{
-                    width: 'calc(100% - 300px)',
+                    width: 'calc(100% - 300px - 550px)',
                     position: 'relative',
+                    overflow: 'hidden',
                   }}
+                  className='flex'
                 >
-                  <div className='relative' style={{ height: 'calc(100%)' }}>
-                    <ENGraph></ENGraph>
-                    <div
-                      className='absolute top-0 left-0 h-1/5'
-                      style={{
-                        width: `${Math.floor(400)}px`,
-                        height: `${Math.floor(300)}px`,
-                      }}
-                    >
-                      {workspace === 'program' && (
-                        <ENCanvas key='encanvas'></ENCanvas>
-                      )}
-                    </div>
-                  </div>
+                  {/* <div className='relative' style={{ height: 'calc(100%)' }}> */}
+                  <ENGraph></ENGraph>
+                  {/* </div> */}
 
+                  {/* */}
+                  <OverlayHtml></OverlayHtml>
+                </div>
+                <div
+                  className='relative'
+                  style={{ height: '100%', width: `550px` }}
+                >
                   <div
-                    className='absolute top-0 right-0 '
-                    style={{ height: 'h-full ', width: `550px` }}
+                    className='w-full'
+                    style={{
+                      height: '300px',
+                      // width: `${Math.floor(400)}px`,
+                      // height: `${Math.floor(300)}px`,
+                    }}
+                  >
+                    {workspace === 'program' && (
+                      <ENCanvas key='encanvas'></ENCanvas>
+                    )}
+                  </div>
+                  <div
+                    className='w-full'
+                    style={{ height: 'calc(100% - 300px)', overflow: 'auto' }}
                   >
                     <ENParams key={'nodeparams'}></ENParams>
                   </div>
-                  <OverlayHtml></OverlayHtml>
                 </div>
               </div>
             }
