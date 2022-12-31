@@ -18,8 +18,8 @@ export function LeftMenu() {
   return (
     <>
       <aside
-        className={`fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-4 ml-4 overflow-y-auto antialiased bg-white border-0 shadow-none max-w-62.5 ease-nav-brand z-990  rounded-2xl transition-transform duration-200 xl:left-0 xl:bg-transparent ${
-          !gui.menuOpen ? ` -translate-x-full ` : `translate-x-0 `
+        className={`fixed  shadow-2xl shadow-slate-400 inset-y-0 flex-wrap items-center justify-between block w-full p-0  my-4 ml-4 overflow-y-auto antialiased bg-white border-0 max-w-62.5 ease-nav-brand z-990  rounded-2xl transition-transform duration-200 xl:left-0 xl:bg-transparent ${
+          gui.menuOpen ? ` -translate-x-full  ` : ` `
         }`}
       >
         <div className='h-19.5'>

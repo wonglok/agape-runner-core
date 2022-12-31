@@ -6,8 +6,8 @@ export function SmartDrawer({ children }) {
 
   return (
     <div
-      className={` transition-all duration-300 ${
-        gui.menuOpen ? '' : ' lg:ml-56 '
+      className={` shadow-slate-400  transition-all duration-300 ${
+        gui.menuOpen ? '' : ' lg:ml-72 '
       }`}
     >
       {children}
