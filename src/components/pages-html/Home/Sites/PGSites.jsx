@@ -17,7 +17,7 @@ export function PGSites({ content }) {
         <LeftMenu></LeftMenu>
         <div className='relative h-full max-h-screen ease-soft-in-out xl:ml-68.5 '>
           <SectionHeader
-            title='Sites'
+            title='My Sites'
             subTitle='Programmable Avatar Apps'
             bgImage='/brand/avatar.webp'
             bgOffsetY={15}

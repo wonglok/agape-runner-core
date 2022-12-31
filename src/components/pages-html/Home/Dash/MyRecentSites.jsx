@@ -6,13 +6,15 @@ export function MyRecentSites() {
     <div className='flex-none w-full max-w-full px-4 mt-9'>
       <div className='relative flex flex-col min-w-0 mx-2 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border'>
         <div className='p-4 pb-0 mb-0 bg-white rounded-t-2xl'>
-          <h6 className='mb-1 text-xl'>Your Metaverses</h6>
-          <p className='text-sm leading-normal'>Mapped with your own Domains</p>
+          <h6 className='mb-1 text-xl'>Your Recent Sites</h6>
+          <p className='mb-3 text-sm leading-normal'>The Metaverse by you. </p>
         </div>
+        {/*  */}
+        {/*  */}
         <div className='flex-auto mx-2'>
           <div className='flex flex-wrap mb-8'>
             <div className='w-full max-w-full px-3 mb-6 cursor-pointer md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12'>
-              <Link href={'/cnms/sites'} data-stuff='javascript:;'>
+              <Link href={'/cms/create-site'} data-stuff='javascript:;'>
                 <div className='relative flex flex-col h-full min-w-0 break-words bg-transparent border border-solid shadow-inner rounded-2xl border-slate-100 bg-clip-border'>
                   <div className='flex flex-col justify-center flex-auto p-6 text-center '>
                     <span>
@@ -25,6 +27,8 @@ export function MyRecentSites() {
             </div>
 
             <OneCard></OneCard>
+
+            {/*  */}
 
             {/* <div className='w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12'>
               <div className='relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border'>
@@ -294,7 +298,7 @@ function OneCard({
   domain = 'merry.christmas.com',
 }) {
   return (
-    <div className='w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12'>
+    <div className='w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-6 xl:w-3/12'>
       <div className='relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border'>
         <div className='relative'>
           <a className='block shadow-xl rounded-2xl'>

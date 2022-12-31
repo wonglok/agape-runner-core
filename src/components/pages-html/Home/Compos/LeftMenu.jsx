@@ -40,11 +40,13 @@ export function LeftMenu() {
           </li>
           {/*  */}
           {/*  */}
+          {/*  */}
+          {/*  */}
           {[
             //
             { _id: getID(), link: '/cms', name: 'Dashboard' },
             // { _id: getID(), link: '/cms/pldaces', name: 'Domain' },
-            { _id: getID(), link: '/cms/sites', name: 'Sites' },
+            { _id: getID(), link: '/cms/sites', name: 'My Sites' },
           ].map((item) => {
             //
             return (
