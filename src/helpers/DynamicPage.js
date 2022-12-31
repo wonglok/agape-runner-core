@@ -57,7 +57,6 @@ const DynamicPage = (props) => {
       </Box>
 
       {/*  */}
-
       {/*  */}
       {/*  */}
       {/*  */}

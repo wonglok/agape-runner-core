@@ -3,7 +3,7 @@ import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
-    <RedirGateHTML redirect='/portal'>
+    <RedirGateHTML redirect='/cms'>
       {/* <AvaLand></AvaLand> */}
       <PGHome></PGHome>
     </RedirGateHTML>
