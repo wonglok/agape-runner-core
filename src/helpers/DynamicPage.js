@@ -26,8 +26,6 @@ import { UserEndPoints } from './UserEndPoints'
 const DynamicPage = (props) => {
   //!SECTION
 
-  console.log(props.domainMapping)
-
   return (
     <>
       <group>
@@ -139,5 +137,6 @@ export async function getServerSidePropsForDynamicPage(context) {
 
 export { DynamicPage }
 
+//
 //
 //
