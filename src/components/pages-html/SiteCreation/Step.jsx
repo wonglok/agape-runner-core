@@ -1,7 +1,7 @@
 export function Step({ active = () => {}, text }) {
   return (
     <div
-      className={` cursor-pointer text-sm my-3 inline-flex items-center justify-centertext-sm  overflow-hidden`}
+      className={` cursor-auto text-sm my-3 inline-flex items-center justify-centertext-sm  overflow-hidden`}
     >
       <div
         className={`flex ${
