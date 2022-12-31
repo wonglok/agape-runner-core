@@ -1,11 +1,11 @@
-import { CreateSite } from '@/components/pages-html/SiteCreation/CreateSite'
+import { PGHome } from '@/components/pages-html/Home/Dash/PGHome'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
-    <RedirGateHTML redirect='/cms/places'>
+    <RedirGateHTML redirect='/app'>
       {/* <AvaLand></AvaLand> */}
-      <CreateSite></CreateSite>
+      <PGHome></PGHome>
     </RedirGateHTML>
   )
 }
