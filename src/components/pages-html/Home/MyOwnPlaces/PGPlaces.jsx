@@ -17,7 +17,7 @@ export function PGPlaces({ content }) {
         <LeftMenu></LeftMenu>
         {/*  */}
         {/*  */}
-        <div className='relative h-full max-h-screen ease-soft-in-out xl:ml-68.5 '>
+        <div className=' '>
           <SectionHeader
             title='Places'
             subTitle='Where you can hangout'

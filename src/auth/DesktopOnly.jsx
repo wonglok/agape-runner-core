@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
 
-export function DesktopOnly({ children }) {
+export function DesktopOnlyFilter({ children }) {
   let [st, setST] = useState(children)
   //
   useEffect(() => {
@@ -41,4 +41,8 @@ export function DesktopOnly({ children }) {
 
   //
   return st
+}
+
+export function DesktopOnly({ children }) {
+  return children
 }
