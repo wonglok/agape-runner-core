@@ -2,7 +2,7 @@
   "name": "react-three-next",
   "version": "2.0.0",
   "authors": [
-    "Renaud ROHLINGER <https://twitter.com/onirenaud>"
+    "Wong Lok <https://twitter.com/wonglok831>"
   ],
   "license": "MIT",
   "private": true,
@@ -47,7 +47,7 @@
     "leva": "^0.9.30",
     "md5": "^2.3.0",
     "native-file-system-adapter": "^2.0.4",
-    "next": "^12.2.3",
+    "next": "^12.3.1",
     "next-pwa": "^5.5.4",
     "nodemailer": "^6.8.0",
     "postprocessing": "^6.28.5",
@@ -68,6 +68,7 @@
     "tweakpane-image-plugin": "^1.1.3",
     "use-tweaks": "^0.3.1",
     "valtio": "^1.8.0",
+    "typescript": "^4.9.4",
     "zustand": "^4.0.0"
   },
   "devDependencies": {
@@ -85,7 +86,6 @@
     "prettier": "^2.7.1",
     "raw-loader": "^4.0.2",
     "tailwindcss": "^3.1.6",
-    "typescript": "^4.9.4",
     "url-loader": "^4.1.1"
   }
 }

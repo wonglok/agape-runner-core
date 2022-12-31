@@ -1,7 +1,7 @@
 import '@/styles/index.css'
 
 import { useRouter } from 'next/router'
-import { Suspense, useMemo, useEffect } from 'react'
+import { useEffect } from 'react'
 import Header from '@/config'
 import { Multiverse } from '@/components/layout/Multiverse'
 import { useSystemStore } from '@/helpers/useSystemStore'
@@ -12,9 +12,10 @@ import { LandingPage } from '@/components/layout/LandingPage'
 import { useReady } from '@/helpers/useScrollStore'
 import { hydration } from '@/auth/GateMethods'
 
-import { GateState } from '@/auth/GateState.ts'
+import { GateState } from '@/auth/GateState'
 import { useSnapshot } from 'valtio'
-import { useState } from 'react'
+// import { useState } from 'react'
+//Suspense, useMemo,
 
 function App({ Component, pageProps = { title: 'index' } }) {
   const router = useRouter()
@@ -28,42 +29,44 @@ function App({ Component, pageProps = { title: 'index' } }) {
   let setLoading = useReady((s) => s.setLoading)
 
   useEffect(() => {
+    if (Component.layout === 'Landing') {
+      // setLoading(true)
+    }
     // if (Component.layout === 'Multiverse') {
     //   setLoading(true)
     // }
-
     // if (Component.layout === 'PromotePage') {
     //   setLoading(true)
     // }
-
-    if (Component.layout === 'Landing') {
-      setLoading(true)
-    }
   }, [])
 
   useEffect(() => {
-    hydration()
+    hydration().then(() => {
+      setLoading(false)
+    })
   }, [])
+
   let gs = useSnapshot(GateState)
 
-  let [skip, setST] = useState(false)
+  // let [skip, setST] = useState(false)
   useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const sTokenInURL = params.get('token')
-
-    if (window.location.pathname === '/' && sTokenInURL) {
-      setST('localonly')
-    }
+    // const params = new URLSearchParams(location.search)
+    // const sTokenInURL = params.get('token')
+    // if (window.location.pathname === '/' && sTokenInURL) {
+    //   setST('localonly')
+    // }
     //
   }, [])
 
   return (
     <>
-      <Header title={pageProps.title} />
+      {pageProps.seo && (
+        <Header title={pageProps.seo.title} seo={pageProps.seo} />
+      )}
 
       {router && (
         <>
-          {Component.layout === 'Multiverse' && skip !== 'localonly' && (
+          {Component.layout === 'Multiverse' && (
             <>
               <Multiverse router={router} {...pageProps}>
                 <Component router={router} {...pageProps}></Component>

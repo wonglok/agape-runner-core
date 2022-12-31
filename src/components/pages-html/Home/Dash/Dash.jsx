@@ -7,7 +7,7 @@ import { Cards } from './Cards'
 import { MyRecentSites } from './MyRecentSites'
 
 export function Dash() {
-  let gs = useSnapshot(GateState)
+  // let gs = useSnapshot(GateState)
 
   return (
     <div className='relative h-full max-h-screen ease-soft-in-out xl:ml-68.5'>

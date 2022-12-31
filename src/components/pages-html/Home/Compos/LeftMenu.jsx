@@ -43,7 +43,7 @@ export function LeftMenu() {
           {[
             //
             { _id: getID(), link: '/portal', name: 'Dashboard' },
-            // { _id: getID(), link: '/portal/avatars', name: 'Avatars' },
+            // { _id: getID(), link: '/portal/pldaces', name: 'Domain' },
             { _id: getID(), link: '/portal/sites', name: 'Sites' },
           ].map((item) => {
             //
