@@ -5,7 +5,7 @@ const url = 'https://forge.toykit.me/'
 const description = 'Thank you Jesus'
 const author = 'Agape'
 
-const Header = ({ title = titleDefault }) => {
+const TitleHeader = ({ title = titleDefault }) => {
   return (
     <>
       <Head>
@@ -78,4 +78,4 @@ const Header = ({ title = titleDefault }) => {
   )
 }
 
-export default Header
+export default TitleHeader

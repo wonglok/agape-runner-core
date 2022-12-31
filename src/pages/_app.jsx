@@ -14,6 +14,7 @@ import { hydration } from '@/auth/GateMethods'
 
 import { GateState } from '@/auth/GateState'
 import { useSnapshot } from 'valtio'
+import TitleHeader from '@/config'
 // import { useState } from 'react'
 //Suspense, useMemo,
 
@@ -25,44 +26,43 @@ function App({ Component, pageProps = { title: 'index' } }) {
     setRouter({ router })
   }, [router, setRouter])
 
-  let loading = useReady((s) => s.loading)
-  let setLoading = useReady((s) => s.setLoading)
+  // let loading = useReady((s) => s.loading)
+  // let setLoading = useReady((s) => s.setLoading)
+
+  // useEffect(() => {
+  //   if (Component.layout === 'Landing') {
+  //     // setLoading(true)
+  //   }
+  //   // if (Component.layout === 'Multiverse') {
+  //   //   setLoading(true)
+  //   // }
+  //   // if (Component.layout === 'PromotePage') {
+  //   //   setLoading(true)
+  //   // }
+  // }, [])
 
   useEffect(() => {
-    if (Component.layout === 'Landing') {
-      // setLoading(true)
-    }
-    // if (Component.layout === 'Multiverse') {
-    //   setLoading(true)
-    // }
-    // if (Component.layout === 'PromotePage') {
-    //   setLoading(true)
-    // }
+    hydration().then(() => {})
   }, [])
 
-  useEffect(() => {
-    hydration().then(() => {
-      setLoading(false)
-    })
-  }, [])
+  // let gs = useSnapshot(GateState)
 
-  let gs = useSnapshot(GateState)
-
-  // let [skip, setST] = useState(false)
-  useEffect(() => {
-    // const params = new URLSearchParams(location.search)
-    // const sTokenInURL = params.get('token')
-    // if (window.location.pathname === '/' && sTokenInURL) {
-    //   setST('localonly')
-    // }
-    //
-  }, [])
+  // // let [skip, setST] = useState(false)
+  // useEffect(() => {
+  //   // const params = new URLSearchParams(location.search)
+  //   // const sTokenInURL = params.get('token')
+  //   // if (window.location.pathname === '/' && sTokenInURL) {
+  //   //   setST('localonly')
+  //   // }
+  //   //
+  // }, [])
 
   return (
     <>
-      {pageProps.seo && (
-        <Header title={pageProps.seo.title} seo={pageProps.seo} />
-      )}
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {pageProps.title && <TitleHeader title={pageProps.title} />}
 
       {router && (
         <>
@@ -91,8 +91,11 @@ function App({ Component, pageProps = { title: 'index' } }) {
             <Component router={router} {...pageProps}></Component>
           )}
 
-          {typeof Component.SEO !== 'undefined' && (
-            <Component.SEO router={router} {...pageProps}></Component.SEO>
+          {typeof Component.SEOContent !== 'undefined' && (
+            <Component.SEOContent
+              router={router}
+              {...pageProps}
+            ></Component.SEOContent>
           )}
 
           <span
@@ -119,7 +122,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
         </>
       )}
 
-      {loading && (
+      {/* {loading && (
         <div
           className='absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-30 backdrop-blur-md'
           style={{ zIndex: '1000' }}
@@ -162,7 +165,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
             </svg>
           </div>
         </div>
-      )}
+      )} */}
     </>
   )
 }
