@@ -1,11 +1,11 @@
-import { CreateSite } from '@/components/pages-html/SiteCreation/CreateSite'
+import { PGAvatars } from '@/components/pages-html/Home/MyOwnAvatars/PGAvatars'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
-    <RedirGateHTML redirect='/app/places'>
+    <RedirGateHTML redirect='/agape/create-site'>
       {/* <AvaLand></AvaLand> */}
-      <CreateSite></CreateSite>
+      <PGAvatars></PGAvatars>
     </RedirGateHTML>
   )
 }
@@ -13,7 +13,7 @@ export default function Avatars() {
 export async function getServerSideProps(context) {
   return {
     props: {
-      title: 'Agape Portal',
+      title: 'Agape',
     },
   }
 }

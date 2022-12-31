@@ -3,7 +3,7 @@ import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
-    <RedirGateHTML redirect='/app'>
+    <RedirGateHTML redirect='/agape'>
       {/* <AvaLand></AvaLand> */}
       <PGHome></PGHome>
     </RedirGateHTML>
@@ -13,7 +13,7 @@ export default function Avatars() {
 export async function getServerSideProps(context) {
   return {
     props: {
-      title: 'Agape Portal',
+      title: 'Agape',
     },
   }
 }
