@@ -107,32 +107,32 @@ const DynamicPage = (props) => {
 DynamicPage.layout = 'Multiverse'
 
 export async function getServerSidePropsForDynamicPage(context) {
-  //
-  let domainMapping = false
+  // //
+  // let domainMapping = false
 
-  try {
-    let endPoint = UserEndPoints[process.env.NODE_ENV]
-    let response = await fetch(`${endPoint}/domain-of-sites`, {
-      method: 'POST',
-      body: JSON.stringify({
-        domain: context?.req?.headers?.host || '',
-      }),
-    })
+  // try {
+  //   let endPoint = UserEndPoints[process.env.NODE_ENV]
+  //   let response = await fetch(`${endPoint}/domain-of-sites`, {
+  //     method: 'POST',
+  //     body: JSON.stringify({
+  //       domain: context?.req?.headers?.host || '',
+  //     }),
+  //   })
 
-    let data = await response.json()
+  //   let data = await response.json()
 
-    if (response.ok) {
-      domainMapping = data
-    }
-  } catch (e) {
-    console.error(e)
-    console.error('seo')
-  }
+  //   if (response.ok) {
+  //     domainMapping = data
+  //   }
+  // } catch (e) {
+  //   console.error(e)
+  //   console.error('seo')
+  // }
 
   return {
     props: {
-      domainMapping,
-      title: 'Agape Town - Here we go!',
+      // domainMapping,
+      title: 'Agape Town',
     }, // will be passed to the page component as props
   }
 }

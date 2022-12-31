@@ -15,10 +15,11 @@ import { Player } from '@/helpers/Player'
 import { ConfigCanvas } from '@/helpers/ConfigCanvas'
 // import { Companion } from '@/helpers/Companion'
 
-const Multiverse = ({ router, children }) => {
+const Multiverse = ({ visible, router, children }) => {
   return (
     <Canvas
       style={{
+        display: visible ? 'block' : 'hidden',
         backgroundColor: 'white',
         position: 'absolute',
         top: 0,

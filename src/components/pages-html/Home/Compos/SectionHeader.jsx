@@ -12,7 +12,7 @@ export function SectionHeader({
   return (
     <>
       <nav
-        className='absolute z-20 flex flex-wrap items-center justify-between w-full px-6 py-2 text-white shadow-none transition-all duration-250 ease-soft-in lg:flex-nowrap lg:justify-start'
+        className='fixed z-20 flex flex-wrap items-center justify-between w-full px-6 py-2 text-white shadow-none  ease-soft-in lg:flex-nowrap lg:justify-start'
         navbar-scroll='true'
       >
         <div className='flex items-center justify-between w-full px-6 py-1 mx-auto flex-wrap-inherit'>
@@ -41,13 +41,13 @@ export function SectionHeader({
           </nav>
           <div className='flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto'>
             <div className='flex items-center md:ml-auto md:pr-4'>
-              <div className='relative flex flex-wrap items-stretch w-full rounded-lg transition-all ease-soft'>
-                {/* <span className='absolute z-50 flex items-center h-full py-2 -ml-px text-sm font-normal text-center bg-transparent border border-r-0 border-transparent rounded-lg rounded-tr-none rounded-br-none ease-soft leading-5.6 whitespace-nowrap px-2.5 text-slate-500 transition-all'>
+              <div className='relative flex flex-wrap items-stretch w-full rounded-lg  ease-soft'>
+                {/* <span className='absolute z-50 flex items-center h-full py-2 -ml-px text-sm font-normal text-center bg-transparent border border-r-0 border-transparent rounded-lg rounded-tr-none rounded-br-none ease-soft leading-5.6 whitespace-nowrap px-2.5 text-slate-500 '>
                       <i className='fas fa-search' aria-hidden='true' />
                     </span>
                     <input
                       type='text'
-                      className='relative flex-auto block min-w-0 py-2 pr-3 -ml-px text-sm text-gray-700 bg-white border border-gray-300 border-solid rounded-lg pl-8.75 focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 bg-clip-padding transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow'
+                      className='relative flex-auto block min-w-0 py-2 pr-3 -ml-px text-sm text-gray-700 bg-white border border-gray-300 border-solid rounded-lg pl-8.75 focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 bg-clip-padding  placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none focus:transition-shadow'
                       placeholder='Type here...'
                     /> */}
 
@@ -57,14 +57,14 @@ export function SectionHeader({
             <ul className='flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full'>
               {/* online builder btn  */}
               {/* <li class="flex items-center">
-                <a class="inline-block px-8 py-2 mb-0 mr-4 font-bold text-center text-white uppercase align-middle transition-all border border-solid rounded-lg shadow-none cursor-pointer leading-pro border-white/75 bg-white/10 ease-soft-in text-xs hover:scale-102 active:shadow-soft-xs tracking-tight-soft hover:border-white hover:bg-transparent hover:text-white hover:opacity-75 hover:shadow-none active:bg-white active:text-black active:hover:bg-transparent active:hover:text-white" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
+                <a class="inline-block px-8 py-2 mb-0 mr-4 font-bold text-center text-white uppercase align-middle  border border-solid rounded-lg shadow-none cursor-pointer leading-pro border-white/75 bg-white/10 ease-soft-in text-xs hover:scale-102 active:shadow-soft-xs tracking-tight-soft hover:border-white hover:bg-transparent hover:text-white hover:opacity-75 hover:shadow-none active:bg-white active:text-black active:hover:bg-transparent active:hover:text-white" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
               </li> */}
               <li className='flex items-center'>
                 <a
                   onClick={() => {
                     signOut()
                   }}
-                  className='block px-0 py-2 text-sm font-semibold text-white transition-all ease-soft-in-out'
+                  className='block px-0 py-2 text-sm font-semibold text-white  ease-soft-in-out'
                 >
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -86,20 +86,20 @@ export function SectionHeader({
               {/* <li className='flex items-center pl-4 xl:hidden'>
                     <a
                       data-stuff='javascript:;'
-                      className='block p-0 text-sm text-white transition-all ease-soft-in-out'
+                      className='block p-0 text-sm text-white  ease-soft-in-out'
                       sidenav-trigger
                     >
                       <div className='overflow-hidden w-4.5'>
-                        <i className='relative block bg-white rounded-sm ease-soft mb-0.75 h-0.5 transition-all' />
-                        <i className='relative block bg-white rounded-sm ease-soft mb-0.75 h-0.5 transition-all' />
-                        <i className='relative block bg-white rounded-sm ease-soft h-0.5 transition-all' />
+                        <i className='relative block bg-white rounded-sm ease-soft mb-0.75 h-0.5 ' />
+                        <i className='relative block bg-white rounded-sm ease-soft mb-0.75 h-0.5 ' />
+                        <i className='relative block bg-white rounded-sm ease-soft h-0.5 ' />
                       </div>
                     </a>
                   </li> */}
               <li className='flex items-center px-4'>
                 <a
                   data-stuff='javascript:;'
-                  className='p-0 text-sm text-white transition-all ease-soft-in-out'
+                  className='p-0 text-sm text-white  ease-soft-in-out'
                 >
                   <i className='cursor-pointer fa fa-cog' aria-hidden='true' />
                 </a>
@@ -109,12 +109,12 @@ export function SectionHeader({
                 <p className='hidden transform-dropdown-show' />
                 <a
                   data-stuff='javascript:;'
-                  className='block p-0 text-sm text-white transition-all ease-nav-brand'
+                  className='block p-0 text-sm text-white  ease-nav-brand'
                   aria-expanded='false'
                 >
                   <i className='cursor-pointer fa fa-bell' aria-hidden='true' />
                 </a>
-                <ul className="absolute top-0 right-0 z-50 px-2 py-4 text-sm text-left list-none bg-white border-0 border-transparent border-solid rounded-lg opacity-0 pointer-events-none transform-dropdown before:font-awesome before:leading-default before:duration-350 before:ease-soft lg:shadow-soft-3xl duration-250 min-w-44 before:sm:right-7.5 before:text-5.5 origin-top bg-clip-padding text-slate-500 transition-all before:absolute before:right-2 before:left-auto before:top-0 before:z-50 before:inline-block before:font-normal before:text-white before:antialiased before:transition-all before:content-['\f0d8'] sm:-mr-6 lg:absolute lg:right-0 lg:left-auto lg:mt-2 lg:block lg:cursor-pointer">
+                <ul className="absolute top-0 right-0 z-50 px-2 py-4 text-sm text-left list-none bg-white border-0 border-transparent border-solid rounded-lg opacity-0 pointer-events-none transform-dropdown before:font-awesome before:leading-default before:duration-350 before:ease-soft lg:shadow-soft-3xl duration-250 min-w-44 before:sm:right-7.5 before:text-5.5 origin-top bg-clip-padding text-slate-500  before:absolute before:right-2 before:left-auto before:top-0 before:z-50 before:inline-block before:font-normal before:text-white before:antialiased before: before:content-['\f0d8'] sm:-mr-6 lg:absolute lg:right-0 lg:left-auto lg:mt-2 lg:block lg:cursor-pointer">
                   {/* add show class on dropdown open js */}
                   <li className='relative mb-2'>
                     <a
@@ -181,7 +181,7 @@ export function SectionHeader({
                       data-stuff='javascript:;'
                     >
                       <div className='flex py-1'>
-                        <div className='inline-flex items-center justify-center my-auto mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out bg-gradient-to-tl from-slate-600 to-slate-300 h-9 w-9 rounded-xl'>
+                        <div className='inline-flex items-center justify-center my-auto mr-4 text-sm text-white  duration-200 ease-soft-in-out bg-gradient-to-tl from-slate-600 to-slate-300 h-9 w-9 rounded-xl'>
                           <svg
                             width='12px'
                             height='12px'
@@ -286,7 +286,7 @@ export function SectionHeader({
                   >
                     <li className='z-30 flex-auto text-center'>
                       <a
-                        className='z-30 block w-full px-0 py-1 mb-0 border-0 rounded-lg transition-all ease-soft-in-out bg-inherit text-slate-700'
+                        className='z-30 block w-full px-0 py-1 mb-0 border-0 rounded-lg  ease-soft-in-out bg-inherit text-slate-700'
                         nav-link
                         active
                         data-stuff='javascript:;'
@@ -308,7 +308,7 @@ export function SectionHeader({
                     </li>
                     <li className='z-30 flex-auto text-center'>
                       <a
-                        className='z-30 block w-full px-0 py-1 mb-0 border-0 rounded-lg transition-all ease-soft-in-out bg-inherit text-slate-700'
+                        className='z-30 block w-full px-0 py-1 mb-0 border-0 rounded-lg  ease-soft-in-out bg-inherit text-slate-700'
                         nav-link
                         active
                         data-stuff='javascript:;'

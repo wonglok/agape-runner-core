@@ -1,7 +1,7 @@
 import '@/styles/index.css'
 
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '@/config'
 import { Multiverse } from '@/components/layout/Multiverse'
 import { useSystemStore } from '@/helpers/useSystemStore'
@@ -26,6 +26,20 @@ function App({ Component, pageProps = { title: 'index' } }) {
     setRouter({ router })
   }, [router, setRouter])
 
+  let [ready, setReady] = useState(false)
+  useEffect(() => {
+    hydration().then(
+      () => {
+        setReady(true)
+      },
+      () => {
+        setReady(true)
+      }
+    )
+  }, [])
+
+  //
+
   // let loading = useReady((s) => s.loading)
   // let setLoading = useReady((s) => s.setLoading)
 
@@ -40,10 +54,6 @@ function App({ Component, pageProps = { title: 'index' } }) {
   //   //   setLoading(true)
   //   // }
   // }, [])
-
-  useEffect(() => {
-    hydration().then(() => {})
-  }, [])
 
   // let gs = useSnapshot(GateState)
 
@@ -68,7 +78,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
         <>
           {Component.layout === 'Multiverse' && (
             <>
-              <Multiverse router={router} {...pageProps}>
+              <Multiverse visible={ready} router={router} {...pageProps}>
                 <Component router={router} {...pageProps}></Component>
               </Multiverse>
               <Loader />
