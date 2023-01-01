@@ -42,7 +42,7 @@ export function PGSiteDetail({ siteID }) {
         {!site && (
           <SmartDrawer className=''>
             <SectionHeader
-              title={`Edit Materaverse`}
+              title={`Materaverse Site Editor`}
               subTitle={`Loading....`}
               bgImage='/img/blue-green.svg'
               bgOffsetY={50}
