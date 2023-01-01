@@ -39,6 +39,7 @@ const DomainCard = ({ domain, revalidateDomains }) => {
             </svg>
           </span>
         </a>
+        {/*  */}
         <div className='flex space-x-3'>
           <button
             onClick={() => {
@@ -53,6 +54,7 @@ const DomainCard = ({ domain, revalidateDomains }) => {
           >
             {isValidating ? <LoadingDots /> : 'Refresh'}
           </button>
+          {/*  */}
           <button
             onClick={async () => {
               setRemoving(true)

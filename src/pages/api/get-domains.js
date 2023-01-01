@@ -15,9 +15,9 @@ export default async function handler(req, res) {
   const json = await response.json()
 
   // not required –> only for this demo to prevent removal of the demo's domain
-  const filteredDomains = json.domains.filter(
-    (domain) => domain.name !== 'admin.agape.town'
-  )
+  const filteredDomains = json.domains
+    .filter((domain) => domain.name !== 'admin.agape.town')
+    .filter((domain) => domain.name !== '*.at.agape.town')
 
   res.status(response.status).send(filteredDomains)
 }

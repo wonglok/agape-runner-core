@@ -29,8 +29,8 @@ export function DomainMappingAll() {
   }, [adding])
 
   return (
-    <div className='flex-none w-full max-w-full px-4 mt-9'>
-      <h1 className='text-4xl font-bold sm:text-6xl'>Domains API</h1>
+    <div className='flex-none w-full max-w-full px-4 mt-9 pb-9'>
+      {/* <h1 className='text-4xl font-bold sm:text-6xl'>Domains API</h1> */}
 
       <form
         onSubmit={async (e) => {
@@ -45,6 +45,8 @@ export function DomainMappingAll() {
             setAdding(false)
           }
         }}
+        //
+        //
         className='flex justify-between w-full h-10 max-w-2xl px-5 mt-10 space-x-4'
       >
         <input
