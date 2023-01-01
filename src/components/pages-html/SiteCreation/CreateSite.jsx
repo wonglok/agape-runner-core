@@ -1,11 +1,13 @@
 import { useRef } from 'react'
 import { GuideNav } from './GuideNav'
 import Link from 'next/link'
-import { checkSiteIDTaken } from './site-aws'
+import { checkSiteIDTaken, createSite } from './site-aws'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 // import { GuideHeader } from './GuideHeader'
 
 export function CreateSite() {
+  let router = useRouter()
   let siteIDRef = useRef()
   let ctaRef = useRef()
   let tt = 0
@@ -19,9 +21,21 @@ export function CreateSite() {
               ref={ctaRef}
               className='px-5 py-2 mx-2 text-base text-white bg-blue-700 shadow-lg cursor-pointer shadow-blue-500 rounded-3xl'
               onClick={async () => {
-                if (!siteIDRef.current.value) {
+                let slug = siteIDRef.current.value
+                if (!slug) {
+                  setSt({ msg: '', color: '' })
                   return
                 }
+
+                if ((slug || '').length <= 4) {
+                  setSt({ msg: 'name too short', color: 'text-red-500' })
+                  return
+                }
+
+                createSite({ slug }).then(() => {
+                  router.push('/agape')
+                })
+                //
                 //
               }}
             >
