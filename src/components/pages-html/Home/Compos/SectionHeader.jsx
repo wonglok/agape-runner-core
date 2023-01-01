@@ -8,8 +8,8 @@ export function SectionHeader({
   subTitle = `Metaverse Overview`,
   bgImage = '../assets/img/curved-images/curved0.jpg',
   bgOffsetY = '50',
+  bar = null,
 }) {
-  let gs = useSnapshot(GateState)
   return (
     <>
       <div className='relative'>
@@ -75,33 +75,11 @@ export function SectionHeader({
             <span className='absolute inset-y-0 w-full h-full bg-center bg-cover bg-gradient-to-tl  opacity-60' />
           </div>
 
-          <div className='relative flex flex-col flex-auto min-w-0 p-4 mx-6 -mt-32 overflow-hidden break-words bg-white border-0 shadow-blur rounded-2xl bg-opacity-80 bg-clip-border backdrop-blur-2xl backdrop-saturate-200'>
-            {
-              <div className='flex flex-wrap h-18.5'>
-                <div className='flex-none w-auto max-w-full'>
-                  <div className='relative inline-flex items-center justify-center text-base text-white ease-soft-in-out w-18.5 rounded-xl '>
-                    <img
-                      src={
-                        gs.userSession.picture ||
-                        '../scene/2022-11-28-NYC/coverimage/agape.png'
-                      }
-                      alt='profile_image'
-                      className='w-full shadow-soft-sm rounded-xl'
-                    />
-                  </div>
-                </div>
-                <div className='flex-none w-auto max-w-full px-3 my-auto'>
-                  <div className='h-full'>
-                    <h5 className='mb-1 font-semibold'>
-                      {gs.userSession.name}
-                    </h5>
-                    <p className='mb-0 text-sm leading-normal'>
-                      Role: {gs.userSession.tenantID}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            }
+          <div
+            style={{ height: `115px` }}
+            className='relative flex flex-col flex-auto min-w-0 p-4 mx-6 -mt-32 overflow-hidden break-words bg-white border-0 shadow-blur rounded-2xl bg-opacity-80 bg-clip-border backdrop-blur-2xl backdrop-saturate-200'
+          >
+            {bar}
           </div>
         </div>
       </div>

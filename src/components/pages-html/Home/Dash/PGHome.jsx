@@ -19,16 +19,34 @@ export function PGHome({ content }) {
         <StylesDashboard></StylesDashboard>
         <LeftMenu></LeftMenu>
         <SmartDrawer>
-          <SectionHeader bgImage='../scene/2022-11-28-NYC/coverimage/mech2.png'></SectionHeader>
+          <SectionHeader
+            bar={
+              <div className='flex flex-wrap '>
+                <img
+                  src={
+                    gs.userSession.picture ||
+                    '../scene/2022-11-28-NYC/coverimage/agape.png'
+                  }
+                  style={{ width: `85px` }}
+                  className=' rounded-xl'
+                />
+                <div className='flex-none w-auto max-w-full px-3'>
+                  <div className='flex flex-col items-start justify-center h-full'>
+                    <h5 className='mb-1 font-semibold'>
+                      {gs.userSession.name}
+                    </h5>
+                    <p className='mb-0 text-sm leading-normal'>
+                      Role: {gs.userSession.tenantID}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            }
+            bgImage='../scene/2022-11-28-NYC/coverimage/mech2.png'
+          ></SectionHeader>
           <MyRecentSites></MyRecentSites>
-          <MyRecentSites></MyRecentSites>
-          <MyRecentSites></MyRecentSites>
-          <MyRecentSites></MyRecentSites>
-          <MyRecentSites></MyRecentSites>
-          <MyRecentSites></MyRecentSites>
-          <MyRecentSites></MyRecentSites>
-          <MyRecentSites></MyRecentSites>
-          <MyRecentSites></MyRecentSites>
+
+          {/*  */}
           {/* <MyAvatars></MyAvatars> */}
           {/* <Cards></Cards> */}
         </SmartDrawer>
