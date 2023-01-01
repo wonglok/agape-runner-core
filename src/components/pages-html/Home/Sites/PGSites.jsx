@@ -7,6 +7,7 @@ import { DesktopOnly } from '@/lib/desktop/DesktopOnly'
 import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
+import { AllSites } from './AllSites'
 
 export function PGSites({ content }) {
   let gs = useSnapshot(GateState)
@@ -23,6 +24,7 @@ export function PGSites({ content }) {
             bgImage='/brand/avatar.webp'
             bgOffsetY={15}
           ></SectionHeader>
+          <AllSites></AllSites>
         </SmartDrawer>
       </DesktopOnly>
     </>

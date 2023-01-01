@@ -12,7 +12,6 @@ export function MyRecentSites() {
       (data) => {
         let cleand = [data.list[0], data.list[1], data.list[2]].filter((e) => e)
         setSites(cleand)
-        //
         // console.log(data)
       },
       (err) => {
