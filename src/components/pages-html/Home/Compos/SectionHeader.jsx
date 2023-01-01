@@ -34,7 +34,7 @@ export function SectionHeader({
                   {title} Page
                 </li>
               </ol>
-              <h6 className='ml-2 text-3xl font-bold text-white capitalize'>
+              <h6 className='mb-2 ml-2 text-3xl font-bold text-white capitalize'>
                 {title}
               </h6>
               <h4 className='mb-2 ml-2 -mt-2 text-xl font-normal text-gray-100 capitalize'>
@@ -76,12 +76,14 @@ export function SectionHeader({
             <span className='absolute inset-y-0 w-full h-full bg-center bg-cover bg-gradient-to-tl  opacity-60' />
           </div>
 
-          <div
-            style={{ height: `115px` }}
-            className='relative flex flex-col flex-auto min-w-0 p-4 mx-6 -mt-32 overflow-hidden break-words bg-white border-0 shadow-blur rounded-2xl bg-opacity-80 bg-clip-border backdrop-blur-2xl backdrop-saturate-200'
-          >
-            {bar}
-          </div>
+          {bar && (
+            <div
+              style={{ height: `115px` }}
+              className='relative flex flex-col flex-auto min-w-0 p-4 mx-6 -mt-32 overflow-hidden break-words bg-white border-0 shadow-blur rounded-2xl bg-opacity-80 bg-clip-border backdrop-blur-2xl backdrop-saturate-200'
+            >
+              {bar}
+            </div>
+          )}
         </div>
       </div>
     </>

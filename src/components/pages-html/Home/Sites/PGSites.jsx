@@ -17,10 +17,10 @@ export function PGSites({ content }) {
       <DesktopOnly>
         <StylesDashboard></StylesDashboard>
         <LeftMenu></LeftMenu>
-        <SmartDrawer className=' '>
+        <SmartDrawer className=''>
           <SectionHeader
             title='My Sites'
-            subTitle='Programmable Avatar Apps'
+            subTitle='My Metaverse Sites'
             bgImage='/brand/avatar.webp'
             bgOffsetY={15}
           ></SectionHeader>
