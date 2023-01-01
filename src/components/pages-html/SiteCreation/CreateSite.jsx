@@ -1,6 +1,7 @@
 import { useRef } from 'react'
-import { GuideHeader } from './GuideHeader'
 import { GuideNav } from './GuideNav'
+import Link from 'next/link'
+// import { GuideHeader } from './GuideHeader'
 
 export function CreateSite() {
   let siteIDRef = useRef()
@@ -8,14 +9,16 @@ export function CreateSite() {
     <div>
       <GuideNav></GuideNav>
       <div className='container  p-4 mx-auto ' style={{ minHeight: '50vh' }}>
-        <h1 className=' flex items-center mb-3'>
-          <img
-            className='inline w-12 mr-1 opacity-75'
-            src={'/img/back.svg'}
-            alt='Back'
-          ></img>
-          Go Back to Dashboard
-        </h1>
+        <Link href={'/agape'}>
+          <h1 className=' flex items-center mb-3'>
+            <img
+              className='inline w-12 mr-1 opacity-75'
+              src={'/img/back.svg'}
+              alt='Back'
+            ></img>
+            Go Back to Dashboard
+          </h1>
+        </Link>
         {/*  */}
         <h1 className='text-2xl'>Name Your metaverse!</h1>
         {/*  */}
