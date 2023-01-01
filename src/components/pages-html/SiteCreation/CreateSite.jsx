@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { GuideNav } from './GuideNav'
 import Link from 'next/link'
-import { checkSiteIDTaken, siteCreate } from './site-aws'
+import { checkSiteIDTaken, siteCreate } from '../Home/aws/site-aws'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 // import { GuideHeader } from './GuideHeader'

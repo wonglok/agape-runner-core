@@ -1,7 +1,24 @@
 import Link from 'next/link'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { siteRecent } from '../aws/site-aws'
 
 /* eslint-disable @next/next/no-img-element */
 export function MyRecentSites() {
+  let [recentSites, setSites] = useState([])
+
+  useEffect(() => {
+    siteRecent({}).then(
+      (data) => {
+        setSites(data.list || [])
+        //
+        // console.log(data)
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  }, [])
   return (
     <div className='flex-none w-full max-w-full px-4 mt-9'>
       <div className='relative flex flex-col min-w-0 mx-2 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border'>
@@ -26,7 +43,9 @@ export function MyRecentSites() {
               </Link>
             </div>
 
-            <OneCard></OneCard>
+            {recentSites.map((site) => {
+              return <OneCard key={site._id} site={site}></OneCard>
+            })}
 
             {/*  */}
 
@@ -293,10 +312,7 @@ export function MyRecentSites() {
 
 //
 
-function OneCard({
-  siteSlug = 'christmas-tree',
-  domain = 'merry.christmas.com',
-}) {
+function OneCard({ site }) {
   return (
     <div className='w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-6 xl:w-3/12'>
       <div className='relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border'>
@@ -311,30 +327,35 @@ function OneCard({
         </div>
         <div className='flex-auto px-1 pt-6'>
           <a data-stuff='javascript:;'>
-            <h5>{siteSlug}</h5>
+            <h5>{site.slug}</h5>
           </a>
           {/*  */}
-          <p className='flex mb-6 text-sm leading-normal'>{domain}</p>
+          <p className='flex mb-6 text-sm leading-normal'>
+            https://{site.slug}.at.agape.town
+          </p>
           <div className='flex items-center justify-start'>
-            <button
-              type='button'
-              className='inline-flex items-center px-4 py-2 mb-0 mr-3 text-xs font-bold text-center uppercase align-middle bg-transparent border border-solid rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 active:shadow-soft-xs tracking-tight-soft border-fuchsia-500 text-fuchsia-500 hover:border-fuchsia-500 hover:bg-transparent hover:text-fuchsia-500 hover:opacity-75 hover:shadow-none active:bg-fuchsia-500 active:text-white active:hover:bg-transparent active:hover:text-fuchsia-500'
-            >
-              Visit
-              <div className='inline-block ml-2 scale-75'>
-                <svg
-                  width='24'
-                  height='24'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  fill={`rgb(203 12 159)`}
-                >
-                  <path d='M14 4h-13v18h20v-11h1v12h-22v-20h14v1zm10 5h-1v-6.293l-11.646 11.647-.708-.708 11.647-11.646h-6.293v-1h8v8z' />
-                </svg>
-              </div>
-            </button>
-
+            <Link href={`https://${site.slug}.at.agape.town`}>
+              <button
+                type='button'
+                className='inline-flex items-center px-4 py-2 mb-0 mr-3 text-xs font-bold text-center uppercase align-middle bg-transparent border border-solid rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 active:shadow-soft-xs tracking-tight-soft border-fuchsia-500 text-fuchsia-500 hover:border-fuchsia-500 hover:bg-transparent hover:text-fuchsia-500 hover:opacity-75 hover:shadow-none active:bg-fuchsia-500 active:text-white active:hover:bg-transparent active:hover:text-fuchsia-500'
+              >
+                Visit
+                <div className='inline-block ml-2 scale-75'>
+                  <svg
+                    width='24'
+                    height='24'
+                    xmlns='http://www.w3.org/2000/svg'
+                    fillRule='evenodd'
+                    clipRule='evenodd'
+                    fill={`rgb(203 12 159)`}
+                  >
+                    <path d='M14 4h-13v18h20v-11h1v12h-22v-20h14v1zm10 5h-1v-6.293l-11.646 11.647-.708-.708 11.647-11.646h-6.293v-1h8v8z' />
+                  </svg>
+                </div>
+              </button>
+            </Link>
+            {/*  */}
+            {/*  */}
             <button
               type='button'
               className='inline-flex items-center px-4 py-2 mb-0 mr-3 text-xs font-bold text-center uppercase align-middle bg-transparent border border-solid rounded-lg shadow-none cursor-pointer transition-all leading-pro ease-soft-in hover:scale-102 active:shadow-soft-xs tracking-tight-soft border-fuchsia-500 text-fuchsia-500 hover:border-fuchsia-500 hover:bg-transparent hover:text-fuchsia-500 hover:opacity-75 hover:shadow-none active:bg-fuchsia-500 active:text-white active:hover:bg-transparent active:hover:text-fuchsia-500'
