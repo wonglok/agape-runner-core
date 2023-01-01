@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { GuideNav } from './GuideNav'
 import Link from 'next/link'
-import { checkSiteIDTaken, createSite } from './site-aws'
+import { checkSiteIDTaken, siteCreate } from './site-aws'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 // import { GuideHeader } from './GuideHeader'
@@ -32,9 +32,13 @@ export function CreateSite() {
                   return
                 }
 
-                createSite({ slug }).then(() => {
-                  router.push('/agape')
-                })
+                siteCreate({ slug })
+                  .then(() => {
+                    router.push('/agape')
+                  })
+                  .catch((e) => {
+                    console.error(e)
+                  })
                 //
                 //
               }}

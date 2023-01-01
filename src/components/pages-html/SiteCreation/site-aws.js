@@ -38,7 +38,7 @@ export async function checkSiteIDTaken({ slug }) {
   }
 }
 
-export async function createSite({ slug }) {
+export async function siteCreate({ slug }) {
   const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
   if (!sToken) {
     console.error('no session token')
@@ -53,7 +53,7 @@ export async function createSite({ slug }) {
     const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
 
     //
-    const response = await fetch(`${myAPIEndPoint}/create-site`, {
+    const response = await fetch(`${myAPIEndPoint}/site-create`, {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
@@ -68,8 +68,9 @@ export async function createSite({ slug }) {
       let data = await response.json()
       return data
     } else {
-      console.error('server error')
-      return Promise.reject('server error')
+      let data = await response.json()
+      console.error('server error', data.reason)
+      return Promise.reject('server error ' + data.reason)
     }
   } catch (error) {
     // eslint-disable-next-line no-console
