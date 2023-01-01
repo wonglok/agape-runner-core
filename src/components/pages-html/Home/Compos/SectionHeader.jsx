@@ -69,6 +69,7 @@ export function SectionHeader({
             style={{
               backgroundImage: `url("${encodeURI(bgImage)}")`,
               backgroundPositionY: bgOffsetY + '%',
+              backgroundColor: '#444444',
             }}
           >
             {/* from-purple-700 to-pink-500 */}
