@@ -10,6 +10,7 @@ import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { getURLFromSiteSlug, siteGet } from '../aws/site-aws'
+import { SiteEdit } from './SiteEdit'
 
 export function PGSiteDetail({ siteID }) {
   //
@@ -44,25 +45,31 @@ export function PGSiteDetail({ siteID }) {
         {site && (
           <SmartDrawer className=''>
             {
-              <SectionHeader
-                title={`${site.slug}`}
-                subTitle={
-                  <a
-                    className='text-sm underline normal-case'
-                    target={'_blank'}
-                    href={`${getURLFromSiteSlug(site.slug)}`}
-                    rel='noreferrer'
-                  >
-                    {getURLFromSiteSlug(site.slug)}
-                  </a>
-                }
-                bgImage='/scene/2022-11-28-NYC/coverimage/circle_portal.png'
-                bgOffsetY={50}
-                // bar={<div>{/*  */}</div>}
-              ></SectionHeader>
+              <>
+                {/*  */}
+                <SectionHeader
+                  title={`${site.slug}`}
+                  subTitle={
+                    <a
+                      className='text-sm underline normal-case'
+                      target={'_blank'}
+                      href={`${getURLFromSiteSlug(site.slug)}`}
+                      rel='noreferrer'
+                    >
+                      {getURLFromSiteSlug(site.slug)}
+                    </a>
+                  }
+                  bgImage='/scene/2022-11-28-NYC/coverimage/circle_portal.png'
+                  bgOffsetY={50}
+                  // bar={<div>{/*  */}</div>}
+                ></SectionHeader>
+
+                <SiteEdit></SiteEdit>
+              </>
             }
           </SmartDrawer>
         )}
+
         {/*  */}
         {/*  */}
         {/*  */}
