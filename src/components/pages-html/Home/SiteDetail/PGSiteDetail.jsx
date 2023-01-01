@@ -10,7 +10,7 @@ import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { getURLFromSiteSlug, siteGet } from '../aws/site-aws'
-import { SiteEdit } from './SiteEdit'
+import { DomainMapping } from './DomainMapping'
 
 export function PGSiteDetail({ siteID }) {
   let [site, setSite] = useState(() => {
@@ -33,12 +33,10 @@ export function PGSiteDetail({ siteID }) {
   return (
     <>
       <DesktopOnly>
-        {/*  */}
         <StylesDashboard></StylesDashboard>
 
         <LeftMenu siteID={siteID}></LeftMenu>
 
-        {/*  */}
         {!site && (
           <SmartDrawer className=''>
             <SectionHeader
@@ -51,7 +49,6 @@ export function PGSiteDetail({ siteID }) {
           </SmartDrawer>
         )}
 
-        {/*  */}
         {site && (
           <SmartDrawer className=''>
             {
@@ -71,17 +68,17 @@ export function PGSiteDetail({ siteID }) {
                   }
                   bgImage='/img/blue-green.svg'
                   bgOffsetY={50}
-                  bar={
-                    <div>
-                      {/*  */}
+                  // bar={
+                  //   <div>
+                  //     {/*  */}
 
-                      {/*  */}
-                    </div>
-                  }
+                  //     {/*  */}
+                  //   </div>
+                  // }
                 ></SectionHeader>
                 {/*  */}
                 <div className='h-6'></div>
-                <SiteEdit></SiteEdit>
+                <DomainMapping siteID={siteID}></DomainMapping>
                 {/*  */}
               </>
             }

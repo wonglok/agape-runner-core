@@ -5,7 +5,7 @@ import LoadingDots from './components/loading-dots'
 import useSWR from 'swr'
 import fetcher from '@/lib/fetcher'
 
-export function Domain() {
+export function DomainMappingAll() {
   const [domain, setDomain] = useState('')
 
   const { data: domainList, mutate: revalidateDomains } = useSWR(
@@ -108,7 +108,7 @@ export function Domain() {
                 />
               )
             })
-          : [1, 2, 3, 4, 5].map((_, index) => {
+          : [1, 2, 3].map((_, index) => {
               return <DomainCardPlaceholder key={index} />
             })}
       </div>

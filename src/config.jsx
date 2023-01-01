@@ -1,8 +1,8 @@
 import Head from 'next/head'
 
-const titleDefault = 'Agape - Effect Node'
-const url = 'https://forge.toykit.me/'
-const description = 'Thank you Jesus'
+const titleDefault = 'Agape'
+const url = 'https://agape.town/'
+const description = 'Thank you dear LORD Jesus for AGAPE Metaverse'
 const author = 'Agape'
 
 const TitleHeader = ({ title = titleDefault }) => {
