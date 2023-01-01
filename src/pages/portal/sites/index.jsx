@@ -1,9 +1,9 @@
 import { PGSites } from '@/components/pages-html/Home/Sites/PGSites'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
-export default function Avatars() {
+export default function Page() {
   return (
-    <RedirGateHTML redirect='/agape/places'>
+    <RedirGateHTML redirect='/portal/sites'>
       {/* <AvaLand></AvaLand> */}
       <PGSites></PGSites>
     </RedirGateHTML>

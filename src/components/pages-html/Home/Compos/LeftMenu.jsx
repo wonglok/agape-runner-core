@@ -25,12 +25,12 @@ export function LeftMenu() {
         <div className='h-19.5'>
           <i className='absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden' />
           <a
-            className='block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700'
-            href='../agape'
+            className='flex justify-center px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700'
+            href='../portal'
             target='_blank'
           >
             <img
-              src='../brand/agape.png'
+              src='/brand/agape.png'
               className='inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8'
               alt='main_logo'
             />
@@ -52,9 +52,9 @@ export function LeftMenu() {
             {/*  */}
             {[
               //
-              { _id: getID(), link: '/agape', name: 'Dashboard' },
-              // { _id: getID(), link: '/agape/pldaces', name: 'Domain' },
-              { _id: getID(), link: '/agape/sites', name: 'My Sites' },
+              { _id: getID(), link: '/portal', name: 'Dashboard' },
+              // { _id: getID(), link: '/portal/pldaces', name: 'Domain' },
+              { _id: getID(), link: '/portal/sites', name: 'My Sites' },
             ].map((item) => {
               //
               return (
@@ -67,7 +67,7 @@ export function LeftMenu() {
                         xmlns='http://www.w3.org/2000/svg'
                         fillRule='evenodd'
                         clipRule='evenodd'
-                        className='rounded-full shadow-lg fill-slate-800'
+                        className='rounded-full shadow-lg shadow-cyan-200 fill-slate-800'
                       >
                         <path d='M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm-3 5.753l6.44 5.247-6.44 5.263.678.737 7.322-6-7.335-6-.665.753z' />
                       </svg>

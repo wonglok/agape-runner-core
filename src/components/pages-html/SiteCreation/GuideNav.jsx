@@ -5,7 +5,7 @@ export function GuideNav({ done = null }) {
         <div>
           <a
             className='block px-4 py-6 m-0 text-sm whitespace-nowrap text-slate-700'
-            href='/agape'
+            href='/portal'
           >
             <img
               src='../brand/agape.png'
