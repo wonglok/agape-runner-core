@@ -13,8 +13,6 @@ import { getURLFromSiteSlug, siteGet } from '../aws/site-aws'
 import { PageEdit } from './PageEdit'
 
 export function PGPageDetail({ siteID, pageID }) {
-  // let gs = useSnapshot(GateState)
-
   let [site, setSite] = useState(false)
   useEffect(() => {
     if (!siteID) {

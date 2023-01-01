@@ -13,25 +13,23 @@ import { getURLFromSiteSlug, siteGet } from '../aws/site-aws'
 import { SiteEdit } from './SiteEdit'
 
 export function PGSiteDetail({ siteID }) {
-  // let gs = useSnapshot(GateState)
-
-  let [site, setSite] = useState(false)
+  let [site, setSite] = useState(() => {
+    return false
+  })
   useEffect(() => {
     if (!siteID) {
       return
     }
-    siteGet({ _id: siteID })
-      //
-      .then((data) => {
-        //
-        setSite(data.item)
-      })
+    siteGet({ _id: siteID }).then((data) => {
+      setSite(data.item)
+    })
   }, [siteID])
 
   //
-  // console.log(siteID)
-  //
 
+  //!SECTION
+
+  //
   return (
     <>
       <DesktopOnly>
@@ -60,7 +58,7 @@ export function PGSiteDetail({ siteID }) {
               <>
                 {/*  */}
                 <SectionHeader
-                  title={`${site.slug}`}
+                  title={`Site: ${site.slug}`}
                   subTitle={
                     <a
                       className='text-sm underline normal-case'
