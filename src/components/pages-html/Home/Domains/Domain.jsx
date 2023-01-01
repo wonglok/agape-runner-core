@@ -29,13 +29,16 @@ export function DomainMappingAll() {
   }, [adding])
 
   return (
-    <div className='flex-none w-full max-w-full px-4 mt-9 pb-9'>
+    <div className='flex-none w-full max-w-full px-0 mt-9 pb-9'>
       {/* <h1 className='text-4xl font-bold sm:text-6xl'>Domains API</h1> */}
 
       <form
         onSubmit={async (e) => {
           e.preventDefault()
           setAdding(true)
+          //
+
+          //
           try {
             await fetch(`/api/add-domain?domain=${domain}`)
             await revalidateDomains()
