@@ -9,7 +9,7 @@ import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { siteGet } from '../aws/site-aws'
+import { getURLFromSiteSlug, siteGet } from '../aws/site-aws'
 
 export function PGSiteDetail({ siteID }) {
   //
@@ -22,9 +22,9 @@ export function PGSiteDetail({ siteID }) {
     if (!siteID) {
       return
     }
-    siteGet({ _id: siteID }).then((value) => {
+    siteGet({ _id: siteID }).then((data) => {
       //
-      console.log(value)
+      setSite(data.item)
       //
     })
   }, [siteID])
@@ -36,19 +36,33 @@ export function PGSiteDetail({ siteID }) {
     <>
       <DesktopOnly>
         {/*  */}
-        {/*  */}
 
         <StylesDashboard></StylesDashboard>
+
         <LeftMenu></LeftMenu>
-        <SmartDrawer className=''>
-          <SectionHeader
-            title='Site Detail'
-            subTitle='My Detail'
-            bgImage='/scene/2022-11-28-NYC/coverimage/circle_portal.png'
-            bgOffsetY={50}
-            bar={<div>{/*  */}</div>}
-          ></SectionHeader>
-        </SmartDrawer>
+
+        {site && (
+          <SmartDrawer className=''>
+            {
+              <SectionHeader
+                title={`${site.slug}`}
+                subTitle={
+                  <a
+                    className='text-sm underline normal-case'
+                    target={'_blank'}
+                    href={`${getURLFromSiteSlug(site.slug)}`}
+                    rel='noreferrer'
+                  >
+                    {getURLFromSiteSlug(site.slug)}
+                  </a>
+                }
+                bgImage='/scene/2022-11-28-NYC/coverimage/circle_portal.png'
+                bgOffsetY={50}
+                // bar={<div>{/*  */}</div>}
+              ></SectionHeader>
+            }
+          </SmartDrawer>
+        )}
         {/*  */}
         {/*  */}
         {/*  */}
