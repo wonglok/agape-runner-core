@@ -6,6 +6,10 @@ export async function checkSiteIDTaken({ slug }) {
     console.error('no session token')
     return Promise.reject('no session token')
   }
+  if (!slug) {
+    console.error('no slug given')
+    return Promise.reject('no slug given')
+  }
   try {
     const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
     //

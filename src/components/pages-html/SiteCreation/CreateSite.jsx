@@ -2,12 +2,14 @@ import { useRef } from 'react'
 import { GuideNav } from './GuideNav'
 import Link from 'next/link'
 import { checkSiteIDTaken } from './site-aws'
+import { useState } from 'react'
 // import { GuideHeader } from './GuideHeader'
 
 export function CreateSite() {
   let siteIDRef = useRef()
   let ctaRef = useRef()
   let tt = 0
+  let [st, setSt] = useState({ msg: '', color: ' ' })
   return (
     <div>
       <GuideNav
@@ -21,17 +23,6 @@ export function CreateSite() {
                   return
                 }
                 //
-                let isOkay = await checkSiteIDTaken({
-                  slug: siteIDRef.current.value,
-                }).catch((e) => {
-                  return false
-                })
-
-                if (isOkay === true) {
-                  //!SECTION
-
-                  console.log(123)
-                }
               }}
             >
               Create
@@ -67,11 +58,29 @@ export function CreateSite() {
 
               clearTimeout(tt)
               tt = setTimeout(async () => {
+                if (!siteIDRef.current.value) {
+                  setSt({ msg: '', color: '' })
+                  return
+                }
+
+                if ((siteIDRef.current.value || '').length <= 4) {
+                  setSt({ msg: 'name too short', color: 'text-red-500' })
+                  return
+                }
+
+                let val = siteIDRef.current.value
                 let isOkay = await checkSiteIDTaken({
-                  slug: siteIDRef.current.value,
+                  slug: val,
                 })
 
-                console.log(isOkay)
+                if (isOkay) {
+                  setSt({
+                    msg: `"${val}" is avaiable`,
+                    color: 'text-green-500',
+                  })
+                } else {
+                  setSt({ msg: 'already taken', color: 'text-red-500' })
+                }
               }, 100)
             }}
           ></input>
@@ -80,7 +89,7 @@ export function CreateSite() {
 
         {/*  */}
         {/*  */}
-        <div className=''></div>
+        <div className={`${st.color}`}>{st.msg}</div>
       </div>
 
       {/* <GuideHeader active={0} scrollLeft={0}></GuideHeader> */}
@@ -88,4 +97,5 @@ export function CreateSite() {
   )
 }
 
+//
 //
