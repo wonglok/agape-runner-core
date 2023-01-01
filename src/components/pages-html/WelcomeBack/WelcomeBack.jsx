@@ -19,36 +19,14 @@ export function WelcomeBack() {
             <div className='w-full max-w-full px-3 flex-0'>
               {/* Navbar */}
               <nav className='absolute top-0 left-0 right-0 z-30 flex flex-wrap items-center px-4 py-2 mx-6 my-4 shadow-soft-2xl rounded-blur bg-white/80 backdrop-blur-2xl backdrop-saturate-200 lg:flex-nowrap lg:justify-start'>
-                <div className='flex items-center justify-between w-full p-0 pl-6 mx-auto flex-wrap-inherit'>
+                <div className='flex items-center justify-center w-full p-0 pl-6 mx-auto flex-wrap-inherit'>
                   <a
                     className='ml-4 mr-4 text-sm font-bold py-2.375 whitespace-nowrap text-slate-700 lg:ml-0'
                     href='/'
                   >
                     AGAPE METAVERSE PORTAL
                   </a>
-                  <button
-                    navbar-trigger
-                    className='px-3 py-1 ml-2 text-lg leading-none bg-transparent border border-transparent border-solid rounded-lg shadow-none cursor-pointer transition-all ease-soft-in-out lg:hidden'
-                    type='button'
-                    aria-controls='navigation'
-                    aria-expanded='false'
-                    aria-label='Toggle navigation'
-                  >
-                    <span className='inline-block w-6 h-6 mt-2 align-middle bg-center bg-no-repeat bg-cover bg-none'>
-                      <span
-                        bar1
-                        className='relative block h-px mx-auto my-0 bg-gray-600 w-5.5 rounded-xs transition-all duration-300'
-                      />
-                      <span
-                        bar2
-                        className='relative block h-px mx-auto my-0 bg-gray-600 w-5.5 rounded-xs mt-1.75 transition-all duration-300'
-                      />
-                      <span
-                        bar3
-                        className='relative block h-px mx-auto my-0 bg-gray-600 w-5.5 rounded-xs mt-1.75 transition-all duration-300'
-                      />
-                    </span>
-                  </button>
+
                   <div
                     navbar-menu
                     className='items-center flex-grow overflow-hidden transition-all duration-500 ease-soft lg-max:max-h-0 basis-full lg:flex lg:basis-auto'
@@ -127,6 +105,7 @@ export function WelcomeBack() {
                     >Online Builder</a
                   >
                 </li> */}
+
                     <ul className='hidden pl-0 mb-0 list-none lg:block lg:flex-row'>
                       <li>
                         <a
@@ -403,7 +382,7 @@ export function WelcomeBack() {
             <div className='flex flex-wrap -mx-3'>
               <div className='w-8/12 max-w-full px-3 mx-auto mt-1 text-center flex-0'>
                 <p className='mb-0 text-slate-400'>
-                  Copyright © 2022 by Reunite Limited
+                  Thank you for using AGAPE.
                 </p>
               </div>
             </div>

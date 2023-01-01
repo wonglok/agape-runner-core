@@ -1,4 +1,4 @@
-export function GuideNav() {
+export function GuideNav({ done = null }) {
   return (
     <div className=' bg-gray-200'>
       <div className='container flex items-center justify-between mx-auto'>
@@ -14,7 +14,9 @@ export function GuideNav() {
             />
           </a>
         </div>
-        <div className='block py-6 m-0 text-sm px-7 whitespace-nowrap text-slate-700'></div>
+        <div className='block py-6 m-0 text-sm px-7 whitespace-nowrap text-slate-700'>
+          {done}
+        </div>
       </div>
     </div>
   )

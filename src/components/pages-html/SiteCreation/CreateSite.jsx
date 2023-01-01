@@ -7,7 +7,15 @@ export function CreateSite() {
   let siteIDRef = useRef()
   return (
     <div>
-      <GuideNav></GuideNav>
+      <GuideNav
+        done={
+          <div>
+            <div className='px-5 py-1 mx-2 text-xl bg-gray-300 rounded-3xl'>
+              Done
+            </div>
+          </div>
+        }
+      ></GuideNav>
       <div className='container  p-4 mx-auto ' style={{ minHeight: '50vh' }}>
         <Link href={'/agape'}>
           <h1 className=' flex items-center mb-3'>
@@ -20,7 +28,7 @@ export function CreateSite() {
           </h1>
         </Link>
         {/*  */}
-        <h1 className='text-2xl'>Give your metaverse a name!</h1>
+        <h1 className='text-2xl lg:text-3xl'>Give your metaverse a name!</h1>
         {/*  */}
         <div className='p-2 pl-0'>
           https://
