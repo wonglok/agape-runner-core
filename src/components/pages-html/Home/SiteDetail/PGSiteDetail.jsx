@@ -13,10 +13,7 @@ import { getURLFromSiteSlug, siteGet } from '../aws/site-aws'
 import { SiteEdit } from './SiteEdit'
 
 export function PGSiteDetail({ siteID }) {
-  //
-  let gs = useSnapshot(GateState)
-
-  //
+  // let gs = useSnapshot(GateState)
 
   let [site, setSite] = useState(false)
   useEffect(() => {
@@ -31,7 +28,8 @@ export function PGSiteDetail({ siteID }) {
   }, [siteID])
 
   //
-  console.log(siteID)
+  // console.log(siteID)
+  //
 
   return (
     <>
@@ -42,10 +40,22 @@ export function PGSiteDetail({ siteID }) {
 
         <LeftMenu></LeftMenu>
 
+        {!site && (
+          <SmartDrawer className=''>
+            <SectionHeader
+              title={`Edit Materaverse`}
+              subTitle={`Loading....`}
+              bgImage='/img/blue-green.svg'
+              bgOffsetY={50}
+              // bar={<div>{/*  */}</div>}
+            ></SectionHeader>
+          </SmartDrawer>
+        )}
         {site && (
           <SmartDrawer className=''>
             {
               <>
+                {/*  */}
                 {/*  */}
                 <SectionHeader
                   title={`${site.slug}`}
@@ -59,7 +69,7 @@ export function PGSiteDetail({ siteID }) {
                       {getURLFromSiteSlug(site.slug)}
                     </a>
                   }
-                  bgImage='/scene/2022-11-28-NYC/coverimage/circle_portal.png'
+                  bgImage='/img/blue-green.svg'
                   bgOffsetY={50}
                   // bar={<div>{/*  */}</div>}
                 ></SectionHeader>
