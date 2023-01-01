@@ -12,8 +12,6 @@ export function DomainMapping() {
         </div>
         <div>
           <DomainMappingAll></DomainMappingAll>
-          {/*  */}
-          {/*  */}
         </div>
         <div>
           {/*  */}
