@@ -10,9 +10,9 @@ import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { getURLFromSiteSlug, siteGet } from '../aws/site-aws'
-import { SiteEdit } from './SiteEdit'
+import { PageEdit } from './PageEdit'
 
-export function PGSiteDetail({ siteID }) {
+export function PGPageDetail({ siteID, pageID }) {
   // let gs = useSnapshot(GateState)
 
   let [site, setSite] = useState(false)
@@ -44,7 +44,7 @@ export function PGSiteDetail({ siteID }) {
         {!site && (
           <SmartDrawer className=''>
             <SectionHeader
-              title={`Edit Materaverse`}
+              title={`Edit Page`}
               subTitle={`Loading....`}
               bgImage='/img/blue-green.svg'
               bgOffsetY={50}
@@ -60,7 +60,7 @@ export function PGSiteDetail({ siteID }) {
               <>
                 {/*  */}
                 <SectionHeader
-                  title={`${site.slug}`}
+                  title={`Page: ${site.slug}`}
                   subTitle={
                     <a
                       className='text-sm underline normal-case'
@@ -83,7 +83,7 @@ export function PGSiteDetail({ siteID }) {
                 ></SectionHeader>
                 {/*  */}
                 <div className='h-6'></div>
-                <SiteEdit></SiteEdit>
+                <PageEdit></PageEdit>
                 {/*  */}
               </>
             }

@@ -1,9 +1,18 @@
 import { SESSION_ACCESS_KEY, UserEndPoints } from '@/auth/GateConst'
+import { proxy } from 'valtio'
 
 export const BASE_URL_SITE_SLUG_SUFFIX = `.at.agape.town`
 export const getURLFromSiteSlug = (slug) => {
   return `https://${slug}${BASE_URL_SITE_SLUG_SUFFIX}`
 }
+export const getSiteIDPageEdit = (siteID) => {
+  return `/portal/sites/${siteID}/edit`
+}
+
+export const getSiteIDSubPageEdit = (siteID, pageID) => {
+  return `/portal/sites/${siteID}/preview/${pageID}`
+}
+
 export async function checkSiteIDTaken({ slug }) {
   const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
   if (!sToken) {

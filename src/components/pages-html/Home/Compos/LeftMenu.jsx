@@ -3,12 +3,13 @@ import { getID } from '@/lib/getID'
 import Link from 'next/link'
 import { useSnapshot } from 'valtio'
 import { GUIState } from './GUIState'
+import { SitePagesLink } from './SitePagesLink'
 // import { GateState } from '@/auth/GateState.ts'
 // import { useSnapshot } from 'valtio'
 
-export function LeftMenu() {
+export function LeftMenu({ siteID }) {
   // let gs = useSnapshot(GateState)
-  let getClass = (className, url) => {
+  let getActiveClass = (className, url) => {
     if (location) {
       return location.pathname === url ? className : ''
     }
@@ -37,7 +38,7 @@ export function LeftMenu() {
           </a>
         </div>
 
-        <hr className='h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent' />
+        <hr className=' h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent' />
 
         <div className='items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full'>
           <ul className='flex flex-col pl-0 mb-0'>
@@ -52,9 +53,8 @@ export function LeftMenu() {
             {/*  */}
             {[
               //
-              { _id: getID(), link: '/portal', name: 'Dashboard' },
-              // { _id: getID(), link: '/portal/pldaces', name: 'Domain' },
-              { _id: getID(), link: '/portal/sites', name: 'My Sites' },
+              { _id: getID(), link: `/portal`, name: 'Dashboard' },
+              { _id: getID(), link: `/portal/sites`, name: 'My Sites' },
             ].map((item) => {
               //
               return (
@@ -74,7 +74,7 @@ export function LeftMenu() {
                       <span
                         className={
                           'ml-1 opacity-100 pointer-events-none duration-300 ease-soft ' +
-                          getClass('text-slate-700 underline ', item.link)
+                          getActiveClass('text-slate-700 underline ', item.link)
                         }
                       >
                         {item.name}
@@ -85,6 +85,12 @@ export function LeftMenu() {
               )
             })}
             {/*  */}
+            {siteID && (
+              <>
+                <SitePagesLink siteID={siteID}></SitePagesLink>
+              </>
+            )}
+
             {/*  */}
 
             <li className='w-full mt-4'>

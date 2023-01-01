@@ -78,7 +78,7 @@ export function SectionHeader({
 
           {bar && (
             <div
-              style={{ height: `115px` }}
+              style={{ height: `118px` }}
               className='relative flex flex-col flex-auto min-w-0 p-4 mx-6 -mt-32 overflow-hidden break-words bg-white border-0 shadow-blur rounded-2xl bg-opacity-80 bg-clip-border backdrop-blur-2xl backdrop-saturate-200'
             >
               {bar}
