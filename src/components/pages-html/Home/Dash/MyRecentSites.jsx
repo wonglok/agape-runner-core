@@ -310,8 +310,6 @@ export function MyRecentSites() {
   )
 }
 
-//
-
 function OneCard({ site }) {
   return (
     <div className='w-full max-w-full px-3 mb-6 md:w-6/12 md:flex-none xl:mb-6 xl:w-3/12'>
