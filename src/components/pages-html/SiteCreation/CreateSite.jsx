@@ -20,7 +20,7 @@ export function CreateSite() {
           </h1>
         </Link>
         {/*  */}
-        <h1 className='text-2xl'>Name Your metaverse!</h1>
+        <h1 className='text-2xl'>Give your metaverse a name!</h1>
         {/*  */}
         <div className='p-2 pl-0'>
           https://
@@ -31,6 +31,7 @@ export function CreateSite() {
           ></input>
           .at.agape.town
         </div>
+        <div className=''>Later on you can map your own domain as well...</div>
       </div>
 
       {/* <GuideHeader active={0} scrollLeft={0}></GuideHeader> */}

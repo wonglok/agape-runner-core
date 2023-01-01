@@ -14,9 +14,7 @@ export function GuideNav() {
             />
           </a>
         </div>
-        <div className='block py-6 m-0 text-sm px-7 whitespace-nowrap text-slate-700'>
-          {`Let's Create Your Metaverse Site`}
-        </div>
+        <div className='block py-6 m-0 text-sm px-7 whitespace-nowrap text-slate-700'></div>
       </div>
     </div>
   )
