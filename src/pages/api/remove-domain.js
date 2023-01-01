@@ -22,4 +22,4 @@ export default async function handler(req, res) {
   res.status(200).send(json)
 }
 
-const restrictedDomains = ['portfolio.steventey.com', 'cat.vercel.pub']
+const restrictedDomains = ['admin.agape.town', '*.at.agape.town']
