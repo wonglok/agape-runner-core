@@ -4,8 +4,9 @@ import DomainCardPlaceholder from './components/domain-card-placeholder'
 import LoadingDots from './components/loading-dots'
 import useSWR from 'swr'
 import fetcher from '@/lib/fetcher'
+import { SESSION_ACCESS_KEY } from '@/auth/GateConst'
 
-export function DomainMappingAll() {
+export function DomainMappingAll({ siteID }) {
   const [domain, setDomain] = useState('')
 
   const { data: domainList, mutate: revalidateDomains } = useSWR(
@@ -40,7 +41,16 @@ export function DomainMappingAll() {
 
           //
           try {
-            await fetch(`/api/add-domain?domain=${domain}`)
+            await fetch(`/api/add-domain`, {
+              method: 'POST',
+              body: JSON.stringify({
+                //
+                slug: domain,
+                siteID: siteID,
+                sToken: localStorage.getItem(SESSION_ACCESS_KEY),
+              }),
+            })
+            //
             await revalidateDomains()
           } catch (error) {
             alert(error.message)
@@ -108,6 +118,7 @@ export function DomainMappingAll() {
               return (
                 <DomainCard
                   key={index}
+                  siteID={siteID}
                   domain={domain.name}
                   revalidateDomains={revalidateDomains}
                 />

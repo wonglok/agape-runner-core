@@ -151,7 +151,7 @@ export function WelcomeBack() {
                               Google
                             </button>
                           </div>
-                          <div className='text-center'>
+                          {/* <div className='text-center'>
                             <button
                               type='button'
                               onClick={() => {
@@ -162,7 +162,7 @@ export function WelcomeBack() {
                             >
                               Guest
                             </button>
-                          </div>
+                          </div> */}
 
                           <div className='text-center'>
                             <button

@@ -3,8 +3,9 @@ import useSWR, { mutate } from 'swr'
 import fetcher from '@/lib/fetcher'
 import { useState } from 'react'
 import LoadingDots from '../components/loading-dots'
+import { SESSION_ACCESS_KEY } from '@/auth/GateConst'
 
-const DomainCard = ({ domain, revalidateDomains }) => {
+const DomainCard = ({ siteID, domain, revalidateDomains }) => {
   const { data: domainInfo, isValidating } = useSWR(
     `/api/check-domain?domain=${domain}`,
     fetcher,
@@ -59,9 +60,20 @@ const DomainCard = ({ domain, revalidateDomains }) => {
             onClick={async () => {
               setRemoving(true)
               try {
-                await fetch(`/api/remove-domain?domain=${domain}`)
+                await fetch(`/api/remove-domain?domain=${domain}`, {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    //
+                    slug: domain,
+                    siteID: siteID,
+                    sToken: localStorage.getItem(SESSION_ACCESS_KEY),
+                  }),
+                })
+
+                // await fetch(`/api/remove-domain?domain=${domain}`)
                 await revalidateDomains()
               } catch (error) {
+                console.error(error)
                 alert(`Error removing domain`)
               } finally {
                 setRemoving(false)

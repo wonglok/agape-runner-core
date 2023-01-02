@@ -1,6 +1,6 @@
 import { DomainMappingAll } from '../Domains/Domain'
 
-export function DomainMapping() {
+export function DomainMapping({ siteID }) {
   return (
     <div className='flex-none w-full max-w-full px-4 mb-4 '>
       <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
@@ -11,7 +11,7 @@ export function DomainMapping() {
           </p>
         </div>
         <div>
-          <DomainMappingAll></DomainMappingAll>
+          <DomainMappingAll siteID={siteID}></DomainMappingAll>
         </div>
         <div>
           {/*  */}
