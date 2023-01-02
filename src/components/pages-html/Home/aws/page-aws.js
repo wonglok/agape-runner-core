@@ -28,7 +28,7 @@ export async function fetchPages(siteID) {
   } catch (error) {
     console.error(error)
   } finally {
-    console.log('finally')
+    console.log('fetch pages', siteID)
   }
 }
 
@@ -61,6 +61,6 @@ export async function removePage({ siteID, oid }) {
   } catch (error) {
     console.error(error)
   } finally {
-    console.log('finally')
+    console.log('removePage', siteID, oid)
   }
 }
