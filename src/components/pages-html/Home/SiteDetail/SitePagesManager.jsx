@@ -10,7 +10,7 @@ export function SitePagesManager() {
   const confirm = useConfirm()
   let gui = useSnapshot(GUIState)
 
-  let { data, mutate: reloadPages } = useSWR(`${gui.siteID}`, fetchPages)
+  let { data, mutate } = useSWR(`${gui.siteID}`, fetchPages)
 
   return (
     <div className='flex-none w-full max-w-full px-4 mb-4 '>
@@ -22,7 +22,7 @@ export function SitePagesManager() {
           </p>
 
           <div>
-            <CreateOnePage reloadPages={reloadPages}></CreateOnePage>
+            <CreateOnePage reloadPages={mutate}></CreateOnePage>
             {/*  */}
           </div>
           <div className='mb-3'>
@@ -56,6 +56,8 @@ export function SitePagesManager() {
                               siteID: gui.siteID,
                               oid: li.oid,
                             })
+
+                            await mutate()
 
                             console.log(res)
                             //
