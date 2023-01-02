@@ -29,7 +29,7 @@ export function SitePagesManager() {
                 <div key={li._id} className='flex items-center mb-2'>
                   <div>
                     <span
-                      style={{ minWidth: `120px` }}
+                      style={{ minWidth: `135px` }}
                       className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-l border-r border-gray-300 rounded-l-xl'
                     >
                       {li.slug}
