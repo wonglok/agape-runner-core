@@ -151,18 +151,6 @@ export function WelcomeBack() {
                               Google
                             </button>
                           </div>
-                          {/* <div className='text-center'>
-                            <button
-                              type='button'
-                              onClick={() => {
-                                //
-                                loginGuest()
-                              }}
-                              className='inline-block w-full px-6 py-3 mt-6 mb-0 text-xs font-bold text-center text-white uppercase align-middle bg-transparent border-0 rounded-lg cursor-pointer transition-all shadow-soft-md bg-x-25 bg-150 leading-pro ease-soft-in tracking-tight-soft bg-gradient-to-tl from-cyan-600 to-green-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85'
-                            >
-                              Guest
-                            </button>
-                          </div> */}
 
                           <div className='text-center'>
                             <button
@@ -178,18 +166,33 @@ export function WelcomeBack() {
                           </div>
 
                           {process.env.NODE_ENV === 'development' && (
-                            <div className='text-center'>
-                              <button
-                                type='button'
-                                onClick={() => {
-                                  //
-                                  loginGuestLocal()
-                                }}
-                                className='inline-block w-full px-6 py-3 mt-6 mb-0 text-xs font-bold text-center text-white uppercase align-middle bg-transparent border-0 rounded-lg cursor-pointer transition-all shadow-soft-md bg-x-25 bg-150 leading-pro ease-soft-in tracking-tight-soft bg-gradient-to-tl from-blue-600 to-red-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85'
-                              >
-                                Dev Guest
-                              </button>
-                            </div>
+                            <>
+                              <div className='text-center'>
+                                <button
+                                  type='button'
+                                  onClick={() => {
+                                    //
+                                    loginGuest()
+                                  }}
+                                  className='inline-block w-full px-6 py-3 mt-6 mb-0 text-xs font-bold text-center text-white uppercase align-middle bg-transparent border-0 rounded-lg cursor-pointer transition-all shadow-soft-md bg-x-25 bg-150 leading-pro ease-soft-in tracking-tight-soft bg-gradient-to-tl from-cyan-600 to-green-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85'
+                                >
+                                  Dev Guest ngrok
+                                </button>
+                              </div>
+
+                              <div className='text-center'>
+                                <button
+                                  type='button'
+                                  onClick={() => {
+                                    //
+                                    loginGuestLocal()
+                                  }}
+                                  className='inline-block w-full px-6 py-3 mt-6 mb-0 text-xs font-bold text-center text-white uppercase align-middle bg-transparent border-0 rounded-lg cursor-pointer transition-all shadow-soft-md bg-x-25 bg-150 leading-pro ease-soft-in tracking-tight-soft bg-gradient-to-tl from-blue-600 to-red-400 hover:scale-102 hover:shadow-soft-xs active:opacity-85'
+                                >
+                                  Dev Guest localhost
+                                </button>
+                              </div>
+                            </>
                           )}
                         </div>
                         {/* <form role='form'>
