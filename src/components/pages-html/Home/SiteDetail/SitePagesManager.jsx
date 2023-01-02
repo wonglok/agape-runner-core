@@ -57,7 +57,7 @@ export function SitePagesManager() {
                               oid: li.oid,
                             })
 
-                            await mutate(res, true)
+                            await mutate()
                           })
                           .catch(() => console.log('Deletion cancelled.'))
                       }}
