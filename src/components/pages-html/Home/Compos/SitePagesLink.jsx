@@ -1,6 +1,10 @@
 import { getID } from '@/lib/getID'
 import Link from 'next/link'
 import { getSiteIDPageEdit, getSiteIDSubPageEdit } from '../aws/site-aws'
+import useSWR from 'swr'
+import { useSnapshot } from 'valtio'
+import { GUIState } from './GUIState'
+import { fetchPages } from '../SiteDetail/SitePagesManager'
 
 export function SitePagesLink({ siteID }) {
   let getActiveClass = (className, url) => {
@@ -8,6 +12,11 @@ export function SitePagesLink({ siteID }) {
       return location.pathname === url ? className : ''
     }
   }
+
+  let gui = useSnapshot(GUIState)
+
+  let { data, mutate: reloadPages } = useSWR(`${gui.siteID}`, fetchPages)
+
   return (
     <>
       <li className='w-full mt-4'>

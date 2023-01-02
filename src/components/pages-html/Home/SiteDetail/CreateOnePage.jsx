@@ -2,11 +2,12 @@ import { useSnapshot } from 'valtio'
 import { GUIState } from '../Compos/GUIState'
 import LoadingDots from '../Domains/components/loading-dots'
 import { useEffect, useState } from 'react'
+import { SESSION_ACCESS_KEY, UserEndPoints } from '@/auth/GateConst'
 
-export function CreateOnePage({ reloadPages }) {
+export function CreateOnePage({ reloadPages = () => {} }) {
   let gui = useSnapshot(GUIState)
 
-  const [pageSlug, setSlug] = useState('')
+  const [pageSlug, setSlug] = useState('/')
   const [disabled, setDisabled] = useState(false)
   const [adding, setAdding] = useState(false)
   const [error, setError] = useState(null)
@@ -33,22 +34,40 @@ export function CreateOnePage({ reloadPages }) {
 
           //
           try {
-            await fetch(``, {
+            let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+
+            if (!sToken) {
+              throw new Error('no sToken')
+            }
+
+            let ep = UserEndPoints[process.env.NODE_ENV]
+
+            let res = await fetch(`${ep}/site-page-create`, {
               method: 'POST',
+              mode: 'cors',
               body: JSON.stringify({
                 //
                 slug: pageSlug,
                 siteID: gui.siteID,
-                seo: {},
-                sToken: localStorage.getItem(SESSION_ACCESS_KEY),
+                seo: {
+                  slug: pageSlug,
+                },
+                sToken: sToken,
               }),
+              headers: {
+                Authorization: `Bearer ${sToken}`,
+              },
             })
+
+            console.log(await res.json())
             //
             await reloadPages()
+            document.querySelector('#createonepage').value = ''
           } catch (error) {
             alert(error.message)
           } finally {
             setAdding(false)
+            setDisabled(false)
           }
         }}
         //
@@ -61,12 +80,12 @@ export function CreateOnePage({ reloadPages }) {
         <input
           type='text'
           name='page'
+          id='createonepage'
           onInput={(e) => {
-            setSlug(e.target.value)
+            setSlug('/' + e.target.value)
           }}
           autoComplete='off'
           placeholder='home-page'
-          required
           className='h-10 min-w-0 px-4 mr-3 border-t border-b border-r border-gray-300 rounded-l-none rounded-t-md rounded-r-md rounded-b-md focus:ring-0 focus:oultine-none focus:border-black sm:text-sm'
         />
         <button
