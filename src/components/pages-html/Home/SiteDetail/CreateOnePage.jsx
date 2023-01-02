@@ -10,7 +10,7 @@ export function CreateOnePage({ reloadPages = () => {} }) {
   const [pageSlug, setSlug] = useState('/')
   const [disabled, setDisabled] = useState(false)
   const [adding, setAdding] = useState(false)
-  const [error, setError] = useState(null)
+  // const [error, setError] = useState(null)
 
   // useEffect(() => {
   //   if (pageSlug.length == 0) {

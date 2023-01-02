@@ -5,12 +5,19 @@ import useSWR from 'swr'
 import Link from 'next/link'
 import { fetchPages, removePage } from '../aws/page-aws'
 import { useConfirm } from 'material-ui-confirm'
+import { useState } from 'react'
 
 export function SitePagesManager() {
   const confirm = useConfirm()
   let gui = useSnapshot(GUIState)
-
-  let { data, mutate } = useSWR(`${gui.siteID}`, fetchPages)
+  let [reloadID, setReloadID] = useState(0)
+  let { data } = useSWR(
+    { siteID: `${gui.siteID}`, reloadID: reloadID },
+    fetchPages
+  )
+  let reloadPages = () => {
+    setReloadID((s) => s + 1)
+  }
 
   return (
     <div className='flex-none w-full max-w-full px-4 mb-4 '>
@@ -22,7 +29,7 @@ export function SitePagesManager() {
           </p>
 
           <div>
-            <CreateOnePage reloadPages={mutate}></CreateOnePage>
+            <CreateOnePage reloadPages={reloadPages}></CreateOnePage>
             {/*  */}
           </div>
           <div className='mb-3'>
@@ -36,6 +43,9 @@ export function SitePagesManager() {
                     >
                       {li.slug}
                     </span>
+                    {/*  */}
+                    {/*  */}
+                    {/*  */}
                     <Link
                       href={`/creator-portal/sites/${gui.siteID}/preview/${li.oid}`}
                     >
@@ -57,7 +67,7 @@ export function SitePagesManager() {
                               oid: li.oid,
                             })
 
-                            await mutate()
+                            await reloadPages()
                           })
                           .catch(() => console.log('Deletion cancelled.'))
                       }}

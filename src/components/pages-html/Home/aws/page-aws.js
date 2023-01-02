@@ -1,6 +1,6 @@
 import { SESSION_ACCESS_KEY, UserEndPoints } from '@/auth/GateConst'
 
-export async function fetchPages(siteID) {
+export async function fetchPages({ siteID = '', reloadID = Math.random() }) {
   //
   //
   try {
@@ -12,7 +12,7 @@ export async function fetchPages(siteID) {
 
     let ep = UserEndPoints[process.env.NODE_ENV]
 
-    let res = await fetch(`${ep}/site-page-list-mine`, {
+    let res = await fetch(`${ep}/site-page-list-mine?r=${reloadID}`, {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
