@@ -32,6 +32,7 @@ export function LeftMenu({ siteID }) {
       window.removeEventListener('resize', h)
     }
   }, [])
+
   return (
     <>
       <aside
@@ -72,12 +73,12 @@ export function LeftMenu({ siteID }) {
             {/*  */}
             {[
               //
-              { _id: getID(), link: `/creator-portal`, name: 'Dashboard' },
-              { _id: getID(), link: `/creator-portal/sites`, name: 'My Sites' },
+              { oid: getID(), link: `/creator-portal`, name: 'Dashboard' },
+              { oid: getID(), link: `/creator-portal/sites`, name: 'My Sites' },
             ].map((item) => {
               //
               return (
-                <li key={item._id} className='w-full mt-0.5'>
+                <li key={item.oid} className='w-full mt-0.5'>
                   <Link href={item.link}>
                     <div className='flex items-center px-4 mx-4 my-0 text-sm cursor-pointer hover:underline underline-offset-4 py-2.7 ease-nav-brand whitespace-nowrap transition-colors'>
                       <svg

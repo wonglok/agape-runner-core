@@ -54,18 +54,24 @@ export function SitePagesLink({ siteID }) {
         </Link>
       </li>
 
-      {[
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {/* [
         //
         {
-          _id: getID(),
+          oid: getID(),
           link: `${getSiteIDSubPageEdit(siteID, 'mYpageIDYo')}`,
           name: 'Home',
         },
-      ].map((item) => {
+      ]
+
+      */}
+      {(data?.list || []).map((item) => {
         //
         return (
-          <li key={item._id} className='w-full ml-5 mt-0.5'>
-            <Link href={item.link}>
+          <li key={item.oid} className='w-full ml-5 mt-0.5'>
+            <Link href={getSiteIDSubPageEdit(siteID, item.oid)}>
               <div className='flex items-center px-4 mx-4 my-0 text-sm cursor-pointer hover:underline underline-offset-4 py-2.7 ease-nav-brand whitespace-nowrap transition-colors'>
                 <svg
                   width='24'
@@ -80,10 +86,13 @@ export function SitePagesLink({ siteID }) {
                 <span
                   className={
                     'ml-1 opacity-100 pointer-events-none duration-300 ease-soft ' +
-                    getActiveClass('text-slate-700 underline ', item.link)
+                    getActiveClass(
+                      'text-slate-700 underline ',
+                      getSiteIDSubPageEdit(siteID, item.oid)
+                    )
                   }
                 >
-                  {item.name}
+                  {item.slug}
                 </span>
               </div>
             </Link>

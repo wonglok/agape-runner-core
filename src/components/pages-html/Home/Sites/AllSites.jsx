@@ -47,7 +47,7 @@ export function AllSites() {
             </div>
 
             {recentSites.map((site) => {
-              return <OneCard key={site._id} site={site}></OneCard>
+              return <OneCard key={site.oid} site={site}></OneCard>
             })}
 
             {/*  */}

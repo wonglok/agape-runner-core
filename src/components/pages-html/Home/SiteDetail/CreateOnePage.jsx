@@ -61,7 +61,7 @@ export function CreateOnePage({ reloadPages = () => {} }) {
 
             console.log(await res.json())
             //
-            await reloadPages()
+            await reloadPages(`${gui.siteID}`)
             document.querySelector('#createonepage').value = ''
           } catch (error) {
             alert(error.message)

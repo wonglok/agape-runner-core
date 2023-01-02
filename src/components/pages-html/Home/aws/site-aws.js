@@ -132,7 +132,7 @@ export async function siteRecent({}) {
   }
 }
 
-export async function siteGet({ _id }) {
+export async function siteGet({ oid }) {
   const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
   if (!sToken) {
     console.error('no session token')
@@ -147,7 +147,7 @@ export async function siteGet({ _id }) {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
-        _id,
+        oid,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,

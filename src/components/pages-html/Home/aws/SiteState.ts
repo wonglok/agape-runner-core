@@ -3,11 +3,11 @@ import { proxy } from 'valtio'
 
 //
 declare type Page = {
-  _id: string
+  oid: string
 }
 //
 declare type Domain = {
-  _id: string
+  oid: string
 }
 //
 

@@ -18,7 +18,7 @@ export function PGPageDetail({ siteID, pageID }) {
     if (!siteID) {
       return
     }
-    siteGet({ _id: siteID })
+    siteGet({ oid: siteID })
       //
       .then((data) => {
         //

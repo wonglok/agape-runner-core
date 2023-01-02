@@ -15,6 +15,8 @@ import { hydration } from '@/auth/GateMethods'
 import { GateState } from '@/auth/GateState'
 import { useSnapshot } from 'valtio'
 import TitleHeader from '@/config'
+import { ConfirmProvider } from 'material-ui-confirm'
+
 // import { useState } from 'react'
 //Suspense, useMemo,
 
@@ -69,69 +71,70 @@ function App({ Component, pageProps = { title: 'index' } }) {
 
   return (
     <>
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {pageProps.title && <TitleHeader title={pageProps.title} />}
+      <ConfirmProvider>
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        {pageProps.title && <TitleHeader title={pageProps.title} />}
 
-      {router && (
-        <>
-          {Component.layout === 'Multiverse' && (
-            <>
-              <Multiverse visible={ready} router={router} {...pageProps}>
+        {router && (
+          <>
+            {Component.layout === 'Multiverse' && (
+              <>
+                <Multiverse visible={ready} router={router} {...pageProps}>
+                  <Component router={router} {...pageProps}></Component>
+                </Multiverse>
+                <Loader />
+              </>
+            )}
+
+            {Component.layout === 'PromotePage' && (
+              <PromotePage router={router} {...pageProps}>
                 <Component router={router} {...pageProps}></Component>
-              </Multiverse>
-              <Loader />
-            </>
-          )}
+              </PromotePage>
+            )}
 
-          {Component.layout === 'PromotePage' && (
-            <PromotePage router={router} {...pageProps}>
+            {Component.layout === 'Landing' && (
+              <LandingPage router={router} {...pageProps}>
+                <Component router={router} {...pageProps}></Component>
+              </LandingPage>
+            )}
+
+            {typeof Component.layout === 'undefined' && (
               <Component router={router} {...pageProps}></Component>
-            </PromotePage>
-          )}
+            )}
 
-          {Component.layout === 'Landing' && (
-            <LandingPage router={router} {...pageProps}>
-              <Component router={router} {...pageProps}></Component>
-            </LandingPage>
-          )}
+            {typeof Component.SEOContent !== 'undefined' && (
+              <Component.SEOContent
+                router={router}
+                {...pageProps}
+              ></Component.SEOContent>
+            )}
 
-          {typeof Component.layout === 'undefined' && (
-            <Component router={router} {...pageProps}></Component>
-          )}
+            <span
+              style={{
+                display: 'block',
+                position: 'absolute',
+                zIndex: 10,
+              }}
+              id='myroot'
+            ></span>
 
-          {typeof Component.SEOContent !== 'undefined' && (
-            <Component.SEOContent
-              router={router}
-              {...pageProps}
-            ></Component.SEOContent>
-          )}
-
-          <span
-            style={{
-              display: 'block',
-              position: 'absolute',
-              zIndex: 10,
-            }}
-            id='myroot'
-          ></span>
-
-          <ToastContainer
-            position='top-right'
-            zIndex={1000}
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-        </>
-      )}
-
+            <ToastContainer
+              position='top-right'
+              zIndex={1000}
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+          </>
+        )}
+      </ConfirmProvider>
       {/* {loading && (
         <div
           className='absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-30 backdrop-blur-md'
