@@ -18,8 +18,18 @@ export function LeftMenu({ siteID }) {
   let gui = useSnapshot(GUIState)
 
   useEffect(() => {
-    if (window.innerWidth <= 500) {
-      GUIState.menuOpen = true
+    let h = () => {
+      if (window.innerWidth <= 500) {
+        GUIState.menuOpen = true
+      } else {
+        GUIState.menuOpen = false
+      }
+    }
+    h()
+
+    window.addEventListener('resize', h)
+    return () => {
+      window.removeEventListener('resize', h)
     }
   }, [])
   return (
