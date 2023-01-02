@@ -1,3 +1,4 @@
+import { GUIState } from '@/components/pages-html/Home/Compos/GUIState'
 import { PGPageDetail } from '@/components/pages-html/Home/PageDetail/PGPageDetail'
 import { PGSiteDetail } from '@/components/pages-html/Home/SiteDetail/PGSiteDetail'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'

@@ -1,10 +1,10 @@
 import { useSnapshot } from 'valtio'
 import { GUIState } from '../Compos/GUIState'
+import { CreateOnePage } from './CreateOnePage'
 
 export function SitePagesManager() {
   let gui = useSnapshot(GUIState)
 
-  console.log(gui.pageID, gui.siteID)
   return (
     <div className='flex-none w-full max-w-full px-4 mb-4 '>
       <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
@@ -15,6 +15,7 @@ export function SitePagesManager() {
           </p>
 
           <div>
+            <CreateOnePage></CreateOnePage>
             {/*  */}
             {/*  */}
             {/*  */}
