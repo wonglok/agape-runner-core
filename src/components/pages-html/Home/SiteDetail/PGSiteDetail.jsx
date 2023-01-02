@@ -11,6 +11,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { getURLFromSiteSlug, siteGet } from '../aws/site-aws'
 import { DomainMapping } from './DomainMapping'
+import { SitePagesManager } from './SitePagesManager'
 
 export function PGSiteDetail({ siteID }) {
   let [site, setSite] = useState(() => {
@@ -25,11 +26,6 @@ export function PGSiteDetail({ siteID }) {
     })
   }, [siteID])
 
-  //
-
-  //!SECTION
-
-  //
   return (
     <>
       <DesktopOnly>
@@ -79,6 +75,7 @@ export function PGSiteDetail({ siteID }) {
                 {/*  */}
                 <div className='h-6'></div>
                 <DomainMapping siteID={siteID}></DomainMapping>
+                <SitePagesManager siteID={siteID}></SitePagesManager>
                 {/*  */}
               </>
             }

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useSnapshot } from 'valtio'
 import { GUIState } from './GUIState'
 import { SitePagesLink } from './SitePagesLink'
+import { useEffect } from 'react'
 // import { GateState } from '@/auth/GateState.ts'
 // import { useSnapshot } from 'valtio'
 
@@ -16,12 +17,20 @@ export function LeftMenu({ siteID }) {
   }
   let gui = useSnapshot(GUIState)
 
+  useEffect(() => {
+    if (window.innerWidth <= 500) {
+      GUIState.menuOpen = true
+    }
+  }, [])
   return (
     <>
       <aside
         className={`fixed  shadow-2xl shadow-slate-400 inset-y-0 flex-wrap items-center justify-between block w-full p-0  my-4 ml-4 overflow-y-auto antialiased bg-white border-0 max-w-62.5 ease-nav-brand z-990  rounded-2xl transition-transform duration-200 xl:left-0 xl:bg-transparent ${
-          gui.menuOpen ? ` -translate-x-full  ` : ` `
+          gui.menuOpen ? `  ` : ` `
         }`}
+        style={{
+          transform: `${gui.menuOpen ? `translateX(-100vw)` : ``}`,
+        }}
       >
         <div className='h-19.5'>
           <i className='absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden' />
@@ -40,7 +49,7 @@ export function LeftMenu({ siteID }) {
 
         <hr className=' h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent' />
 
-        <div className='items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full'>
+        <div className=''>
           <ul className='flex flex-col pl-0 mb-0'>
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>

@@ -39,6 +39,7 @@ export function SitePagesLink({ siteID }) {
             >
               {/*  */}
               Site Settings
+              {/*  */}
             </span>
           </div>
         </Link>
