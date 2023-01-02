@@ -260,15 +260,10 @@ export function WelcomeBack() {
 
                   {/*  */}
                   <div className='w-full max-w-full px-3 lg:flex-0 shrink-0 md:w-6/12'>
-                    <div className='absolute top-0 hidden w-3/5 h-full -mr-32 overflow-hidden -skew-x-10 -right-40 rounded-bl-xl md:block'>
-                      <div
-                        className='absolute inset-x-0 top-0 z-0 h-full -ml-16 bg-cover skew-x-10'
-                        style={{
-                          backgroundImage:
-                            'url("../assets/img/curved-images/curved6.jpg")',
-                        }}
-                      />
-                    </div>
+                    <img
+                      className='hidden mt-2 -ml-12 rounded-full md:block'
+                      src={`/scene/2022-11-28-NYC/coverimage/agape_square_image.jpg`}
+                    ></img>
                   </div>
                 </div>
               </div>
