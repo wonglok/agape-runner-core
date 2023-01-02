@@ -57,7 +57,7 @@ export function DomainMappingAll({ siteID }) {
   }, [adding])
 
   return (
-    <div className='flex-none w-full max-w-full px-0 mt-9 pb-9'>
+    <div className='flex-none w-full max-w-full px-0 '>
       {/* <h1 className='text-4xl font-bold sm:text-6xl'>Domains API</h1> */}
 
       <form
@@ -87,7 +87,7 @@ export function DomainMappingAll({ siteID }) {
         }}
         //
         //
-        className='flex justify-between w-full h-10 max-w-2xl px-5 mt-10 space-x-4'
+        className='flex justify-between w-full h-10 max-w-2xl px-5 mt-3 mb-5 space-x-4'
       >
         <input
           type='text'
