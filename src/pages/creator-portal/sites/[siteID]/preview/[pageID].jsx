@@ -9,6 +9,8 @@ export default function Page() {
   let { siteID, pageID } = router.query
 
   //
+  GUIState.pageID = pageID
+  GUIState.siteID = siteID
   //
   return siteID ? (
     <RedirGateHTML redirect={'/creator-portal/sites/' + siteID + '/edit'}>
