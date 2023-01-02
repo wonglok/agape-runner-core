@@ -31,7 +31,10 @@ export function AllSites() {
         <div className='flex-auto mx-2'>
           <div className='flex flex-wrap mb-8'>
             <div className='w-full max-w-full px-3 mb-6 cursor-pointer md:w-6/12 md:flex-none xl:mb-0 xl:w-3/12'>
-              <Link href={'/portal/create-site'} data-stuff='javascript:;'>
+              <Link
+                href={'/creator-portal/create-site'}
+                data-stuff='javascript:;'
+              >
                 <div className='relative flex flex-col h-full min-w-0 break-words bg-transparent border border-solid shadow-inner rounded-2xl border-slate-100 bg-clip-border'>
                   <div className='flex flex-col justify-center flex-auto p-6 text-center '>
                     <span>

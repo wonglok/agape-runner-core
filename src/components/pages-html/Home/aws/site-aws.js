@@ -9,11 +9,11 @@ export const getURLFromSiteSlug = (slug) => {
   return `https://${slug}${BASE_URL_SITE_SLUG_SUFFIX}`
 }
 export const getSiteIDPageEdit = (siteID) => {
-  return `/portal/sites/${siteID}/edit`
+  return `/creator-portal/sites/${siteID}/edit`
 }
 
 export const getSiteIDSubPageEdit = (siteID, pageID) => {
-  return `/portal/sites/${siteID}/preview/${pageID}`
+  return `/creator-portal/sites/${siteID}/preview/${pageID}`
 }
 
 export async function checkSiteIDTaken({ slug }) {

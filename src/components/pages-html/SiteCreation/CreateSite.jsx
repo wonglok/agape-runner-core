@@ -34,7 +34,7 @@ export function CreateSite() {
 
                 siteCreate({ slug })
                   .then(() => {
-                    router.push('/portal')
+                    router.push('/creator-portal')
                   })
                   .catch((e) => {
                     console.error(e)
@@ -49,7 +49,7 @@ export function CreateSite() {
         }
       ></GuideNav>
       <div className='container  p-4 mx-auto ' style={{ minHeight: '50vh' }}>
-        <Link href={'/portal'}>
+        <Link href={'/creator-portal'}>
           <h1 className=' flex items-center mb-8 lg:mb-3'>
             <img
               className='inline w-12 mr-1 opacity-75'

@@ -74,7 +74,7 @@ export function PGPageDetail({ siteID, pageID }) {
                   bar={
                     <div>
                       {/*  */}
-
+                      {/*  */}
                       {/*  */}
                     </div>
                   }
@@ -95,12 +95,6 @@ export function PGPageDetail({ siteID, pageID }) {
     </>
   )
 }
-
-//
-
-//
-
-//
 
 //
 

@@ -1,11 +1,11 @@
-import { PGAvatars } from '@/components/pages-html/Home/MyOwnAvatars/PGAvatars'
+import { PGSites } from '@/components/pages-html/Home/Sites/PGSites'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
-export default function Avatars() {
+export default function Page() {
   return (
-    <RedirGateHTML redirect='/portal/create-site'>
+    <RedirGateHTML redirect='/creator-portal/sites'>
       {/* <AvaLand></AvaLand> */}
-      <PGAvatars></PGAvatars>
+      <PGSites></PGSites>
     </RedirGateHTML>
   )
 }
@@ -17,3 +17,5 @@ export async function getServerSideProps(context) {
     },
   }
 }
+
+//
