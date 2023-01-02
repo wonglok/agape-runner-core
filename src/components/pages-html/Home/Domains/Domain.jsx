@@ -3,16 +3,43 @@ import DomainCard from './components/domain-card'
 import DomainCardPlaceholder from './components/domain-card-placeholder'
 import LoadingDots from './components/loading-dots'
 import useSWR from 'swr'
-import fetcher from '@/lib/fetcher'
-import { SESSION_ACCESS_KEY } from '@/auth/GateConst'
+import { SESSION_ACCESS_KEY, UserEndPoints } from '@/auth/GateConst'
+
+const fetcher = async (url) => {
+  const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY) || ''
+
+  if (!sToken) {
+    const error = new Error(`${401}: no token`)
+    error.error = json.error
+    throw error
+  }
+
+  let endPoint = UserEndPoints[process.env.NODE_ENV]
+  let response = await fetch(`${endPoint}/site-domain-list-mine`, {
+    method: 'POST',
+    mode: 'cors',
+    body: JSON.stringify({}),
+    headers: {
+      Authorization: `Bearer ${sToken}`,
+    },
+  })
+
+  if (response.ok) {
+    let data = await response.json()
+    return data.list
+  } else {
+    throw new Error('bad response')
+  }
+}
 
 export function DomainMappingAll({ siteID }) {
   const [domain, setDomain] = useState('')
 
   const { data: domainList, mutate: revalidateDomains } = useSWR(
-    `/api/get-domains`,
+    `/api/get-my-domains`,
     fetcher
   )
+
   const [disabled, setDisabled] = useState(true)
   const [adding, setAdding] = useState(false)
   const [error, setError] = useState(null)
@@ -119,7 +146,7 @@ export function DomainMappingAll({ siteID }) {
                 <DomainCard
                   key={index}
                   siteID={siteID}
-                  domain={domain.name}
+                  domain={domain.slug}
                   revalidateDomains={revalidateDomains}
                 />
               )

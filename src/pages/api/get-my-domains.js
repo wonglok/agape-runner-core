@@ -4,27 +4,29 @@ import fetch from 'node-fetch'
 export default async function handler(req, res) {
   //
 
+  let endPoint = UserEndPoints[process.env.NODE_ENV]
   //
 
-  const response = await fetch(
-    `https://api.vercel.com/v9/projects/${process.env.PROJECT_ID_VERCEL}/domains/${domain}?teamId=${process.env.TEAM_ID_VERCEL}&limit=50`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      method: 'GET',
-    }
-  )
+  let bodyData =
+    typeof req.body === 'string' ? JSON.parse(req.body) : req.body || {}
 
-  const json = await response.json()
+  // let domain = bodyData.domain
+  let slug = bodyData.slug
+  let sToken = bodyData.sToken
+  let siteID = bodyData.siteID
 
-  // not required –> only for this demo to prevent removal of the demo's domain
-  const filteredDomains = json.domains
-    .filter((domain) => domain.name !== 'admin.agape.town')
-    .filter((domain) => domain.name !== '*.at.agape.town')
+  let response = await fetch(`${endPoint}/site-domain-list-mine`, {
+    method: 'POST',
+    mode: 'cors',
+    body: JSON.stringify({}),
+    headers: {
+      Authorization: `Bearer ${sToken}`,
+    },
+  })
 
-  res.status(response.status).send(filteredDomains)
+  let result = await response.json()
+
+  res.status(200).json(result.list)
 }
 //
 

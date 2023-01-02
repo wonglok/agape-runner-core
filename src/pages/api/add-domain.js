@@ -29,7 +29,7 @@ export default async function handler(req, res) {
 
   let responseSiteDomainAdd = await siteDomainAddResp.json()
 
-  console.log(responseSiteDomainAdd)
+  // console.log(responseSiteDomainAdd)
   if (responseSiteDomainAdd.list && responseSiteDomainAdd.list.length >= 1) {
     ///
     let domain = slug
@@ -60,8 +60,4 @@ export default async function handler(req, res) {
     res.status(409).end()
   }
   // console.log(responseSiteDomainAdd)
-
-  //
-
-  //
 }
