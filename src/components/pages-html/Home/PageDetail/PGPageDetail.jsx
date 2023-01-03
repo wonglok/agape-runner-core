@@ -87,13 +87,7 @@ export function PGPageDetail({ siteID, pageID }) {
                   }
                   bgImage={`/img/blue-pink.svg`}
                   bgOffsetY={50}
-                  bar={
-                    <div>
-                      {/*  */}
-                      {/*  */}
-                      {/*  */}
-                    </div>
-                  }
+                  // bar={<div></div>}
                 ></SectionHeader>
                 {/*  */}
                 <div className='h-6'></div>

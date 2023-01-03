@@ -6,17 +6,17 @@ export function OneCard({ site }) {
       <div className='relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none rounded-2xl bg-clip-border'>
         <div className='relative'>
           <a className='block shadow-xl rounded-2xl'>
-            <img
+            {/* <img
               src='../assets/img/home-decor-2.jpg'
               alt='img-blur-shadow'
               className='max-w-full shadow-soft-2xl rounded-xl'
-            />
+            /> */}
+            <div className='flex items-center justify-center rounded-2xl bg-gradient-to-tr from-yellow-100 via-orange-300 to-yellow-900 h-36'>
+              <h5 className=''>{site.slug}</h5>
+            </div>
           </a>
         </div>
         <div className='flex-auto px-1 pt-6'>
-          <a data-stuff='javascript:;'>
-            <h5>{site.slug}</h5>
-          </a>
           {/*  */}
           <p className='flex mb-6 text-sm leading-normal'>
             https://{site.slug}.at.agape.town
@@ -74,7 +74,7 @@ export function OneCard({ site }) {
                   data-target='tooltip_trigger'
                   data-placement='bottom'
                 >
-                  <img
+                  <div
                     className='w-full rounded-circle'
                     alt='Image placeholder'
                     src='../assets/img/team-3.jpg'
