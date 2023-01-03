@@ -61,15 +61,40 @@ function OnePage({ li }) {
   return (
     <div key={li.oid} className='flex items-center mb-2'>
       <div>
-        <span className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-l border-r border-gray-300 rounded-l-xl'>
-          /
+        <span
+          style={{
+            width: `160px`,
+          }}
+          onClick={async (ev) => {
+            let obj = SiteStateData.pages.find((e) => e.oid === li.oid)
+            obj.slug = ''
+            refInput.current.innerText = ''
+            refInput.current.value = ''
+            ev.target.innerText = 'Saving'
+            await updatePageHandler({ object: obj, siteID: gui.siteID })
+            ev.target.innerText = 'Set as Home Page'
+          }}
+          className='inline-flex items-center justify-center h-10 px-2 text-sm bg-purple-200  border-gray-300 cursor-pointer rounded-l-xl'
+        >
+          Set as Home Page
         </span>
+
+        <span
+          style={{ width: '60px' }}
+          className={
+            'inline-flex whitespace-pre justify-center items-center h-10 px-4 text-sm  border-t border-b border-l border-r border-gray-300 ' +
+            `${li.slug === '' ? 'bg-green-300' : 'bg-white'}`
+          }
+        >
+          {li.slug === '' ? '🏡' : '📄'}
+        </span>
+
         <input
           style={{
             minWidth: `135px`,
             transform: 'translateY(0.5px)',
           }}
-          className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-r border-gray-300 '
+          className='inline-flex items-center h-10 px-2 text-sm bg-white border-t border-b border-r border-gray-300 '
           defaultValue={li.slug}
           onInput={(ev) => {
             let name = ev.target.value
@@ -84,13 +109,16 @@ function OnePage({ li }) {
 
         <span
           ref={ref}
+          style={{
+            minWidth: `80px`,
+          }}
           onClick={async (ev) => {
             refInput.current.value = slugify(li.slug)
             ev.target.innerText = 'Saving'
             await updatePageHandler({ object: li, siteID: gui.siteID })
             ev.target.innerText = 'Rename'
           }}
-          className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-green-200 border-t border-b border-r border-gray-300 cursor-pointer'
+          className='inline-flex items-center justify-center h-10 px-2 text-sm bg-green-200 border-t border-b border-r border-gray-300 cursor-pointer'
         >
           Rename
         </span>
@@ -98,13 +126,21 @@ function OnePage({ li }) {
         {/*  */}
         {/*  */}
         {/*  */}
-        <Link href={`/creator-portal/sites/${gui.siteID}/preview/${li.oid}`}>
-          <span className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-blue-200 border-t border-b border-r border-gray-300 cursor-pointer'>
+        <Link
+          style={{
+            minWidth: `80px`,
+          }}
+          href={`/creator-portal/sites/${gui.siteID}/preview/${li.oid}`}
+        >
+          <span className='inline-flex items-center justify-center  h-10 px-2 text-sm bg-blue-200 border-t border-b border-r border-gray-300 cursor-pointer'>
             Edit
           </span>
         </Link>
 
         <span
+          style={{
+            minWidth: `80px`,
+          }}
           onClick={() => {
             //
             confirm({
@@ -119,7 +155,7 @@ function OnePage({ li }) {
               })
               .catch(() => console.log('Deletion cancelled.'))
           }}
-          className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-red-200 border-t border-b border-r border-gray-300 cursor-pointer rounded-r-xl'
+          className='inline-flex items-center h-10 px-2 text-sm bg-red-200 border-t border-b border-r border-gray-300 cursor-pointer rounded-r-xl'
         >
           Remove
         </span>
