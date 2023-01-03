@@ -104,6 +104,24 @@ const DynamicPage = (props) => {
 DynamicPage.layout = 'Multiverse'
 
 export async function getServerSidePropsForDynamicPage(context) {
+  //
+  let siteOID = null
+
+  // preview route
+  if (context?.params?.siteOID) {
+    siteOID = context?.params?.siteOID
+  }
+
+  let host = context?.req?.headers?.host
+  if (typeof host === 'string' && host !== '') {
+    if (host.includes('.at.agape.town')) {
+      //
+      let slug = host.replace('.at.agape.town', '') || ''
+      console.log(slug)
+    } else {
+      //
+    }
+  }
   // //
   // let domainMapping = false
 
@@ -128,6 +146,7 @@ export async function getServerSidePropsForDynamicPage(context) {
 
   return {
     props: {
+      siteOID,
       // domainMapping,
       title: 'Agape Town',
     }, // will be passed to the page component as props

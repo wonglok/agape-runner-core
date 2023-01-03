@@ -18,16 +18,6 @@ export function SitePagesManager() {
     reloadPages({ siteID: gui.siteID })
   }, [gui.siteID])
 
-  let updatePageHandler = async (li, name) => {
-    let obj = SiteStateData.pages.find((e) => e.oid === li.oid)
-
-    obj.slug = '/' + slugify(name)
-
-    await updatePage({ object: li })
-    await reloadPages({
-      siteID: gui.siteID,
-    })
-  }
   let tt = useRef(0)
 
   return (
@@ -45,57 +35,7 @@ export function SitePagesManager() {
           </div>
           <div className='mb-3'>
             {siteData.pages?.map((li) => {
-              return (
-                <div key={li.oid} className='flex items-center mb-2'>
-                  <div>
-                    <span className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-l border-r border-gray-300 rounded-l-xl'>
-                      /
-                    </span>
-                    <input
-                      style={{
-                        minWidth: `135px`,
-                        transform: 'translateY(0.5px)',
-                      }}
-                      className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-r border-gray-300 '
-                      defaultValue={li.slug}
-                      onInput={(ev) => {
-                        let str = ev.target.value
-                        updatePageHandler(li, str)
-                      }}
-                    ></input>
-                    {/*  */}
-                    {/*  */}
-                    {/*  */}
-                    <Link
-                      href={`/creator-portal/sites/${gui.siteID}/preview/${li.oid}`}
-                    >
-                      <span className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-blue-200 border-t border-b border-r border-gray-300 cursor-pointer'>
-                        Edit
-                      </span>
-                    </Link>
-
-                    <span
-                      onClick={() => {
-                        //
-                        confirm({
-                          description: `This will permanently delete ${li.slug}.`,
-                        })
-                          .then(async () => {
-                            //
-                            await removePage({
-                              oid: li.oid,
-                            })
-                            await reloadPages({ siteID: gui.siteID })
-                          })
-                          .catch(() => console.log('Deletion cancelled.'))
-                      }}
-                      className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-red-200 border-t border-b border-r border-gray-300 cursor-pointer rounded-r-xl'
-                    >
-                      Remove
-                    </span>
-                  </div>
-                </div>
-              )
+              return <OnePage key={li.oid} li={li}></OnePage>
             })}
           </div>
         </div>
@@ -105,3 +45,82 @@ export function SitePagesManager() {
 }
 
 //
+
+let updatePageHandler = async ({ object, siteID }) => {
+  await updatePage({ object: object })
+  await reloadPages({
+    siteID,
+  })
+}
+
+function OnePage({ li }) {
+  let ref = useRef()
+  let gui = useSnapshot(GUIState)
+  return (
+    <div key={li.oid} className='flex items-center mb-2'>
+      <div>
+        <span className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-l border-r border-gray-300 rounded-l-xl'>
+          /
+        </span>
+        <input
+          style={{
+            minWidth: `135px`,
+            transform: 'translateY(0.5px)',
+          }}
+          className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-r border-gray-300 '
+          defaultValue={li.slug}
+          onInput={(ev) => {
+            let name = ev.target.value
+            let obj = SiteStateData.pages.find((e) => e.oid === li.oid)
+
+            obj.slug = slugify(name, '_')
+
+            ref.current.innerText = 'Save to Rename Page'
+            //
+          }}
+        ></input>
+
+        <span
+          ref={ref}
+          onClick={async (ev) => {
+            ev.target.innerText = 'Saving'
+            await updatePageHandler({ object: li, siteID: gui.siteID })
+            ev.target.innerText = 'Rename'
+          }}
+          className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-green-200 border-t border-b border-r border-gray-300 cursor-pointer'
+        >
+          Rename
+        </span>
+
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        <Link href={`/creator-portal/sites/${gui.siteID}/preview/${li.oid}`}>
+          <span className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-blue-200 border-t border-b border-r border-gray-300 cursor-pointer'>
+            Edit
+          </span>
+        </Link>
+
+        <span
+          onClick={() => {
+            //
+            confirm({
+              description: `This will permanently delete ${li.slug}.`,
+            })
+              .then(async () => {
+                //
+                await removePage({
+                  oid: li.oid,
+                })
+                await reloadPages({ siteID: gui.siteID })
+              })
+              .catch(() => console.log('Deletion cancelled.'))
+          }}
+          className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-red-200 border-t border-b border-r border-gray-300 cursor-pointer rounded-r-xl'
+        >
+          Remove
+        </span>
+      </div>
+    </div>
+  )
+}

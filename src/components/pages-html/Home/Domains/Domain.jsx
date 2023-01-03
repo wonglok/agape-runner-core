@@ -151,7 +151,7 @@ export function DomainMappingAll({ siteID }) {
                 />
               )
             })
-          : [1, 2, 3].map((_, index) => {
+          : [1, 2].map((_, index) => {
               return <DomainCardPlaceholder key={index} />
             })}
       </div>
