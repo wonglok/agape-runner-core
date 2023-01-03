@@ -14,7 +14,6 @@ import { Floor } from '@/helpers/Floor'
 // import { Companion } from '@/helpers/Companion'
 import anime from 'animejs'
 import { screenOpacity } from '@/helpers/GLOverlayEffect'
-import { UserEndPoints } from './UserEndPoints'
 import { Vector3 } from 'three'
 
 // import { useMultiverse } from '@/helpers/useMultiverse'
@@ -25,9 +24,7 @@ import { Vector3 } from 'three'
 // import dynamic from 'next/dynamic'
 
 const DynamicPage = (props) => {
-  //!SECTION
-
-  console.log(props)
+  //
 
   return (
     <>
