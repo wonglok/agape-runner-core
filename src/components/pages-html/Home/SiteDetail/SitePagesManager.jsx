@@ -126,13 +126,13 @@ function OnePage({ li }) {
         {/*  */}
         {/*  */}
         {/*  */}
-        <Link
-          style={{
-            minWidth: `80px`,
-          }}
-          href={`/creator-portal/sites/${gui.siteID}/preview/${li.oid}`}
-        >
-          <span className='inline-flex items-center justify-center  h-10 px-2 text-sm bg-blue-200 border-t border-b border-r border-gray-300 cursor-pointer'>
+        <Link href={`/creator-portal/sites/${gui.siteID}/preview/${li.oid}`}>
+          <span
+            style={{
+              width: `70px`,
+            }}
+            className='inline-flex items-center justify-center  h-10 px-2 text-sm bg-blue-200 border-t border-b border-r border-gray-300 cursor-pointer'
+          >
             Edit
           </span>
         </Link>

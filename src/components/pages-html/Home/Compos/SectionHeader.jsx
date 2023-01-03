@@ -4,6 +4,7 @@ import { useSnapshot } from 'valtio'
 import { GUIState } from './GUIState'
 
 export function SectionHeader({
+  root = `Creator's Portal`,
   title = 'Dashboard',
   subTitle = `Metaverse Overview`,
   bgImage = '../assets/img/curved-images/curved0.jpg',
@@ -21,20 +22,17 @@ export function SectionHeader({
             <nav>
               {/* breadcrumb */}
               <ol className='flex flex-wrap pt-1 pl-2 pr-4 mr-12 bg-transparent rounded-lg sm:mr-16'>
-                <li
-                  className='text-sm leading-normal capitalize'
-                  aria-current='page'
-                >
-                  {`Creator's Portal`}
+                <li className='text-sm leading-normal ' aria-current='page'>
+                  {`${root}`}
                 </li>
                 <li
-                  className="pl-2 text-sm leading-normal capitalize before:float-left before:pr-2 before:content-['/']"
+                  className="pl-2 text-sm leading-normal  before:float-left before:pr-2 before:content-['/']"
                   aria-current='page'
                 >
                   {title}
                 </li>
               </ol>
-              <h6 className='mb-2 ml-2 text-3xl font-bold text-white capitalize'>
+              <h6 className='mb-2 ml-2 text-3xl font-bold text-white '>
                 {title}
               </h6>
               <h4 className='mb-2 ml-2 -mt-2 text-xl font-normal text-gray-100 capitalize'>

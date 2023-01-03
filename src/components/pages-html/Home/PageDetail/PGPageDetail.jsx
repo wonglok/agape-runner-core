@@ -38,13 +38,19 @@ export function PGPageDetail({ siteID, pageID }) {
   }, [siteID])
 
   useEffect(() => {
-    SiteStateData.page = (siteData.pages || []).find((e) => e.oid === pageID)
+    SiteStateData.page = siteData.pages.find((e) => e.oid === pageID)
+
+    console.log()
   }, [pageID, siteData.pages])
 
+  let getPageDisplay = () => {
+    return SiteStateData.page.slug || 'Home Page 🏡'
+  }
   //
   // console.log(siteID)
   //
 
+  // console.log(siteData.page)
   return (
     <>
       <DesktopOnly>
@@ -74,20 +80,49 @@ export function PGPageDetail({ siteID, pageID }) {
               <>
                 {/*  */}
                 <SectionHeader
-                  title={`${siteData.page.slug}`}
+                  root={`Metaverse site`}
+                  title={getPageDisplay()}
                   subTitle={
                     <a
                       className='text-sm underline normal-case'
                       target={'_blank'}
                       href={`${getURLFromSiteSlug(site.slug)}`}
                       rel='noreferrer'
-                    >
-                      {getURLFromSiteSlug(site.slug)}
-                    </a>
+                    ></a>
                   }
                   bgImage={`/img/blue-pink.svg`}
                   bgOffsetY={50}
-                  // bar={<div></div>}
+                  bar={
+                    <div>
+                      <div>
+                        Preview:
+                        <a
+                          className='ml-2 underline underline-offset-2'
+                          target={'_blank'}
+                          href={`/preview/${site.oid}/${
+                            SiteStateData.page?.slug || ''
+                          }`}
+                          rel='noreferrer'
+                        >
+                          Link
+                        </a>
+                      </div>
+                      <div>
+                        Production:
+                        <a
+                          className='ml-2 underline underline-offset-2'
+                          target={'_blank'}
+                          href={
+                            getURLFromSiteSlug(site.slug) +
+                            `/${siteData?.page?.slug || ''}`
+                          }
+                          rel='noreferrer'
+                        >
+                          Link
+                        </a>
+                      </div>
+                    </div>
+                  }
                 ></SectionHeader>
                 {/*  */}
                 <div className='h-6'></div>

@@ -11,7 +11,8 @@ export function PageEdit() {
           <h6 className='mb-1 text-xl'>Page Detail</h6>
           <p className='mb-3 text-sm leading-normal'>The Metaverse by you. </p>
 
-          <div>{JSON.stringify(siteData.page)}</div>
+          <div></div>
+          <pre>{JSON.stringify(siteData.page, null, '  ')}</pre>
         </div>
       </div>
     </div>

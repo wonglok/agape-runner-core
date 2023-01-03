@@ -95,7 +95,7 @@ export function SitePagesLink({ siteID }) {
                     )
                   }
                 >
-                  {item.slug}
+                  {item.slug || 'home'}
                 </span>
               </div>
             </Link>
