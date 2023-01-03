@@ -6,7 +6,8 @@ import Link from 'next/link'
 import { removePage, updatePage } from '../aws/page-aws'
 import { useConfirm } from 'material-ui-confirm'
 import { SiteStateData, reloadPages } from '../aws/SiteState'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import slugify from 'slugify'
 
 export function SitePagesManager() {
   const confirm = useConfirm()
@@ -17,7 +18,8 @@ export function SitePagesManager() {
     reloadPages({ siteID: gui.siteID })
   }, [gui.siteID])
 
-  let tt = 0
+  let tt = useRef(0)
+
   return (
     <div className='flex-none w-full max-w-full px-4 mb-4 '>
       <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
@@ -41,18 +43,19 @@ export function SitePagesManager() {
                       className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-l border-r border-gray-300 translate-y-px rounded-l-xl'
                       defaultValue={li.slug}
                       onInput={(ev) => {
-                        let obj = SiteStateData.pages.find(
-                          (e) => e.oid === li.oid
-                        )
-                        obj.slug = ev.target.value
+                        clearTimeout(tt.current)
+                        tt.current = setTimeout(async () => {
+                          let obj = SiteStateData.pages.find(
+                            (e) => e.oid === li.oid
+                          )
 
-                        clearTimeout(tt)
-                        tt = setTimeout(async () => {
+                          obj.slug = slugify(ev.target.value)
+
                           await updatePage({ object: li })
                           await reloadPages({
                             siteID: gui.siteID,
                           })
-                        }, 500)
+                        }, 1000)
                       }}
                     ></input>
                     {/*  */}

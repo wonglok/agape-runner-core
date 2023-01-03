@@ -3,8 +3,9 @@ import { GUIState } from '../Compos/GUIState'
 import { useEffect, useState } from 'react'
 import { SESSION_ACCESS_KEY, UserEndPoints } from '@/auth/GateConst'
 import LoadingDots from '../Domains/components/loading-dots'
+import { reloadPages } from '../aws/SiteState'
 
-export function CreateOnePage({ reloadPages = () => {} }) {
+export function CreateOnePage({}) {
   let gui = useSnapshot(GUIState)
 
   const [pageSlug, setSlug] = useState('/')
@@ -91,7 +92,7 @@ export function CreateOnePage({ reloadPages = () => {} }) {
             setSlug('/' + e.target.value)
           }}
           autoComplete='off'
-          placeholder='home-page'
+          placeholder='about-page'
           className='h-10 min-w-0 px-4 mr-3 border-t border-b border-r border-gray-300 rounded-l-none rounded-t-md rounded-r-md rounded-b-md focus:ring-0 focus:oultine-none focus:border-black sm:text-sm'
         />
         <button
