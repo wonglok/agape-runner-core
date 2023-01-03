@@ -56,6 +56,7 @@ let updatePageHandler = async ({ object, siteID }) => {
 function OnePage({ li }) {
   let ref = useRef()
   let gui = useSnapshot(GUIState)
+  let refInput = useRef()
   return (
     <div key={li.oid} className='flex items-center mb-2'>
       <div>
@@ -74,15 +75,16 @@ function OnePage({ li }) {
             let obj = SiteStateData.pages.find((e) => e.oid === li.oid)
 
             obj.slug = slugify(name, '_')
-
             ref.current.innerText = 'Save to Rename Page'
             //
           }}
+          ref={refInput}
         ></input>
 
         <span
           ref={ref}
           onClick={async (ev) => {
+            refInput.current.value = slugify(li.slug)
             ev.target.innerText = 'Saving'
             await updatePageHandler({ object: li, siteID: gui.siteID })
             ev.target.innerText = 'Rename'
