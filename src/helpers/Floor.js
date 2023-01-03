@@ -1,21 +1,22 @@
-import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
 import { EffectNodeRuntime } from '@/effectnode/component/EffectNodeRuntime'
 import { useGLTF } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+// import { useFrame, useThree } from '@react-three/fiber'
 import anime from 'animejs'
 import { Children, useEffect, useMemo, useRef, useState } from 'react'
-import {
-  BoxBufferGeometry,
-  CircleBufferGeometry,
-  GridHelper,
-  SphereBufferGeometry,
-  Vector3,
-} from 'three'
+// import {
+//   BoxBufferGeometry,
+//   CircleBufferGeometry,
+//   GridHelper,
+//   SphereBufferGeometry,
+//   Vector3,
+// } from 'three'
 // import { LineStuff } from './LineDrop/LineStuff'
+// import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
 
 import { screenOpacity } from './GLOverlayEffect'
 import { useMultiverse } from './useMultiverse'
 import { WalkerCam } from './collider/WalkerCamera'
+import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
 
 let ttt = 0
 export function Floor({
@@ -93,6 +94,9 @@ export function Floor({
 
   return (
     <group>
+      <group scale={0.01}>
+        <theVortex></theVortex>
+      </group>
       {outCollider && <WalkerCam collider={outCollider}></WalkerCam>}
       <primitive object={glb.scene}></primitive>
       {/* {glbFnc({ glb })} */}
