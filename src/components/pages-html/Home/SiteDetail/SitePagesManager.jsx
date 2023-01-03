@@ -41,8 +41,6 @@ export function SitePagesManager() {
                       className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-l border-r border-gray-300 translate-y-px rounded-l-xl'
                       defaultValue={li.slug}
                       onInput={(ev) => {
-                        //
-
                         let obj = SiteStateData.pages.find(
                           (e) => e.oid === li.oid
                         )
