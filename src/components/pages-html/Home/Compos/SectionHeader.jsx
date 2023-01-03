@@ -25,13 +25,13 @@ export function SectionHeader({
                   className='text-sm leading-normal capitalize'
                   aria-current='page'
                 >
-                  Portal
+                  {`Creator's Portal`}
                 </li>
                 <li
                   className="pl-2 text-sm leading-normal capitalize before:float-left before:pr-2 before:content-['/']"
                   aria-current='page'
                 >
-                  {title} Page
+                  {title}
                 </li>
               </ol>
               <h6 className='mb-2 ml-2 text-3xl font-bold text-white capitalize'>

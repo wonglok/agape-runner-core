@@ -8,7 +8,7 @@ import { reloadPages } from '../aws/SiteState'
 export function CreateOnePage({}) {
   let gui = useSnapshot(GUIState)
 
-  const [pageSlug, setSlug] = useState('/')
+  const [pageSlug, setSlug] = useState('')
   const [disabled, setDisabled] = useState(false)
   const [adding, setAdding] = useState(false)
 
@@ -81,7 +81,7 @@ export function CreateOnePage({}) {
         //
         className='flex items-center justify-start w-full h-20 max-w-2xl'
       >
-        <span className='inline-flex items-center h-10 pl-4 pr-4 border  border-gray-300 rounded-l-md'>
+        <span className='inline-flex items-center h-10 pl-4 pr-4 border  border-gray-300 rounded-l-xl'>
           /
         </span>
         <input
@@ -89,11 +89,11 @@ export function CreateOnePage({}) {
           name='page'
           id='createonepage'
           onInput={(e) => {
-            setSlug('/' + e.target.value)
+            setSlug(e.target.value)
           }}
           autoComplete='off'
           placeholder='about-page'
-          className='h-10 min-w-0 px-4 mr-3 border-t border-b border-r border-gray-300 rounded-l-none rounded-t-md rounded-r-md rounded-b-md focus:ring-0 focus:oultine-none focus:border-black sm:text-sm'
+          className='h-10 min-w-0 px-4 mr-3 border-t border-b border-r border-gray-300 rounded-r-xl focus:ring-0 focus:oultine-none focus:border-black sm:text-sm'
         />
         <button
           type='submit'

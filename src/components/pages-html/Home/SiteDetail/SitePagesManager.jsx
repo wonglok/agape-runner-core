@@ -18,6 +18,16 @@ export function SitePagesManager() {
     reloadPages({ siteID: gui.siteID })
   }, [gui.siteID])
 
+  let updatePageHandler = async (li, name) => {
+    let obj = SiteStateData.pages.find((e) => e.oid === li.oid)
+
+    obj.slug = '/' + slugify(name)
+
+    await updatePage({ object: li })
+    await reloadPages({
+      siteID: gui.siteID,
+    })
+  }
   let tt = useRef(0)
 
   return (
@@ -38,24 +48,19 @@ export function SitePagesManager() {
               return (
                 <div key={li.oid} className='flex items-center mb-2'>
                   <div>
+                    <span className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-l border-r border-gray-300 rounded-l-xl'>
+                      /
+                    </span>
                     <input
-                      style={{ minWidth: `135px` }}
-                      className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-l border-r border-gray-300 translate-y-px rounded-l-xl'
+                      style={{
+                        minWidth: `135px`,
+                        transform: 'translateY(0.5px)',
+                      }}
+                      className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-r border-gray-300 '
                       defaultValue={li.slug}
                       onInput={(ev) => {
-                        clearTimeout(tt.current)
-                        tt.current = setTimeout(async () => {
-                          let obj = SiteStateData.pages.find(
-                            (e) => e.oid === li.oid
-                          )
-
-                          obj.slug = slugify(ev.target.value)
-
-                          await updatePage({ object: li })
-                          await reloadPages({
-                            siteID: gui.siteID,
-                          })
-                        }, 1000)
+                        let str = ev.target.value
+                        updatePageHandler(li, str)
                       }}
                     ></input>
                     {/*  */}

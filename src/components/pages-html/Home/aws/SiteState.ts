@@ -5,6 +5,7 @@ import { fetchPages } from './page-aws'
 //
 declare type Page = {
   oid: string
+  slug: string
 }
 //
 declare type Domain = {
@@ -16,18 +17,22 @@ export const SiteStateData = proxy<{
   //
   domains: Domain[]
   pages: Page[]
+  page: Page | undefined | null
 }>({
   domains: [],
   pages: [],
+  page: undefined,
 })
 
 //
 export const reloadPages = ({ siteID }) => {
-  fetchPages({ siteID: siteID }).then((data) => {
+  return fetchPages({ siteID: siteID }).then((data) => {
     if (data) {
       SiteStateData.pages = data?.list || []
     } else {
       SiteStateData.pages = []
     }
+
+    return SiteStateData.pages
   })
 }

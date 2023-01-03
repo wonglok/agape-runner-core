@@ -11,9 +11,13 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { getURLFromSiteSlug, siteGet } from '../aws/site-aws'
 import { PageEdit } from './PageEdit'
+import { SiteStateData, reloadPages } from '../aws/SiteState'
+import { useSnapshot } from 'valtio'
 
 export function PGPageDetail({ siteID, pageID }) {
   let [site, setSite] = useState(false)
+  let siteData = useSnapshot(SiteStateData)
+
   useEffect(() => {
     if (!siteID) {
       return
@@ -25,6 +29,17 @@ export function PGPageDetail({ siteID, pageID }) {
         setSite(data.item)
       })
   }, [siteID])
+
+  useEffect(() => {
+    if (!siteID) {
+      return
+    }
+    reloadPages({ siteID: siteID })
+  }, [siteID])
+
+  useEffect(() => {
+    SiteStateData.page = (siteData.pages || []).find((e) => e.oid === pageID)
+  }, [pageID, siteData.pages])
 
   //
   // console.log(siteID)
@@ -39,7 +54,7 @@ export function PGPageDetail({ siteID, pageID }) {
         <LeftMenu siteID={siteID}></LeftMenu>
 
         {/*  */}
-        {!site && (
+        {!siteData.page && (
           <SmartDrawer className=''>
             <SectionHeader
               title={`Edit Page`}
@@ -52,13 +67,14 @@ export function PGPageDetail({ siteID, pageID }) {
         )}
 
         {/*  */}
-        {site && (
+
+        {siteData.page && (
           <SmartDrawer className=''>
             {
               <>
                 {/*  */}
                 <SectionHeader
-                  title={`Page: ${site.slug}`}
+                  title={`${siteData.page.slug}`}
                   subTitle={
                     <a
                       className='text-sm underline normal-case'
@@ -69,7 +85,7 @@ export function PGPageDetail({ siteID, pageID }) {
                       {getURLFromSiteSlug(site.slug)}
                     </a>
                   }
-                  bgImage='/img/blue-green.svg'
+                  bgImage={`/img/blue-pink.svg`}
                   bgOffsetY={50}
                   bar={
                     <div>

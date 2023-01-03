@@ -15,12 +15,6 @@ export default function Page() {
   GUIState.pageID = pageID
   GUIState.siteID = siteID
 
-  useEffect(() => {
-    if (!siteID) {
-      return
-    }
-    reloadPages({ siteID: siteID })
-  }, [siteID])
   //
   return siteID ? (
     <RedirGateHTML redirect={'/creator-portal/sites/' + siteID + '/edit'}>
