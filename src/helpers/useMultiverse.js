@@ -1,6 +1,12 @@
 import create from 'zustand'
 import { sceneToCollider } from './sceneToCollider'
-import { BoxBufferGeometry, Color, MeshPhysicalMaterial, Scene } from 'three'
+import {
+  BoxBufferGeometry,
+  Color,
+  MeshPhysicalMaterial,
+  Scene,
+  Spherical,
+} from 'three'
 import { Mesh, MeshBasicMaterial } from 'three'
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry'
 import { Line3, Vector3 } from 'three'
@@ -97,11 +103,117 @@ const useMultiverse = create((set, get) => {
     //
     coord: new Vector3(),
     quaternion: new Quaternion(),
+
+    keyState: {
+      //
+      joyStickDown: false,
+      joyStickAngle: 0,
+      joyStickPressure: 0,
+      joyStickSide: 0,
+    },
+
+    globalCameraPos: new Vector3(),
+    spherical: new Spherical(),
+    deltaRot: new Vector3(),
   }
 
   return {
     ///
+    setupJoystick: () => {
+      let core = {
+        cleans: [],
+        onClean: (v) => {
+          core.cleans.push(v)
+        },
+      }
+      import('nipplejs')
+        .then((s) => {
+          return s.default
+        })
+        .then(async (nip) => {
+          document.querySelector('#avacontrols')?.remove()
+          core.onClean(() => {
+            document.querySelector('#avacontrols')?.remove()
+          })
+          let zone = document.createElement('div')
+          zone.id = 'avacontrols'
+          document.body.appendChild(zone)
 
+          // zone.style.cssText = `
+          //   display: flex;
+          //   justify-content: center;
+          //   align-items:center;
+          //   position: absolute;
+          //   z-index: 200;
+          //   bottom: calc(100px / 2);
+          //   left: calc(50% - 100px / 2);
+          //   width: 100px;
+          //   height: 100px;
+          // `
+          zone.style.zIndex = '100'
+          zone.style.position = 'absolute'
+          zone.style.display = 'flex'
+          zone.style.justifyContent = 'center'
+          zone.style.alignItems = 'center'
+          zone.style.left = 'calc(50% - 125px / 2)'
+          zone.style.bottom = 'calc(125px / 2)'
+          zone.style.width = 'calc(125px)'
+          zone.style.height = 'calc(125px)'
+          zone.style.borderRadius = 'calc(125px)'
+          zone.style.userSelect = 'none'
+          // zone.style.backgroundColor = 'rgba(0,0,0,1)'
+          zone.style.backgroundImage = `url(/img/hud/walk.png)`
+          zone.style.backgroundSize = `cover`
+          let mydynamic = nip.create({
+            color: 'white',
+            zone: zone,
+            mode: 'dynamic',
+          })
+
+          mydynamic.on('added', (evt, nipple) => {
+            mydynamic.on('start move end dir plain', (evta, data) => {
+              if (evta.type === 'start') {
+                self.keyState.joyStickDown = true
+              }
+
+              if (data?.angle?.radian) {
+                self.keyState.joyStickPressure = data.vector.y
+                self.keyState.joyStickSide = -data.vector.x * 0.8
+
+                if (self.keyState.joyStickPressure <= -1) {
+                  self.keyState.joyStickPressure = -1
+                }
+                if (self.keyState.joyStickPressure >= 1) {
+                  self.keyState.joyStickPressure = 1
+                }
+
+                if (self.keyState.joyStickSide >= Math.PI * 0.5) {
+                  self.keyState.joyStickSide = Math.PI * 0.5
+                }
+                if (self.keyState.joyStickSide <= -Math.PI * 0.5) {
+                  self.keyState.joyStickSide = -Math.PI * 0.5
+                }
+              }
+
+              if (evta.type === 'end') {
+                self.keyState.joyStickDown = false
+              }
+            })
+            nipple.on('removed', () => {
+              nipple.off('start move end dir plain')
+            })
+
+            core.onClean(() => {
+              nipple.destroy()
+            })
+          })
+        })
+
+      return () => {
+        core.cleans.forEach((t) => t())
+        core.cleans = []
+      }
+    },
     locked: false,
     setLocked: (v) => {
       set({ locked: v })
@@ -147,6 +259,9 @@ const useMultiverse = create((set, get) => {
       let controls = self.controls
       let camera = self.camera
 
+      if (!camera) {
+        return
+      }
       //
       self.playerVelocity.set(0, 0, 0)
       self.player.position.fromArray(initPos)
@@ -379,6 +494,34 @@ const useMultiverse = create((set, get) => {
         self.player.rotation.y = self.controls.getAzimuthalAngle()
       }
 
+      if (self.keyState.joyStickDown && self.controls) {
+        self.tempVector
+          .set(0, 0, -1)
+          .applyAxisAngle(self.upVector, angle + self.keyState.joyStickAngle)
+
+        self.controls.object.getWorldPosition(self.globalCameraPos)
+        self.globalCameraPos.y = self.controls.target.y
+        let dist = self.controls.target.distanceTo(self.globalCameraPos)
+
+        self.deltaRot.setFromCylindricalCoords(
+          dist,
+          self.controls.getAzimuthalAngle() +
+            0.2 * delta * self.keyState.joyStickSide * 15.0
+        )
+
+        //
+        let y = self.camera.position.y
+        self.camera.position.sub(self.controls.target)
+        self.camera.position.copy(self.deltaRot)
+        self.camera.position.add(self.controls.target)
+        self.camera.position.y = y
+
+        self.player.position.addScaledVector(
+          self.tempVector,
+          self.playerSpeed * delta * self.keyState.joyStickPressure * 1
+        )
+      }
+
       self.player.updateMatrixWorld()
 
       // adjust player position based on collisions
@@ -496,7 +639,7 @@ const useMultiverse = create((set, get) => {
         return
       }
 
-      if (self.player.position.distanceTo(self.camera.position) <= 2.5) {
+      if (self.player.position.distanceTo(self.camera.position) <= 1.5) {
         self.player.visible = false
       } else {
         self.player.visible = true

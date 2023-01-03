@@ -3,7 +3,7 @@ import { EffectNodeRuntime } from '@/effectnode/component/EffectNodeRuntime'
 import { useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import anime from 'animejs'
-import { Children, useEffect, useRef, useState } from 'react'
+import { Children, useEffect, useMemo, useRef, useState } from 'react'
 import {
   BoxBufferGeometry,
   CircleBufferGeometry,
@@ -15,6 +15,7 @@ import {
 
 import { screenOpacity } from './GLOverlayEffect'
 import { useMultiverse } from './useMultiverse'
+import { WalkerCam } from './collider/WalkerCamera'
 
 let ttt = 0
 export function Floor({
@@ -25,74 +26,76 @@ export function Floor({
 }) {
   let addNamedScene = useMultiverse((s) => s.addNamedScene)
   let setPosition = useMultiverse((s) => s.setPosition)
+  let setupJoystick = useMultiverse((s) => s.setupJoystick)
   // let setPostProcessing = useMultiverse((s) => s.setPostProcessing)
-  let scene = useThree((s) => s.scene)
-  let gl = useThree((s) => s.gl)
+  // let scene = useThree((s) => s.scene)
+  // let gl = useThree((s) => s.gl)
+
   let glb = useGLTF(url)
+
   mapDecors({ mapScene: glb.scene })
 
-  let [outletRneder, setRender] = useState(null)
+  let [outCollider, setCollider] = useState(null)
 
-  //
-  useEffect(() => {
+  let prom = useMemo(() => {
     let prom = addNamedScene({ name: url, scene: glb.scene })
+    return prom
+  }, [addNamedScene, glb.scene, url])
 
-    // setPostProcessing(false)
+  useEffect(() => {
     prom.then((it) => {
-      // geo.scale(1, 0.01, 1)
+      setCollider(it)
+    })
+  }, [prom])
 
+  useEffect(() => {
+    setPosition({ initPos: initPos, lookAt: lookAt })
+
+    prom.then(() => {
       setPosition({ initPos: initPos, lookAt: lookAt })
-
-      glb.scene.visible = false
-
-      let applyGLB = (v) => {
-        if (glb) {
-          if (v === 0) {
-            glb.scene.visible = false
-          } else {
-            glb.scene.visible = true
-          }
-          glb.scene.traverse((it) => {
-            if (it.material) {
-              it.material.transparent = true
-              it.material.opacity = v
-            }
-          })
-        }
-      }
-
-      screenOpacity.value = 0
-
-      anime({
-        targets: [screenOpacity],
-        value: 1,
-        duration: 7000,
-        update: () => {
-          applyGLB(screenOpacity.value)
-        },
-      })
-
-      // glb.scene.traverse((it) => {
-      //   if (it.isLight) {
-      //     it.castShadow = true
-      //   }
-      //   it.castShadow = true
-      //   it.receiveShadow = true
-      // })
-
-      setTimeout(() => {
-        setRender(<primitive object={glb.scene}></primitive>)
-      })
-
-      //
     })
     return () => {}
-  }, [gl, glb, url, scene, addNamedScene])
+  }, [initPos, lookAt, prom, setPosition])
+
+  useEffect(() => {
+    return setupJoystick()
+  }, [setupJoystick])
+
+  useEffect(() => {
+    glb.scene.visible = false
+
+    let applyGLB = (v) => {
+      if (glb) {
+        if (v === 0) {
+          glb.scene.visible = false
+        } else {
+          glb.scene.visible = true
+        }
+        glb.scene.traverse((it) => {
+          if (it.material) {
+            it.material.transparent = true
+            it.material.opacity = v
+          }
+        })
+      }
+    }
+
+    screenOpacity.value = 0
+    anime({
+      targets: [screenOpacity],
+      value: 1,
+      duration: 7000,
+      update: () => {
+        applyGLB(screenOpacity.value)
+      },
+    })
+  }, [glb])
 
   return (
     <group>
+      {outCollider && <WalkerCam collider={outCollider}></WalkerCam>}
+      <primitive object={glb.scene}></primitive>
       {/* {glbFnc({ glb })} */}
-      {outletRneder}
       <EffectNodeRuntime key={url} glbObject={glb}></EffectNodeRuntime>
     </group>
   )

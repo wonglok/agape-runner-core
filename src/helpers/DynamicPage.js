@@ -26,6 +26,8 @@ import { UserEndPoints } from './UserEndPoints'
 const DynamicPage = (props) => {
   //!SECTION
 
+  console.log(props)
+
   return (
     <>
       <group>
@@ -59,45 +61,6 @@ const DynamicPage = (props) => {
       {/*  */}
       {/*  */}
       {/*  */}
-      {/*  */}
-      {/*  */}
-      {/* <Suspense fallback={null}>
-        <Companion
-          frustumCulled={false}
-          runActionName='sprint_forward'
-          url={`/scene/landing/swat-mo-1024.glb`}
-          speed={4}
-          lookAtOffset={[0, 0, 0]}
-          walkOffset={[0, 0, -0.01]}
-        ></Companion>
-      </Suspense> */}
-
-      {/*
-      <Suspense fallback={null}>
-        <Companion
-          frustumCulled={false}
-          runActionName='sprint_forward'
-          url={`/scene/landing/swat-mo-1024.glb`}
-          speed={4}
-          lookAtOffset={[0, 0, -2]}
-          walkOffset={[1, 0, -0.01]}
-        ></Companion>
-      </Suspense>
-      <Suspense fallback={null}>
-        <Companion
-          frustumCulled={false}
-          runActionName='sprint_forward'
-          url={`/scene/landing/swat-mo-1024.glb`}
-          speed={4}
-          lookAtOffset={[0, 0, -2]}
-          walkOffset={[-1, 0, -0.01]}
-        ></Companion>
-      </Suspense>
-      */}
-
-      {/*  */}
-      {/*  */}
-      {/*  */}
     </>
   )
 }
@@ -122,6 +85,7 @@ export async function getServerSidePropsForDynamicPage(context) {
       //
     }
   }
+
   // //
   // let domainMapping = false
 
@@ -147,9 +111,8 @@ export async function getServerSidePropsForDynamicPage(context) {
   return {
     props: {
       siteOID,
-      // domainMapping,
       title: 'Agape Town',
-    }, // will be passed to the page component as props
+    },
   }
 }
 
