@@ -10,7 +10,6 @@ import { useEffect, useRef } from 'react'
 import slugify from 'slugify'
 
 export function SitePagesManager() {
-  const confirm = useConfirm()
   let gui = useSnapshot(GUIState)
   let siteData = useSnapshot(SiteStateData)
 
@@ -54,6 +53,8 @@ let updatePageHandler = async ({ object, siteID }) => {
 }
 
 function OnePage({ li }) {
+  const confirm = useConfirm()
+
   let ref = useRef()
   let gui = useSnapshot(GUIState)
   let refInput = useRef()
