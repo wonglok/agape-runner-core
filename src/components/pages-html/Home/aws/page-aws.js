@@ -32,7 +32,7 @@ export async function fetchPages({ siteID = '', reloadID = Math.random() }) {
   }
 }
 
-export async function removePage({ siteID, oid }) {
+export async function removePage({ oid }) {
   //
   //
   try {
@@ -50,7 +50,6 @@ export async function removePage({ siteID, oid }) {
       body: JSON.stringify({
         //
         oid: oid,
-        siteID: siteID,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,
@@ -61,7 +60,7 @@ export async function removePage({ siteID, oid }) {
   } catch (error) {
     console.error(error)
   } finally {
-    console.log('removePage', siteID, oid)
+    console.log('removePage')
   }
 }
 

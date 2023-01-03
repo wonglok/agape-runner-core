@@ -1,8 +1,8 @@
 import { useSnapshot } from 'valtio'
 import { GUIState } from '../Compos/GUIState'
-import LoadingDots from '../Domains/components/loading-dots'
 import { useEffect, useState } from 'react'
 import { SESSION_ACCESS_KEY, UserEndPoints } from '@/auth/GateConst'
+import LoadingDots from '../Domains/components/loading-dots'
 
 export function CreateOnePage({ reloadPages = () => {} }) {
   let gui = useSnapshot(GUIState)
@@ -10,6 +10,7 @@ export function CreateOnePage({ reloadPages = () => {} }) {
   const [pageSlug, setSlug] = useState('/')
   const [disabled, setDisabled] = useState(false)
   const [adding, setAdding] = useState(false)
+
   // const [error, setError] = useState(null)
 
   // useEffect(() => {
@@ -20,6 +21,7 @@ export function CreateOnePage({ reloadPages = () => {} }) {
   //   }
   // }, [pageSlug])
 
+  //
   useEffect(() => {
     if (adding) {
       setDisabled(true)
@@ -28,11 +30,13 @@ export function CreateOnePage({ reloadPages = () => {} }) {
     }
   }, [adding])
 
+  //
   return (
     <div>
       <form
         onSubmit={async (e) => {
           e.preventDefault()
+          //
           setAdding(true)
           //
           try {
@@ -63,7 +67,7 @@ export function CreateOnePage({ reloadPages = () => {} }) {
 
             let result = await res.json()
 
-            await reloadPages()
+            await reloadPages({ siteID: gui.siteID })
             document.querySelector('#createonepage').value = ''
           } catch (error) {
             alert(error.message)

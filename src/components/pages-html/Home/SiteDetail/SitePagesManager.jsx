@@ -1,32 +1,21 @@
 import { useSnapshot } from 'valtio'
 import { GUIState } from '../Compos/GUIState'
 import { CreateOnePage } from './CreateOnePage'
-import useSWR from 'swr'
+// import useSWR from 'swr'
 import Link from 'next/link'
-import { fetchPages, removePage, updatePage } from '../aws/page-aws'
+import { removePage, updatePage } from '../aws/page-aws'
 import { useConfirm } from 'material-ui-confirm'
-import { useEffect, useState } from 'react'
-import { SiteStateData } from '../aws/SiteState'
+import { SiteStateData, reloadPages } from '../aws/SiteState'
+import { useEffect } from 'react'
 
 export function SitePagesManager() {
   const confirm = useConfirm()
   let gui = useSnapshot(GUIState)
-  let [reloadID, setReloadID] = useState(0)
-  let { data } = useSWR(
-    { siteID: `${gui.siteID}`, reloadID: reloadID },
-    fetchPages
-  )
-  let reloadPages = () => {
-    setReloadID((s) => s + 1)
-  }
+  let siteData = useSnapshot(SiteStateData)
 
   useEffect(() => {
-    if (data) {
-      SiteStateData.pages = data.list
-    } else {
-      SiteStateData.pages = []
-    }
-  }, [data])
+    reloadPages({ siteID: gui.siteID })
+  }, [gui.siteID])
 
   let tt = 0
   return (
@@ -43,7 +32,7 @@ export function SitePagesManager() {
             {/*  */}
           </div>
           <div className='mb-3'>
-            {data?.list?.map((li) => {
+            {siteData.pages?.map((li) => {
               return (
                 <div key={li.oid} className='flex items-center mb-2'>
                   <div>
@@ -53,12 +42,18 @@ export function SitePagesManager() {
                       defaultValue={li.slug}
                       onInput={(ev) => {
                         //
-                        li.slug = ev.target.value
+
+                        let obj = SiteStateData.pages.find(
+                          (e) => e.oid === li.oid
+                        )
+                        obj.slug = ev.target.value
 
                         clearTimeout(tt)
                         tt = setTimeout(async () => {
                           await updatePage({ object: li })
-                          SiteStateData.pages = [...SiteStateData.pages]
+                          await reloadPages({
+                            siteID: gui.siteID,
+                          })
                         }, 500)
                       }}
                     ></input>
@@ -81,12 +76,10 @@ export function SitePagesManager() {
                         })
                           .then(async () => {
                             //
-                            let res = await removePage({
-                              siteID: gui.siteID,
+                            await removePage({
                               oid: li.oid,
                             })
-
-                            await reloadPages()
+                            await reloadPages({ siteID: gui.siteID })
                           })
                           .catch(() => console.log('Deletion cancelled.'))
                       }}

@@ -1,4 +1,5 @@
 import { proxy } from 'valtio'
+import { fetchPages } from './page-aws'
 //
 
 //
@@ -21,5 +22,12 @@ export const SiteStateData = proxy<{
 })
 
 //
-
-//
+export const reloadPages = ({ siteID }) => {
+  fetchPages({ siteID: siteID }).then((data) => {
+    if (data) {
+      SiteStateData.pages = data.list
+    } else {
+      SiteStateData.pages = []
+    }
+  })
+}
