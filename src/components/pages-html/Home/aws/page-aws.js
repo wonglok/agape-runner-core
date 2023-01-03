@@ -64,3 +64,34 @@ export async function removePage({ siteID, oid }) {
     console.log('removePage', siteID, oid)
   }
 }
+
+export async function updatePage({ object }) {
+  //
+  //
+  try {
+    let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+
+    if (!sToken) {
+      throw new Error('no sToken')
+    }
+
+    let ep = UserEndPoints[process.env.NODE_ENV]
+
+    let res = await fetch(`${ep}/site-page-update`, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        object,
+      }),
+      headers: {
+        Authorization: `Bearer ${sToken}`,
+      },
+    })
+
+    return await res.json()
+  } catch (error) {
+    console.error(error)
+  } finally {
+    console.log('updatePage')
+  }
+}

@@ -21,7 +21,11 @@ export function CreateOnePage({ reloadPages = () => {} }) {
   // }, [pageSlug])
 
   useEffect(() => {
-    if (adding) setDisabled(true)
+    if (adding) {
+      setDisabled(true)
+    } else {
+      setDisabled(false)
+    }
   }, [adding])
 
   return (
@@ -30,8 +34,6 @@ export function CreateOnePage({ reloadPages = () => {} }) {
         onSubmit={async (e) => {
           e.preventDefault()
           setAdding(true)
-          //
-
           //
           try {
             let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
@@ -60,7 +62,7 @@ export function CreateOnePage({ reloadPages = () => {} }) {
             })
 
             let result = await res.json()
-            //
+
             await reloadPages()
             document.querySelector('#createonepage').value = ''
           } catch (error) {

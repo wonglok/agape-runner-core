@@ -5,6 +5,7 @@ import useSWR from 'swr'
 import { useSnapshot } from 'valtio'
 import { GUIState } from './GUIState'
 import { fetchPages } from '../SiteDetail/SitePagesManager'
+import { SiteStateData } from '../aws/SiteState'
 
 export function SitePagesLink({ siteID }) {
   let getActiveClass = (className, url) => {
@@ -15,7 +16,9 @@ export function SitePagesLink({ siteID }) {
 
   let gui = useSnapshot(GUIState)
 
-  let { data, mutate: reloadPages } = useSWR(`${gui.siteID}`, fetchPages)
+  // let { data } = useSWR({ siteID: `${gui.siteID}`, reloadID: 0 }, fetchPages)
+
+  let siteData = useSnapshot(SiteStateData)
 
   return (
     <>
@@ -67,7 +70,7 @@ export function SitePagesLink({ siteID }) {
       ]
 
       */}
-      {(data?.list || []).map((item) => {
+      {siteData.pages.map((item) => {
         //
         return (
           <li key={item.oid} className='w-full ml-5 mt-0.5'>

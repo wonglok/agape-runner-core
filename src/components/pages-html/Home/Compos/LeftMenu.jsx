@@ -15,6 +15,7 @@ export function LeftMenu({ siteID }) {
       return location.pathname === url ? className : ''
     }
   }
+
   let gui = useSnapshot(GUIState)
 
   useEffect(() => {

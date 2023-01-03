@@ -11,7 +11,7 @@ declare type Domain = {
 }
 //
 
-export const pagesData = proxy<{
+export const SiteStateData = proxy<{
   //
   domains: Domain[]
   pages: Page[]

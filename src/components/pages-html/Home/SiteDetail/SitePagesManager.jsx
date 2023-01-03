@@ -3,9 +3,10 @@ import { GUIState } from '../Compos/GUIState'
 import { CreateOnePage } from './CreateOnePage'
 import useSWR from 'swr'
 import Link from 'next/link'
-import { fetchPages, removePage } from '../aws/page-aws'
+import { fetchPages, removePage, updatePage } from '../aws/page-aws'
 import { useConfirm } from 'material-ui-confirm'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { SiteStateData } from '../aws/SiteState'
 
 export function SitePagesManager() {
   const confirm = useConfirm()
@@ -19,6 +20,15 @@ export function SitePagesManager() {
     setReloadID((s) => s + 1)
   }
 
+  useEffect(() => {
+    if (data) {
+      SiteStateData.pages = data.list
+    } else {
+      SiteStateData.pages = []
+    }
+  }, [data])
+
+  let tt = 0
   return (
     <div className='flex-none w-full max-w-full px-4 mb-4 '>
       <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
@@ -37,12 +47,21 @@ export function SitePagesManager() {
               return (
                 <div key={li.oid} className='flex items-center mb-2'>
                   <div>
-                    <span
+                    <input
                       style={{ minWidth: `135px` }}
-                      className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-l border-r border-gray-300 rounded-l-xl'
-                    >
-                      {li.slug}
-                    </span>
+                      className='inline-flex items-center h-10 pl-4 pr-4 text-sm bg-white border-t border-b border-l border-r border-gray-300 translate-y-px rounded-l-xl'
+                      defaultValue={li.slug}
+                      onInput={(ev) => {
+                        //
+                        li.slug = ev.target.value
+
+                        clearTimeout(tt)
+                        tt = setTimeout(async () => {
+                          await updatePage({ object: li })
+                          SiteStateData.pages = [...SiteStateData.pages]
+                        }, 500)
+                      }}
+                    ></input>
                     {/*  */}
                     {/*  */}
                     {/*  */}
