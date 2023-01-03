@@ -17,6 +17,7 @@ import { screenOpacity } from './GLOverlayEffect'
 import { useMultiverse } from './useMultiverse'
 import { WalkerCam } from './collider/WalkerCamera'
 import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
+import { Vector3 } from 'three'
 
 let ttt = 0
 export function Floor({
@@ -94,11 +95,14 @@ export function Floor({
 
   return (
     <group>
-      <group scale={0.01}>
-        <theVortex></theVortex>
-      </group>
       {outCollider && <WalkerCam collider={outCollider}></WalkerCam>}
-      <primitive object={glb.scene}></primitive>
+      <group
+        onClick={(ev) => {
+          console.log(ev.object)
+        }}
+      >
+        <primitive object={glb.scene}></primitive>
+      </group>
       {/* {glbFnc({ glb })} */}
       <EffectNodeRuntime key={url} glbObject={glb}></EffectNodeRuntime>
     </group>

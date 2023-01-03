@@ -15,6 +15,7 @@ import { Floor } from '@/helpers/Floor'
 import anime from 'animejs'
 import { screenOpacity } from '@/helpers/GLOverlayEffect'
 import { UserEndPoints } from './UserEndPoints'
+import { Vector3 } from 'three'
 
 // import { useMultiverse } from '@/helpers/useMultiverse'
 // import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
@@ -57,6 +58,19 @@ const DynamicPage = (props) => {
       >
         <meshStandardMaterial color={'#ff0000'}></meshStandardMaterial>
       </Box>
+
+      <group
+        position={new Vector3()
+          .copy({
+            x: 0.6250860183367339,
+            y: 4.573492821328801,
+            z: -9.505888938903809,
+          })
+          .toArray()}
+        scale={0.11}
+      >
+        <theVortex></theVortex>
+      </group>
 
       {/*  */}
       {/*  */}
