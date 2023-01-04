@@ -16,6 +16,7 @@ export function PageEdit() {
           <div></div>
 
           {/*  */}
+          {/*  */}
           <div>
             <TextEntries name={'colliderURL'}></TextEntries>
           </div>
