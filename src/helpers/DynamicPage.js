@@ -7,15 +7,15 @@ import {
   // Text,
   // Trail,
 } from '@react-three/drei'
-import Router from 'next/router'
+// import Router from 'next/router'
 // import { Suspense, useEffect } from 'react'
 import { Floor } from '@/helpers/Floor'
 // import { useEffect, useRef } from 'react'
 // import { useState } from 'react'
 // import { Companion } from '@/helpers/Companion'
-import anime from 'animejs'
-import { screenOpacity } from '@/helpers/GLOverlayEffect'
-import { Vector3 } from 'three'
+// import anime from 'animejs'
+// import { screenOpacity } from '@/helpers/GLOverlayEffect'
+// import { Vector3 } from 'three'
 import { UserEndPoints } from './UserEndPoints'
 import { Suspense, useEffect, useState } from 'react'
 
