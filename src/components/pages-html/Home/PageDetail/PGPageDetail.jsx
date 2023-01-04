@@ -39,18 +39,12 @@ export function PGPageDetail({ siteID, pageID }) {
 
   useEffect(() => {
     SiteStateData.page = siteData.pages.find((e) => e.oid === pageID)
-
-    console.log()
   }, [pageID, siteData.pages])
 
   let getPageDisplay = () => {
-    return SiteStateData.page.slug || 'Home Page 🏡'
+    return SiteStateData?.page?.slug || 'Home Page 🏡'
   }
-  //
-  // console.log(siteID)
-  //
 
-  // console.log(siteData.page)
   return (
     <>
       <DesktopOnly>

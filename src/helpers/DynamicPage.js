@@ -15,6 +15,7 @@ import { Floor } from '@/helpers/Floor'
 import anime from 'animejs'
 import { screenOpacity } from '@/helpers/GLOverlayEffect'
 import { Vector3 } from 'three'
+import { UserEndPoints } from './UserEndPoints'
 
 // import { useMultiverse } from '@/helpers/useMultiverse'
 // import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
@@ -22,7 +23,6 @@ import { Vector3 } from 'three'
 // import { useThree } from '@react-three/fiber'
 // import { Vector3 } from 'three'
 // import dynamic from 'next/dynamic'
-
 const DynamicPage = (props) => {
   //
 
@@ -58,13 +58,16 @@ const DynamicPage = (props) => {
 
       <group
         position={new Vector3()
-          .copy({
-            x: 0.6250860183367339,
-            y: 4.573492821328801,
-            z: -9.505888938903809,
-          })
+          .copy(
+            //
+            {
+              x: 0.6250860183367339,
+              y: 4.573492821328801,
+              z: -9.505888938903809,
+            }
+          )
           .toArray()}
-        scale={0.11}
+        scale={0.12}
       >
         <theVortex></theVortex>
       </group>
@@ -77,55 +80,166 @@ const DynamicPage = (props) => {
 }
 DynamicPage.layout = 'Multiverse'
 
-export async function getServerSidePropsForDynamicPage(context) {
-  //
-  let siteOID = null
+export const getServerSidePropsForDynamicPage =
+  ({ isIndex }) =>
+  async (context) => {
+    //
+    let siteOID = null
 
-  // preview route
-  if (context?.params?.siteOID) {
-    siteOID = context?.params?.siteOID
-  }
+    // preview route
+    if (context?.params?.siteOID) {
+      siteOID = context?.params?.siteOID
+    }
 
-  let host = context?.req?.headers?.host
-  if (typeof host === 'string' && host !== '') {
-    if (host.includes('.at.agape.town')) {
-      //
-      let slug = host.replace('.at.agape.town', '') || ''
-      console.log(slug)
-    } else {
+    let host = context?.req?.headers?.host
+
+    // host = 'kam.agape.land'
+
+    if (typeof host === 'string' && host !== '') {
+      if (host.includes('.at.agape.town')) {
+        //
+        let slug = host.replace('.at.agape.town', '') || ''
+
+        let response = await fetch(
+          `${UserEndPoints[process.env.NODE_ENV]}/seo-subdomain-site`,
+          {
+            body: JSON.stringify({
+              //
+              slug: slug,
+            }),
+            method: 'POST',
+            mode: 'cors',
+          }
+        )
+        let result = await response.json()
+        //
+        let list = result?.list
+        if (list) {
+          let first = list[0]
+
+          if (first) {
+            siteOID = first.oid
+          }
+        }
+      } else {
+        //
+
+        let slug = host + '' || ''
+
+        // console.log(slug)
+
+        let response = await fetch(
+          `${UserEndPoints[process.env.NODE_ENV]}/seo-userdomain-site`,
+          {
+            body: JSON.stringify({
+              //
+              slug: slug,
+            }),
+            method: 'POST',
+            mode: 'cors',
+          }
+        )
+        let result = await response.json()
+        //
+
+        let list = result?.list
+        if (list) {
+          let first = list[0]
+
+          if (first) {
+            siteOID = first.siteID
+          }
+        }
+      }
+    }
+
+    let pageData = {}
+
+    if (siteOID) {
+      if (isIndex) {
+        let response = await fetch(
+          `${UserEndPoints[process.env.NODE_ENV]}/seo-site-page`,
+          {
+            body: JSON.stringify({
+              //
+              siteID: siteOID,
+              slug: '',
+            }),
+            method: 'POST',
+            mode: 'cors',
+          }
+        )
+        let result = await response.json()
+
+        let list = result?.list
+        if (list) {
+          let first = list[0]
+
+          if (first) {
+            pageData = first
+            // console.log(pageData)
+          }
+        }
+      } else {
+        // console.log(slug)
+
+        let response = await fetch(
+          `${UserEndPoints[process.env.NODE_ENV]}/seo-site-page`,
+          {
+            body: JSON.stringify({
+              //
+              siteID: siteOID,
+              slug: context?.params?.slug || '',
+            }),
+            method: 'POST',
+            mode: 'cors',
+          }
+        )
+        let result = await response.json()
+
+        let list = result?.list
+        if (list) {
+          let first = list[0]
+
+          if (first) {
+            pageData = first
+          }
+        }
+      }
       //
     }
+
+    // //
+    // let domainMapping = false
+
+    // try {
+    //   let endPoint = UserEndPoints[process.env.NODE_ENV]
+    //   let response = await fetch(`${endPoint}/domain-of-sites`, {
+    //     method: 'POST',
+    //     body: JSON.stringify({
+    //       domain: context?.req?.headers?.host || '',
+    //     }),
+    //   })
+
+    //   let data = await response.json()
+
+    //   if (response.ok) {
+    //     domainMapping = data
+    //   }
+    // } catch (e) {
+    //   console.error(e)
+    //   console.error('seo')
+    // }
+
+    // console.log(siteOID, pageData)
+    return {
+      props: {
+        siteOID,
+        pageData,
+        title: 'Agape Town',
+      },
+    }
   }
-
-  // //
-  // let domainMapping = false
-
-  // try {
-  //   let endPoint = UserEndPoints[process.env.NODE_ENV]
-  //   let response = await fetch(`${endPoint}/domain-of-sites`, {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       domain: context?.req?.headers?.host || '',
-  //     }),
-  //   })
-
-  //   let data = await response.json()
-
-  //   if (response.ok) {
-  //     domainMapping = data
-  //   }
-  // } catch (e) {
-  //   console.error(e)
-  //   console.error('seo')
-  // }
-
-  return {
-    props: {
-      siteOID,
-      title: 'Agape Town',
-    },
-  }
-}
 
 export { DynamicPage }
 
