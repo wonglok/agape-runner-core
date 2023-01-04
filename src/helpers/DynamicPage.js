@@ -34,26 +34,23 @@ const DynamicPage = (props) => {
 
   let [page, setPage] = useState(false)
 
-  useEffect(() => {
-    if (!props.pageData) {
-      return
-    }
-    let run = async ({ pageID }) => {
-      let response = await fetch(
-        `${UserEndPoints[process.env.NODE_ENV]}/seo-page-get`,
-        {
-          body: JSON.stringify({
-            //
-            oid: pageID,
-          }),
-          method: 'POST',
-          mode: 'cors',
-        }
-      )
-      let result = await response.json()
-      setPage(result.item)
-    }
+  let run = async ({ pageID }) => {
+    let response = await fetch(
+      `${UserEndPoints[process.env.NODE_ENV]}/seo-page-get`,
+      {
+        body: JSON.stringify({
+          //
+          oid: pageID,
+        }),
+        method: 'POST',
+        mode: 'cors',
+      }
+    )
+    let result = await response.json()
+    setPage(result?.item)
+  }
 
+  useEffect(() => {
     //
     if (props?.pageData?.oid) {
       run({ pageID: props?.pageData?.oid })
@@ -65,7 +62,9 @@ const DynamicPage = (props) => {
   if (!props.pageData?.oid) {
     return (
       <group>
-        <Text fontSize={0.5}>Not Found</Text>
+        <Text position={[0, 1, 0]} fontSize={0.5}>
+          Page Not Found
+        </Text>
       </group>
     )
   }
@@ -85,7 +84,7 @@ const DynamicPage = (props) => {
         </group>
       )}
 
-      <Environment background={true} preset='apartment'></Environment>
+      <Environment background={false} preset='apartment'></Environment>
 
       {/* <Box
         position={[3, 1, 1]}
