@@ -23,7 +23,7 @@ export function PGSites({ content }) {
             subTitle='My Metaverse Sites'
             bgImage='/brand/avatar.webp'
             bgOffsetY={15}
-            // bar={<div className='pb-1'>Yo</div>}
+            bar={<div className='pb-1'></div>}
           ></SectionHeader>
           <AllSites></AllSites>
         </SmartDrawer>

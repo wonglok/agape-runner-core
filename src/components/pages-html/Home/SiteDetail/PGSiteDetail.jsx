@@ -64,13 +64,12 @@ export function PGSiteDetail({ siteID }) {
                   }
                   bgImage='/img/blue-green.svg'
                   bgOffsetY={50}
-                  // bar={
-                  //   <div>
-                  //     {/*  */}
-
-                  //     {/*  */}
-                  //   </div>
-                  // }
+                  bar={
+                    <div>
+                      {/*  */}
+                      {/*  */}
+                    </div>
+                  }
                 ></SectionHeader>
                 {/*  */}
                 <div className='h-6'></div>
