@@ -26,6 +26,14 @@ import { UserEndPoints } from './UserEndPoints'
 const DynamicPage = (props) => {
   //
 
+  // console.log(props)
+
+  //pageData
+
+  // if (!props.pageData?.oid) {
+  //   return <group></group>
+  // }
+
   return (
     <>
       <group>
@@ -61,6 +69,7 @@ const DynamicPage = (props) => {
           .copy(
             //
             {
+              //
               x: 0.6250860183367339,
               y: 4.573492821328801,
               z: -9.505888938903809,
