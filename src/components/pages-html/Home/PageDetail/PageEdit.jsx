@@ -1,6 +1,6 @@
 import { useSnapshot } from 'valtio'
 import { SiteStateData } from '../aws/SiteState'
-
+import { updatePage } from '../aws/page-aws'
 export function PageEdit() {
   let siteData = useSnapshot(SiteStateData)
 
@@ -16,8 +16,43 @@ export function PageEdit() {
           <div></div>
 
           {/*  */}
+          <div>
+            <TextEntries name={'colliderURL'}></TextEntries>
+          </div>
+          <div>
+            <TextEntries name={'mapURL'}></TextEntries>
+          </div>
         </div>
       </div>
     </div>
+  )
+}
+
+function TextEntries({ name = 'colliderURL' }) {
+  let siteData = useSnapshot(SiteStateData)
+  let pageRoot = siteData.page || {}
+  return (
+    <>
+      <input
+        className='p-2 my-2 border border-r-0 appearance-none w-52 rounded-l-xl'
+        type={'text'}
+        defaultValue={pageRoot[name] || ''}
+        onInput={(ev) => {
+          SiteStateData.page = SiteStateData.page || {}
+          SiteStateData.page[name] = ev.target.value
+        }}
+      ></input>
+      <button
+        onClick={async (ev) => {
+          //
+          ev.target.innerText = 'Loading'
+          await updatePage({ object: pageRoot })
+          ev.target.innerText = 'Save'
+        }}
+        className='w-24 px-3 py-2 border rounded-r-xl'
+      >
+        Save
+      </button>
+    </>
   )
 }

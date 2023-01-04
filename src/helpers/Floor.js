@@ -1,5 +1,5 @@
 import { EffectNodeRuntime } from '@/effectnode/component/EffectNodeRuntime'
-import { useGLTF } from '@react-three/drei'
+import { CubeCamera, useEnvironment, useGLTF } from '@react-three/drei'
 // import { useFrame, useThree } from '@react-three/fiber'
 import anime from 'animejs'
 import { Children, useEffect, useMemo, useRef, useState } from 'react'
@@ -16,11 +16,14 @@ import { Children, useEffect, useMemo, useRef, useState } from 'react'
 import { screenOpacity } from './GLOverlayEffect'
 import { useMultiverse } from './useMultiverse'
 import { WalkerCam } from './collider/WalkerCamera'
-import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
-import { Vector3 } from 'three'
+// import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
+// import { Vector3 } from 'three'
+// import { useThree } from '@react-three/fiber'
 
-let ttt = 0
+// let ttt = 0
 export function Floor({
+  colliderURL = `/scene/2022-12-28/os-effect.glb`,
+  mapURL = `/scene/2022-12-28/os-effect.glb`,
   url,
   initPos = [0, 1.52, -5],
   lookAt = [0, 1, 0],
@@ -33,7 +36,8 @@ export function Floor({
   // let scene = useThree((s) => s.scene)
   // let gl = useThree((s) => s.gl)
 
-  let glb = useGLTF(url)
+  let glb = useGLTF(colliderURL)
+  let glbMap = useGLTF(mapURL)
 
   mapDecors({ mapScene: glb.scene })
 
@@ -101,8 +105,19 @@ export function Floor({
           console.log(ev.object)
         }}
       >
-        <primitive object={glb.scene}></primitive>
+        <primitive object={glbMap.scene}></primitive>
       </group>
+      {/* <group position={[0, 15, -20]}>
+        {glbMap?.scene && (
+          <CubeCamera frames={1}>
+            {(env) => {
+              env.generateMipmaps = true
+              scene.environment = env
+              return null
+            }}
+          </CubeCamera>
+        )}
+      </group> */}
       {/* {glbFnc({ glb })} */}
       <EffectNodeRuntime key={url} glbObject={glb}></EffectNodeRuntime>
     </group>

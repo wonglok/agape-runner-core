@@ -2,6 +2,7 @@ import {
   Box,
   // Box,
   Environment,
+  Text,
   // PerspectiveCamera,
   // Text,
   // Trail,
@@ -16,6 +17,7 @@ import anime from 'animejs'
 import { screenOpacity } from '@/helpers/GLOverlayEffect'
 import { Vector3 } from 'three'
 import { UserEndPoints } from './UserEndPoints'
+import { Suspense, useEffect, useState } from 'react'
 
 // import { useMultiverse } from '@/helpers/useMultiverse'
 // import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
@@ -30,23 +32,62 @@ const DynamicPage = (props) => {
 
   //pageData
 
-  // if (!props.pageData?.oid) {
-  //   return <group></group>
-  // }
+  let [page, setPage] = useState(false)
+
+  useEffect(() => {
+    if (!props.pageData) {
+      return
+    }
+    let run = async ({ pageID }) => {
+      let response = await fetch(
+        `${UserEndPoints[process.env.NODE_ENV]}/seo-page-get`,
+        {
+          body: JSON.stringify({
+            //
+            oid: pageID,
+          }),
+          method: 'POST',
+          mode: 'cors',
+        }
+      )
+      let result = await response.json()
+      setPage(result.item)
+    }
+
+    //
+    if (props?.pageData?.oid) {
+      run({ pageID: props?.pageData?.oid })
+    }
+    //seo-page-get
+  }, [props.pageData])
+
+  //
+  if (!props.pageData?.oid) {
+    return (
+      <group>
+        <Text fontSize={0.5}>Not Found</Text>
+      </group>
+    )
+  }
 
   return (
     <>
-      <group>
-        <Floor
-          initPos={[0, 1.5, 5]}
-          lookAt={[0, 1.0, 0]}
-          url={`/scene/2022-12-28/os-effect.glb`}
-        ></Floor>
-      </group>
+      {page && page.colliderURL && page.mapURL && (
+        <group>
+          <Suspense fallback={null}>
+            <Floor
+              initPos={[0, 2.5, 0]}
+              lookAt={[0, 2.5, -1]}
+              colliderURL={`${page.colliderURL}`}
+              mapURL={`${page.mapURL}`}
+            ></Floor>
+          </Suspense>
+        </group>
+      )}
 
       <Environment background={true} preset='apartment'></Environment>
 
-      <Box
+      {/* <Box
         position={[3, 1, 1]}
         onClick={() => {
           //
@@ -62,16 +103,16 @@ const DynamicPage = (props) => {
         }}
       >
         <meshStandardMaterial color={'#ff0000'}></meshStandardMaterial>
-      </Box>
+      </Box> */}
 
-      <group
+      {/* <group
         position={new Vector3()
           .copy(
             //
             {
               //
               x: 0.6250860183367339,
-              y: 4.573492821328801,
+              y: 5.573492821328801,
               z: -9.505888938903809,
             }
           )
@@ -79,7 +120,7 @@ const DynamicPage = (props) => {
         scale={0.12}
       >
         <theVortex></theVortex>
-      </group>
+      </group> */}
 
       {/*  */}
       {/*  */}
