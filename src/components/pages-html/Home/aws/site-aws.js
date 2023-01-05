@@ -12,6 +12,10 @@ export const getSiteIDPageEdit = (siteID) => {
   return `/creator-portal/sites/${siteID}/edit`
 }
 
+export const getSiteIDMediaLib = (siteID) => {
+  return `/creator-portal/sites/${siteID}/media`
+}
+
 export const getSiteIDSubPageEdit = (siteID, pageID) => {
   return `/creator-portal/sites/${siteID}/preview/${pageID}`
 }

@@ -43,8 +43,6 @@ export function SitePagesManager() {
   )
 }
 
-//
-
 let updatePageHandler = async ({ object, siteID }) => {
   await updatePage({ object: object })
   await reloadPages({
