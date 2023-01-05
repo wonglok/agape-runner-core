@@ -19,7 +19,7 @@ export function PGSites({ content }) {
         <LeftMenu></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='My Sites'
+            title='All My Sites'
             subTitle='My Metaverse Sites'
             bgImage='/brand/avatar.webp'
             bgOffsetY={15}

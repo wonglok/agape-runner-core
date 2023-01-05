@@ -18,6 +18,7 @@ import { Floor } from '@/helpers/Floor'
 // import { Vector3 } from 'three'
 import { UserEndPoints } from './UserEndPoints'
 import { Suspense, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 // import { useMultiverse } from '@/helpers/useMultiverse'
 // import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
@@ -27,6 +28,7 @@ import { Suspense, useEffect, useState } from 'react'
 // import dynamic from 'next/dynamic'
 const DynamicPage = (props) => {
   //
+  let router = useRouter()
 
   // console.log(props)
 
@@ -58,7 +60,6 @@ const DynamicPage = (props) => {
     //seo-page-get
   }, [props.pageData])
 
-  //
   if (!props.pageData?.oid) {
     return (
       <group>
@@ -130,11 +131,11 @@ const DynamicPage = (props) => {
 DynamicPage.layout = 'Multiverse'
 
 export const getServerSidePropsForDynamicPage =
-  ({ isIndex }) =>
+  ({ isIndex, siteRoot }) =>
   async (context) => {
     let siteOID = null
-    let pageData = {}
-
+    let pageData = null
+    //
     try {
       // preview route
       if (context?.params?.siteOID) {
@@ -287,8 +288,10 @@ export const getServerSidePropsForDynamicPage =
     // }
 
     // console.log(siteOID, pageData)
+
     return {
       props: {
+        siteRoot,
         siteOID,
         pageData,
         title: 'Agape Town',

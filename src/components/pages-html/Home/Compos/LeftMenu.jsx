@@ -37,7 +37,7 @@ export function LeftMenu({ siteID }) {
   return (
     <>
       <aside
-        className={`fixed  shadow-2xl shadow-slate-400 inset-y-0 flex-wrap items-center justify-between block w-full p-0  my-4 ml-4 overflow-y-auto antialiased bg-white border-0 max-w-62.5 ease-nav-brand z-990  rounded-2xl transition-transform duration-200 xl:left-0 xl:bg-transparent ${
+        className={`fixed  shadow-2xl shadow-slate-400 inset-y-0 flex-wrap items-center justify-between block w-full p-0  my-4 ml-4 overflow-x-auto overflow-y-auto antialiased bg-white border-0 max-w-62.5 ease-nav-brand z-990  rounded-2xl transition-transform duration-200 xl:left-0 xl:bg-transparent ${
           gui.menuOpen ? `  ` : ` `
         }`}
         style={{
@@ -75,7 +75,11 @@ export function LeftMenu({ siteID }) {
             {[
               //
               { oid: getID(), link: `/creator-portal`, name: 'Dashboard' },
-              { oid: getID(), link: `/creator-portal/sites`, name: 'My Sites' },
+              {
+                oid: getID(),
+                link: `/creator-portal/sites`,
+                name: 'All My Sites',
+              },
             ].map((item) => {
               //
               return (
@@ -105,7 +109,7 @@ export function LeftMenu({ siteID }) {
                 </li>
               )
             })}
-            {/*  */}
+
             {siteID && (
               <>
                 <SitePagesLink siteID={siteID}></SitePagesLink>

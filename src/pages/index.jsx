@@ -5,6 +5,7 @@ import {
 
 export const getServerSideProps = getServerSidePropsForDynamicPage({
   isIndex: true,
+  siteRoot: true,
 })
 
 export default DynamicPage
