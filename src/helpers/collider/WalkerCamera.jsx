@@ -11,7 +11,7 @@ export function WalkerCam({ collider }) {
   useFrame(({ raycaster, mouse, camera }, dt) => {
     //
     if (collider.geometry) {
-      if ('ontouchstart' in window) {
+      if ('ontouchstatr' in window) {
         raycaster.setFromCamera({ x: 0, y: 0 }, camera)
       } else {
         raycaster.setFromCamera(mouse, camera)

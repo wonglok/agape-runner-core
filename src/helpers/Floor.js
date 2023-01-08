@@ -107,6 +107,7 @@ export function Floor({
       >
         <primitive object={glbMap.scene}></primitive>
       </group>
+
       {/* <group position={[0, 15, -20]}>
         {glbMap?.scene && (
           <CubeCamera frames={1}>

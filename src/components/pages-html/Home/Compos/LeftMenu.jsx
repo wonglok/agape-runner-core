@@ -74,12 +74,12 @@ export function LeftMenu({ siteID }) {
             {/*  */}
             {[
               //
-              { oid: getID(), link: `/creator-portal`, name: 'Dashboard' },
-              {
-                oid: getID(),
-                link: `/creator-portal/sites`,
-                name: 'All My Sites',
-              },
+              { oid: getID(), link: `/creator-portal`, name: 'All My Sites' },
+              // {
+              //   oid: getID(),
+              //   link: `/creator-portal/sites`,
+              //   name: 'All My Sites',
+              // },
             ].map((item) => {
               //
               return (

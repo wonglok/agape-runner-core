@@ -27,10 +27,7 @@ export function WelcomeBack() {
                     AGAPE METAVERSE PORTAL
                   </a>
 
-                  <div
-                    navbar-menu
-                    className='items-center flex-grow overflow-hidden transition-all duration-500 ease-soft lg-max:max-h-0 basis-full lg:flex lg:basis-auto'
-                  >
+                  <div className='items-center flex-grow overflow-hidden transition-all duration-500 ease-soft lg-max:max-h-0 basis-full lg:flex lg:basis-auto'>
                     <div className='flex flex-col pl-0 mx-auto mb-0 list-none lg:flex-row xl:ml-auto '></div>
                     {false && (
                       <ul className='flex flex-col pl-0 mx-auto mb-0 list-none lg:flex-row xl:ml-auto'>

@@ -18,7 +18,7 @@ import { Floor } from '@/helpers/Floor'
 // import { Vector3 } from 'three'
 import { UserEndPoints } from './UserEndPoints'
 import { Suspense, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 // import { useMultiverse } from '@/helpers/useMultiverse'
 // import { TheVortex } from '@/components/canvas/TheVortex/TheVortex'
@@ -27,12 +27,7 @@ import { useRouter } from 'next/router'
 // import { Vector3 } from 'three'
 // import dynamic from 'next/dynamic'
 const DynamicPage = (props) => {
-  //
-  let router = useRouter()
-
-  // console.log(props)
-
-  //pageData
+  // let router = useRouter()
 
   let [page, setPage] = useState(false)
 
@@ -85,7 +80,12 @@ const DynamicPage = (props) => {
         </group>
       )}
 
-      <Environment background={false} preset='apartment'></Environment>
+      {page && page.envMapURL && (
+        <Environment
+          background={page.enableBackground}
+          files={[page.envMapURL]}
+        ></Environment>
+      )}
 
       {/* <Box
         position={[3, 1, 1]}
@@ -121,20 +121,17 @@ const DynamicPage = (props) => {
       >
         <theVortex></theVortex>
       </group> */}
-
-      {/*  */}
-      {/*  */}
-      {/*  */}
     </>
   )
 }
 DynamicPage.layout = 'Multiverse'
 
 export const getServerSidePropsForDynamicPage =
-  ({ isIndex, siteRoot }) =>
+  ({ isIndex }) =>
   async (context) => {
     let siteOID = null
     let pageData = null
+
     //
     try {
       // preview route
@@ -151,6 +148,7 @@ export const getServerSidePropsForDynamicPage =
           //
           let slug = host.replace('.at.agape.town', '') || ''
 
+          //
           let response = await fetch(
             `${UserEndPoints[process.env.NODE_ENV]}/seo-subdomain-site`,
             {
@@ -162,7 +160,10 @@ export const getServerSidePropsForDynamicPage =
               mode: 'cors',
             }
           )
+
+          //
           let result = await response.json()
+
           //
           let list = result?.list
           if (list) {
@@ -172,12 +173,12 @@ export const getServerSidePropsForDynamicPage =
               siteOID = first.oid
             }
           }
+
+          //
         } else {
           //
 
           let slug = host + '' || ''
-
-          // console.log(slug)
 
           let response = await fetch(
             `${UserEndPoints[process.env.NODE_ENV]}/seo-userdomain-site`,
@@ -218,6 +219,7 @@ export const getServerSidePropsForDynamicPage =
               mode: 'cors',
             }
           )
+
           let result = await response.json()
 
           let list = result?.list
@@ -226,7 +228,6 @@ export const getServerSidePropsForDynamicPage =
 
             if (first) {
               pageData = first
-              // console.log(pageData)
             }
           }
         } else {
@@ -244,6 +245,7 @@ export const getServerSidePropsForDynamicPage =
               mode: 'cors',
             }
           )
+
           let result = await response.json()
 
           let list = result?.list
@@ -257,11 +259,11 @@ export const getServerSidePropsForDynamicPage =
         }
         //
       }
-
       //
     } catch (e) {
       //
       console.error(e)
+      //
     } finally {
       //
     }
@@ -291,9 +293,8 @@ export const getServerSidePropsForDynamicPage =
 
     return {
       props: {
-        siteRoot,
-        siteOID,
-        pageData,
+        siteOID: siteOID || false,
+        pageData: pageData || {},
         title: 'Agape Town',
       },
     }

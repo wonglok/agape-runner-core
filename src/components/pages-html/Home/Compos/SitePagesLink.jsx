@@ -31,7 +31,7 @@ export function SitePagesLink({ siteID }) {
           My Metaverse
         </h6>
       </li>
-      <li key={`site-manager-media`} className='w-full mt-0.5'>
+      <li key={`products-and-marketing`} className='w-full mt-0.5'>
         <Link href={`${getSiteIDMediaLib(siteID)}`}>
           <div className='flex items-center px-4 mx-4 my-0 text-sm cursor-pointer hover:underline underline-offset-4 py-2.7 ease-nav-brand whitespace-nowrap transition-colors'>
             <svg
@@ -54,14 +54,42 @@ export function SitePagesLink({ siteID }) {
               }
             >
               {/*  */}
-              Files & Media
+              Products & Marketing
               {/*  */}
             </span>
           </div>
         </Link>
       </li>
 
-      <li key={`site-manager-home`} className='w-full mt-0.5'>
+      <li key={`all-my-files`} className='w-full mt-0.5'>
+        <Link href={`${getSiteIDMediaLib(siteID)}`}>
+          <div className='flex items-center px-4 mx-4 my-0 text-sm cursor-pointer hover:underline underline-offset-4 py-2.7 ease-nav-brand whitespace-nowrap transition-colors'>
+            <svg
+              width='24'
+              height='24'
+              xmlns='http://www.w3.org/2000/svg'
+              fillRule='evenodd'
+              clipRule='evenodd'
+              className='rounded-full shadow-lg shadow-cyan-200 fill-slate-800'
+            >
+              <path d='M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm-3 5.753l6.44 5.247-6.44 5.263.678.737 7.322-6-7.335-6-.665.753z' />
+            </svg>
+            <span
+              className={
+                'ml-1 opacity-100 pointer-events-none duration-300 ease-soft ' +
+                getActiveClass(
+                  'text-slate-700 underline ',
+                  `${getSiteIDMediaLib(siteID)}`
+                )
+              }
+            >
+              All My Files
+            </span>
+          </div>
+        </Link>
+      </li>
+
+      <li key={`seo`} className='w-full mt-0.5'>
         <Link href={`${getSiteIDPageEdit(siteID)}`}>
           <div className='flex items-center px-4 mx-4 my-0 text-sm cursor-pointer hover:underline underline-offset-4 py-2.7 ease-nav-brand whitespace-nowrap transition-colors'>
             <svg
@@ -83,9 +111,7 @@ export function SitePagesLink({ siteID }) {
                 )
               }
             >
-              {/*  */}
-              Pages & Domain
-              {/*  */}
+              Domain Pages SEO
             </span>
           </div>
         </Link>
@@ -94,15 +120,15 @@ export function SitePagesLink({ siteID }) {
       {/*  */}
       {/*  */}
       {/*  */}
-      {/* [
-        //
+      {/*
+      //
+      [
         {
           oid: getID(),
           link: `${getSiteIDSubPageEdit(siteID, 'mYpageIDYo')}`,
           name: 'Home',
         },
       ]
-
       */}
       {siteData.pages.map((item) => {
         //

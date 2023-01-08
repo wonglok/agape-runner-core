@@ -16,6 +16,7 @@ import { GateState } from '@/auth/GateState'
 import { useSnapshot } from 'valtio'
 import TitleHeader from '@/config'
 import { ConfirmProvider } from 'material-ui-confirm'
+import { HTMLPage } from '@/components/layout/HTMLPage'
 
 // import { useState } from 'react'
 //Suspense, useMemo,
@@ -46,13 +47,13 @@ function App({ Component, pageProps = { title: 'index' } }) {
   // let setLoading = useReady((s) => s.setLoading)
 
   // useEffect(() => {
-  //   if (Component.layout === 'Landing') {
+  //   if (pageProps.layout === 'Landing') {
   //     // setLoading(true)
   //   }
-  //   // if (Component.layout === 'Multiverse') {
+  //   // if (pageProps.layout === 'Multiverse') {
   //   //   setLoading(true)
   //   // }
-  //   // if (Component.layout === 'PromotePage') {
+  //   // if (pageProps.layout === 'PromotePage') {
   //   //   setLoading(true)
   //   // }
   // }, [])
@@ -79,37 +80,44 @@ function App({ Component, pageProps = { title: 'index' } }) {
 
         {router && (
           <>
-            {Component.layout === 'Multiverse' && (
+            {pageProps.layout === 'metaverse' ||
+            Component.layout === 'Multiverse' ? (
               <>
                 <Multiverse visible={ready} router={router} {...pageProps}>
                   <Component router={router} {...pageProps}></Component>
                 </Multiverse>
-                <Loader />
               </>
+            ) : (
+              <Component router={router} {...pageProps}></Component>
             )}
 
-            {Component.layout === 'PromotePage' && (
+            {/*
+            {pageProps.layout === 'html' && (
+              <>
+                <HTMLPage router={router} {...pageProps}>
+                  <Component router={router} {...pageProps}></Component>
+                </HTMLPage>
+              </>
+            )} */}
+
+            {/* {pageProps.layout === 'PromotePage' && (
               <PromotePage router={router} {...pageProps}>
                 <Component router={router} {...pageProps}></Component>
               </PromotePage>
             )}
 
-            {Component.layout === 'Landing' && (
+            {pageProps.layout === 'Landing' && (
               <LandingPage router={router} {...pageProps}>
                 <Component router={router} {...pageProps}></Component>
               </LandingPage>
-            )}
+            )} */}
 
-            {typeof Component.layout === 'undefined' && (
-              <Component router={router} {...pageProps}></Component>
-            )}
-
-            {typeof Component.SEOContent !== 'undefined' && (
+            {/* {typeof Component.SEOContent !== 'undefined' && (
               <Component.SEOContent
                 router={router}
                 {...pageProps}
               ></Component.SEOContent>
-            )}
+            )} */}
 
             <span
               style={{
