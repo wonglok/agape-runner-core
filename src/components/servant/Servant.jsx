@@ -14,7 +14,6 @@ export function Servant() {
     return clone(glb.scene)
   }, [glb.scene])
 
-  //
   return (
     <>
       <primitive object={glbScene}></primitive>
