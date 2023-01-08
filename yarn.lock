@@ -2100,6 +2100,11 @@
     three-stdlib "^2.12.1"
     zustand "^3.7.1"
 
+"@remote-ui/rpc@^1.2.5":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@remote-ui/rpc/-/rpc-1.4.1.tgz#c9a5b69819710c7e35392272c56df6e76322356f"
+  integrity sha512-YLjZqAeTolxLPvH59jO1W5/A1M0uK8IDtbfnrU8LXEaUPn9kmE7w5z2Isa+Do5m+YjTCn4y5bNHBsUTTsmhO0w==
+
 "@rollup/plugin-babel@^5.2.0":
   version "5.3.1"
   resolved "https://registry.npmjs.org/@rollup/plugin-babel/-/plugin-babel-5.3.1.tgz#04bc0608f4aa4b2e4b1aebf284344d0f68fda283"
@@ -2152,6 +2157,32 @@
   version "1.1.4"
   resolved "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.1.4.tgz"
   integrity sha512-LwzQKA4vzIct1zNZzBmRKI9QuNpLgTQMEjsQLf3BXuGYb3QPTP4Yjf6mkdX+X1mYttZ808QpOwAzZjv28kq7DA==
+
+"@shopify/react-hooks@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@shopify/react-hooks/-/react-hooks-3.0.2.tgz#6c55be09216cd889c76a9c84f51c32d8a3af6251"
+  integrity sha512-zfo4vgB5k4jwOWmwJJxaYkDRJs/Yf+D7RlxVZDmZukiXqD/42m0wP3az3+wq74AjPf3PyG8GcOl2Z3d79Y4nEw==
+
+"@shopify/react-web-worker@^5.0.6":
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/@shopify/react-web-worker/-/react-web-worker-5.0.6.tgz#5360a6927b78a143e4a114b8299cb348b67f5b26"
+  integrity sha512-kp0AddXPcW3HGV5w5KmG2KIFXlV4Nm7/Zf8fZAvWU7IQlwqsucW7M8bC7bSLWGqV6uJmdpsxnPvx/g9S3uVF0w==
+  dependencies:
+    "@shopify/react-hooks" "^3.0.2"
+    "@shopify/useful-types" "^5.1.1"
+    "@shopify/web-worker" "^5.0.1"
+
+"@shopify/useful-types@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@shopify/useful-types/-/useful-types-5.1.1.tgz#83e7b951dc360910925d62d107d39939536b7b8c"
+  integrity sha512-Lnzo84EsrbdO54togslYiwT4EVGDuQW96rRKSEJhkkluyirEjx61aw0SEzZOkNy6VOi5z6CdTBo/vlsnXIhV1Q==
+
+"@shopify/web-worker@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@shopify/web-worker/-/web-worker-5.0.1.tgz#54b377fae5522b405e004c4971b3924a7b361295"
+  integrity sha512-fGNcUkzqA9h2dD/3/zBd2YEPCXePN9Mmy53alb6DgpUq8nEgEE1yxj9+PfDi7RsUM+T36d8/QXgReOZ4NvlxuA==
+  dependencies:
+    "@remote-ui/rpc" "^1.2.5"
 
 "@stitches/react@1.2.8":
   version "1.2.8"

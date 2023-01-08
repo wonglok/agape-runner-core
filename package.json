@@ -35,6 +35,7 @@
     "@react-three/fiber": "^8.10.0",
     "@react-three/postprocessing": "^2.6.2",
     "@react-three/xr": "^5.0.4",
+    "@shopify/react-web-worker": "^5.0.6",
     "@tensorflow-models/hand-pose-detection": "^2.0.0",
     "@tensorflow/tfjs-backend-wasm": "^3.9.0",
     "@tensorflow/tfjs-backend-webgl": "^3.9.0",
