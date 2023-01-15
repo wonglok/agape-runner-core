@@ -48,7 +48,7 @@ let installImportMapOnce = async () => {
 }
 
 //
-let importPackages = async (myPackages = []) => {
+let importNPM = async (myPackages = []) => {
   //
   await installImportMapOnce()
 
@@ -72,4 +72,4 @@ let importPackages = async (myPackages = []) => {
     })
 }
 
-export { importPackages }
+export { importNPM }
