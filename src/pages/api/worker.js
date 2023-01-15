@@ -8,7 +8,6 @@ export default async function Worker(req, res2) {
     self.onmessage = (ev) => {
 
       console.log(ev.data)
-
       self.postMessage(123123)
     }
 

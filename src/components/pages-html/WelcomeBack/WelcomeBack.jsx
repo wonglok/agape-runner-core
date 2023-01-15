@@ -5,8 +5,8 @@ import {
   loginGuestLocal,
 } from '@/auth/GateMethods'
 import { StylesDashboard } from '../Home/Compos/StylesDashboard'
-import { useEffect } from 'react'
-import { SESSION_REDIRECT_KEY } from '@/auth/GateConst'
+// import { useEffect } from 'react'
+// import { SESSION_REDIRECT_KEY } from '@/auth/GateConst'
 
 export function WelcomeBack() {
   return (

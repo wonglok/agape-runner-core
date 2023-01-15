@@ -3884,6 +3884,11 @@ es-abstract@^1.19.0, es-abstract@^1.19.1, es-abstract@^1.19.2, es-abstract@^1.19
     string.prototype.trimstart "^1.0.5"
     unbox-primitive "^1.0.2"
 
+es-module-shims@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/es-module-shims/-/es-module-shims-1.6.3.tgz#14286d3bc51945738139f6aa20f01d0b9a652a9a"
+  integrity sha512-+BQyPRZczeV9JH/17X1nu1GbD+SZvdPKD4Nrt2S61J94A2yc8DpWBlzv9KgF9cOXUZKifEShy8/qLelSVNo/rA==
+
 es-shim-unscopables@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/es-shim-unscopables/-/es-shim-unscopables-1.0.0.tgz"

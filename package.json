@@ -44,6 +44,7 @@
     "@thi.ng/geom-resample": "^2.1.25",
     "animejs": "^3.2.1",
     "babel-plugin-glsl": "^1.0.0",
+    "es-module-shims": "^1.6.3",
     "ethers": "^5.7.2",
     "glsl-random": "^0.0.5",
     "idb-keyval": "^6.2.0",
