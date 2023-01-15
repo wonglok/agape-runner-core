@@ -25,6 +25,10 @@ function App({ Component, pageProps = { title: 'index' } }) {
   const router = useRouter()
   const setRouter = useSystemStore((s) => s.setRouter)
 
+  //
+
+  //
+
   useEffect(() => {
     setRouter({ router })
   }, [router, setRouter])
