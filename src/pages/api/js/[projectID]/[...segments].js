@@ -22,9 +22,10 @@ const cors = initMiddleware(
 export default async function Love(req, res) {
   await cors(req, res)
 
+  let projectID = req.query.projectID
   let segments = req.query.segments
 
-  console.log(segments)
+  console.log(projectID, segments)
 
   res.setHeader(`Content-Type`, `application/javascript`)
   res.status(200).send(`
@@ -35,11 +36,13 @@ export class Yo {
         this.a = 1;
     }
 }
+
 window.process = {
     env: {
         NODE_ENV: 'production'
     }
 };
+
 window.importNPM([
     '@react-three/fiber'
 ]).then((res)=>{

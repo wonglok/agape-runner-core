@@ -2,21 +2,21 @@ import '@/styles/index.css'
 
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import Header from '@/config'
-import { Multiverse } from '@/components/layout/Multiverse'
+// import Header from '@/config'
+// import { Multiverse } from '@/components/layout/Multiverse'
 import { useSystemStore } from '@/helpers/useSystemStore'
-import { PromotePage } from '@/components/layout/PromotePage'
-import { Loader } from '@react-three/drei'
+// import { PromotePage } from '@/components/layout/PromotePage'
+// import { Loader } from '@react-three/drei'
 import { ToastContainer } from 'react-toastify'
-import { LandingPage } from '@/components/layout/LandingPage'
-import { useReady } from '@/helpers/useScrollStore'
+// import { LandingPage } from '@/components/layout/LandingPage'
+// import { useReady } from '@/helpers/useScrollStore'
 import { hydration } from '@/auth/GateMethods'
 
-import { GateState } from '@/auth/GateState'
-import { useSnapshot } from 'valtio'
+// import { GateState } from '@/auth/GateState'
+// import { useSnapshot } from 'valtio'
 import TitleHeader from '@/config'
 import { ConfirmProvider } from 'material-ui-confirm'
-import { HTMLPage } from '@/components/layout/HTMLPage'
+// import { HTMLPage } from '@/components/layout/HTMLPage'
 
 // import { useState } from 'react'
 //Suspense, useMemo,
@@ -77,10 +77,12 @@ function App({ Component, pageProps = { title: 'index' } }) {
         {/*  */}
         {/*  */}
         {pageProps.title && <TitleHeader title={pageProps.title} />}
+        {<Component router={router} {...pageProps}></Component>}
 
         {router && (
           <>
-            {pageProps.layout === 'metaverse' ||
+            {/*  */}
+            {/* {pageProps.layout === 'metaverse' ||
             Component.layout === 'Multiverse' ? (
               <>
                 <Multiverse visible={ready} router={router} {...pageProps}>
@@ -89,7 +91,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
               </>
             ) : (
               <Component router={router} {...pageProps}></Component>
-            )}
+            )} */}
 
             {/*
             {pageProps.layout === 'html' && (
@@ -143,6 +145,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
           </>
         )}
       </ConfirmProvider>
+
       {/* {loading && (
         <div
           className='absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-30 backdrop-blur-md'

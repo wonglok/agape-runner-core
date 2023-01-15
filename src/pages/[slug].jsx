@@ -49,7 +49,7 @@ export default function SlugPage() {
       ></Script>
       <Script
         id='initloadd'
-        src={'/api/js/fafa/yoyo2.js'}
+        src={'/api/js/projectIDAAAAAAAAAA/package-yoyo/main.js'}
         type='module'
       ></Script>
       {/*  */}

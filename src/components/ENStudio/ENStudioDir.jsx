@@ -29,7 +29,6 @@ window.importNPM(['@react-three/fiber']).then((res) => {
     </Canvas>
   );
 
-
   //
 
 })
