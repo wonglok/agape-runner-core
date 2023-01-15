@@ -1,5 +1,5 @@
 // import { PGHome } from '@/components/pages-html/Home/Dash/PGHome'
-import { ENStudio } from '@/components/en-studio/ENStudio'
+import { ENStudioDir } from '@/components/ENStudio/ENStudioDir'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
@@ -7,7 +7,7 @@ export default function Avatars() {
     <RedirGateHTML redirect='/effectnode'>
       {/* <AvaLand></AvaLand> */}
       {/* <PGHome></PGHome> */}
-      <ENStudio></ENStudio>
+      <ENStudioDir></ENStudioDir>
     </RedirGateHTML>
   )
 }
