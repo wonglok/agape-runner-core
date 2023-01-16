@@ -16,7 +16,7 @@ import { SiteStateData } from '../aws/SiteState'
 
 export function CreationDetails({ content }) {
   let gs = useSnapshot(GateState)
-  let ss = useSnapshot(SiteStateData)
+  let ssd = useSnapshot(SiteStateData)
   let {
     query: { folderID },
   } = useRouter()
@@ -27,10 +27,14 @@ export function CreationDetails({ content }) {
     //
     //
     fetchOneFolder({ oid: folderID }).then((data) => {
-      SiteStateData.folder = data.item
+      if (data?.item) {
+        SiteStateData.folder = data?.item
+      }
     })
     //
   }, [folderID])
+
+  //
   return (
     <>
       <DesktopOnly>
@@ -38,14 +42,14 @@ export function CreationDetails({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title={SiteStateData.folder?.displayName || '...'}
+            title={ssd?.folder?.displayName || '...'}
             subTitle='Snapshots Management'
             bgImage='/brand/blue-green-grad.svg'
             bgOffsetY={15}
             bar={
               <>
-                {SiteStateData.folder && (
-                  <UpdateFolder object={SiteStateData.folder}></UpdateFolder>
+                {ssd.folder && (
+                  <UpdateFolder object={ssd.folder}></UpdateFolder>
                 )}
               </>
             }

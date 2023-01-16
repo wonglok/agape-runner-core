@@ -11,9 +11,7 @@ import { useRouter } from 'next/router'
 
 export function UpdateFolder({ object }) {
   //
-
   //
-
   return (
     <div className='pb-1'>
       <UpdateFolderName object={object}></UpdateFolderName>
