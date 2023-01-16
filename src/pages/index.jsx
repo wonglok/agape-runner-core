@@ -54,7 +54,7 @@ export default function SlugPage() {
   return (
     <>
       <div className='w-full h-full' ref={ref}></div>
-
+      {/*
       <Script
         id='react'
         src={'/static/react18/react.production.min.js'}
@@ -62,7 +62,7 @@ export default function SlugPage() {
       <Script
         id='react-dom'
         src={'/static/react18/react-dom.prod.min.js'}
-      ></Script>
+      ></Script> */}
       {/*  */}
 
       {/*  */}

@@ -23,18 +23,12 @@ const cors = initMiddleware(
 let ENV_STR = `
 window.process = {
     env: {
-        NODE_ENV: 'production'
+        NODE_ENV: 'development'
     }
 };
 `
 
 let CODE = `
-
-
-
-
-
-
 
 
 
