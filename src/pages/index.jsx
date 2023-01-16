@@ -48,7 +48,7 @@ export default function SlugPage() {
 
     //   console.log(ref.current)
     // })
-  }, [query?.slug])
+  }, [query, query.slug])
 
   //
   return (
