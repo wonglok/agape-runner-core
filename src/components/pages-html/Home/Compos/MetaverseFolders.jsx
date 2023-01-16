@@ -15,7 +15,7 @@ export function MetaverseFolders({}) {
   useEffect(() => {
     //
     fetchAllFolders({}).then((data) => {
-      SiteStateData.folders = data.list
+      SiteStateData.folders = data?.list || []
     })
   }, [])
   let gui = useSnapshot(GUIState)
