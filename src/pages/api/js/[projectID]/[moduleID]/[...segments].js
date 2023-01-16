@@ -42,6 +42,9 @@ let CODE = `
 
 
 
+
+
+
 console.log('running hello');
 export class Yo {
     constructor(){
@@ -101,9 +104,10 @@ export const init = async ({ domElement  })=>{
         anisotropy: 1.5,
         clearcoat: 1,
         clearcoatRoughness: 0.2,
-        envMapIntensity: 3
+        envMapIntensity: 3,
+        roughness: 0.4
     }))), /*#__PURE__*/ React.createElement(Environment, {
-        frames: Infinity,
+        frames: 1,
         preset: "city",
         resolution: 256,
         background: true,
