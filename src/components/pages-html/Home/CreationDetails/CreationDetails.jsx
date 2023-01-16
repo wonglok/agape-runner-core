@@ -11,11 +11,12 @@ import { useEffect, useState } from 'react'
 import { fetchOneFolder } from '../aws/folder-aws'
 import { useRouter } from 'next/router'
 import { MyPages } from './MyPages'
+import { UpdateFolder } from './UpdateFolder'
+import { SiteStateData } from '../aws/SiteState'
 
 export function CreationDetails({ content }) {
   let gs = useSnapshot(GateState)
-
-  let [folder, setFolder] = useState(false)
+  let ss = useSnapshot(SiteStateData)
   let {
     query: { folderID },
   } = useRouter()
@@ -23,7 +24,7 @@ export function CreationDetails({ content }) {
     //
     //
     fetchOneFolder({ oid: folderID }).then((data) => {
-      setFolder(data.item)
+      SiteStateData.folder = data.item
     })
     //
   }, [folderID])
@@ -34,11 +35,17 @@ export function CreationDetails({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title={folder?.displayName || '...'}
+            title={SiteStateData.folder?.displayName || '...'}
             subTitle='Snapshots Management'
             bgImage='/brand/blue-green-grad.svg'
             bgOffsetY={15}
-            bar={<></>}
+            bar={
+              <>
+                {SiteStateData.folder && (
+                  <UpdateFolder object={SiteStateData.folder}></UpdateFolder>
+                )}
+              </>
+            }
           ></SectionHeader>
           <MyPages></MyPages>
         </SmartDrawer>

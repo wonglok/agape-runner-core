@@ -24,6 +24,7 @@ export const SiteStateData = proxy<{
   pages: Page[]
   page: Page | undefined | null
   folders: Folder[]
+  folder: Folder | null | undefined
 }>({
   domains: [],
   pages: [],
@@ -31,6 +32,7 @@ export const SiteStateData = proxy<{
 
   ///!SECTION
   folders: [],
+  folder: undefined,
 })
 
 //

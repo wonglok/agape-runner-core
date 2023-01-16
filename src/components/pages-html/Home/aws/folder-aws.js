@@ -70,7 +70,7 @@ export async function fetchAllFolders({ reloadID = Math.random() }) {
   } catch (error) {
     console.error(error)
   } finally {
-    console.log('fetch all folders')
+    console.log('done fetchAllFolders')
   }
 }
 
@@ -104,10 +104,44 @@ export async function fetchOneFolder({ oid, reloadID = Math.random() }) {
   } catch (error) {
     console.error(error)
   } finally {
-    console.log('fetch all folders')
+    console.log('done fetchOneFolder')
   }
 }
 
 export function getFolderEditorURL(folder) {
   return `/admin/folders/${folder.oid}`
 }
+
+export async function updateOneFolder({ object, reloadID = Math.random() }) {
+  //
+  //
+  try {
+    let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+
+    if (!sToken) {
+      throw new Error('no sToken')
+    }
+
+    let ep = UserEndPoints[process.env.NODE_ENV]
+
+    let res = await fetch(`${ep}/folder-update?r=${reloadID}`, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        //
+        object,
+      }),
+      headers: {
+        Authorization: `Bearer ${sToken}`,
+      },
+    })
+
+    return await res.json()
+  } catch (error) {
+    console.error(error)
+  } finally {
+    console.log('done updateOneFolder')
+  }
+}
+
+////////
