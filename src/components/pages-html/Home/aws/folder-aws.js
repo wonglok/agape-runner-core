@@ -145,3 +145,37 @@ export async function updateOneFolder({ object, reloadID = Math.random() }) {
 }
 
 ////////
+
+export async function removeOneFolder({ object, reloadID = Math.random() }) {
+  //
+  //
+  try {
+    let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+
+    if (!sToken) {
+      throw new Error('no sToken')
+    }
+
+    let ep = UserEndPoints[process.env.NODE_ENV]
+
+    let res = await fetch(`${ep}/folder-remove?r=${reloadID}`, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        //
+        oid: object.oid,
+      }),
+      headers: {
+        Authorization: `Bearer ${sToken}`,
+      },
+    })
+
+    return await res.json()
+  } catch (error) {
+    console.error(error)
+  } finally {
+    console.log('done removeOneFolder')
+  }
+}
+
+////////

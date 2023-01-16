@@ -18,6 +18,8 @@ export function MetaverseFolders({}) {
       SiteStateData.folders = data?.list || []
     })
   }, [])
+
+  //
   let gui = useSnapshot(GUIState)
 
   // let { data } = useSWR({ siteID: `${gui.siteID}`, reloadID: 0 }, fetchPages)
@@ -28,7 +30,7 @@ export function MetaverseFolders({}) {
     <>
       <li className='w-full mt-4'>
         <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-          Your Metaverse
+          Metaverse Folders
         </h6>
       </li>
 
