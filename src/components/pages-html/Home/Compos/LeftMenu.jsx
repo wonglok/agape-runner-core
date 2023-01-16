@@ -49,7 +49,7 @@ export function LeftMenu({ siteID, folderID }) {
           <i className='absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden' />
           <a
             className='flex justify-center px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700'
-            href='/creator-portal'
+            href='/admin'
             target='_blank'
           >
             <img
@@ -75,7 +75,7 @@ export function LeftMenu({ siteID, folderID }) {
             {/*  */}
             {[
               //
-              // { oid: getID(), link: `/creator-portal`, name: 'All My Sites' },
+              // { oid: getID(), link: `/admin`, name: 'All My Sites' },
               {
                 oid: getID(),
                 link: `/admin`,
@@ -83,7 +83,7 @@ export function LeftMenu({ siteID, folderID }) {
               },
               // {
               //   oid: getID(),
-              //   link: `/creator-portal/sites`,
+              //   link: `/admin/sites`,
               //   name: 'All My Sites',
               // },
             ].map((item) => {
@@ -116,11 +116,12 @@ export function LeftMenu({ siteID, folderID }) {
               )
             })}
 
+            {/*
             {siteID && (
               <>
                 <SitePagesLink siteID={siteID}></SitePagesLink>
               </>
-            )}
+            )} */}
 
             {
               <>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920px" height="1080px" viewBox="0 0 1920 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Extra Large@1x</title>
+    <defs>
+        <radialGradient cx="50%" cy="0%" fx="50%" fy="0%" r="116.534992%" gradientTransform="translate(0.500000,0.000000),scale(0.562500,1.000000),rotate(88.911734),translate(-0.500000,-0.000000)" id="radialGradient-1">
+            <stop stop-color="#0064FF" offset="0%"></stop>
+            <stop stop-color="#94FFBD" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="Extra-Large" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" fill="url(#radialGradient-1)" x="0" y="0" width="1920" height="1080"></rect>
+    </g>
+</svg>

@@ -36,7 +36,7 @@ export function CreationDetails({ content }) {
           <SectionHeader
             title={folder?.displayName || '...'}
             subTitle='Snapshots Management'
-            bgImage='/brand/place.webp'
+            bgImage='/brand/blue-green-grad.svg'
             bgOffsetY={15}
             bar={<></>}
           ></SectionHeader>
