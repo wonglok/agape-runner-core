@@ -88,7 +88,7 @@ export const init = async ({ domElement }) => {
         ior={0.6}
         backfaceIor={1.26}>
 
-        <TorusKnot position={[0, 15, 0]} args={[15, 3, 128, 64, 3, 7]}>
+        <TorusKnot position={[0, 15, 0]} args={[15, 3, 128, 64, 1, 3]}>
           <MeshTransmissionMaterial thickness={0.2} chromaticAberration={0.05} anisotropy={1.5} clearcoat={1} clearcoatRoughness={0.2} envMapIntensity={3} />
         </TorusKnot>
       </Caustics>
@@ -109,7 +109,7 @@ export const init = async ({ domElement }) => {
         </group>
       </Environment>
 
-      <OrbitControls></OrbitControls>
+      <OrbitControls object-position={[0,5,5]}></OrbitControls>
     </Canvas>
   </>
   );

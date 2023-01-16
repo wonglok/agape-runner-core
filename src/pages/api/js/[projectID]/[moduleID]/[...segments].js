@@ -36,6 +36,12 @@ let CODE = `
 
 
 
+
+
+
+
+
+
 console.log('running hello');
 export class Yo {
     constructor(){
@@ -72,7 +78,7 @@ export const init = async ({ domElement  })=>{
         ],
         frustum: 1.75,
         intensity: 0.5,
-        worldRadius: 1,
+        worldRadius: 0.66 / 10,
         ior: 0.6,
         backfaceIor: 1.26
     }, /*#__PURE__*/ React.createElement(TorusKnot, {
@@ -86,8 +92,8 @@ export const init = async ({ domElement  })=>{
             3,
             128,
             64,
-            3,
-            7
+            1,
+            2
         ]
     }, /*#__PURE__*/ React.createElement(MeshTransmissionMaterial, {
         thickness: 0.2,
@@ -215,9 +221,14 @@ export const init = async ({ domElement  })=>{
             10,
             1
         ]
-    }))), /*#__PURE__*/ React.createElement(OrbitControls, null))));
+    }))), /*#__PURE__*/ React.createElement(OrbitControls, {
+        "object-position": [
+            0,
+            5,
+            5
+        ]
+    }))));
 };
-
 
 
 
