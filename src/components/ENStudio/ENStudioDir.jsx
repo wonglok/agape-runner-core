@@ -1,9 +1,53 @@
 import { useEffect, useState } from 'react'
-import initSwc, { transformSync } from '@swc/wasm-web'
+import initSwc, { transform } from '@swc/wasm-web'
+const uglify = require('uglifyjs-browser')
 
-function compile() {
-  const result = transformSync(
-    `
+async function compile({ input }) {
+  const result = await transform(input, {
+    jsc: {
+      parser: {
+        syntax: 'ecmascript',
+        jsx: true,
+        dynamicImport: true,
+        privateMethod: true,
+        functionBind: true,
+        exportDefaultFrom: false,
+        exportNamespaceFrom: false,
+        decorators: false,
+        decoratorsBeforeExport: true,
+        topLevelAwait: true,
+        importMeta: true,
+        preserveAllComments: false,
+      },
+
+      //
+      transform: {
+        react: {
+          pragma: 'React.createElement',
+        },
+      },
+      target: 'es2018',
+      loose: false,
+      externalHelpers: false,
+      keepClassNames: true,
+    },
+
+    isModule: true,
+
+    module: {
+      type: 'es6',
+    },
+  })
+
+  return result.code
+}
+
+export function ENStudioDir() {
+  const [initialized, setInitialized] = useState(false)
+
+  let input = /* jsx */ `
+
+
 
 console.log('running hello');
 
@@ -17,80 +61,40 @@ window.process = {
   env: {
     NODE_ENV: 'production'
   }
-}
-
-window.importNPM(['@react-three/fiber']).then((res) => {
-  let [{ Canvas }] = res
+};
 
 
+const loadNPM = window.importNPM
 
-  let dom = (
-    <Canvas>
-    </Canvas>
-  );
+export const init = async ({ domElement }) => {
 
-  //
+  await loadNPM(['react'])
 
-})
+  let [{ Canvas }, { Box, OrbitControls }, ReactDOM] = await loadNPM([
+      '@react-three/fiber',
+      '@react-three/drei',
+      'react-dom/client',
+  ])
 
+  let root = ReactDOM.createRoot(domElement, {});
 
+  root.render(<Canvas>
+    <Box></Box>
+    <OrbitControls></OrbitControls>
+  </Canvas>);
 
+};
 
-
-
-    `,
-    {
-      jsc: {
-        parser: {
-          syntax: 'ecmascript',
-          jsx: true,
-          dynamicImport: true,
-          privateMethod: true,
-          functionBind: true,
-          exportDefaultFrom: false,
-          exportNamespaceFrom: false,
-          decorators: false,
-          decoratorsBeforeExport: true,
-          topLevelAwait: true,
-          importMeta: true,
-          preserveAllComments: false,
-        },
-
-        //
-        transform: null,
-        target: 'es2016',
-        loose: false,
-        externalHelpers: false,
-        keepClassNames: true,
-      },
-
-      isModule: true,
-
-      module: {
-        type: 'es6',
-
-        // These are defaults.
-        // strict: false,
-        // strictMode: true,
-        // lazy: false,
-        // noInterop: false,
-      },
-    }
-  )
-
-  console.log(result.code)
-}
-
-export function ENStudioDir() {
-  const [initialized, setInitialized] = useState(false)
+    `
 
   useEffect(() => {
     async function importAndRunSwcOnMount() {
       await initSwc()
 
-      setInitialized(true)
+      let result = await compile({ input })
 
-      compile()
+      console.log(result)
+      setInitialized(true)
     }
     importAndRunSwcOnMount()
   }, [])
