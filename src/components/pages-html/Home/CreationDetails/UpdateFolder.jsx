@@ -42,13 +42,15 @@ function UpdateFolderName({ object }) {
           // - folder removed
           await updateOneFolder({ object })
 
-          fetchOneFolder({ oid: object.oid }).then((data) => {
-            SiteStateData.folder = data.item
-            let idx = SiteStateData.folders.findIndex(
-              (s) => s.oid === object.oid
-            )
-            SiteStateData.folders[idx] = data.item
-          })
+          if (object && object.oid) {
+            fetchOneFolder({ oid: object.oid }).then((data) => {
+              SiteStateData.folder = data.item
+              let idx = SiteStateData.folders.findIndex(
+                (s) => s.oid === object.oid
+              )
+              SiteStateData.folders[idx] = data.item
+            })
+          }
         }}
         className='px-4 py-2 text-xs text-white bg-blue-500 rounded-2xl'
       >

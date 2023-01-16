@@ -21,6 +21,9 @@ export function CreationDetails({ content }) {
     query: { folderID },
   } = useRouter()
   useEffect(() => {
+    if (!folderID) {
+      return
+    }
     //
     //
     fetchOneFolder({ oid: folderID }).then((data) => {

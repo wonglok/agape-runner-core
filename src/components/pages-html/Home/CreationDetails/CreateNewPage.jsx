@@ -33,6 +33,11 @@ export function CreateNewPage({ folderID }) {
 
             try {
               let yo = await createCodePage({ slug: slug, folderID })
+
+              ev.target.innerText = 'Done!'
+              ev.target.classList.remove('bg-yellow-500')
+              ev.target.classList.remove('bg-red-500')
+              ev.target.classList.add('bg-blue-500')
             } catch (e) {
               console.log(e)
 

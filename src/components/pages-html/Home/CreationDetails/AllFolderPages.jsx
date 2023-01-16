@@ -8,8 +8,14 @@ export function AllFolderPages({ folderID }) {
   let pages = ssd?.codePages || []
 
   useEffect(() => {
+    if (!folderID) {
+      return
+    }
     fetchAllCodePageInFolder({ folderID }).then((data) => {
+      //
       SiteStateData.codePages = data?.list || []
+
+      console.log(data?.list)
     })
   }, [folderID])
 
@@ -18,6 +24,7 @@ export function AllFolderPages({ folderID }) {
       {pages.map((page) => {
         return (
           <div key={page.oid}>
+            <div className=''></div>
             <pre>{JSON.stringify(page, null, '  ')}</pre>
           </div>
         )
@@ -25,3 +32,7 @@ export function AllFolderPages({ folderID }) {
     </div>
   )
 }
+//
+//
+//
+//

@@ -56,7 +56,7 @@ export async function fetchAllCodePageInFolder({
 
     let ep = UserEndPoints[process.env.NODE_ENV]
 
-    let res = await fetch(`${ep}/folder-list?r=${reloadID}`, {
+    let res = await fetch(`${ep}/codepage-list?r=${reloadID}`, {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
