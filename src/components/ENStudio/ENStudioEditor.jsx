@@ -65,7 +65,7 @@ export const init = async ({ domElement }) => {
 
   await loadNPM(['react'])
 
-  let [{ Canvas }, { Box, OrbitControls, Caustics, Sphere, MeshTransmissionMaterial, Lightformer, Environment }, ReactDOM] = await loadNPM([
+  let [{ Canvas }, { Box, OrbitControls, Caustics, TorusKnot, MeshTransmissionMaterial, Lightformer, Environment }, ReactDOM] = await loadNPM([
       '@react-three/fiber',
       '@react-three/drei',
       'react-dom/client',
@@ -83,14 +83,14 @@ export const init = async ({ domElement }) => {
         focus={[0, -1.2, 0]}
         lightSource={[-2, 2.5, -2.5]}
         frustum={1.75}
-        intensity={0.005}
+        intensity={0.5}
         worldRadius={0.66 / 10}
         ior={0.6}
         backfaceIor={1.26}>
 
-        <Sphere position={[0,2,0]}>
+        <TorusKnot position={[0, 15, 0]} args={[15, 3, 128, 64, 3, 7]}>
           <MeshTransmissionMaterial thickness={0.2} chromaticAberration={0.05} anisotropy={1.5} clearcoat={1} clearcoatRoughness={0.2} envMapIntensity={3} />
-        </Sphere>
+        </TorusKnot>
       </Caustics>
 
       <Environment frames={Infinity} preset="city" resolution={256} background blur={0.8}>

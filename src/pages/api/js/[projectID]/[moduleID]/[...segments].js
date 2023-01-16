@@ -31,6 +31,11 @@ window.process = {
 let CODE = `
 
 
+
+
+
+
+
 console.log('running hello');
 export class Yo {
     constructor(){
@@ -42,7 +47,7 @@ export const init = async ({ domElement  })=>{
     await loadNPM([
         'react'
     ]);
-    let [{ Canvas  }, { Box , Lightformer, OrbitControls , Caustics , Sphere , MeshTransmissionMaterial , Environment  }, ReactDOM] = await loadNPM([
+    let [{ Canvas  }, { Box , OrbitControls , Caustics , TorusKnot , MeshTransmissionMaterial , Lightformer , Environment  }, ReactDOM] = await loadNPM([
         '@react-three/fiber',
         '@react-three/drei',
         'react-dom/client'
@@ -61,20 +66,28 @@ export const init = async ({ domElement  })=>{
             0
         ],
         lightSource: [
-            0,
-            1,
-            0
+            -2,
+            2.5,
+            -2.5
         ],
         frustum: 1.75,
-        intensity: 0.005,
-        worldRadius: 0.66 / 10,
+        intensity: 0.5,
+        worldRadius: 1,
         ior: 0.6,
         backfaceIor: 1.26
-    }, /*#__PURE__*/ React.createElement(Sphere, {
+    }, /*#__PURE__*/ React.createElement(TorusKnot, {
         position: [
             0,
-            1,
+            15,
             0
+        ],
+        args: [
+            15,
+            3,
+            128,
+            64,
+            3,
+            7
         ]
     }, /*#__PURE__*/ React.createElement(MeshTransmissionMaterial, {
         thickness: 0.2,
@@ -204,6 +217,10 @@ export const init = async ({ domElement  })=>{
         ]
     }))), /*#__PURE__*/ React.createElement(OrbitControls, null))));
 };
+
+
+
+
 
 
 `
