@@ -1,5 +1,6 @@
 import { useRef } from 'react'
-import { createCodePage } from '../aws/codepage-aws'
+import { createCodePage, fetchAllCodePageInFolder } from '../aws/codepage-aws'
+import { SiteStateData } from '../aws/SiteState'
 
 export function CreateNewPage({ folderID }) {
   let refInputText = useRef()
@@ -18,12 +19,44 @@ export function CreateNewPage({ folderID }) {
         ></input>
 
         <button
-          onClick={async () => {
+          onClick={async (ev) => {
             //
+            if (!folderID) {
+              throw new Error('lack folderID')
+            }
             let slug = refInputText.current.value
+            //
+            ev.target.innerText = 'Loading...'
+            ev.target.classList.add('bg-yellow-500')
+            ev.target.classList.remove('bg-red-500')
+            ev.target.classList.remove('bg-blue-500')
 
+            try {
+              let yo = await createCodePage({ slug: slug, folderID })
+            } catch (e) {
+              console.log(e)
+
+              if (e === 'taken') {
+                ev.target.innerText = 'Taken'
+                ev.target.classList.remove('bg-yellow-500')
+                ev.target.classList.add('bg-red-500')
+                ev.target.classList.remove('bg-blue-500')
+              }
+            } finally {
+              console.log('finally createCodePage')
+
+              setTimeout(() => {
+                ev.target.innerText = 'Create'
+                ev.target.classList.remove('bg-yellow-500')
+                ev.target.classList.remove('bg-red-500')
+                ev.target.classList.add('bg-blue-500')
+              }, 1000)
+
+              fetchAllCodePageInFolder({ folderID }).then((data) => {
+                SiteStateData.codePages = data?.list || []
+              })
+            }
             // - folder removed
-            let yo = await createCodePage({ slug: slug, folderID })
 
             //
           }}

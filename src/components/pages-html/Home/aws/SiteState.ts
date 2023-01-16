@@ -17,6 +17,12 @@ declare type Folder = {
   displayName: string
 }
 //
+declare type CodePage = {
+  oid: string
+  slug: string
+  folderID
+}
+//
 
 export const SiteStateData = proxy<{
   //
@@ -25,6 +31,8 @@ export const SiteStateData = proxy<{
   page: Page | undefined | null
   folders: Folder[]
   folder: Folder | null | undefined
+  codePage: CodePage | null | undefined
+  codePages: CodePage[]
 }>({
   domains: [],
   pages: [],
@@ -33,6 +41,9 @@ export const SiteStateData = proxy<{
   ///!SECTION
   folders: [],
   folder: undefined,
+  //!SECTION
+  codePages: [],
+  codePage: undefined,
 })
 
 //

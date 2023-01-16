@@ -32,11 +32,46 @@ export async function createCodePage({ slug, folderID }) {
     } else {
       let data = await response.json()
       console.error('server error', data.reason)
-      return Promise.reject('server error ' + data.reason)
+      return Promise.reject(data.reason)
     }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('server error', error)
     return Promise.reject('server error')
+  }
+}
+
+export async function fetchAllCodePageInFolder({
+  folderID,
+  reloadID = Math.random(),
+}) {
+  //
+  //
+  try {
+    let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+
+    if (!sToken) {
+      throw new Error('no sToken')
+    }
+
+    let ep = UserEndPoints[process.env.NODE_ENV]
+
+    let res = await fetch(`${ep}/folder-list?r=${reloadID}`, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        //
+        folderID,
+      }),
+      headers: {
+        Authorization: `Bearer ${sToken}`,
+      },
+    })
+
+    return await res.json()
+  } catch (error) {
+    console.error(error)
+  } finally {
+    console.log('done fetchAllCodePage')
   }
 }

@@ -8,6 +8,7 @@ import { useSnapshot } from 'valtio'
 import { SiteStateData } from '../aws/SiteState'
 import { CreateNewPage } from './CreateNewPage'
 import { useRouter } from 'next/router'
+import { AllFolderPages } from './AllFolderPages'
 
 /* eslint-disable @next/next/no-img-element */
 export function MyPages() {
@@ -36,15 +37,12 @@ export function MyPages() {
         <div className='p-4'>
           {folderID && <CreateNewPage folderID={folderID}></CreateNewPage>}
         </div>
+        <div className='p-4'>
+          {folderID && <AllFolderPages folderID={folderID}></AllFolderPages>}
+        </div>
       </div>
     </div>
   )
 }
 
-//
-//
-//
-
-//
-//
 //
