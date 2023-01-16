@@ -32,6 +32,8 @@ export default function SlugPage() {
     // window.React = React
     // window.ReactDOM = ReactDOM
 
+    //
+
     window.importNPM = importNPM
 
     let url = `/api/js/projectIDAAAAAAAAAA/package-yoyo/module-fafa/main.js`
