@@ -15,11 +15,15 @@ import { UpdateFolder } from './UpdateFolder'
 import { SiteStateData } from '../aws/SiteState'
 
 export function CreationDetails({ content }) {
+  //
   let gs = useSnapshot(GateState)
+
   let ssd = useSnapshot(SiteStateData)
+
   let {
     query: { folderID },
   } = useRouter()
+
   useEffect(() => {
     if (!folderID) {
       return

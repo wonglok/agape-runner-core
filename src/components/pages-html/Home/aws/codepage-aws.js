@@ -32,12 +32,12 @@ export async function createCodePage({ slug, folderID }) {
     } else {
       let data = await response.json()
       console.error('server error', data.reason)
-      return Promise.reject(data.reason)
+      throw Promise.reject(data.reason)
     }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('server error', error)
-    return Promise.reject('server error')
+    throw Promise.reject('server error')
   }
 }
 
@@ -71,7 +71,6 @@ export async function fetchAllCodePageInFolder({
     return await res.json()
   } catch (error) {
     console.error(error)
-  } finally {
-    console.log('done fetchAllCodePage')
+    throw Promise.reject('server error')
   }
 }

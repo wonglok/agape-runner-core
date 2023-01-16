@@ -37,7 +37,7 @@ export async function folderCreate({ displayName }) {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('server error', error)
-    return Promise.reject('server error')
+    throw Promise.reject('server error')
   }
 }
 
@@ -68,9 +68,8 @@ export async function fetchAllFolders({ reloadID = Math.random() }) {
 
     return await res.json()
   } catch (error) {
-    console.error(error)
-  } finally {
-    console.log('done fetchAllFolders')
+    console.log(error)
+    throw Promise.reject('error')
   }
 }
 
@@ -102,9 +101,9 @@ export async function fetchOneFolder({ oid, reloadID = Math.random() }) {
 
     return await res.json()
   } catch (error) {
-    console.error(error)
-  } finally {
-    console.log('done fetchOneFolder')
+    console.log(error)
+
+    throw Promise.reject('error')
   }
 }
 
@@ -138,9 +137,8 @@ export async function updateOneFolder({ object, reloadID = Math.random() }) {
 
     return await res.json()
   } catch (error) {
-    console.error(error)
-  } finally {
-    console.log('done updateOneFolder')
+    console.log(error)
+    throw Promise.reject('error')
   }
 }
 
@@ -172,9 +170,8 @@ export async function removeOneFolder({ object, reloadID = Math.random() }) {
 
     return await res.json()
   } catch (error) {
-    console.error(error)
-  } finally {
-    console.log('done removeOneFolder')
+    console.log(error)
+    throw Promise.reject('error')
   }
 }
 

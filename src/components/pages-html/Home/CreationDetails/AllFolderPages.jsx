@@ -14,11 +14,12 @@ export function AllFolderPages({ folderID }) {
     fetchAllCodePageInFolder({ folderID }).then((data) => {
       //
       SiteStateData.codePages = data?.list || []
-
-      console.log(data?.list)
     })
   }, [folderID])
 
+  //
+
+  //
   return (
     <div>
       {pages.map((page) => {
