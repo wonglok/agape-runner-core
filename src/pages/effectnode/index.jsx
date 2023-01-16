@@ -1,15 +1,11 @@
 // import { PGHome } from '@/components/pages-html/Home/Dash/PGHome'
-import { ENStudioDir } from '@/components/ENStudio/ENStudioDir'
+import { PGCreationFolder } from '@/components/pages-html/Home/CreationFolder/PGCreationFolder'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
     <RedirGateHTML redirect='/effectnode'>
-      {/*  */}
-      {/* <AvaLand></AvaLand> */}
-      {/* <PGHome></PGHome> */}
-      {/*  */}
-      <ENStudioDir></ENStudioDir>
+      <PGCreationFolder></PGCreationFolder>
     </RedirGateHTML>
   )
 }

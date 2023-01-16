@@ -1,13 +1,22 @@
 // packageName/metaverseName
 
+import { CreationFolder } from './CreationFolder/CreationFolder'
+
 export function ENStudioDir() {
   return (
-    <div>
-      <div>123</div>
-      <div>123</div>
-      <div>123</div>
-      <div>123</div>
-      <div>123</div>
+    <div className='w-full h-full'>
+      <CreationFolder></CreationFolder>
+      {/*  */}
+
+      {/*  */}
+
+      {/*  */}
+
+      {/*  */}
+
+      {/*  */}
+
+      {/*  */}
     </div>
   )
 }
