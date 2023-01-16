@@ -12,16 +12,25 @@ declare type Domain = {
   oid: string
 }
 //
+declare type Folder = {
+  oid: string
+  displayName: string
+}
+//
 
 export const SiteStateData = proxy<{
   //
   domains: Domain[]
   pages: Page[]
   page: Page | undefined | null
+  folders: Folder[]
 }>({
   domains: [],
   pages: [],
   page: undefined,
+
+  ///!SECTION
+  folders: [],
 })
 
 //

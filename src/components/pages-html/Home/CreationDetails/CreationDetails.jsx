@@ -7,12 +7,24 @@ import { DesktopOnly } from '@/lib/desktop/DesktopOnly'
 import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
-import { MyFolders } from './MyFolders'
-import { NewCreation } from './NewCreation'
+import { useEffect, useState } from 'react'
+import { fetchOneFolder } from '../aws/folder-aws'
+import { useRouter } from 'next/router'
 
-export function PGCreationFolder({ content }) {
+export function CreationDetails({ content }) {
   let gs = useSnapshot(GateState)
-
+  let [folder, setFolder] = useState(false)
+  let {
+    query: { folderID },
+  } = useRouter()
+  useEffect(() => {
+    //
+    //
+    fetchOneFolder({ oid: folderID }).then((data) => {
+      setFolder(data.item)
+    })
+    //
+  }, [folderID])
   return (
     <>
       <DesktopOnly>
@@ -20,18 +32,20 @@ export function PGCreationFolder({ content }) {
         <LeftMenu></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='Metavese Snapshots'
-            subTitle='Folders of Versions'
-            bgImage='/brand/avatar.webp'
+            title={folder?.displayName || '...'}
+            subTitle='Snapshots Management'
+            bgImage='/brand/place.webp'
             bgOffsetY={15}
-            bar={<NewCreation></NewCreation>}
+            bar={<></>}
           ></SectionHeader>
-          <MyFolders></MyFolders>
+          {/* <MyFolders></MyFolders> */}
         </SmartDrawer>
       </DesktopOnly>
     </>
   )
 }
+
+//
 
 //
 

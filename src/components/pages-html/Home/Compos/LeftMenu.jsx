@@ -75,6 +75,11 @@ export function LeftMenu({ siteID }) {
             {[
               //
               { oid: getID(), link: `/creator-portal`, name: 'All My Sites' },
+              {
+                oid: getID(),
+                link: `/effectnode`,
+                name: 'Metaverse Management',
+              },
               // {
               //   oid: getID(),
               //   link: `/creator-portal/sites`,
