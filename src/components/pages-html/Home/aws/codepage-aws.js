@@ -11,33 +11,27 @@ export async function createCodePage({ slug, folderID }) {
     return Promise.reject('no slug given')
   }
 
-  try {
-    const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
+  const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
 
-    const response = await fetch(`${myAPIEndPoint}/codepage-create`, {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify({
-        slug: slug,
-        folderID: folderID,
-      }),
-      headers: {
-        Authorization: `Bearer ${sToken}`,
-      },
-    })
+  const response = await fetch(`${myAPIEndPoint}/codepage-create`, {
+    method: 'POST',
+    mode: 'cors',
+    body: JSON.stringify({
+      slug: slug,
+      folderID: folderID,
+    }),
+    headers: {
+      Authorization: `Bearer ${sToken}`,
+    },
+  })
 
-    if (response.ok) {
-      let data = await response.json()
-      return data
-    } else {
-      let data = await response.json()
-      console.error('server error', data.reason)
-      throw Promise.reject(data.reason)
-    }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('server error', error)
-    throw Promise.reject('server error')
+  if (response.ok) {
+    let data = await response.json()
+    return data
+  } else {
+    let data = await response.json()
+    console.error('server error', data.reason)
+    throw Promise.reject(data.reason)
   }
 }
 
@@ -47,30 +41,30 @@ export async function fetchAllCodePageInFolder({
 }) {
   //
   //
-  try {
-    let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+  // try {
+  let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
-    if (!sToken) {
-      throw new Error('no sToken')
-    }
-
-    let ep = UserEndPoints[process.env.NODE_ENV]
-
-    let res = await fetch(`${ep}/codepage-list?r=${reloadID}`, {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify({
-        //
-        folderID,
-      }),
-      headers: {
-        Authorization: `Bearer ${sToken}`,
-      },
-    })
-
-    return await res.json()
-  } catch (error) {
-    console.error(error)
-    throw Promise.reject('server error')
+  if (!sToken) {
+    throw new Error('no sToken')
   }
+
+  let ep = UserEndPoints[process.env.NODE_ENV]
+
+  let res = await fetch(`${ep}/codepage-list?r=${reloadID}`, {
+    method: 'POST',
+    mode: 'cors',
+    body: JSON.stringify({
+      //
+      folderID,
+    }),
+    headers: {
+      Authorization: `Bearer ${sToken}`,
+    },
+  })
+
+  return await res.json()
+  // } catch (error) {
+  //   console.error(error)
+  //   throw Promise.reject('server error')
+  // }
 }

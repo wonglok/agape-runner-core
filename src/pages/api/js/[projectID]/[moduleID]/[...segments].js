@@ -30,10 +30,6 @@ window.process = {
 
 let CODE = `
 
-
-
-
-
 console.log('running hello');
 export class Yo {
     constructor(){
@@ -41,17 +37,25 @@ export class Yo {
     }
 }
 const loadNPM = window.importNPM;
-export const init = async ({ domElement  })=>{
+export const init = async ({ domElement })=>{
     let [React] = await loadNPM([
         'react'
     ]);
 
-    let [{ Canvas  }, { Box , OrbitControls , Caustics , TorusKnot , MeshTransmissionMaterial , Lightformer , Environment  }, ReactDOM] = await loadNPM([
+    let [{default: anime}, { Canvas  }, { Box , OrbitControls , Caustics , TorusKnot , MeshTransmissionMaterial , Lightformer , Environment  }, ReactDOM] = await loadNPM([
+        'animejs',
         '@react-three/fiber',
         '@react-three/drei',
         'react-dom/client'
     ]);
+
+    await anime({
+      targets: [domElement],
+      opacity: 0,
+    }).finished
+
     let root = ReactDOM.createRoot(domElement, {});
+
     root.render(/*#__PURE__*/ React.createElement(React.Fragment, null, /*#__PURE__*/ React.createElement(Canvas, null, /*#__PURE__*/ React.createElement(Caustics, {
         backfaces: true,
         color: [
@@ -222,9 +226,13 @@ export const init = async ({ domElement  })=>{
             5
         ]
     }))));
+
+    await anime({
+      targets: [domElement],
+      opacity: 1,
+      delay: 500
+    }).finished
 };
-
-
 
 
 
