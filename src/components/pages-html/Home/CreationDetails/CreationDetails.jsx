@@ -10,7 +10,7 @@ import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useEffect, useState } from 'react'
 import { fetchOneFolder } from '../aws/folder-aws'
 import { useRouter } from 'next/router'
-import { SiteStateData } from '../aws/SiteState'
+import { MyPages } from './MyPages'
 
 export function CreationDetails({ content }) {
   let gs = useSnapshot(GateState)
@@ -40,7 +40,7 @@ export function CreationDetails({ content }) {
             bgOffsetY={15}
             bar={<></>}
           ></SectionHeader>
-          {/* <MyFolders></MyFolders> */}
+          <MyPages></MyPages>
         </SmartDrawer>
       </DesktopOnly>
     </>

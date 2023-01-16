@@ -3,22 +3,21 @@ import { useEffect } from 'react'
 // import { useState } from 'react'
 // import { siteRecent } from '../aws/site-aws'
 // import { OneCard } from '../Compos/OneCard'
-import { OneFolder } from './OneFolder'
-import { fetchAllFolders } from '../aws/folder-aws'
+// import { fetchAllFolders } from '../aws/folder-aws'
 import { useSnapshot } from 'valtio'
 import { SiteStateData } from '../aws/SiteState'
 
 /* eslint-disable @next/next/no-img-element */
-export function MyFolders() {
+export function MyPages() {
   let ss = useSnapshot(SiteStateData)
 
   useEffect(() => {
-    fetchAllFolders({
-      //
-    }).then((data) => {
-      //
-      SiteStateData.folders = data?.list || []
-    })
+    // fetchAllFolders({
+    //   //
+    // }).then((data) => {
+    //   //
+    //   SiteStateData.folders = data?.list || []
+    // })
     // siteRecent({}).then(
     //   (data) => {
     //     // console.log(data)
@@ -33,17 +32,17 @@ export function MyFolders() {
       <div className='relative flex flex-col min-w-0 mx-2 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border'>
         <div className='p-4 pb-0 mb-0 bg-white rounded-t-2xl'>
           <h6 className='mb-1 text-xl'>Metaverse Snapshots</h6>
-          <p className='mb-3 text-sm leading-normal'>Snapshot Folders</p>
+          <p className='mb-3 text-sm leading-normal'>Snapshot URLs</p>
         </div>
         {/*  */}
         {/*  */}
         {/*  */}
-        <div className='flex-auto mx-2'>
-          <div className='flex flex-wrap mb-8'>
-            {(ss?.folders || []).map((folder) => {
-              return <OneFolder key={folder.oid} data={folder}></OneFolder>
-            })}
-          </div>
+        <div className='p-4'>
+          <div className='text-sm'>12345 12345 12345</div>
+          <div className='text-sm'>12345 12345 12345</div>
+          <div className='text-sm'>12345 12345 12345</div>
+          <div className='text-sm'>12345 12345 12345</div>
+          <div className='text-sm'>12345 12345 12345</div>
         </div>
       </div>
     </div>
