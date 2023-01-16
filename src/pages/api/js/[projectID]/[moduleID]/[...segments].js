@@ -61,9 +61,9 @@ export const init = async ({ domElement  })=>{
             0
         ],
         lightSource: [
-            -2,
-            2.5,
-            -2.5
+            0,
+            1,
+            0
         ],
         frustum: 1.75,
         intensity: 0.005,
@@ -73,7 +73,7 @@ export const init = async ({ domElement  })=>{
     }, /*#__PURE__*/ React.createElement(Sphere, {
         position: [
             0,
-            2,
+            1,
             0
         ]
     }, /*#__PURE__*/ React.createElement(MeshTransmissionMaterial, {
