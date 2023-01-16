@@ -59,7 +59,7 @@ export default function SlugPage() {
   return (
     <>
       <div className='w-full h-full' ref={ref}>
-        <LoaderDiv></LoaderDiv>
+        <LoaderGrid></LoaderGrid>
       </div>
 
       {/*
@@ -72,6 +72,185 @@ export default function SlugPage() {
         src={'/static/react18/react-dom.prod.min.js'}
       ></Script> */}
       {/*  */}
+    </>
+  )
+}
+
+function LoaderGrid() {
+  return (
+    <>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: /* css */ `
+
+
+ul.dotscontian {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: rotate(45deg) translate(-50%, -50%);
+}
+
+.dotscontian li {
+  list-style-type: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 20px;
+  height: 20px;
+  background: #ca9646;
+  border-radius: 50%;
+  box-shadow: 0px 0px 30px 0px #ca9646;
+}
+
+#a {
+  animation: a 1s ease-in-out infinite;
+  top: -40px;
+  left: -40px;
+}
+
+#b {
+  animation: b 1s ease-in-out infinite;
+  top: -40px;
+  left: 0px;
+}
+
+#c {
+  animation: c 1s ease-in-out infinite;
+  top: -40px;
+  left: 40px;
+}
+
+#d {
+  animation: d 1s ease-in-out infinite;
+  top: 0px;
+  left: -40px;
+}
+
+#e {
+  animation: e 1s ease-in-out infinite;
+  top: 0px;
+  left: 0px;
+}
+
+#f {
+  animation: f 1s ease-in-out infinite;
+  top: 0px;
+  left: 40px;
+}
+
+#g {
+  animation: g 1s ease-in-out infinite;
+  top: 40px;
+  left: -40px;
+}
+
+#h {
+  animation: h 1s ease-in-out infinite;
+  top: 40px;
+  left: 0px;
+}
+
+#i {
+  animation: i 1s ease-in-out infinite;
+  top: 40px;
+  left: 40px;
+}
+
+@keyframes a {
+  50% {
+    top: 0px;
+    left: -40px;
+  }
+  100% {
+    top: 0px;
+    left: -40px;
+  }
+}
+@keyframes b {
+  50% {
+    top: -40px;
+    left: -40px;
+  }
+  100% {
+    top: -40px;
+    left: -40px;
+  }
+}
+@keyframes c {
+  50% {
+    top: -40px;
+    left: 0px;
+  }
+  100% {
+    top: -40px;
+    left: 0px;
+  }
+}
+@keyframes d {
+  50% {
+    top: 40px;
+    left: -40px;
+  }
+  100% {
+    top: 40px;
+    left: -40px;
+  }
+}
+@keyframes f {
+  50% {
+    top: -40px;
+    left: 40px;
+  }
+  100% {
+    top: -40px;
+    left: 40px;
+  }
+}
+@keyframes g {
+  50% {
+    top: 40px;
+    left: 0px;
+  }
+  100% {
+    top: 40px;
+    left: 0px;
+  }
+}
+@keyframes h {
+  50% {
+    top: 40px;
+    left: 40px;
+  }
+  100% {
+    top: 40px;
+    left: 40px;
+  }
+}
+@keyframes i {
+  50% {
+    top: 0px;
+    left: 40px;
+  }
+  100% {
+    top: 0px;
+    left: 40px;
+  }
+}
+    `,
+        }}
+      ></style>
+      <ul className='dotscontian'>
+        <li className='' id='a'></li>
+        <li className='' id='b'></li>
+        <li className='' id='c'></li>
+        <li className='' id='d'></li>
+        <li className='' id='e'></li>
+        <li className='' id='f'></li>
+        <li className='' id='g'></li>
+        <li className='' id='h'></li>
+        <li className='' id='i'></li>
+      </ul>
     </>
   )
 }
