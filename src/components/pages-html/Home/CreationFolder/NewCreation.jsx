@@ -1,5 +1,6 @@
 import { useRef } from 'react'
-import { folderCreate } from '../aws/folder-aws'
+import { fetchAllFolders, folderCreate } from '../aws/folder-aws'
+import { SiteStateData } from '../aws/SiteState'
 // import { useEffect, useState } from 'react'
 
 export function NewCreation() {
@@ -29,6 +30,10 @@ export function NewCreation() {
             let yo = await folderCreate({ displayName: displayName })
 
             console.log(yo)
+
+            fetchAllFolders({}).then((data) => {
+              SiteStateData.folders = data?.list || []
+            })
             //
             // console.log()
           }}
