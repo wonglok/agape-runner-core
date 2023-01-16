@@ -34,11 +34,6 @@ let CODE = `
 
 
 
-
-
-
-
-
 console.log('running hello');
 export class Yo {
     constructor(){
@@ -47,9 +42,10 @@ export class Yo {
 }
 const loadNPM = window.importNPM;
 export const init = async ({ domElement  })=>{
-    await loadNPM([
+    let [React] = await loadNPM([
         'react'
     ]);
+
     let [{ Canvas  }, { Box , OrbitControls , Caustics , TorusKnot , MeshTransmissionMaterial , Lightformer , Environment  }, ReactDOM] = await loadNPM([
         '@react-three/fiber',
         '@react-three/drei',
