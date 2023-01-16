@@ -24,7 +24,7 @@ export function NewCreation() {
         <button
           onClick={async () => {
             //
-            let displayName = newNameRef.current.value
+            let displayName = newNameRef?.current?.value || ''
 
             // - folder removed
             let yo = await folderCreate({ displayName: displayName })

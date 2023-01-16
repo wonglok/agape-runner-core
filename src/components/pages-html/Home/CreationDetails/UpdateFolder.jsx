@@ -13,10 +13,16 @@ export function UpdateFolder({ object }) {
   //
   //
   return (
-    <div className='pb-1'>
-      <UpdateFolderName object={object}></UpdateFolderName>
-      <RemoveFolderAndFixResource object={object}></RemoveFolderAndFixResource>
-    </div>
+    <>
+      {object ? (
+        <div className='pb-1'>
+          <UpdateFolderName object={object}></UpdateFolderName>
+          <RemoveFolderAndFixResource
+            object={object}
+          ></RemoveFolderAndFixResource>
+        </div>
+      ) : null}
+    </>
   )
 }
 
@@ -35,6 +41,9 @@ function UpdateFolderName({ object }) {
       <button
         onClick={async () => {
           //
+          if (!object) {
+            return
+          }
           let displayName = newNameRef.current.value
           object.displayName = displayName
           // - folder removed
