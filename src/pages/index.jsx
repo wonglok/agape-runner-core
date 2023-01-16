@@ -64,8 +64,6 @@ export default function SlugPage() {
         src={'/static/react18/react-dom.prod.min.js'}
       ></Script> */}
       {/*  */}
-
-      {/*  */}
     </>
   )
 }
