@@ -72,4 +72,5 @@ let importNPM = async (myPackages = []) => {
     })
 }
 
+export const importPackages = importNPM
 export { importNPM }
