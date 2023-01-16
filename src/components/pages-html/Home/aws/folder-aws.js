@@ -107,3 +107,7 @@ export async function fetchOneFolder({ oid, reloadID = Math.random() }) {
     console.log('fetch all folders')
   }
 }
+
+export function getFolderEditorURL(folder) {
+  return `/admin/folders/${folder.oid}`
+}

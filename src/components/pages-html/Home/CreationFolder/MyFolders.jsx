@@ -5,15 +5,19 @@ import { siteRecent } from '../aws/site-aws'
 import { OneCard } from '../Compos/OneCard'
 import { OneFolder } from './OneFolder'
 import { fetchAllFolders } from '../aws/folder-aws'
+import { useSnapshot } from 'valtio'
+import { SiteStateData } from '../aws/SiteState'
 
 /* eslint-disable @next/next/no-img-element */
 export function MyFolders() {
-  let [allFodlers, setFolders] = useState([])
+  let ss = useSnapshot(SiteStateData)
 
   useEffect(() => {
-    fetchAllFolders({}).then((data) => {
+    fetchAllFolders({
       //
-      setFolders(data.list)
+    }).then((data) => {
+      //
+      SiteStateData.folders = data.list
     })
     // siteRecent({}).then(
     //   (data) => {
@@ -23,7 +27,7 @@ export function MyFolders() {
     //     console.error(err)
     //   }
     // )
-  }, [])
+  }, [ss])
   return (
     <div className='flex-none w-full max-w-full px-4 mt-9'>
       <div className='relative flex flex-col min-w-0 mx-2 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border'>
@@ -35,7 +39,7 @@ export function MyFolders() {
         {/*  */}
         <div className='flex-auto mx-2'>
           <div className='flex flex-wrap mb-8'>
-            {allFodlers.map((folder) => {
+            {ss?.folders.map((folder) => {
               return <OneFolder key={folder.oid} data={folder}></OneFolder>
             })}
           </div>

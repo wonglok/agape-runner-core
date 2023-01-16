@@ -10,9 +10,11 @@ import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useEffect, useState } from 'react'
 import { fetchOneFolder } from '../aws/folder-aws'
 import { useRouter } from 'next/router'
+import { SiteStateData } from '../aws/SiteState'
 
 export function CreationDetails({ content }) {
   let gs = useSnapshot(GateState)
+
   let [folder, setFolder] = useState(false)
   let {
     query: { folderID },
@@ -29,7 +31,7 @@ export function CreationDetails({ content }) {
     <>
       <DesktopOnly>
         <StylesDashboard></StylesDashboard>
-        <LeftMenu></LeftMenu>
+        <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
             title={folder?.displayName || '...'}

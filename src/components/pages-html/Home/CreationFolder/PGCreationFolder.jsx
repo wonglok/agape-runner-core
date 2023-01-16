@@ -9,15 +9,20 @@ import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { MyFolders } from './MyFolders'
 import { NewCreation } from './NewCreation'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 export function PGCreationFolder({ content }) {
   let gs = useSnapshot(GateState)
+  let {
+    query: { folderID },
+  } = useRouter()
 
   return (
     <>
       <DesktopOnly>
         <StylesDashboard></StylesDashboard>
-        <LeftMenu></LeftMenu>
+        <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
             title='Metavese Snapshots'

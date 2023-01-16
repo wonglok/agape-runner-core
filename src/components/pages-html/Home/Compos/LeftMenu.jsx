@@ -5,10 +5,11 @@ import { useSnapshot } from 'valtio'
 import { GUIState } from './GUIState'
 import { SitePagesLink } from './SitePagesLink'
 import { useEffect } from 'react'
+import { MetaverseFolders } from './MetaverseFolders'
 // import { GateState } from '@/auth/GateState.ts'
 // import { useSnapshot } from 'valtio'
 
-export function LeftMenu({ siteID }) {
+export function LeftMenu({ siteID, folderID }) {
   // let gs = useSnapshot(GateState)
   let getActiveClass = (className, url) => {
     if (location) {
@@ -74,11 +75,11 @@ export function LeftMenu({ siteID }) {
             {/*  */}
             {[
               //
-              { oid: getID(), link: `/creator-portal`, name: 'All My Sites' },
+              // { oid: getID(), link: `/creator-portal`, name: 'All My Sites' },
               {
                 oid: getID(),
-                link: `/effectnode`,
-                name: 'Metaverse Management',
+                link: `/admin`,
+                name: 'Metaverse Portal',
               },
               // {
               //   oid: getID(),
@@ -120,6 +121,12 @@ export function LeftMenu({ siteID }) {
                 <SitePagesLink siteID={siteID}></SitePagesLink>
               </>
             )}
+
+            {
+              <>
+                <MetaverseFolders></MetaverseFolders>
+              </>
+            }
 
             {/*  */}
 

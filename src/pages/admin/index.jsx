@@ -4,7 +4,7 @@ import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
-    <RedirGateHTML redirect='/agape'>
+    <RedirGateHTML redirect='/admin'>
       <PGCreationFolder></PGCreationFolder>
     </RedirGateHTML>
   )

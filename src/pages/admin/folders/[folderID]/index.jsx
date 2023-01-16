@@ -11,7 +11,7 @@ export default function Avatars({}) {
 
   //
   return (
-    <RedirGateHTML redirect={`/agape/folders/${folderID}`}>
+    <RedirGateHTML redirect={`/admin/folders/${folderID}`}>
       <CreationDetails></CreationDetails>
     </RedirGateHTML>
   )
