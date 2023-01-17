@@ -12,7 +12,7 @@
 import { importNPM } from '@/components/servant/importPackages'
 import { useRouter } from 'next/router'
 // import { useEffect, useRef } from 'react'
-import Script from 'next/script'
+// import Script from 'next/script'
 import { useEffect, useRef } from 'react'
 
 export default function SlugPage() {
