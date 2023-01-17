@@ -31,9 +31,15 @@ export function NewCreation() {
 
             console.log(yo)
 
-            fetchAllFolders({}).then((data) => {
-              SiteStateData.folders = data?.list || []
-            })
+            fetchAllFolders({}).then(
+              (data) => {
+                SiteStateData.folders = data?.list || []
+              },
+              async (err) => {
+                //
+                console.log(await err)
+              }
+            )
             //
             // console.log()
           }}

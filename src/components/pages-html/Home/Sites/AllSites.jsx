@@ -14,8 +14,9 @@ export function AllSites() {
         setSites(data.list)
         // console.log(data)
       },
-      (err) => {
-        console.error(err)
+      async (err) => {
+        //
+        console.log(await err)
       }
     )
   }, [])

@@ -57,9 +57,15 @@ export function CreateNewPage({ folderID }) {
                 ev.target.classList.add('bg-blue-500')
               }, 1000)
 
-              fetchAllCodePageInFolder({ folderID }).then((data) => {
-                SiteStateData.codePages = data?.list || []
-              })
+              fetchAllCodePageInFolder({ folderID }).then(
+                (data) => {
+                  SiteStateData.codePages = data?.list || []
+                },
+                async (err) => {
+                  //
+                  console.log(await err)
+                }
+              )
             }
             // - folder removed
 

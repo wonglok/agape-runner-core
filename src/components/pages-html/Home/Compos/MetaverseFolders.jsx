@@ -14,9 +14,15 @@ export function MetaverseFolders({}) {
 
   useEffect(() => {
     //
-    fetchAllFolders({}).then((data) => {
-      SiteStateData.folders = data?.list || []
-    })
+    fetchAllFolders({}).then(
+      (data) => {
+        SiteStateData.folders = data?.list || []
+      },
+      async (err) => {
+        //
+        console.log(await err)
+      }
+    )
   }, [])
 
   //

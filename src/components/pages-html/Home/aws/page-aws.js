@@ -7,7 +7,7 @@ export async function fetchPages({ siteID = '', reloadID = Math.random() }) {
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
-      throw new Error('no sToken')
+      return Promise.reject('no sToken')
     }
 
     let ep = UserEndPoints[process.env.NODE_ENV]
@@ -39,7 +39,7 @@ export async function removePage({ oid }) {
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
-      throw new Error('no sToken')
+      return Promise.reject('no sToken')
     }
 
     let ep = UserEndPoints[process.env.NODE_ENV]
@@ -71,7 +71,7 @@ export async function updatePage({ object }) {
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
-      throw new Error('no sToken')
+      return Promise.reject('no sToken')
     }
 
     let ep = UserEndPoints[process.env.NODE_ENV]

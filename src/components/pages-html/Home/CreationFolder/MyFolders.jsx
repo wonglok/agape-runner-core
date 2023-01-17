@@ -15,10 +15,16 @@ export function MyFolders() {
   useEffect(() => {
     fetchAllFolders({
       //
-    }).then((data) => {
-      //
-      SiteStateData.folders = data?.list || []
-    })
+    }).then(
+      (data) => {
+        //
+        SiteStateData.folders = data?.list || []
+      },
+      async (err) => {
+        //
+        console.log(await err)
+      }
+    )
     // siteRecent({}).then(
     //   (data) => {
     //     // console.log(data)

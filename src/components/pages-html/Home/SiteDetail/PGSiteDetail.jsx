@@ -21,9 +21,15 @@ export function PGSiteDetail({ siteID }) {
     if (!siteID) {
       return
     }
-    siteGet({ oid: siteID }).then((data) => {
-      setSite(data.item)
-    })
+    siteGet({ oid: siteID }).then(
+      (data) => {
+        setSite(data.item)
+      },
+      async (err) => {
+        //
+        console.log(await err)
+      }
+    )
   }, [siteID])
 
   return (

@@ -144,13 +144,19 @@ function OnePage({ li }) {
             confirm({
               description: `This will permanently delete ${li.slug}.`,
             })
-              .then(async () => {
-                //
-                await removePage({
-                  oid: li.oid,
-                })
-                await reloadPages({ siteID: gui.siteID })
-              })
+              .then(
+                async () => {
+                  //
+                  await removePage({
+                    oid: li.oid,
+                  })
+                  await reloadPages({ siteID: gui.siteID })
+                },
+                async (err) => {
+                  //
+                  console.log(await err)
+                }
+              )
               .catch(() => console.log('Deletion cancelled.'))
           }}
           className='inline-flex items-center h-10 px-2 text-sm bg-red-200 border-t border-b border-r border-gray-300 cursor-pointer rounded-r-xl'

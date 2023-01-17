@@ -24,10 +24,16 @@ export function PGPageDetail({ siteID, pageID }) {
     }
     siteGet({ oid: siteID })
       //
-      .then((data) => {
-        //
-        setSite(data.item)
-      })
+      .then(
+        (data) => {
+          //
+          setSite(data.item)
+        },
+        async (err) => {
+          //
+          console.log(await err)
+        }
+      )
   }, [siteID])
 
   useEffect(() => {

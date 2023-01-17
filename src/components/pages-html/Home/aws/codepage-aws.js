@@ -31,7 +31,7 @@ export async function createCodePage({ slug, folderID }) {
   } else {
     let data = await response.json()
     console.error('server error', data.reason)
-    throw await Promise.reject(data.reason)
+    return Promise.reject(data.reason)
   }
 }
 
@@ -42,7 +42,7 @@ export async function fetchAllCodePageInFolder({ folderID }) {
   let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
   if (!sToken) {
-    throw new Error('no sToken')
+    return Promise.reject('no sToken')
   }
 
   let ep = UserEndPoints[process.env.NODE_ENV]
@@ -66,7 +66,7 @@ export async function fetchAllCodePageInFolder({ folderID }) {
   }
   // } catch (error) {
   //   console.error(error)
-  //   throw await Promise.reject('server error')
+  //   return Promise.reject('server error')
   // }
 }
 
@@ -77,7 +77,7 @@ export async function updateOneCodePage({ object }) {
   let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
   if (!sToken) {
-    throw new Error('no sToken')
+    return Promise.reject('no sToken')
   }
 
   let ep = UserEndPoints[process.env.NODE_ENV]
@@ -102,7 +102,7 @@ export async function updateOneCodePage({ object }) {
 
   // } catch (error) {
   //   console.log(error)
-  //   throw await Promise.reject('error')
+  //   return Promise.reject('error')
   // }
 }
 

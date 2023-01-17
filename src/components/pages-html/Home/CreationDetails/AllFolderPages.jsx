@@ -12,10 +12,16 @@ export function AllFolderPages({ folderID }) {
     if (!folderID) {
       return
     }
-    fetchAllCodePageInFolder({ folderID }).then((data) => {
-      //
-      SiteStateData.codePages = data?.list || []
-    })
+    fetchAllCodePageInFolder({ folderID }).then(
+      (data) => {
+        //
+        SiteStateData.codePages = data?.list || []
+      },
+      async (err) => {
+        //
+        console.log(await err)
+      }
+    )
   }, [folderID])
 
   //

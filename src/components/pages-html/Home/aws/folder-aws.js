@@ -4,11 +4,11 @@ export async function folderCreate({ displayName }) {
   const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
   if (!sToken) {
     console.error('no session token')
-    throw await Promise.reject('no session token')
+    return Promise.reject('no session token')
   }
   if (!displayName) {
     console.error('no displayName given')
-    throw await Promise.reject('no displayName given')
+    return Promise.reject('no displayName given')
   }
 
   // try {
@@ -32,7 +32,7 @@ export async function folderCreate({ displayName }) {
   } else {
     let data = await response.json()
     console.error('server error', data.reason)
-    throw await Promise.reject('server error ' + data.reason)
+    return Promise.reject('server error ' + data.reason)
   }
   // } catch (error) {
   //   // eslint-disable-next-line no-console
@@ -50,7 +50,7 @@ export async function fetchAllFolders({}) {
   let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
   if (!sToken) {
-    throw new Error('no sToken')
+    return Promise.reject('no sToken')
   }
 
   let ep = UserEndPoints[process.env.NODE_ENV]
@@ -69,7 +69,7 @@ export async function fetchAllFolders({}) {
   if (res.ok) {
     return await res.json()
   } else {
-    throw await Promise.reject(res.json())
+    return Promise.reject(res.json())
   }
   // } catch (error) {
   //   console.log(error)
@@ -86,7 +86,7 @@ export async function fetchOneFolder({ oid }) {
   let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
   if (!sToken) {
-    throw new Error('no sToken')
+    return Promise.reject('no sToken')
   }
 
   let ep = UserEndPoints[process.env.NODE_ENV]
@@ -106,7 +106,7 @@ export async function fetchOneFolder({ oid }) {
   if (res.ok) {
     return await res.json()
   } else {
-    throw await Promise.reject(res.json())
+    return Promise.reject(res.json())
   }
   // } catch (error) {
   //   console.log(error)
@@ -126,7 +126,7 @@ export async function updateOneFolder({ object }) {
   let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
   if (!sToken) {
-    throw new Error('no sToken')
+    return Promise.reject('no sToken')
   }
 
   let ep = UserEndPoints[process.env.NODE_ENV]
@@ -146,7 +146,7 @@ export async function updateOneFolder({ object }) {
   if (res.ok) {
     return await res.json()
   } else {
-    throw await Promise.reject(res.json())
+    return Promise.reject(res.json())
   }
   // } catch (error) {
   //   console.log(error)
@@ -163,7 +163,7 @@ export async function removeOneFolder({ object }) {
   let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
   if (!sToken) {
-    throw new Error('no sToken')
+    return Promise.reject('no sToken')
   }
 
   let ep = UserEndPoints[process.env.NODE_ENV]
@@ -183,7 +183,7 @@ export async function removeOneFolder({ object }) {
   if (res.ok) {
     return await res.json()
   } else {
-    throw await Promise.reject(res.json())
+    return Promise.reject(res.json())
   }
   // } catch (error) {
   //   console.log(error)

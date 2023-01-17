@@ -45,9 +45,11 @@ function UpdateFolderName({ object }) {
             return
           }
           let displayName = newNameRef.current.value
-          object.displayName = displayName
+
+          let yo = SiteStateData.folders.find((e) => e.oid === object.oid)
+          yo.displayName = displayName
           // - folder removed
-          await updateOneFolder({ object })
+          await updateOneFolder({ object: yo })
 
           if (object && object.oid) {
             fetchOneFolder({ oid: object.oid }).then((data) => {
@@ -89,21 +91,27 @@ function RemoveFolderAndFixResource({ object }) {
             // - folder removed
             await removeOneFolder({ object })
 
-            fetchAllFolders({}).then((data) => {
-              SiteStateData.folders = data.list
+            fetchAllFolders({}).then(
+              (data) => {
+                SiteStateData.folders = data.list
 
-              router.push(`/admin`)
+                router.push(`/admin`)
 
-              let idx = SiteStateData.folders.findIndex(
-                (s) => s.oid === object.oid
-              )
-              SiteStateData.folders.splice(idx, 1)
-              SiteStateData.folders = [...SiteStateData.folders]
+                let idx = SiteStateData.folders.findIndex(
+                  (s) => s.oid === object.oid
+                )
+                SiteStateData.folders.splice(idx, 1)
+                SiteStateData.folders = [...SiteStateData.folders]
 
-              SiteStateData.folder = false
+                SiteStateData.folder = false
 
-              ev.target.innerText = `Remove Folder and Sub Resource`
-            })
+                ev.target.innerText = `Remove Folder and Sub Resource`
+              },
+              async (err) => {
+                //
+                console.log(await err)
+              }
+            )
           }
         }}
         className='px-4 py-2 text-xs text-white bg-red-500 rounded-2xl'

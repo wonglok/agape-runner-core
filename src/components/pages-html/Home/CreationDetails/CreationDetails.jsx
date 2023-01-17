@@ -30,11 +30,17 @@ export function CreationDetails({ content }) {
     }
     //
     //
-    fetchOneFolder({ oid: folderID }).then((data) => {
-      if (data?.item) {
-        SiteStateData.folder = data?.item
+    fetchOneFolder({ oid: folderID }).then(
+      (data) => {
+        if (data?.item) {
+          SiteStateData.folder = data?.item
+        }
+      },
+      async (err) => {
+        //
+        console.log(await err)
       }
-    })
+    )
     //
   }, [folderID])
 
