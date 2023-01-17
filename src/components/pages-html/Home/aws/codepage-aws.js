@@ -107,3 +107,41 @@ export async function updateOneCodePage({ object }) {
 }
 
 ////////
+
+export async function removeOneCodePage({ oid }) {
+  //
+  //
+  // try {
+  let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+
+  if (!sToken) {
+    return Promise.reject('no sToken')
+  }
+
+  let ep = UserEndPoints[process.env.NODE_ENV]
+
+  let res = await fetch(`${ep}/codepage-remove`, {
+    method: 'POST',
+    mode: 'cors',
+    body: JSON.stringify({
+      //
+      oid,
+    }),
+    headers: {
+      Authorization: `Bearer ${sToken}`,
+    },
+  })
+
+  if (res.ok) {
+    return await res.json()
+  } else {
+    return Promise.reject(res.json())
+  }
+
+  // } catch (error) {
+  //   console.log(error)
+  //   return Promise.reject('error')
+  // }
+}
+
+////////

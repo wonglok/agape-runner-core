@@ -1,5 +1,9 @@
 import { useRef } from 'react'
-import { updateOneCodePage } from '../aws/codepage-aws'
+import {
+  fetchAllCodePageInFolder,
+  removeOneCodePage,
+  updateOneCodePage,
+} from '../aws/codepage-aws'
 import { SiteStateData } from '../aws/SiteState'
 import { useSnapshot } from 'valtio'
 
@@ -18,7 +22,35 @@ export function OnePageRecord({ page }) {
             <button className='inline-flex items-center justify-center px-3 py-2 text-xs bg-purple-300 border border-gray-500 rounded-none transition-all duration-500 hover:bg-gray-500 hover:text-white'>
               Fork
             </button>
-            <button className='inline-flex items-center justify-center px-5 py-2 text-xs bg-red-400 border border-l-0 border-gray-500 rounded-full rounded-l-none transition-all duration-500 hover:bg-gray-500 hover:text-white'>
+            <button
+              onClick={async (ev) => {
+                ev.target.classList.remove('bg-red-300')
+                ev.target.classList.remove('bg-green-300')
+                ev.target.classList.add('bg-yellow-300')
+                ev.target.innerText = `Removing...`
+
+                await removeOneCodePage({ oid: page.oid }).catch((e) => {
+                  //
+                })
+
+                await fetchAllCodePageInFolder({
+                  folderID: page.folderID,
+                })
+                  .then(
+                    (data) => {
+                      SiteStateData.codePages = data?.list || []
+                    },
+                    async (err) => {
+                      //
+                      console.log(await err)
+                    }
+                  )
+                  .catch((e) => {
+                    //
+                  })
+              }}
+              className='inline-flex items-center justify-center px-5 py-2 text-xs bg-red-400 border border-l-0 border-gray-500 rounded-full rounded-l-none transition-all duration-500 hover:bg-gray-500 hover:text-white'
+            >
               Delete
             </button>
           </div>
@@ -35,6 +67,8 @@ export function OnePageRecord({ page }) {
               onClick={(ev) => {
                 //
                 //
+                ev.target.classList.remove('bg-red-300')
+                ev.target.classList.remove('bg-green-300')
                 ev.target.classList.add('bg-yellow-300')
                 ev.target.innerText = `Loading...`
                 thisPage.slug = refURLInput.current.value
