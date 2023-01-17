@@ -2,6 +2,7 @@ import { useSnapshot } from 'valtio'
 import { SiteStateData } from '../aws/SiteState'
 import { useEffect } from 'react'
 import { fetchAllCodePageInFolder } from '../aws/codepage-aws'
+import { OnePageRecord } from './OnePageRecord'
 
 export function AllFolderPages({ folderID }) {
   let ssd = useSnapshot(SiteStateData)
@@ -23,12 +24,7 @@ export function AllFolderPages({ folderID }) {
   return (
     <div>
       {pages.map((page) => {
-        return (
-          <div key={page.oid}>
-            <div className=''></div>
-            <pre>{JSON.stringify(page, null, '  ')}</pre>
-          </div>
-        )
+        return <OnePageRecord key={page.oid} page={page}></OnePageRecord>
       })}
     </div>
   )

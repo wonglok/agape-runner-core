@@ -41,6 +41,8 @@ export default function SlugPage() {
     import(/* webpackIgnore: true */ url).then(({ init }) => {
       init({
         domElement: ref.current,
+      }).catch((r) => {
+        console.log('reason', r)
       })
     })
 

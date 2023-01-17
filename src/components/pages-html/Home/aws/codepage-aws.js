@@ -31,14 +31,11 @@ export async function createCodePage({ slug, folderID }) {
   } else {
     let data = await response.json()
     console.error('server error', data.reason)
-    throw Promise.reject(data.reason)
+    throw await Promise.reject(data.reason)
   }
 }
 
-export async function fetchAllCodePageInFolder({
-  folderID,
-  reloadID = Math.random(),
-}) {
+export async function fetchAllCodePageInFolder({ folderID }) {
   //
   //
   // try {
@@ -50,7 +47,7 @@ export async function fetchAllCodePageInFolder({
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/codepage-list?r=${reloadID}`, {
+  let res = await fetch(`${ep}/codepage-list`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -62,9 +59,51 @@ export async function fetchAllCodePageInFolder({
     },
   })
 
-  return await res.json()
+  if (res.ok) {
+    return await res.json()
+  } else {
+    return Promise.reject(res.json())
+  }
   // } catch (error) {
   //   console.error(error)
-  //   throw Promise.reject('server error')
+  //   throw await Promise.reject('server error')
   // }
 }
+
+export async function updateOneCodePage({ object }) {
+  //
+  //
+  // try {
+  let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+
+  if (!sToken) {
+    throw new Error('no sToken')
+  }
+
+  let ep = UserEndPoints[process.env.NODE_ENV]
+
+  let res = await fetch(`${ep}/codepage-update`, {
+    method: 'POST',
+    mode: 'cors',
+    body: JSON.stringify({
+      //
+      object,
+    }),
+    headers: {
+      Authorization: `Bearer ${sToken}`,
+    },
+  })
+
+  if (res.ok) {
+    return await res.json()
+  } else {
+    return Promise.reject(res.json())
+  }
+
+  // } catch (error) {
+  //   console.log(error)
+  //   throw await Promise.reject('error')
+  // }
+}
+
+////////

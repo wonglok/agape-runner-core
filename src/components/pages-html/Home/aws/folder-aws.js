@@ -4,11 +4,11 @@ export async function folderCreate({ displayName }) {
   const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
   if (!sToken) {
     console.error('no session token')
-    return Promise.reject('no session token')
+    throw await Promise.reject('no session token')
   }
   if (!displayName) {
     console.error('no displayName given')
-    return Promise.reject('no displayName given')
+    throw await Promise.reject('no displayName given')
   }
 
   // try {
@@ -32,7 +32,7 @@ export async function folderCreate({ displayName }) {
   } else {
     let data = await response.json()
     console.error('server error', data.reason)
-    return Promise.reject('server error ' + data.reason)
+    throw await Promise.reject('server error ' + data.reason)
   }
   // } catch (error) {
   //   // eslint-disable-next-line no-console
@@ -43,7 +43,7 @@ export async function folderCreate({ displayName }) {
 
 //!SECTION
 
-export async function fetchAllFolders({ reloadID = Math.random() }) {
+export async function fetchAllFolders({}) {
   //
   //
   // try {
@@ -55,7 +55,7 @@ export async function fetchAllFolders({ reloadID = Math.random() }) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/folder-list?r=${reloadID}`, {
+  let res = await fetch(`${ep}/folder-list`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -66,7 +66,11 @@ export async function fetchAllFolders({ reloadID = Math.random() }) {
     },
   })
 
-  return await res.json()
+  if (res.ok) {
+    return await res.json()
+  } else {
+    throw await Promise.reject(res.json())
+  }
   // } catch (error) {
   //   console.log(error)
   //   throw Promise.reject('error')
@@ -75,7 +79,7 @@ export async function fetchAllFolders({ reloadID = Math.random() }) {
 
 ////////
 
-export async function fetchOneFolder({ oid, reloadID = Math.random() }) {
+export async function fetchOneFolder({ oid }) {
   //
   //
   // try {
@@ -87,7 +91,7 @@ export async function fetchOneFolder({ oid, reloadID = Math.random() }) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/folder-get?r=${reloadID}`, {
+  let res = await fetch(`${ep}/folder-get`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -99,7 +103,11 @@ export async function fetchOneFolder({ oid, reloadID = Math.random() }) {
     },
   })
 
-  return await res.json()
+  if (res.ok) {
+    return await res.json()
+  } else {
+    throw await Promise.reject(res.json())
+  }
   // } catch (error) {
   //   console.log(error)
 
@@ -111,7 +119,7 @@ export function getFolderEditorURL(folder) {
   return `/admin/folders/${folder.oid}`
 }
 
-export async function updateOneFolder({ object, reloadID = Math.random() }) {
+export async function updateOneFolder({ object }) {
   //
   //
   // try {
@@ -123,7 +131,7 @@ export async function updateOneFolder({ object, reloadID = Math.random() }) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/folder-update?r=${reloadID}`, {
+  let res = await fetch(`${ep}/folder-update`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -135,7 +143,11 @@ export async function updateOneFolder({ object, reloadID = Math.random() }) {
     },
   })
 
-  return await res.json()
+  if (res.ok) {
+    return await res.json()
+  } else {
+    throw await Promise.reject(res.json())
+  }
   // } catch (error) {
   //   console.log(error)
   //   throw Promise.reject('error')
@@ -144,7 +156,7 @@ export async function updateOneFolder({ object, reloadID = Math.random() }) {
 
 ////////
 
-export async function removeOneFolder({ object, reloadID = Math.random() }) {
+export async function removeOneFolder({ object }) {
   //
   //
   // try {
@@ -156,7 +168,7 @@ export async function removeOneFolder({ object, reloadID = Math.random() }) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/folder-remove?r=${reloadID}`, {
+  let res = await fetch(`${ep}/folder-remove`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -168,7 +180,11 @@ export async function removeOneFolder({ object, reloadID = Math.random() }) {
     },
   })
 
-  return await res.json()
+  if (res.ok) {
+    return await res.json()
+  } else {
+    throw await Promise.reject(res.json())
+  }
   // } catch (error) {
   //   console.log(error)
   //   throw Promise.reject('error')
