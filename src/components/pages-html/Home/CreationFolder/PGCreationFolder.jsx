@@ -24,9 +24,9 @@ export function PGCreationFolder({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='Metavese Snapshots'
-            subTitle='Folders of Versions'
-            bgImage='/brand/avatar.webp'
+            title='Metaverse Snapshots'
+            subTitle='Grouped into Folders'
+            bgImage='/brand/pink-yellow.svg'
             bgOffsetY={15}
             bar={<NewCreation></NewCreation>}
           ></SectionHeader>

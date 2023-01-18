@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import {
   fetchAllFolders,
   fetchOneFolder,
@@ -28,6 +28,10 @@ export function UpdateFolder({ object }) {
 
 function UpdateFolderName({ object }) {
   let newNameRef = useRef()
+
+  useEffect(() => {
+    newNameRef.current.value = object.displayName
+  }, [object])
   return (
     <p className='pb-2 mb-3 '>
       <input
@@ -72,6 +76,7 @@ function UpdateFolderName({ object }) {
 function RemoveFolderAndFixResource({ object }) {
   let router = useRouter()
   let inputRef = useRef()
+
   return (
     <p className='pb-2 mb-3 '>
       <input

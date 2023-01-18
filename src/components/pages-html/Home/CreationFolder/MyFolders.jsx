@@ -33,13 +33,14 @@ export function MyFolders() {
     //     console.error(err)
     //   }
     // )
-  }, [ss])
+  }, [])
+
   return (
     <div className='flex-none w-full max-w-full px-4 mt-9'>
       <div className='relative flex flex-col min-w-0 mx-2 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border'>
         <div className='p-4 pb-0 mb-0 bg-white rounded-t-2xl'>
           <h6 className='mb-1 text-xl'>Metaverse Snapshots</h6>
-          <p className='mb-3 text-sm leading-normal'>Snapshot Folders</p>
+          <p className='mb-3 text-sm leading-normal'>Grouped into Folders</p>
         </div>
         {/*  */}
         {/*  */}
