@@ -45,11 +45,11 @@ export function PGSiteRoot({ content }) {
                     {`Develop\nmOS Apps`}
                   </button>
                   <button className={getClassNames()}>
-                    {`Design\n 3D Art \n & VFX`}
+                    {`Design VFX\n& 3D Art`}
                   </button>
-                  <button className={getClassNames()}>
-                    {`Discover\nNova Link`}
-                  </button>
+                  <button
+                    className={getClassNames()}
+                  >{`Discover\nNova Link`}</button>
                 </div>
                 {/*  */}
                 {/*  */}

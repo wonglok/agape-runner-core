@@ -98,6 +98,11 @@ export function LeftMenu({ siteID, folderID }) {
                 link: `/admin/3d-vfx-studio`,
                 name: '3D & VFX Designer',
               },
+              {
+                oid: getID(),
+                link: `/admin/nova-link`,
+                name: 'NovaLink',
+              },
 
               //
               // {
