@@ -100,9 +100,9 @@ ul.dotscontian {
   left: 0px;
   width: 20px;
   height: 20px;
-  background: #ca9646;
+  background: #444444;
   border-radius: 50%;
-  box-shadow: 0px 0px 30px 0px #ca9646;
+  box-shadow: 0px 0px 30px 0px #444444;
 }
 
 #a {

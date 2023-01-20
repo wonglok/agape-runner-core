@@ -29,7 +29,7 @@ export function NewCreation() {
             // - folder removed
             let yo = await folderCreate({ displayName: displayName })
 
-            console.log(yo)
+            // console.log(yo)
 
             fetchAllFolders({}).then(
               (data) => {
