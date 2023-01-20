@@ -15,7 +15,7 @@ export async function folderCreate({ displayName }) {
   const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
 
   //
-  const response = await fetch(`${myAPIEndPoint}/folder-create`, {
+  const response = await fetch(`${myAPIEndPoint}/nova-folder-create`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -55,7 +55,7 @@ export async function fetchAllFolders({}) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/folder-list`, {
+  let res = await fetch(`${ep}/nova-folder-list`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -91,7 +91,7 @@ export async function fetchOneFolder({ oid }) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/folder-get`, {
+  let res = await fetch(`${ep}/nova-folder-get`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -131,7 +131,7 @@ export async function updateOneFolder({ object }) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/folder-update`, {
+  let res = await fetch(`${ep}/nova-folder-update`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -168,7 +168,7 @@ export async function removeOneFolder({ object }) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/folder-remove`, {
+  let res = await fetch(`${ep}/nova-folder-remove`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useSnapshot } from 'valtio'
 import { GUIState } from './GUIState'
 import { SiteStateData } from '../aws/SiteState'
-import { getFolderEditorURL, fetchAllFolders } from '../aws/folder-aws'
+import { getFolderEditorURL } from '../aws/folder-aws'
 import { useEffect } from 'react'
 
 export function MetaverseFolders({}) {
@@ -14,15 +14,15 @@ export function MetaverseFolders({}) {
 
   useEffect(() => {
     //
-    fetchAllFolders({}).then(
-      (data) => {
-        SiteStateData.folders = data?.list || []
-      },
-      async (err) => {
-        //
-        console.log(await err)
-      }
-    )
+    // fetchAllFolders({}).then(
+    //   (data) => {
+    //     SiteStateData.folders = data?.list || []
+    //   },
+    //   async (err) => {
+    //     //
+    //     console.log(await err)
+    //   }
+    // )
   }, [])
 
   //

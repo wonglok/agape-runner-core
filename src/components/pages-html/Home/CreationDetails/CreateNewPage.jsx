@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { createCodePage, fetchAllCodePageInFolder } from '../aws/codepage-aws'
+import { createCodePage, fetchAllCodePageInFolder } from '../aws/nova-page-aws'
 import { SiteStateData } from '../aws/SiteState'
 
 export function CreateNewPage({ folderID }) {

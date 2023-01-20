@@ -13,7 +13,7 @@ export async function createCodePage({ slug, folderID }) {
 
   const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
 
-  const response = await fetch(`${myAPIEndPoint}/codepage-create`, {
+  const response = await fetch(`${myAPIEndPoint}/nova-page-create`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -47,7 +47,7 @@ export async function fetchAllCodePageInFolder({ folderID }) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/codepage-list`, {
+  let res = await fetch(`${ep}/nova-page-list`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -82,7 +82,7 @@ export async function updateOneCodePage({ object }) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/codepage-update`, {
+  let res = await fetch(`${ep}/nova-page-update`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({
@@ -120,7 +120,7 @@ export async function removeOneCodePage({ oid }) {
 
   let ep = UserEndPoints[process.env.NODE_ENV]
 
-  let res = await fetch(`${ep}/codepage-remove`, {
+  let res = await fetch(`${ep}/nova-page-remove`, {
     method: 'POST',
     mode: 'cors',
     body: JSON.stringify({

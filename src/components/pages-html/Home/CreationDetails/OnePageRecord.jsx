@@ -3,7 +3,7 @@ import {
   fetchAllCodePageInFolder,
   removeOneCodePage,
   updateOneCodePage,
-} from '../aws/codepage-aws'
+} from '../aws/nova-page-aws'
 import { SiteStateData } from '../aws/SiteState'
 import { useSnapshot } from 'valtio'
 

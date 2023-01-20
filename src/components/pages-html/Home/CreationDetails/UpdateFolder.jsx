@@ -117,6 +117,11 @@ function RemoveFolderAndFixResource({ object }) {
                 console.log(await err)
               }
             )
+          } else {
+            ev.target.innerText = `Please type delete to confirm...`
+            setTimeout(() => {
+              ev.target.innerText = `Remove Folder and Sub Resource`
+            }, 1000)
           }
         }}
         className='px-4 py-2 text-xs text-white bg-red-500 rounded-2xl'

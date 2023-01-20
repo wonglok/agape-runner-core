@@ -1,7 +1,7 @@
 import { useSnapshot } from 'valtio'
 import { SiteStateData } from '../aws/SiteState'
 import { useEffect } from 'react'
-import { fetchAllCodePageInFolder } from '../aws/codepage-aws'
+import { fetchAllCodePageInFolder } from '../aws/nova-page-aws'
 import { OnePageRecord } from './OnePageRecord'
 
 export function AllFolderPages({ folderID }) {
