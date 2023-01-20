@@ -100,13 +100,8 @@ export function LeftMenu({ siteID, folderID }) {
             {[
               {
                 oid: getID(),
-                link: `/admin/app-coding-studio`,
-                name: 'App Coding Studio',
-              },
-              {
-                oid: getID(),
-                link: `/admin/3d-vfx-studio`,
-                name: '3D & VFX Designer',
+                link: `/admin/app-vfx-studio`,
+                name: 'App & VFX Studio',
               },
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
@@ -117,6 +112,11 @@ export function LeftMenu({ siteID, folderID }) {
               </h6>
             </li>
             {[
+              {
+                oid: getID(),
+                link: `/admin/nova-link`,
+                name: 'Buddy List',
+              },
               {
                 oid: getID(),
                 link: `/admin/nova-link`,
