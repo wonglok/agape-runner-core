@@ -71,8 +71,6 @@ export function LeftMenu({ siteID, folderID }) {
             </li>
             {/*  */}
             {/*  */}
-            {/*  */}
-            {/*  */}
             {[
               // { oid: getID(), link: `/admin`, name: 'All My Sites' },
               {
@@ -82,7 +80,7 @@ export function LeftMenu({ siteID, folderID }) {
               },
               {
                 oid: getID(),
-                link: `/admin/seo`,
+                link: `/admin/pages-and-seo`,
                 name: 'Pages & SEO',
               },
               {
