@@ -74,7 +74,6 @@ export function LeftMenu({ siteID, folderID }) {
             {/*  */}
             {/*  */}
             {[
-              //
               // { oid: getID(), link: `/admin`, name: 'All My Sites' },
               {
                 oid: getID(),
