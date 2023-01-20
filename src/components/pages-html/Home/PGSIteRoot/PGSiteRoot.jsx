@@ -34,13 +34,16 @@ export function PGSiteRoot({ content }) {
               <>
                 <div className='flex items-center h-full'>
                   <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    {`Setup\nPages\n& SEO`}
+                    {`Pages\n & SEO`}
                   </button>
                   <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    {`Download\nMetaOS\nApps`}
+                    {`Download\nmOS Apps`}
                   </button>
                   <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    {`Develop\nMetaOS\nApps`}
+                    {`Develop\nmOS Apps`}
+                  </button>
+                  <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
+                    {`Design\n 3D Art \n & VFX`}
                   </button>
                 </div>
                 {/*  */}

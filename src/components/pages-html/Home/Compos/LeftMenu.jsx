@@ -66,7 +66,7 @@ export function LeftMenu({ siteID, folderID }) {
           <ul className='flex flex-col pl-0 mb-0'>
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                My Metaverse
+                Metaverse OS
               </h6>
             </li>
             {/*  */}
@@ -76,7 +76,7 @@ export function LeftMenu({ siteID, folderID }) {
               {
                 oid: getID(),
                 link: `/admin`,
-                name: 'Home',
+                name: 'Dashboard',
               },
               {
                 oid: getID(),
@@ -86,13 +86,20 @@ export function LeftMenu({ siteID, folderID }) {
               {
                 oid: getID(),
                 link: `/admin/app-store`,
-                name: 'App Store',
+                name: 'mOS Store',
               },
               {
                 oid: getID(),
-                link: `/admin/developer`,
-                name: 'Developer Center',
+                link: `/admin/app-coding-studio`,
+                name: 'mOS Coding Studio',
               },
+              {
+                oid: getID(),
+                link: `/admin/3d-vfx-studio`,
+                name: '3D & VFX Designer',
+              },
+
+              //
               // {
               //   oid: getID(),
               //   link: `/admin/sites`,
@@ -127,7 +134,14 @@ export function LeftMenu({ siteID, folderID }) {
                       <span
                         className={
                           'ml-1 opacity-100 pointer-events-none duration-300 ease-soft ' +
-                          getActiveClass('text-slate-700 underline ', item.link)
+                          getActiveClass(
+                            'text-cyan-600 underline ',
+                            item.link
+                          ) +
+                          getActiveClass(
+                            '  shadow-lg shadow-cyan-200',
+                            item.link
+                          )
                         }
                       >
                         {item.name}
