@@ -32,7 +32,8 @@ export function PGDeveloper({ content }) {
             bgOffsetY={50}
             bar={
               <>
-                <div className='flex items-center h-full'>
+                {/*  */}
+                <div className='flex items-center w-full h-full'>
                   <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
                     Write MetaApp
                   </button>

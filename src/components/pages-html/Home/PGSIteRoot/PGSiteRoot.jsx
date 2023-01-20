@@ -8,6 +8,7 @@ import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export function PGSiteRoot({ content }) {
   //
@@ -35,21 +36,22 @@ export function PGSiteRoot({ content }) {
             bar={
               <>
                 {/*  */}
-                {/*  */}
                 <div className='flex items-center h-full'>
-                  <button className={getClassNames()}>{`Pages\n & SEO`}</button>
-                  <button className={getClassNames()}>
-                    {`Download\nmOS Apps`}
-                  </button>
-                  <button className={getClassNames()}>
-                    {`Develop\nmOS Apps`}
-                  </button>
-                  <button className={getClassNames()}>
-                    {`Design VFX\n& 3D Art`}
-                  </button>
-                  <button
-                    className={getClassNames()}
-                  >{`Discover\nNova Link`}</button>
+                  <Link href={`/admin/pages-and-seo`}>
+                    <button
+                      className={getClassNames()}
+                    >{`Pages\n& SEO`}</button>
+                  </Link>
+                  <Link href={`/admin/app-store`}>
+                    <button className={getClassNames()}>
+                      {`Download\nmOS Apps`}
+                    </button>
+                  </Link>
+                  <Link href={`/admin/nova-link`}>
+                    <button
+                      className={getClassNames()}
+                    >{`Discover\nNova Link`}</button>
+                  </Link>
                 </div>
                 {/*  */}
                 {/*  */}

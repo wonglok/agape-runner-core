@@ -27,6 +27,7 @@ export function LeftMenu({ siteID, folderID }) {
         GUIState.menuOpen = false
       }
     }
+
     h()
 
     window.addEventListener('resize', h)
@@ -91,7 +92,7 @@ export function LeftMenu({ siteID, folderID }) {
               {
                 oid: getID(),
                 link: `/admin/app-coding-studio`,
-                name: 'mOS Coding Studio',
+                name: 'App Coding Studio',
               },
               {
                 oid: getID(),

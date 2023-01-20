@@ -26,8 +26,8 @@ export function PGAppStore({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='AppStore'
-            subTitle='AppStore'
+            title='mOS App Store'
+            subTitle='Discover useful metaveres packaged in apps'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
             bar={
