@@ -140,9 +140,9 @@ export function LeftMenu({ siteID, folderID }) {
             )} */}
 
             {
-              <>
-                <MetaverseFolders></MetaverseFolders>
-              </>
+              // <>
+              //   <MetaverseFolders></MetaverseFolders>
+              // </>
             }
 
             {/*  */}
