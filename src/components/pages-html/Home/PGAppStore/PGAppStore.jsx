@@ -7,16 +7,18 @@ import { DesktopOnly } from '@/lib/desktop/DesktopOnly'
 import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
-import { MyFolders } from './MyFolders'
-import { NewCreation } from './NewCreation'
 import { useRouter } from 'next/router'
 
-export function PGCreationFolder({ content }) {
+export function PGAppStore({ content }) {
+  //
   let gs = useSnapshot(GateState)
+
+  //
   let {
     query: { folderID },
   } = useRouter()
 
+  //
   return (
     <>
       <DesktopOnly>
@@ -24,20 +26,26 @@ export function PGCreationFolder({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='Metaverse Snapshots'
-            subTitle='Grouped into Folders'
+            title='AppStore'
+            subTitle='AppStore'
             bgImage='/brand/pink-yellow.svg'
-            bgOffsetY={15}
-            bar={<NewCreation></NewCreation>}
+            bgOffsetY={50}
+            bar={
+              <>
+                <div className='flex items-center h-full'>
+                  <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
+                    Yo
+                  </button>
+                </div>
+              </>
+            }
           ></SectionHeader>
-          <MyFolders></MyFolders>
+          {/* <MyFolders></MyFolders> */}
         </SmartDrawer>
       </DesktopOnly>
     </>
   )
 }
-
-//
 
 //
 

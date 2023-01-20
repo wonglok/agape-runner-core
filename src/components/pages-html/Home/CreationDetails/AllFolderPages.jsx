@@ -25,8 +25,6 @@ export function AllFolderPages({ folderID }) {
   }, [folderID])
 
   //
-
-  //
   return (
     <div>
       {pages.map((page) => {
@@ -35,7 +33,3 @@ export function AllFolderPages({ folderID }) {
     </div>
   )
 }
-//
-//
-//
-//

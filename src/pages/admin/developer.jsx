@@ -1,10 +1,10 @@
-import { PGSiteRoot } from '@/components/pages-html/Home/PGSIteRoot/PGSiteRoot'
+import { PGDeveloper } from '@/components/pages-html/Home/PGDeveloper/PGDeveloper'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
-    <RedirGateHTML redirect='/admin'>
-      <PGSiteRoot></PGSiteRoot>
+    <RedirGateHTML redirect='/admin/developer'>
+      <PGDeveloper></PGDeveloper>
     </RedirGateHTML>
   )
 }
