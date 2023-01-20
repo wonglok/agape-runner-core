@@ -18,6 +18,8 @@ export function PGSiteRoot({ content }) {
     query: { folderID },
   } = useRouter()
 
+  let getClassNames = () =>
+    ` inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 shadow-xl border-cyan-500 hover:bg-cyan-200 transition-all duration-300 rounded-2xl`
   //
   return (
     <>
@@ -32,25 +34,24 @@ export function PGSiteRoot({ content }) {
             bgOffsetY={50}
             bar={
               <>
+                {/*  */}
+                {/*  */}
                 <div className='flex items-center h-full'>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    {`Pages\n & SEO`}
-                  </button>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
+                  <button className={getClassNames()}>{`Pages\n & SEO`}</button>
+                  <button className={getClassNames()}>
                     {`Download\nmOS Apps`}
                   </button>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
+                  <button className={getClassNames()}>
                     {`Develop\nmOS Apps`}
                   </button>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
+                  <button className={getClassNames()}>
                     {`Design\n 3D Art \n & VFX`}
                   </button>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
+                  <button className={getClassNames()}>
                     {`Discover\nNova Link`}
                   </button>
                 </div>
                 {/*  */}
-                {/* <NewCreation></NewCreation> */}
                 {/*  */}
               </>
             }
