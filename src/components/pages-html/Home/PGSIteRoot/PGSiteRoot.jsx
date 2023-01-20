@@ -45,6 +45,9 @@ export function PGSiteRoot({ content }) {
                   <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
                     {`Design\n 3D Art \n & VFX`}
                   </button>
+                  <button className='inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
+                    {`Discover\nNova Link`}
+                  </button>
                 </div>
                 {/*  */}
                 {/* <NewCreation></NewCreation> */}
