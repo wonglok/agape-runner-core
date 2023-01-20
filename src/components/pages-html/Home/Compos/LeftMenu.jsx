@@ -86,7 +86,7 @@ export function LeftMenu({ siteID, folderID }) {
               {
                 oid: getID(),
                 link: `/admin/app-store`,
-                name: 'mOS Store',
+                name: 'mOS App Store',
               },
               {
                 oid: getID(),
