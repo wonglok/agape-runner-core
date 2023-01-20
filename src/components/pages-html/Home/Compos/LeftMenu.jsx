@@ -106,6 +106,7 @@ export function LeftMenu({ siteID, folderID }) {
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
             })}
+
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
                 NOVA Link Marketing
