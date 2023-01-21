@@ -103,13 +103,8 @@ export function LeftMenu({ siteID, folderID }) {
             {[
               {
                 oid: getID(),
-                link: `/admin/builders/code-apps`,
-                name: 'Apps Coding Studio',
-              },
-              {
-                oid: getID(),
-                link: `/admin/builders/design-3d-vfx`,
-                name: 'VFX & 3D Studio',
+                link: `/admin/builders/apps-3d-vfx`,
+                name: 'Creation Studio',
               },
               //
             ].map((item) => {
@@ -123,6 +118,7 @@ export function LeftMenu({ siteID, folderID }) {
             {/* Personal Ownership of your own data */}
             {/*  */}
 
+            {/*
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
                 Novalink Synced Ads
@@ -145,12 +141,12 @@ export function LeftMenu({ siteID, folderID }) {
               //
               {
                 oid: getID(),
-                link: `/admin/nova-link/watch-ads-to-earn`,
-                name: 'Experience Ads & Earn',
+                link: `/admin/nova-link/monetisation`,
+                name: 'Monetisation',
               },
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
-            })}
+            })} */}
 
             {/*
             {siteID && (

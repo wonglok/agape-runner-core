@@ -9,7 +9,9 @@
 
 // export default DynamicPage
 
-import { importNPM } from '@/components/servant/importPackages'
+// import { importNPM } from '@/components/servant/importPackages'
+import {} from '@/components/servant/importPackages'
+
 import { useRouter } from 'next/router'
 // import { useEffect, useRef } from 'react'
 // import Script from 'next/script'
@@ -32,19 +34,26 @@ export default function SlugPage() {
     // window.React = React
     // window.ReactDOM = ReactDOM
 
-    //
-
-    window.importNPM = importNPM
+    // window.importNPM = importNPM
 
     let url = `/api/js/projectIDAAAAAAAAAA/package-yoyo/module-fafa/main.js`
 
-    import(/* webpackIgnore: true */ url).then(({ init }) => {
-      init({
-        domElement: ref.current,
-      }).catch((r) => {
-        console.log('reason', r)
-      })
-    })
+    //
+    //
+    //
+    // import(/* webpackIgnore: true */ 'three')
+    //   .then(() => {})
+    //   .catch((r) => {
+    //     console.log(r)
+    //   })
+
+    // import(/* webpackIgnore: true */ url).then(({ init }) => {
+    //   // init({
+    //   //   domElement: ref.current,
+    //   // }).catch((r) => {
+    //   //   console.log('reason', r)
+    //   // })
+    // })
 
     // importNPM(['three']).then(([THREE]) => {
     //   console.log('MESH', THREE.Mesh)
@@ -52,7 +61,6 @@ export default function SlugPage() {
 
     // import(/* webpackIgnore: true */ ).then((r) => {
     //   console.log(Object.keys(r))
-
     //   console.log(ref.current)
     // })
   }, [query, query.slug])
@@ -60,8 +68,21 @@ export default function SlugPage() {
   //
   return (
     <>
+      <button
+        onClick={() => {
+          //
+          window.importShim('three')
+          console.log(123)
+          //
+        }}
+      >
+        {/*  */}
+        face
+        {/*  */}
+      </button>
+
       <div className='w-full h-full' ref={ref}>
-        <LoaderGrid></LoaderGrid>
+        {/* <LoaderGrid></LoaderGrid> */}
       </div>
 
       {/*
@@ -90,7 +111,7 @@ ul.dotscontian {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: rotate(45deg) translate(-50%, -50%);
+  transform: rotate(45deg) translate(-50%, -50%) scale(0.5);
 }
 
 .dotscontian li {
@@ -488,9 +509,6 @@ svg {
       ></style>
       <div className='loaderBody'>
         <div className=''>
-          <div className='flex items-center justify-center'>
-            Loading Metaverse...
-          </div>
           <div className='blobs'>
             <div className='blob-center'></div>
             <div className='blob'></div>

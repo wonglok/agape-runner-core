@@ -1,10 +1,10 @@
-import { PGDeveloper } from '@/components/pages-html/Home/PGDeveloper/PGDeveloper'
+import { PGBuddyList } from '@/components/pages-html/Home/PGBuddyList/PGBuddyList'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
-    <RedirGateHTML redirect='/admin/developer'>
-      <PGDeveloper></PGDeveloper>
+    <RedirGateHTML redirect='/admin/nova-link/monetisation'>
+      <PGBuddyList></PGBuddyList>
     </RedirGateHTML>
   )
 }

@@ -8,7 +8,6 @@ import {
 import useSWR from 'swr'
 import { useSnapshot } from 'valtio'
 import { GUIState } from './GUIState'
-import { fetchPages } from '../SiteDetail/SitePagesManager'
 import { SiteStateData } from '../aws/SiteState'
 
 export function SitePagesLink({ siteID }) {
@@ -19,8 +18,6 @@ export function SitePagesLink({ siteID }) {
   }
 
   let gui = useSnapshot(GUIState)
-
-  // let { data } = useSWR({ siteID: `${gui.siteID}`, reloadID: 0 }, fetchPages)
 
   let siteData = useSnapshot(SiteStateData)
 

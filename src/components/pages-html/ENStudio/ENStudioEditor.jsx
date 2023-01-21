@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import initSwc, { transform } from '@swc/wasm-web'
-const uglify = require('uglifyjs-browser')
+// const uglify = require('uglifyjs-browser')
 
 async function compile({ input }) {
   const result = await transform(input, {
@@ -47,7 +47,7 @@ async function compile({ input }) {
 export function ENStudioEditor() {
   const [initialized, setInitialized] = useState(false)
 
-  let input = /* jsx */ `
+  let input = /*  */ `
 
 console.log('running hello');
 
@@ -58,8 +58,6 @@ export class Yo {
 }
 
 const loadNPM = window.importNPM
-
-
 
 export const init = async ({ domElement }) => {
 
@@ -124,7 +122,7 @@ export const init = async ({ domElement }) => {
 
       let result = await compile({ input })
 
-      console.log(result)
+      // console.log(result)
       setInitialized(true)
     }
     importAndRunSwcOnMount()

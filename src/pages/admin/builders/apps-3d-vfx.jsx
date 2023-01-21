@@ -1,10 +1,10 @@
-import { PGPagesSEO } from '@/components/pages-html/Home/PGPagesSEO/PGPagesSEO'
+import { PGCreationStudio } from '@/components/pages-html/Home/PGCreationStudio/PGCreationStudio'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
-    <RedirGateHTML redirect='/admin/nova-link/pages-and-seo'>
-      <PGPagesSEO></PGPagesSEO>
+    <RedirGateHTML redirect='/admin/builders/design-3d-vfx'>
+      <PGCreationStudio></PGCreationStudio>
     </RedirGateHTML>
   )
 }

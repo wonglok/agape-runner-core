@@ -28,8 +28,6 @@ export function MetaverseFolders({}) {
   //
   let gui = useSnapshot(GUIState)
 
-  // let { data } = useSWR({ siteID: `${gui.siteID}`, reloadID: 0 }, fetchPages)
-
   // let siteData = useSnapshot(SiteStateData)
   let ss = useSnapshot(SiteStateData)
   return (
