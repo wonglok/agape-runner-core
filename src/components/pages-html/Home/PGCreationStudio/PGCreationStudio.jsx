@@ -13,6 +13,7 @@ import { useEffect, useRef } from 'react'
 import path from 'path'
 import initSwc, { transform } from '@swc/wasm-web'
 // const uglify = require('uglifyjs-browser')
+import * as React from 'react'
 
 async function compile({ input }) {
   const result = await transform(input, {
@@ -35,11 +36,11 @@ async function compile({ input }) {
       //
       transform: {
         react: {
-          pragma: 'React.createElement',
+          pragma: 'window.React.createElement',
         },
       },
 
-      minify: {},
+      // minify: {},
       //
       target: 'es2018',
       loose: false,
@@ -161,7 +162,12 @@ let onRun = async ({ domElement }) => {
             import b from './b.js';
 
             import('./codesplit.js').then((r) => {
-              console.log(r.default)
+              console.log(r.default);
+
+              function Yo () {
+                return null
+              }
+              console.log(<Yo></Yo>)
             })
             import('network:/manifest.json').then(v=>{
               console.log(v)
@@ -174,7 +180,7 @@ let onRun = async ({ domElement }) => {
               }
             }
 
-            console.log('GUI', GUI)
+            console.log('GUI')
 
             import('../engine/index.js').then((r)=>{
               console.log(r.default)
@@ -342,8 +348,16 @@ let onRun = async ({ domElement }) => {
 
   let outputs = (await (await bundle).generate({})).output
 
-  console.log(JSON.stringify(outputs.map((e) => e.code)))
+  console.log(
+    outputs.map((e) => {
+      return {
+        fileName: e.fileName,
+        code: e.code,
+      }
+    })
+  )
 
+  //
   // console.log(outputs)
 
   //
@@ -424,6 +438,8 @@ export function PGCreationStudio({ content }) {
   } = useRouter()
 
   useEffect(() => {
+    window.React = React
+
     onRun({ domElement: ref.current })
   }, [])
 
