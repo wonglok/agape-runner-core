@@ -317,6 +317,8 @@ let onRun = async ({ domElement }) => {
           }
           return new URL(importee, importer).href
         },
+
+        //
         async load(id) {
           if (id.indexOf('network:') === 0) {
             let url = id.replace('network:', '').replace(rollupLocalhost, '')
@@ -359,7 +361,6 @@ let onRun = async ({ domElement }) => {
 
   //
   // console.log(outputs)
-
   //
 
   let loaderUtils = await getLoader({
@@ -439,6 +440,11 @@ export function PGCreationStudio({ content }) {
 
   useEffect(() => {
     window.React = React
+
+    window.addEventListener('message', (ev) => {
+      //
+      console.log(ev.data)
+    })
 
     onRun({ domElement: ref.current })
   }, [])

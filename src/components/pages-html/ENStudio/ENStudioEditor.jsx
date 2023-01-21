@@ -1,6 +1,14 @@
-import { useEffect, useState } from 'react'
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
+import { GateState } from '@/auth/GateState.ts'
+import { ref, useSnapshot } from 'valtio'
+import { useRouter } from 'next/router'
+import { rollup } from 'rollup'
+import { useEffect, useRef } from 'react'
+import path from 'path'
 import initSwc, { transform } from '@swc/wasm-web'
 // const uglify = require('uglifyjs-browser')
+import * as React from 'react'
 
 async function compile({ input }) {
   const result = await transform(input, {
@@ -23,10 +31,11 @@ async function compile({ input }) {
       //
       transform: {
         react: {
-          pragma: 'React.createElement',
+          pragma: 'window.React.createElement',
         },
       },
 
+      // minify: {},
       //
       target: 'es2018',
       loose: false,
@@ -44,104 +53,415 @@ async function compile({ input }) {
   return result.code
 }
 
-export function ENStudioEditor() {
-  const [initialized, setInitialized] = useState(false)
+export const getLoader = async ({
+  onResolve = () => {},
+  onFetch = () => {},
+}) => {
+  let res = document.body.querySelector('#importmap')
 
-  let input = /*  */ `
+  if (!res) {
+    document.body.appendChild(
+      Object.assign(document.createElement('script'), {
+        id: 'importmap',
+        type: 'importmap-shim',
+        innerHTML: JSON.stringify({
+          imports: {},
+        }),
+      })
+    )
 
-console.log('running hello');
-
-export class Yo {
-  constructor(){
-      this.a = 1;
+    // document.body.appendChild(
+    //   Object.assign(document.createElement('script'), {
+    //     id: 'esms-options',
+    //     innerHTML: JSON.stringify({
+    //       shimMode: true,
+    //     }),
+    //   })
+    // )
+    //
   }
+
+  return new Promise(async (resolve) => {
+    window.esmsInitOptions = {
+      // Enable Shim Mode
+      shimMode: true, // default false
+      // Enable newer modules features
+      polyfillEnable: ['css-modules', 'json-modules'], // default empty
+      // Custom CSP nonce
+      nonce: 'n0nce', // default is automatic detection
+      // Don't retrigger load events on module scripts
+      noLoadEventRetriggers: true, // default false
+      // Skip source analysis of certain URLs for full native passthrough
+      skip: /^https:\/\/cdn\.com/, // defaults to null
+      // Clean up blob URLs after execution
+      revokeBlobURLs: true, // default false
+      // Secure mode to not support loading modules without integrity (integrity is always verified though)
+      enforceIntegrity: false, // default false
+      // Permit overrides to import maps
+      mapOverrides: true, // default false
+
+      // -- Hooks --
+      // Module load error
+      onerror: (e) => {
+        /*...*/
+      }, // default noop
+      // Called when polyfill mode first engages
+      onpolyfill: () => {}, // default logs to the console
+      // Hook all module resolutions
+      resolve: (id, parentUrl, resolve) => {
+        return onResolve({ id, parentUrl, resolve })
+        // return resolve(id, parentUrl)
+      }, // default is spec resolution
+      // Hook source fetch function
+      fetch: (url, options) => {
+        //fetch(url, options)
+        return onFetch({ url, options })
+      }, // default is native
+      // Hook import.meta construction
+      meta: (meta, url) => {}, // default is noop
+      // Hook top-level imports
+      onimport: (url, options, parentUrl) => {
+        console.log('onimport', url, options, parentUrl)
+      }, // default is noop
+    }
+
+    await import('es-module-shims')
+
+    //
+    // myPackages.map((it) => {
+    //  return window.importShim(it)
+    // })
+    //
+    //window.importShim.addImportMap(v)
+
+    let tt = setInterval(() => {
+      if (window.importShim) {
+        clearInterval(tt)
+        resolve({
+          load: window.importShim,
+          addImportMap: window.importShim.addImportMap,
+        })
+      }
+    })
+  })
 }
 
-const loadNPM = window.importNPM
+let onRun = async ({ domElement }) => {
+  const myModules = [
+    {
+      moduleName: 'main',
+      files: [
+        {
+          fileName: `index.js`,
+          content: /* js */ `
+            import b from './b.js';
 
-export const init = async ({ domElement }) => {
+            import('./codesplit.js').then((r) => {
+              console.log(r.default);
 
-  await loadNPM(['react'])
+              function Yo () {
+                return null
+              }
+              console.log(<Yo></Yo>)
+            })
+            import('network:/manifest.json').then(v=>{
+              console.log(v)
+            })
 
-  let [{ Canvas }, { Box, OrbitControls, Caustics, TorusKnot, MeshTransmissionMaterial, Lightformer, Environment }, ReactDOM] = await loadNPM([
-      '@react-three/fiber',
-      '@react-three/drei',
-      'react-dom/client',
-  ])
+            export const GUI = {
+              yoyo: 1234,
+              yo: ({ domElement }) => {
+                domElement.innerText = Math.random()
+              }
+            }
 
-  let root = ReactDOM.createRoot(domElement, {});
+            console.log('GUI')
 
-  root.render(
-  <>
-    <Canvas>
+            import('../engine/index.js').then((r)=>{
+              console.log(r.default)
+            })
+            import('./json.json').then((r)=>{
+              console.log(r.default)
+            })
 
-      <Caustics
-        backfaces
-        color={[1, 0.8, 0.8]}
-        focus={[0, -1.2, 0]}
-        lightSource={[-2, 2.5, -2.5]}
-        frustum={1.75}
-        intensity={0.5}
-        worldRadius={0.66 / 10}
-        ior={0.6}
-        backfaceIor={1.26}>
+            export default {
+              mod: 'main',
+              a:b
+            };
+          `,
+        },
+        {
+          fileName: `b.js`,
+          content: /* js */ `
+            export default {
+              b:'bbbbbb'
+            }
+          `,
+        },
+        {
+          fileName: `json.json`,
+          content: JSON.stringify({ yo: 1234 }),
+        },
+        {
+          fileName: `codesplit.js`,
+          content: /* js */ `
+            export default {
+              yaya:'yayayayayayayaya'
+            }
+          `,
+        },
+      ],
+    },
 
-        <TorusKnot position={[0, 15, 0]} args={[15, 3, 128, 64, 1, 3]}>
-          <MeshTransmissionMaterial thickness={0.2} chromaticAberration={0.05} anisotropy={1.5} clearcoat={1} clearcoatRoughness={0.2} envMapIntensity={3} />
-        </TorusKnot>
-      </Caustics>
+    {
+      moduleName: 'engine',
+      files: [
+        {
+          fileName: `index.js`,
+          content: /* js */ `
+            import b from './b.js';
 
-      <Environment frames={Infinity} preset="city" resolution={256} background blur={0.8}>
-        <Lightformer intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} />
-        <Lightformer intensity={4} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} />
-        <group rotation={[Math.PI / 2, 1, 0]}>
-          {[2, -2, 2, -4, 2, -5, 2, -9].map((x, i) => (
-            <Lightformer key={i} intensity={1} rotation={[Math.PI / 4, 0, 0]} position={[x, 4, i * 4]} scale={[4, 1, 1]} />
-          ))}
-          <Lightformer intensity={0.5} rotation-y={Math.PI / 2} position={[-5, 1, -1]} scale={[50, 2, 1]} />
-          <Lightformer intensity={0.5} rotation-y={Math.PI / 2} position={[-5, -1, -1]} scale={[50, 2, 1]} />
-          <Lightformer intensity={0.5} rotation-y={-Math.PI / 2} position={[10, 1, 0]} scale={[50, 2, 1]} />
-        </group>
-        <group>
-          <Lightformer intensity={5} form="ring" color="red" rotation-y={Math.PI / 2} position={[-5, 2, -1]} scale={[10, 10, 1]} />
-        </group>
-      </Environment>
+            import('./codesplit.js').then((r) => {
+              console.log(r.default)
+            })
 
-      <OrbitControls object-position={[0,5,5]}></OrbitControls>
-    </Canvas>
-  </>
-  );
+            export const GUI = {
+              yoyo: 1234
+            }
 
-};
+            console.log('GUI', GUI)
 
-  `
+            export default {
+              mod: 'engine',
+              a:b
+            };
+          `,
+        },
+        {
+          fileName: `b.js`,
+          content: /* js */ `
+            export default {
+              b:'bbbbbb'
+            }
+          `,
+        },
+        {
+          fileName: `codesplit.js`,
+          content: /* js */ `
+
+
+            export default {
+              yaya:'yayayayayayayaya'
+            }
+          `,
+        },
+      ],
+    },
+  ]
+
+  const rollupLocalhost = `rollup://localhost/`
+
+  const getFileName = ({ mod, fileName }) => {
+    let file = mod.files.find((e) => e.fileName === fileName)
+    return `${rollupLocalhost}${mod.moduleName}/${file.fileName}`
+  }
+
+  // let getContent = ({ moduleName, fileName }) => {
+  //   let mod = myModules.find((e) => e.moduleName === moduleName)
+  //   if (!mod) {
+  //     return `console.log('not found module', ${JSON.stringify({
+  //       moduleName,
+  //     })})`
+  //   }
+  //   let file = (mod?.files || []).find((e) => e.fileName === fileName)
+  //   if (!file) {
+  //     return `console.log('not found code', ${JSON.stringify({
+  //       fileName,
+  //       moduleName,
+  //     })})`
+  //   }
+  //   return file.content
+  // }
+
+  //
+
+  let fileList = []
+
+  for (let mod of myModules) {
+    for (let file of mod.files) {
+      fileList.push({
+        rollup: `${rollupLocalhost}${mod.moduleName}/${file.fileName}`,
+        content: file.content,
+      })
+    }
+  }
+
+  await initSwc()
+
+  let bundle = rollup({
+    input: getFileName({
+      mod: myModules[0],
+      fileName: 'index.js',
+    }),
+    plugins: [
+      {
+        name: 'rollup-in-browser-example',
+        resolveId(importee, importer) {
+          if (!importer) {
+            return importee
+          }
+          return new URL(importee, importer).href
+        },
+
+        //
+        async load(id) {
+          if (id.indexOf('network:') === 0) {
+            let url = id.replace('network:', '').replace(rollupLocalhost, '')
+
+            return fetch(url)
+              .then((r) => r.text())
+              .then((t) => {
+                return `export default ${JSON.stringify(t)}`
+              })
+          }
+
+          let file = fileList.find((e) => e.rollup === id)
+
+          if (path.parse(file.rollup)?.ext === '.json') {
+            return `export default ${file.content}`
+          }
+
+          if (file?.content) {
+            return await compile({ input: file.content || '' })
+
+            // return file.content
+          }
+
+          return `console.log('not-found',${JSON.stringify(id)})`
+        },
+      },
+    ],
+  })
+
+  let outputs = (await (await bundle).generate({})).output
+
+  console.log(
+    outputs.map((e) => {
+      return {
+        fileName: e.fileName,
+        code: e.code,
+      }
+    })
+  )
+
+  //
+  // console.log(outputs)
+  //
+
+  let loaderUtils = await getLoader({
+    onFetch: ({ url, options }) => {
+      return fetch(url, options)
+    },
+    onResolve: ({ id, parentUrl, resolve }) => {
+      console.log('onResolve', id, parentUrl)
+
+      if (parentUrl.indexOf('blob:') === 0) {
+        return resolve(id, '')
+      }
+      return resolve(id, parentUrl)
+    },
+  })
+
+  //
+
+  // await initSwc()
+  // await Promise.all(
+  //   outputs.map(async (output) => {
+  //     //
+
+  //     console.log(output)
+
+  //     output.code = await minify(output.code)
+
+  //     return output
+  //   })
+  // )
+
+  for (let output of outputs) {
+    loaderUtils.addImportMap({
+      imports: {
+        [`${output.fileName}`]: URL.createObjectURL(
+          new Blob([`${output.code}`], {
+            type: `application/javascript`,
+          })
+        ),
+      },
+    })
+  }
+
+  // //
+  // // outputs.forEach((item) => {
+
+  loaderUtils.load('index.js').then((r) => {
+    console.log(r.GUI.yo({ domElement: domElement }))
+    //
+  })
+  //
+
+  // fetch(`${UserEndPoints[process.env.NODE_ENV]}/bundle`, {
+  //   method: 'GET',
+  //   mode: 'cors',
+  //   // body: JSON.stringify({}),
+  // }).then(
+  //   (res) => {
+  //     res.json()
+  //   },
+  //   (err) => {
+  //     console.log(err)
+  //   }
+  // )
+  //
+}
+
+export function ENStudioEditor({ content }) {
+  //
+  let gs = useSnapshot(GateState)
+
+  let ref = useRef()
+  //
+  let {
+    query: { folderID },
+  } = useRouter()
 
   useEffect(() => {
-    async function importAndRunSwcOnMount() {
-      await initSwc()
+    window.React = React
 
-      let result = await compile({ input })
+    window.addEventListener('message', (ev) => {
+      //
+      console.log(ev.data)
+    })
 
-      // console.log(result)
-      setInitialized(true)
-    }
-    importAndRunSwcOnMount()
+    onRun({ domElement: ref.current })
   }, [])
 
+  //
   return (
-    <div className='App'>
+    <>
       <button
-        onClick={async () => {
-          if (initialized) {
-            let result = await compile({ input })
-            console.log(result)
-          }
+        onClick={(ev) => {
+          onRun({ domElement: ref.current })
         }}
+        className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'
       >
-        Compile
+        3D Asset
       </button>
-
-      <iframe src={`/yoyo-link`}></iframe>
-    </div>
+      <div ref={ref}>1111</div>
+    </>
   )
 }
+
+//
+
+//
+
+//
