@@ -1,10 +1,10 @@
-import { PGAppStore } from '@/components/pages-html/Home/PGAppStore/PGAppStore'
+import { PGPagesSEO } from '@/components/pages-html/Home/PGPagesSEO/PGPagesSEO'
 import RedirGateHTML from '@/lib/login/RedirGateHTML'
 
 export default function Avatars() {
   return (
-    <RedirGateHTML redirect='/admin/app-store'>
-      <PGAppStore></PGAppStore>
+    <RedirGateHTML redirect='/admin/meta-os/pages-and-seo'>
+      <PGPagesSEO></PGPagesSEO>
     </RedirGateHTML>
   )
 }

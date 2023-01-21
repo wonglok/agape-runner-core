@@ -65,8 +65,11 @@ export function LeftMenu({ siteID, folderID }) {
                 Metaverse OS
               </h6>
             </li>
+
             {/*  */}
             {/*  */}
+            {/*  */}
+
             {[
               // { oid: getID(), link: `/admin`, name: 'All My Sites' },
               {
@@ -76,17 +79,18 @@ export function LeftMenu({ siteID, folderID }) {
               },
               {
                 oid: getID(),
-                link: `/admin/pages-and-seo`,
+                link: `/admin/meta-os/pages-and-seo`,
                 name: 'Pages & SEO',
               },
               {
                 oid: getID(),
-                link: `/admin/app-store`,
-                name: 'mOS App Store',
+                link: `/admin/meta-os/app-store`,
+                name: 'Apps Store',
               },
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
             })}
+
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
                 Developer & Creators
@@ -96,39 +100,54 @@ export function LeftMenu({ siteID, folderID }) {
             {/*  */}
             {/*  */}
             {/*  */}
-            {/*  */}
             {[
               {
                 oid: getID(),
-                link: `/admin/app-vfx-studio`,
-                name: 'App & VFX Studio',
+                link: `/admin/builders/code-apps`,
+                name: 'Apps Coding Studio',
               },
+              {
+                oid: getID(),
+                link: `/admin/builders/design-3d-vfx`,
+                name: 'VFX & 3D Studio',
+              },
+              //
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
             })}
 
+            {/*  */}
+            {/* AGAPE */}
+            {/* Global Sync of Social Graph */}
+            {/* Distributed Content Storage */}
+            {/* Personal Ownership of your own data */}
+            {/*  */}
+
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                NOVA Link Marketing
+                Novalink Synced Ads
               </h6>
             </li>
+
             {[
+              //
               {
                 oid: getID(),
-                link: `/admin/nova-link`,
+                link: `/admin/nova-link/buddy-list`,
                 name: 'Buddy List',
               },
+              //
               {
                 oid: getID(),
-                link: `/admin/nova-link`,
-                name: 'Product Push',
-              },
-              {
-                oid: getID(),
-                link: `/admin/product-discovery`,
-                name: 'Product Discovery',
+                link: `/admin/nova-link/product-sync`,
+                name: 'Product Sync',
               },
               //
+              {
+                oid: getID(),
+                link: `/admin/nova-link/watch-ads-to-earn`,
+                name: 'Experience Ads & Earn',
+              },
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
             })}
@@ -138,7 +157,8 @@ export function LeftMenu({ siteID, folderID }) {
               <>
                 <SitePagesLink siteID={siteID}></SitePagesLink>
               </>
-            )} */}
+            )}
+            */}
 
             {
               // <>
@@ -150,7 +170,7 @@ export function LeftMenu({ siteID, folderID }) {
 
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                Authentication
+                Security
               </h6>
             </li>
             <li className='w-full mt-0.5'>
