@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 import { GateState } from '@/auth/GateState.ts'
-import { useSnapshot } from 'valtio'
+import { ref, useSnapshot } from 'valtio'
 import { LeftMenu } from '../Compos/LeftMenu'
 import { DesktopOnly } from '@/lib/desktop/DesktopOnly'
 import { SectionHeader } from '../Compos/SectionHeader'
@@ -9,8 +9,53 @@ import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useRouter } from 'next/router'
 import { rollup } from 'rollup'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import path from 'path'
+import initSwc, { transform } from '@swc/wasm-web'
+// const uglify = require('uglifyjs-browser')
+
+async function compile({ input }) {
+  const result = await transform(input, {
+    jsc: {
+      parser: {
+        syntax: 'ecmascript',
+        jsx: true,
+        dynamicImport: true,
+        privateMethod: true,
+        functionBind: true,
+        exportDefaultFrom: false,
+        exportNamespaceFrom: false,
+        decorators: false,
+        decoratorsBeforeExport: true,
+        topLevelAwait: true,
+        importMeta: true,
+        preserveAllComments: false,
+      },
+
+      //
+      transform: {
+        react: {
+          pragma: 'React.createElement',
+        },
+      },
+
+      minify: {},
+      //
+      target: 'es2018',
+      loose: false,
+      externalHelpers: false,
+      keepClassNames: true,
+    },
+
+    isModule: true,
+
+    module: {
+      type: 'es6',
+    },
+  })
+
+  return result.code
+}
 
 export const getLoader = async ({
   onResolve = () => {},
@@ -123,7 +168,10 @@ let onRun = async ({ domElement }) => {
             })
 
             export const GUI = {
-              yoyo: 1234
+              yoyo: 1234,
+              yo: ({ domElement }) => {
+                domElement.innerText = Math.random()
+              }
             }
 
             console.log('GUI', GUI)
@@ -131,7 +179,7 @@ let onRun = async ({ domElement }) => {
             import('../engine/index.js').then((r)=>{
               console.log(r.default)
             })
-              import('./json.json').then((r)=>{
+            import('./json.json').then((r)=>{
               console.log(r.default)
             })
 
@@ -238,16 +286,16 @@ let onRun = async ({ domElement }) => {
 
   let fileList = []
 
-  myModules.map((mod) => {
-    mod.files.map((file) => {
+  for (let mod of myModules) {
+    for (let file of mod.files) {
       fileList.push({
         rollup: `${rollupLocalhost}${mod.moduleName}/${file.fileName}`,
         content: file.content,
       })
-    })
+    }
+  }
 
-    return mod
-  })
+  await initSwc()
 
   let bundle = rollup({
     input: getFileName({
@@ -281,7 +329,9 @@ let onRun = async ({ domElement }) => {
           }
 
           if (file?.content) {
-            return file.content
+            return await compile({ input: file.content || '' })
+
+            // return file.content
           }
 
           return `console.log('not-found',${JSON.stringify(id)})`
@@ -292,7 +342,9 @@ let onRun = async ({ domElement }) => {
 
   let outputs = (await (await bundle).generate({})).output
 
-  console.log(outputs)
+  console.log(JSON.stringify(outputs.map((e) => e.code)))
+
+  // console.log(outputs)
 
   //
 
@@ -301,8 +353,6 @@ let onRun = async ({ domElement }) => {
       return fetch(url, options)
     },
     onResolve: ({ id, parentUrl, resolve }) => {
-      //
-
       console.log('onResolve', id, parentUrl)
 
       if (parentUrl.indexOf('blob:') === 0) {
@@ -312,7 +362,22 @@ let onRun = async ({ domElement }) => {
     },
   })
 
-  outputs.forEach((output) => {
+  //
+
+  // await initSwc()
+  // await Promise.all(
+  //   outputs.map(async (output) => {
+  //     //
+
+  //     console.log(output)
+
+  //     output.code = await minify(output.code)
+
+  //     return output
+  //   })
+  // )
+
+  for (let output of outputs) {
     loaderUtils.addImportMap({
       imports: {
         [`${output.fileName}`]: URL.createObjectURL(
@@ -322,12 +387,13 @@ let onRun = async ({ domElement }) => {
         ),
       },
     })
-  })
+  }
 
   // //
   // // outputs.forEach((item) => {
 
-  loaderUtils.load('index.js').then(() => {
+  loaderUtils.load('index.js').then((r) => {
+    console.log(r.GUI.yo({ domElement: domElement }))
     //
   })
   //
@@ -351,13 +417,14 @@ export function PGCreationStudio({ content }) {
   //
   let gs = useSnapshot(GateState)
 
+  let ref = useRef()
   //
   let {
     query: { folderID },
   } = useRouter()
 
   useEffect(() => {
-    onRun({ domElement: null })
+    onRun({ domElement: ref.current })
   }, [])
 
   //
@@ -377,7 +444,7 @@ export function PGCreationStudio({ content }) {
                 <div className='flex items-center w-full h-full'>
                   <button
                     onClick={(ev) => {
-                      onRun({ domElement: ev.target })
+                      onRun({ domElement: ref.current })
                     }}
                     className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'
                   >
@@ -396,6 +463,7 @@ export function PGCreationStudio({ content }) {
             <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
               <div className='p-4 pb-0 mb-0 rounded-t-2xl'>
                 {/* <ENStudioEditor></ENStudioEditor> */}
+                <div ref={ref}>1111</div>
               </div>
             </div>
           </div>
