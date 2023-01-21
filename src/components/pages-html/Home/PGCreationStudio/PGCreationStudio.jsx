@@ -8,11 +8,9 @@ import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useRouter } from 'next/router'
-import { UserEndPoints } from '@/helpers/UserEndPoints'
 import { rollup } from 'rollup'
 import { useEffect } from 'react'
 import path from 'path'
-import jsonPlugin from '@rollup/plugin-json'
 
 export const getLoader = async ({
   onResolve = () => {},
@@ -39,6 +37,7 @@ export const getLoader = async ({
     //     }),
     //   })
     // )
+    //
   }
 
   return new Promise(async (resolve) => {
@@ -106,7 +105,7 @@ export const getLoader = async ({
   })
 }
 
-let onRun = async () => {
+let onRun = async ({ domElement }) => {
   const myModules = [
     {
       moduleName: 'main',
@@ -200,6 +199,8 @@ let onRun = async () => {
         {
           fileName: `codesplit.js`,
           content: /* js */ `
+
+
             export default {
               yaya:'yayayayayayayaya'
             }
@@ -293,6 +294,8 @@ let onRun = async () => {
 
   console.log(outputs)
 
+  //
+
   let loaderUtils = await getLoader({
     onFetch: ({ url, options }) => {
       return fetch(url, options)
@@ -354,7 +357,7 @@ export function PGCreationStudio({ content }) {
   } = useRouter()
 
   useEffect(() => {
-    onRun()
+    onRun({ domElement: null })
   }, [])
 
   //
@@ -373,7 +376,9 @@ export function PGCreationStudio({ content }) {
               <>
                 <div className='flex items-center w-full h-full'>
                   <button
-                    onClick={onRun}
+                    onClick={(ev) => {
+                      onRun({ domElement: ev.target })
+                    }}
                     className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'
                   >
                     3D Asset
