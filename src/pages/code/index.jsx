@@ -177,8 +177,10 @@ export let MyCodeModules = [
   },
 ]
 
+//
+//
 let appSource = {
-  appStart: 'wonglok831',
+  appName: 'wonglok831',
   appPackages: [
     { packageName: 'wonglok831', modules: MyCodeModules },
     { packageName: 'resuables', modules: MyCodeModules },
@@ -188,9 +190,9 @@ let appSource = {
 //
 
 let buildApp = async (input) => {
-  /** @type {{ appStart: '', appPackages: [{[ packageName: '', modules: [{ moduleName: '', files: [{fileName: '', content: ''] }] ]}] }} */
+  /** @type {{ appName: '', appPackages: [{[ packageName: '', modules: [{ moduleName: '', files: [{fileName: '', content: ''] }] ]}] }} */
   let app = input
-  // const { appStart, appPackages } = input
+  // const { appName, appPackages } = input
   const rollupLocalhost = `rollup://localhost/`
 
   const getFileName = ({ onePackage, moduleName, fileName }) => {
@@ -213,12 +215,12 @@ let buildApp = async (input) => {
       }
     }
   }
-  console.log(fileList)
+  // console.log('fileList', fileList)
 
   let bundle = rollup({
     input: [
       getFileName({
-        onePackage: app.appPackages.find((e) => e.packageName === app.appStart),
+        onePackage: app.appPackages.find((e) => e.packageName === app.appName),
         moduleName: 'main',
         fileName: 'index.js',
       }),
@@ -243,11 +245,21 @@ let buildApp = async (input) => {
           if (id.indexOf('network:') === 0) {
             let url = id.replace('network:', '').replace(rollupLocalhost, '')
 
-            return fetch(url)
-              .then((r) => r.json())
-              .then((t) => {
-                return `export default ${JSON.stringify(t)}`
-              })
+            let info = path.parse(url)
+
+            if (info && info.ext === '.json') {
+              return fetch(url)
+                .then((r) => r.json())
+                .then((t) => {
+                  return `export default ${JSON.stringify(t)}`
+                })
+            } else if (info && info.ext === '.js') {
+              return fetch(url)
+                .then((r) => r.text())
+                .then((t) => {
+                  return `${t}`
+                })
+            }
           }
 
           let file = fileList.find((e) => e.rollup === id)
@@ -270,7 +282,13 @@ let buildApp = async (input) => {
     ],
   })
 
-  let rawOutputs = (await (await bundle).generate({})).output
+  let rawOutputs = (
+    await (
+      await bundle
+    ).generate({
+      //
+    })
+  ).output
 
   let outputs = rawOutputs.map((e) => {
     return {
@@ -278,6 +296,8 @@ let buildApp = async (input) => {
       code: e.code,
     }
   })
+
+  // console.log(outputs)
 
   const bc = new BroadcastChannel('editor-runtime-output-signal')
   bc.postMessage({
