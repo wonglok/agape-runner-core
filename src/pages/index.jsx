@@ -28,7 +28,7 @@ export default function SlugPage() {
     if (query && query.slug) {
     }
 
-    setOutputs()
+    // setOutputs( )
   }, [query])
 
   return <>{outputs && <RunLogic outputs={outputs}></RunLogic>}</>

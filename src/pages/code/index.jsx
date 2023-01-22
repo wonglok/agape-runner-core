@@ -50,7 +50,7 @@ async function compile({ input }) {
   return result.code
 }
 
-export const MyCodeModules = [
+export let MyCodeModules = [
   {
     moduleName: 'main',
     files: [
@@ -61,7 +61,6 @@ export const MyCodeModules = [
 
             import('./codesplit.js').then((r) => {
               console.log(r.default);
-
 
             })
 
@@ -110,6 +109,21 @@ export const MyCodeModules = [
           `,
       },
       {
+        fileName: `share.js`,
+        content: /* js */ `
+
+
+          export default {
+            b:'bbbbbb',
+            yo: () => {
+              import('codesplit.js').then(r=>{
+                console.log(r)
+              })
+            }
+          }
+        `,
+      },
+      {
         fileName: `json.json`,
         content: JSON.stringify({ yo: 1234 }),
       },
@@ -117,13 +131,14 @@ export const MyCodeModules = [
         fileName: `codesplit.js`,
         content: /* js */ `
             export default {
-              yaya:'yayayayayayayaya'
+              yaya:'codesplit'
             }
           `,
       },
     ],
   },
 
+  //
   {
     moduleName: 'engine',
     files: [
@@ -159,58 +174,55 @@ export const MyCodeModules = [
       {
         fileName: `codesplit.js`,
         content: /* js */ `
-
-
-            export default {
-              yaya:'yayayayayayayaya'
-            }
-          `,
+          export default {
+            yaya:'yayayayayayayaya'
+          }
+        `,
       },
     ],
   },
 ]
 
-let makeRunCode = async ({ iframe }) => {
+let myPackages = [
+  { packageName: 'wonglok831', modules: MyCodeModules },
+  { packageName: 'kam2', modules: MyCodeModules },
+]
+
+let makeRunCode = async ({
+  packageName = 'wonlgok831',
+  inputPackages = [],
+}) => {
   const rollupLocalhost = `rollup://localhost/`
 
-  const getFileName = ({ mod, fileName }) => {
-    let file = mod.files.find((e) => e.fileName === fileName)
-    return `${rollupLocalhost}${mod.moduleName}/${file.fileName}`
+  const getFileName = ({ onePackage, moduleName, fileName }) => {
+    let oneModule = onePackage.modules.find((e) => e.moduleName === moduleName)
+    let file = oneModule.files.find((e) => e.fileName === fileName)
+    return `${rollupLocalhost}${onePackage.name}/${oneModule.moduleName}/${file.fileName}`
   }
-
-  // let getContent = ({ moduleName, fileName }) => {
-  //   let mod = MyCodeModules.find((e) => e.moduleName === moduleName)
-  //   if (!mod) {
-  //     return `console.log('not found module', ${JSON.stringify({
-  //       moduleName,
-  //     })})`
-  //   }
-  //   let file = (mod?.files || []).find((e) => e.fileName === fileName)
-  //   if (!file) {
-  //     return `console.log('not found code', ${JSON.stringify({
-  //       fileName,
-  //       moduleName,
-  //     })})`
-  //   }
-  //   return file.content
-  // }
 
   let fileList = []
 
-  for (let mod of MyCodeModules) {
-    for (let file of mod.files) {
-      fileList.push({
-        rollup: `${rollupLocalhost}${mod.moduleName}/${file.fileName}`,
-        content: file.content,
-      })
+  //
+
+  for (let onePackage of inputPackages) {
+    for (let mod of onePackage.modules) {
+      for (let file of mod.files) {
+        fileList.push({
+          rollup: `${rollupLocalhost}${onePackage.name}/${mod.moduleName}/${file.fileName}`,
+          content: file.content,
+        })
+      }
     }
   }
 
   let bundle = rollup({
-    input: getFileName({
-      mod: MyCodeModules[0],
-      fileName: 'index.js',
-    }),
+    input: [
+      getFileName({
+        onePackage: inputPackages.find((e) => e.packageName === packageName),
+        moduleName: 'main',
+        fileName: 'index.js',
+      }),
+    ],
     plugins: [
       {
         name: 'rollup-in-browser-example',
@@ -221,7 +233,6 @@ let makeRunCode = async ({ iframe }) => {
           return new URL(importee, importer).href
         },
 
-        //
         async load(id) {
           if (id.indexOf('network:') === 0) {
             let url = id.replace('network:', '').replace(rollupLocalhost, '')
@@ -249,7 +260,14 @@ let makeRunCode = async ({ iframe }) => {
     ],
   })
 
-  let outputs = (await (await bundle).generate({})).output
+  let rawOutputs = (await (await bundle).generate({})).output
+
+  let outputs = rawOutputs.map((e) => {
+    return {
+      fileName: e.fileName,
+      code: e.code,
+    }
+  })
 
   const bc = new BroadcastChannel('editor-runtime-output-signal')
   bc.postMessage({
@@ -261,23 +279,33 @@ let makeRunCode = async ({ iframe }) => {
 export default function Both() {
   let refStatus = useRef()
   let canUse = useRef(false)
+
   useEffect(() => {
     refStatus.current.innerText = 'Loading Editor Core...'
     initSwc().then(() => {
       refStatus.current.innerText = ''
       canUse.current = true
+
+      ///
+      makeRunCode({
+        packageName: 'wonglok831',
+        inputPackages: myPackages,
+      })
     })
   }, [])
+
   return (
     <div>
       <div
         onClick={() => {
-          //
-
           let tt = setInterval(() => {
             if (canUse.current) {
               clearInterval(tt)
-              makeRunCode({})
+
+              makeRunCode({
+                packageName: 'wonglok831',
+                inputPackages: myPackages,
+              })
             }
           })
           //
@@ -287,8 +315,6 @@ export default function Both() {
         Send RunData
       </div>
       <div ref={refStatus}></div>
-
-      {/*  */}
 
       {/*  */}
 

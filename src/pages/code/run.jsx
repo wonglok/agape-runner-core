@@ -2,10 +2,21 @@ import { useEffect, useRef } from 'react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
 
+export const DefaultSetting = {
+  onFetch: ({ url, options }) => {
+    return fetch(url, options)
+  },
+  onResolve: ({ id, parentUrl, resolve }) => {
+    if (parentUrl.indexOf('blob:') === 0) {
+      return resolve(id, '')
+    }
+    return resolve(id, parentUrl)
+  },
+}
 export const getLoader = async ({
   onResolve = () => {},
   onFetch = () => {},
-}) => {
+} = DefaultSetting) => {
   let res = document.body.querySelector('#importmap')
 
   if (!res) {
@@ -92,20 +103,7 @@ let run = async ({ domElement, outputs, onClean }) => {
   window.React = React
   window.ReactDOM = ReactDOM
 
-  let loaderUtils = await getLoader({
-    onFetch: ({ url, options }) => {
-      return fetch(url, options)
-    },
-    onResolve: ({ id, parentUrl, resolve }) => {
-      // console.log('onResolve', id, parentUrl)
-
-      console.log(parentUrl)
-      if (parentUrl.indexOf('blob:') === 0) {
-        return resolve(id, '')
-      }
-      return resolve(id, parentUrl)
-    },
-  })
+  let loaderUtils = await getLoader()
 
   for (let output of outputs) {
     loaderUtils.addImportMap({
