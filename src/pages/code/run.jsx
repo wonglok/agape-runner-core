@@ -94,46 +94,47 @@ export const getLoader = async ({
   })
 }
 
+//
+let run = async ({ domElement, outputs }) => {
+  window.React = React
+  window.ReactDOM = ReactDOM
+
+  let loaderUtils = await getLoader({
+    onFetch: ({ url, options }) => {
+      return fetch(url, options)
+    },
+    onResolve: ({ id, parentUrl, resolve }) => {
+      console.log('onResolve', id, parentUrl)
+
+      if (parentUrl.indexOf('blob:') === 0) {
+        return resolve(id, '')
+      }
+      return resolve(id, parentUrl)
+    },
+  })
+
+  for (let output of outputs) {
+    loaderUtils.addImportMap({
+      imports: {
+        [`${output.fileName}`]: URL.createObjectURL(
+          new Blob([`${output.code}`], {
+            type: `application/javascript`,
+          })
+        ),
+      },
+    })
+  }
+
+  loaderUtils.load('index.js').then((r) => {
+    r.GUI.yo({ domElement: domElement })
+  })
+}
+
 export default function Run() {
   let ref = useRef()
 
   useEffect(() => {
-    window.React = React
-    window.ReactDOM = ReactDOM
     ref.current.innerHTML = 'ready...'
-
-    //
-    let run = async ({ domElement, outputs }) => {
-      let loaderUtils = await getLoader({
-        onFetch: ({ url, options }) => {
-          return fetch(url, options)
-        },
-        onResolve: ({ id, parentUrl, resolve }) => {
-          console.log('onResolve', id, parentUrl)
-
-          if (parentUrl.indexOf('blob:') === 0) {
-            return resolve(id, '')
-          }
-          return resolve(id, parentUrl)
-        },
-      })
-
-      for (let output of outputs) {
-        loaderUtils.addImportMap({
-          imports: {
-            [`${output.fileName}`]: URL.createObjectURL(
-              new Blob([`${output.code}`], {
-                type: `application/javascript`,
-              })
-            ),
-          },
-        })
-      }
-
-      loaderUtils.load('index.js').then((r) => {
-        r.GUI.yo({ domElement: domElement })
-      })
-    }
 
     const bc = new BroadcastChannel('webgl_channel_' + 'aabbcc123412321321')
 
@@ -144,7 +145,9 @@ export default function Run() {
       run({ domElement: ref.current, outputs: outputs })
     }
 
-    //
-  })
+    return () => {
+      bc.close()
+    }
+  }, [])
   return <div ref={ref}></div>
 }
