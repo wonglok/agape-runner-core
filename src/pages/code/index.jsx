@@ -270,7 +270,7 @@ export default function Both() {
   useEffect(() => {
     refStatus.current.innerText = 'Loading Editor Core...'
     initSwc().then(() => {
-      refStatus.current.innerText = 'Done...'
+      refStatus.current.innerText = ''
       canUse.current = true
     })
   }, [])
