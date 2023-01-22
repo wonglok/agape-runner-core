@@ -50,14 +50,13 @@ async function compile({ input }) {
   return result.code
 }
 
-let makeRunCode = async ({ iframe }) => {
-  const myModules = [
-    {
-      moduleName: 'main',
-      files: [
-        {
-          fileName: `index.js`,
-          content: /* js */ `
+export const MyCodeModules = [
+  {
+    moduleName: 'main',
+    files: [
+      {
+        fileName: `index.js`,
+        content: /* js */ `
             import b from './b.js';
 
             import('./codesplit.js').then((r) => {
@@ -65,7 +64,8 @@ let makeRunCode = async ({ iframe }) => {
 
 
             })
-            import('network:/manifest.json').then(v=>{
+
+            import('network:/manifest.json').then((v)=>{
               console.log(v)
             })
 
@@ -100,36 +100,36 @@ let makeRunCode = async ({ iframe }) => {
               a:b
             };
           `,
-        },
-        {
-          fileName: `b.js`,
-          content: /* js */ `
+      },
+      {
+        fileName: `b.js`,
+        content: /* js */ `
             export default {
               b:'bbbbbb'
             }
           `,
-        },
-        {
-          fileName: `json.json`,
-          content: JSON.stringify({ yo: 1234 }),
-        },
-        {
-          fileName: `codesplit.js`,
-          content: /* js */ `
+      },
+      {
+        fileName: `json.json`,
+        content: JSON.stringify({ yo: 1234 }),
+      },
+      {
+        fileName: `codesplit.js`,
+        content: /* js */ `
             export default {
               yaya:'yayayayayayayaya'
             }
           `,
-        },
-      ],
-    },
+      },
+    ],
+  },
 
-    {
-      moduleName: 'engine',
-      files: [
-        {
-          fileName: `index.js`,
-          content: /* js */ `
+  {
+    moduleName: 'engine',
+    files: [
+      {
+        fileName: `index.js`,
+        content: /* js */ `
             import b from './b.js';
 
             import('./codesplit.js').then((r) => {
@@ -147,29 +147,30 @@ let makeRunCode = async ({ iframe }) => {
               a:b
             };
           `,
-        },
-        {
-          fileName: `b.js`,
-          content: /* js */ `
+      },
+      {
+        fileName: `b.js`,
+        content: /* js */ `
             export default {
               b:'bbbbbb'
             }
           `,
-        },
-        {
-          fileName: `codesplit.js`,
-          content: /* js */ `
+      },
+      {
+        fileName: `codesplit.js`,
+        content: /* js */ `
 
 
             export default {
               yaya:'yayayayayayayaya'
             }
           `,
-        },
-      ],
-    },
-  ]
+      },
+    ],
+  },
+]
 
+let makeRunCode = async ({ iframe }) => {
   const rollupLocalhost = `rollup://localhost/`
 
   const getFileName = ({ mod, fileName }) => {
@@ -178,7 +179,7 @@ let makeRunCode = async ({ iframe }) => {
   }
 
   // let getContent = ({ moduleName, fileName }) => {
-  //   let mod = myModules.find((e) => e.moduleName === moduleName)
+  //   let mod = MyCodeModules.find((e) => e.moduleName === moduleName)
   //   if (!mod) {
   //     return `console.log('not found module', ${JSON.stringify({
   //       moduleName,
@@ -196,7 +197,7 @@ let makeRunCode = async ({ iframe }) => {
 
   let fileList = []
 
-  for (let mod of myModules) {
+  for (let mod of MyCodeModules) {
     for (let file of mod.files) {
       fileList.push({
         rollup: `${rollupLocalhost}${mod.moduleName}/${file.fileName}`,
@@ -207,7 +208,7 @@ let makeRunCode = async ({ iframe }) => {
 
   let bundle = rollup({
     input: getFileName({
-      mod: myModules[0],
+      mod: MyCodeModules[0],
       fileName: 'index.js',
     }),
     plugins: [
@@ -250,7 +251,7 @@ let makeRunCode = async ({ iframe }) => {
 
   let outputs = (await (await bundle).generate({})).output
 
-  const bc = new BroadcastChannel('webgl_channel_' + 'aabbcc123412321321')
+  const bc = new BroadcastChannel('editor-runtime-output-signal')
   bc.postMessage({
     outputs,
   })

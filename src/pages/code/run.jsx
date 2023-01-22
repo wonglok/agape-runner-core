@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
+
 export const getLoader = async ({
   onResolve = () => {},
   onFetch = () => {},
@@ -26,7 +27,6 @@ export const getLoader = async ({
     //     }),
     //   })
     // )
-    //
   }
 
   return new Promise(async (resolve) => {
@@ -69,18 +69,11 @@ export const getLoader = async ({
       meta: (meta, url) => {}, // default is noop
       // Hook top-level imports
       onimport: (url, options, parentUrl) => {
-        console.log('onimport', url, options, parentUrl)
+        // console.log('onimport', url, options, parentUrl)
       }, // default is noop
     }
 
     await import('es-module-shims')
-
-    //
-    // myPackages.map((it) => {
-    //  return window.importShim(it)
-    // })
-    //
-    //window.importShim.addImportMap(v)
 
     let tt = setInterval(() => {
       if (window.importShim) {
@@ -104,8 +97,9 @@ let run = async ({ domElement, outputs, onClean }) => {
       return fetch(url, options)
     },
     onResolve: ({ id, parentUrl, resolve }) => {
-      console.log('onResolve', id, parentUrl)
+      // console.log('onResolve', id, parentUrl)
 
+      console.log(parentUrl)
       if (parentUrl.indexOf('blob:') === 0) {
         return resolve(id, '')
       }
@@ -126,24 +120,39 @@ let run = async ({ domElement, outputs, onClean }) => {
   }
 
   loaderUtils.load('index.js').then((r) => {
-    r.GUI.yo({ domElement: domElement, onClean })
+    r.GUI.yo({
+      domElement: domElement,
+      onClean,
+      // load3D: async () => {
+      //   return {
+      //     r3f: await import('@react-three/fiber'),
+      //     post: await import('@react-three/postprocessing'),
+      //     drei: await import('@react-three/drei'),
+      //     three: await import('three'),
+      //   }
+      // },
+    })
   })
 }
 
-export default function Run() {
+export default function RunLogic({ outputs = false }) {
   let ref = useRef()
 
   useEffect(() => {
-    ref.current.innerHTML = 'ready...'
-
-    const bc = new BroadcastChannel('webgl_channel_' + 'aabbcc123412321321')
+    const bc = new BroadcastChannel('editor-runtime-output-signal')
 
     let cleans = []
+
     let onClean = (v) => {
       cleans.push(v)
     }
+
     bc.onmessage = (event) => {
       let outputs = event.data.outputs
+      run({ domElement: ref.current, outputs: outputs, onClean })
+    }
+
+    if (outputs) {
       run({ domElement: ref.current, outputs: outputs, onClean })
     }
 
@@ -151,6 +160,7 @@ export default function Run() {
       bc.close()
       cleans.forEach((v) => v())
     }
-  }, [])
+  }, [outputs])
+  //
   return <div ref={ref}></div>
 }
