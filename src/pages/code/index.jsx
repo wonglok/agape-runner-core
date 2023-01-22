@@ -65,7 +65,7 @@ export let MyCodeModules = [
             })
 
             import('network:/manifest.json').then((v)=>{
-              console.log(v)
+              console.log(v.default)
             })
 
             import('@resuables/main/share.js').then((v)=>{
@@ -244,7 +244,7 @@ let buildApp = async (input) => {
             let url = id.replace('network:', '').replace(rollupLocalhost, '')
 
             return fetch(url)
-              .then((r) => r.text())
+              .then((r) => r.json())
               .then((t) => {
                 return `export default ${JSON.stringify(t)}`
               })
@@ -253,7 +253,7 @@ let buildApp = async (input) => {
           let file = fileList.find((e) => e.rollup === id)
 
           if (!file) {
-            return `console.log('not found', ${JSON.stringify(id)})`
+            return `console.log('file is not found', ${JSON.stringify(id)})`
           }
 
           if (path.parse(file.rollup)?.ext === '.json') {
