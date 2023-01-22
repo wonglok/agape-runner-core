@@ -95,7 +95,7 @@ export const getLoader = async ({
 }
 
 //
-let run = async ({ domElement, outputs }) => {
+let run = async ({ domElement, outputs, onClean }) => {
   window.React = React
   window.ReactDOM = ReactDOM
 
@@ -126,7 +126,7 @@ let run = async ({ domElement, outputs }) => {
   }
 
   loaderUtils.load('index.js').then((r) => {
-    r.GUI.yo({ domElement: domElement })
+    r.GUI.yo({ domElement: domElement, onClean })
   })
 }
 
@@ -138,15 +138,18 @@ export default function Run() {
 
     const bc = new BroadcastChannel('webgl_channel_' + 'aabbcc123412321321')
 
+    let cleans = []
+    let onClean = (v) => {
+      cleans.push(v)
+    }
     bc.onmessage = (event) => {
       let outputs = event.data.outputs
-      ref.current.innerHTML = 'loading...'
-
-      run({ domElement: ref.current, outputs: outputs })
+      run({ domElement: ref.current, outputs: outputs, onClean })
     }
 
     return () => {
       bc.close()
+      cleans.forEach((v) => v())
     }
   }, [])
   return <div ref={ref}></div>

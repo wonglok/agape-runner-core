@@ -63,19 +63,26 @@ let makeRunCode = async ({ iframe }) => {
             import('./codesplit.js').then((r) => {
               console.log(r.default);
 
-              function Yo () {
-                return null
-              }
-              console.log(<Yo></Yo>)
+
             })
             import('network:/manifest.json').then(v=>{
               console.log(v)
             })
 
+            function Yo () {
+              return <div>{Math.random()}</div>
+            }
+            // console.log()
             export const GUI = {
               yoyo: 1234,
-              yo: ({ domElement }) => {
-                domElement.innerText = Math.random()
+              yo: ({ domElement, onClean }) => {
+                window.root = window.root || ReactDOM.createRoot(domElement)
+
+                window.root.render(<Yo></Yo>)
+
+                onClean(() => {
+                  window.root.unmount()
+                })
               }
             }
 
@@ -187,8 +194,6 @@ let makeRunCode = async ({ iframe }) => {
   //   return file.content
   // }
 
-  //
-
   let fileList = []
 
   for (let mod of myModules) {
@@ -235,8 +240,6 @@ let makeRunCode = async ({ iframe }) => {
 
           if (file?.content) {
             return await compile({ input: file.content || '' })
-
-            // return file.content
           }
 
           return `console.log('not-found',${JSON.stringify(id)})`
@@ -247,24 +250,14 @@ let makeRunCode = async ({ iframe }) => {
 
   let outputs = (await (await bundle).generate({})).output
 
-  // console.log(
-  //   outputs.map((e) => {
-  //     return {
-  //       fileName: e.fileName,
-  //       code: e.code,
-  //     }
-  //   })
-  // )
-
   const bc = new BroadcastChannel('webgl_channel_' + 'aabbcc123412321321')
   bc.postMessage({
     outputs,
   })
-  // iframe
+  bc.close()
 }
 
 export default function Both() {
-  let refFrame = useRef()
   let refStatus = useRef()
   let canUse = useRef(false)
   useEffect(() => {
@@ -276,7 +269,6 @@ export default function Both() {
   }, [])
   return (
     <div>
-      <div ref={refStatus}></div>
       <div
         onClick={() => {
           //
@@ -284,7 +276,7 @@ export default function Both() {
           let tt = setInterval(() => {
             if (canUse.current) {
               clearInterval(tt)
-              makeRunCode({ iframe: refFrame.current })
+              makeRunCode({})
             }
           })
           //
@@ -293,11 +285,13 @@ export default function Both() {
       >
         Send RunData
       </div>
-      {/*  */}
+      <div ref={refStatus}></div>
 
       {/*  */}
 
-      <iframe ref={refFrame} src={`/code/run`}></iframe>
+      {/*  */}
+
+      <iframe src={`/code/run`}></iframe>
     </div>
   )
 }
