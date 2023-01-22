@@ -265,10 +265,10 @@ let makeRunCode = async ({ iframe }) => {
 
 export default function Both() {
   let refFrame = useRef()
-  let canUse = false
+  let canUse = useRef(false)
   useEffect(() => {
     initSwc().then(() => {
-      canUse = true
+      canUse.current = true
     })
   }, [])
   return (
@@ -278,7 +278,7 @@ export default function Both() {
           //
 
           let tt = setInterval(() => {
-            if (canUse) {
+            if (canUse.current) {
               clearInterval(tt)
               makeRunCode({ iframe: refFrame.current })
             }
