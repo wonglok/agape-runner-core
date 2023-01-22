@@ -265,14 +265,18 @@ let makeRunCode = async ({ iframe }) => {
 
 export default function Both() {
   let refFrame = useRef()
+  let refStatus = useRef()
   let canUse = useRef(false)
   useEffect(() => {
+    refStatus.current.innerText = 'Loading Editor Core...'
     initSwc().then(() => {
+      refStatus.current.innerText = 'Done...'
       canUse.current = true
     })
   }, [])
   return (
     <div>
+      <div ref={refStatus}></div>
       <div
         onClick={() => {
           //

@@ -100,6 +100,7 @@ export default function Run() {
   useEffect(() => {
     window.React = React
     window.ReactDOM = ReactDOM
+    ref.current.innerHTML = 'ready...'
 
     //
     let run = async ({ domElement, outputs }) => {
@@ -138,6 +139,8 @@ export default function Run() {
 
     bc.onmessage = (event) => {
       let outputs = event.data.outputs
+      ref.current.innerHTML = 'loading...'
+
       run({ domElement: ref.current, outputs: outputs })
     }
 
