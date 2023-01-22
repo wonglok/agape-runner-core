@@ -68,9 +68,7 @@ export let MyCodeModules = [
               console.log(v)
             })
 
-            import('@resuables/main/share.js').then((v)=>{
-              console.log(v.default)
-            })
+
 
             function Yo () {
               return <div>{Math.random()}</div>
@@ -115,7 +113,16 @@ export let MyCodeModules = [
       {
         fileName: `share.js`,
         content: /* js */ `
-          export default 'sharing is caring'
+
+
+          export default {
+            b:'bbbbbb',
+            yo: () => {
+              import('codesplit.js').then(r=>{
+                console.log(r)
+              })
+            }
+          }
         `,
       },
       {
@@ -178,8 +185,8 @@ export let MyCodeModules = [
 ]
 
 let appSource = {
-  appStart: 'wonglok831',
-  appPackages: [
+  loaderName: 'wonglok831',
+  inputPackages: [
     { packageName: 'wonglok831', modules: MyCodeModules },
     { packageName: 'resuables', modules: MyCodeModules },
   ],
@@ -187,38 +194,35 @@ let appSource = {
 
 //
 
-let buildApp = async (input) => {
-  /** @type {{ appStart: '', appPackages: [{[ packageName: '', modules: [{ moduleName: '', files: [{fileName: '', content: ''] }] ]}] }} */
-  let app = input
-  // const { appStart, appPackages } = input
+let buildApp = async (app) => {
+  const { loaderName = 'appName', inputPackages = [] } = app
   const rollupLocalhost = `rollup://localhost/`
 
   const getFileName = ({ onePackage, moduleName, fileName }) => {
     let oneModule = onePackage.modules.find((e) => e.moduleName === moduleName)
     let file = oneModule.files.find((e) => e.fileName === fileName)
-    return `${rollupLocalhost}${onePackage.packageName}/${oneModule.moduleName}/${file.fileName}`
+    return `${rollupLocalhost}${onePackage.name}/${oneModule.moduleName}/${file.fileName}`
   }
 
   let fileList = []
 
   //
 
-  for (let onePackage of app.appPackages) {
+  for (let onePackage of inputPackages) {
     for (let mod of onePackage.modules) {
       for (let file of mod.files) {
         fileList.push({
-          rollup: `${rollupLocalhost}${onePackage.packageName}/${mod.moduleName}/${file.fileName}`,
+          rollup: `${rollupLocalhost}${onePackage.name}/${mod.moduleName}/${file.fileName}`,
           content: file.content,
         })
       }
     }
   }
-  console.log(fileList)
 
   let bundle = rollup({
     input: [
       getFileName({
-        onePackage: app.appPackages.find((e) => e.packageName === app.appStart),
+        onePackage: inputPackages.find((e) => e.packageName === loaderName),
         moduleName: 'main',
         fileName: 'index.js',
       }),
@@ -230,12 +234,6 @@ let buildApp = async (input) => {
           if (!importer) {
             return importee
           }
-
-          if (importee.indexOf('@') === 0) {
-            let address = importee.replace('@', '')
-            return `${rollupLocalhost}${address}`
-          }
-
           return new URL(importee, importer).href
         },
 
@@ -251,10 +249,6 @@ let buildApp = async (input) => {
           }
 
           let file = fileList.find((e) => e.rollup === id)
-
-          if (!file) {
-            return `console.log('not found', ${JSON.stringify(id)})`
-          }
 
           if (path.parse(file.rollup)?.ext === '.json') {
             return `export default ${file.content}`
