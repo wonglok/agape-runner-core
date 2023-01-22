@@ -285,6 +285,7 @@ export default function Both() {
           })
           //
         }}
+        className='inline-block p-5 bg-gray-200'
       >
         Send RunData
       </div>
