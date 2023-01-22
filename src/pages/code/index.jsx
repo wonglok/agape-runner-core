@@ -17,7 +17,7 @@ async function compile({ input }) {
         privateMethod: true,
         functionBind: true,
         exportDefaultFrom: false,
-        exportNamespaceFrom: false,
+        appNamespaceFrom: false,
         decorators: false,
         decoratorsBeforeExport: true,
         topLevelAwait: true,
@@ -72,19 +72,19 @@ export let MyCodeModules = [
               console.log(v.default)
             })
 
-            function Yo () {
+            function YoApp () {
               return <div>{Math.random()}</div>
             }
             // console.log()
             export const GUI = {
               yoyo: 1234,
               yo: ({ domElement, onClean }) => {
-                window.root = window.root || ReactDOM.createRoot(domElement)
+                window.appRoot = window.appRoot || ReactDOM.createRoot(domElement)
 
-                window.root.render(<Yo></Yo>)
+                window.appRoot.render(<YoApp></YoApp>)
 
                 onClean(() => {
-                  window.root.unmount()
+                  window.appRoot.unmount()
                 })
               }
             }
@@ -178,7 +178,7 @@ export let MyCodeModules = [
 ]
 
 //
-//
+// app as an repo
 let appSource = {
   appName: 'my-awesome-app',
   appPackages: [
@@ -190,7 +190,9 @@ let appSource = {
 let buildApp = async (input) => {
   /** @type {{ appName: '', appPackages: [{[ packageName: '', modules: [{ moduleName: '', files: [{fileName: '', content: ''] }] ]}] }} */
   let app = input
+
   // const { appName, appPackages } = input
+
   const rollupLocalhost = `rollup://localhost/`
 
   const getFileName = ({ onePackage, moduleName, fileName }) => {
