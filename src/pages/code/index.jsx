@@ -68,7 +68,7 @@ export let MyCodeModules = [
               console.log(v.default)
             })
 
-            import('@resuables/main/share.js').then((v)=>{
+            import('@webgl/main/share.js').then((v)=>{
               console.log(v.default)
             })
 
@@ -141,7 +141,7 @@ export let MyCodeModules = [
         content: /* js */ `
             import b from './b.js';
 
-            import('./codesplit.js').then((r) => {
+            import('./vanilla.js').then((r) => {
               console.log(r.default)
             })
 
@@ -166,7 +166,7 @@ export let MyCodeModules = [
           `,
       },
       {
-        fileName: `codesplit.js`,
+        fileName: `vanilla.js`,
         content: /* js */ `
           export default {
             yaya:'yayayayayayayaya'
@@ -180,14 +180,12 @@ export let MyCodeModules = [
 //
 //
 let appSource = {
-  appName: 'wonglok831',
+  appName: 'my-awesome-app',
   appPackages: [
-    { packageName: 'wonglok831', modules: MyCodeModules },
-    { packageName: 'resuables', modules: MyCodeModules },
+    { packageName: 'self', modules: MyCodeModules },
+    { packageName: 'webgl', modules: MyCodeModules },
   ],
 }
-
-//
 
 let buildApp = async (input) => {
   /** @type {{ appName: '', appPackages: [{[ packageName: '', modules: [{ moduleName: '', files: [{fileName: '', content: ''] }] ]}] }} */
@@ -203,8 +201,6 @@ let buildApp = async (input) => {
 
   let fileList = []
 
-  //
-
   for (let onePackage of app.appPackages) {
     for (let mod of onePackage.modules) {
       for (let file of mod.files) {
@@ -217,10 +213,13 @@ let buildApp = async (input) => {
   }
   // console.log('fileList', fileList)
 
+  let firstPackage = appSource.appPackages[0]
+
+  //
   let bundle = rollup({
     input: [
       getFileName({
-        onePackage: app.appPackages.find((e) => e.packageName === app.appName),
+        onePackage: firstPackage, //app.appPackages.find((e) => e.packageName === app.appName),
         moduleName: 'main',
         fileName: 'index.js',
       }),
@@ -297,7 +296,7 @@ let buildApp = async (input) => {
     }
   })
 
-  // console.log(outputs)
+  console.log(outputs, 'outputs')
 
   const bc = new BroadcastChannel('editor-runtime-output-signal')
   bc.postMessage({
