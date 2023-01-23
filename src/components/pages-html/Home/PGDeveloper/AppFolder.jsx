@@ -16,17 +16,20 @@ export function AppFolder() {
     <div className='flex-none w-full max-w-full px-4 mt-4 mb-6'>
       <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
         <div className='p-4 pb-0 mb-0 rounded-t-2xl'>
-          <h6 className='mb-1 text-xl'>Site Detail</h6>
+          <h6 className='mb-1 text-xl'>My Apps</h6>
 
           {cs.appEntry.map((it) => {
             return (
-              <div key={it.oid}>
+              <div key={it.oid} className='py-3'>
                 <p className='mb-3 text-sm leading-normal'>
-                  {/*  */}
-                  <button className='p-2 bg-gray-100'>{it.title}</button>
+                  <button className='p-2 px-4 mr-2 bg-gray-100 rounded-xl'>
+                    {it.title}
+                  </button>
 
                   <Link href={`/apps/${it.oid}`}>
-                    <button className='p-2 bg-gray-200'>Edit</button>
+                    <button className='p-2 px-4 mr-2 text-white bg-blue-500 rounded-xl'>
+                      Edit
+                    </button>
                   </Link>
                 </p>
 
