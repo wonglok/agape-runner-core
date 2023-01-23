@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { AppEntry } from '@/aws/AppEntry'
 import { Tag } from 'antd'
 
-export function AppFolder() {
+export function AllAppEntry() {
   let cs = useSnapshot(CSData)
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export function AppFolder() {
         <div className='p-4 pb-0 mb-0 rounded-t-2xl'>
           <h6 className='mb-1 text-xl'>My Apps</h6>
 
-          {cs.appEntry.map((it) => {
+          {cs.appEntry.map((it, idx) => {
             return (
               <div key={it.oid} className='py-3'>
                 <p className='mb-3 text-sm leading-normal'>
@@ -26,7 +26,7 @@ export function AppFolder() {
                     {it.title}
                   </button>
 
-                  <Link href={`/apps/${it.oid}`}>
+                  <Link prefetch={idx === 0} href={`/apps/${it.oid}`}>
                     <button className='p-2 px-4 mr-2 text-white bg-blue-500 rounded-xl'>
                       Edit
                     </button>
@@ -39,6 +39,8 @@ export function AppFolder() {
               </div>
             )
           })}
+
+          {/*  */}
 
           {cs.appEntry.length === 0 && (
             <>

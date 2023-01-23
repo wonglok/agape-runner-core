@@ -8,7 +8,7 @@ import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useRouter } from 'next/router'
-import { AppFolder } from './AppFolder'
+import { AllAppEntry } from './AllAppEntry'
 import { useEffect } from 'react'
 import { CreateApp } from './CreateApp'
 
@@ -43,7 +43,7 @@ export function PGDeveloper({ content }) {
               </>
             }
           ></SectionHeader>
-          <AppFolder></AppFolder>
+          <AllAppEntry></AllAppEntry>
           {/* <MyFolders></MyFolders> */}
         </SmartDrawer>
       </DesktopOnly>
