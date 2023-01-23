@@ -61,7 +61,6 @@ export let MyCodeModules = [
 
             import('./codesplit.js').then((r) => {
               console.log(r.default);
-
             })
 
             import('network:/manifest.json').then((v)=>{
@@ -77,7 +76,7 @@ export let MyCodeModules = [
             }
             // console.log()
             export const GUI = {
-              yoyo: 1234,
+              fala: 1234,
               yo: ({ domElement, onClean }) => {
                 window.appRoot = window.appRoot || ReactDOM.createRoot(domElement)
 
@@ -146,7 +145,7 @@ export let MyCodeModules = [
             })
 
             export const GUI = {
-              yoyo: 1234
+              fala: 1234
             }
 
             console.log('GUI', GUI)

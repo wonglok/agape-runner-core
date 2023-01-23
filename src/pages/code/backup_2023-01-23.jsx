@@ -17,7 +17,7 @@ async function compile({ input }) {
         privateMethod: true,
         functionBind: true,
         exportDefaultFrom: false,
-        exportNamespaceFrom: false,
+        appNamespaceFrom: false,
         decorators: false,
         decoratorsBeforeExport: true,
         topLevelAwait: true,
@@ -61,28 +61,29 @@ export let MyCodeModules = [
 
             import('./codesplit.js').then((r) => {
               console.log(r.default);
-
             })
 
             import('network:/manifest.json').then((v)=>{
-              console.log(v)
+              console.log(v.default)
             })
 
+            import('@webgl/main/share.js').then((v)=>{
+              console.log(v.default)
+            })
 
-
-            function Yo () {
+            function YoApp () {
               return <div>{Math.random()}</div>
             }
             // console.log()
             export const GUI = {
-              yoyo: 1234,
+              fala: 1234,
               yo: ({ domElement, onClean }) => {
-                window.root = window.root || ReactDOM.createRoot(domElement)
+                window.appRoot = window.appRoot || ReactDOM.createRoot(domElement)
 
-                window.root.render(<Yo></Yo>)
+                window.appRoot.render(<YoApp></YoApp>)
 
                 onClean(() => {
-                  window.root.unmount()
+                  window.appRoot.unmount()
                 })
               }
             }
@@ -113,16 +114,7 @@ export let MyCodeModules = [
       {
         fileName: `share.js`,
         content: /* js */ `
-
-
-          export default {
-            b:'bbbbbb',
-            yo: () => {
-              import('codesplit.js').then(r=>{
-                console.log(r)
-              })
-            }
-          }
+          export default 'sharing is caring'
         `,
       },
       {
@@ -148,12 +140,12 @@ export let MyCodeModules = [
         content: /* js */ `
             import b from './b.js';
 
-            import('./codesplit.js').then((r) => {
+            import('./vanilla.js').then((r) => {
               console.log(r.default)
             })
 
             export const GUI = {
-              yoyo: 1234
+              fala: 1234
             }
 
             console.log('GUI', GUI)
@@ -173,7 +165,7 @@ export let MyCodeModules = [
           `,
       },
       {
-        fileName: `codesplit.js`,
+        fileName: `vanilla.js`,
         content: /* js */ `
           export default {
             yaya:'yayayayayayayaya'
@@ -184,45 +176,51 @@ export let MyCodeModules = [
   },
 ]
 
+//
+// app as an repo
 let appSource = {
-  loaderName: 'wonglok831',
-  inputPackages: [
-    { packageName: 'wonglok831', modules: MyCodeModules },
-    { packageName: 'resuables', modules: MyCodeModules },
+  appName: 'my-awesome-app',
+  appPackages: [
+    { packageName: 'self', modules: MyCodeModules },
+    { packageName: 'webgl', modules: MyCodeModules },
   ],
 }
 
-//
+let buildApp = async (input) => {
+  /** @type {{ appName: '', appPackages: [{[ packageName: '', modules: [{ moduleName: '', files: [{fileName: '', content: ''] }] ]}] }} */
+  let app = input
 
-let buildApp = async (app) => {
-  const { loaderName = 'appName', inputPackages = [] } = app
+  // const { appName, appPackages } = input
+
   const rollupLocalhost = `rollup://localhost/`
 
   const getFileName = ({ onePackage, moduleName, fileName }) => {
     let oneModule = onePackage.modules.find((e) => e.moduleName === moduleName)
     let file = oneModule.files.find((e) => e.fileName === fileName)
-    return `${rollupLocalhost}${onePackage.name}/${oneModule.moduleName}/${file.fileName}`
+    return `${rollupLocalhost}${onePackage.packageName}/${oneModule.moduleName}/${file.fileName}`
   }
 
   let fileList = []
 
-  //
-
-  for (let onePackage of inputPackages) {
+  for (let onePackage of app.appPackages) {
     for (let mod of onePackage.modules) {
       for (let file of mod.files) {
         fileList.push({
-          rollup: `${rollupLocalhost}${onePackage.name}/${mod.moduleName}/${file.fileName}`,
+          rollup: `${rollupLocalhost}${onePackage.packageName}/${mod.moduleName}/${file.fileName}`,
           content: file.content,
         })
       }
     }
   }
+  // console.log('fileList', fileList)
 
+  let firstPackage = appSource.appPackages[0]
+
+  //
   let bundle = rollup({
     input: [
       getFileName({
-        onePackage: inputPackages.find((e) => e.packageName === loaderName),
+        onePackage: firstPackage, //app.appPackages.find((e) => e.packageName === app.appName),
         moduleName: 'main',
         fileName: 'index.js',
       }),
@@ -234,6 +232,12 @@ let buildApp = async (app) => {
           if (!importer) {
             return importee
           }
+
+          if (importee.indexOf('@') === 0) {
+            let address = importee.replace('@', '')
+            return `${rollupLocalhost}${address}`
+          }
+
           return new URL(importee, importer).href
         },
 
@@ -241,14 +245,28 @@ let buildApp = async (app) => {
           if (id.indexOf('network:') === 0) {
             let url = id.replace('network:', '').replace(rollupLocalhost, '')
 
-            return fetch(url)
-              .then((r) => r.text())
-              .then((t) => {
-                return `export default ${JSON.stringify(t)}`
-              })
+            let info = path.parse(url)
+
+            if (info && info.ext === '.json') {
+              return fetch(url)
+                .then((r) => r.json())
+                .then((t) => {
+                  return `export default ${JSON.stringify(t)}`
+                })
+            } else if (info && info.ext === '.js') {
+              return fetch(url)
+                .then((r) => r.text())
+                .then((t) => {
+                  return `${t}`
+                })
+            }
           }
 
           let file = fileList.find((e) => e.rollup === id)
+
+          if (!file) {
+            return `console.log('file is not found', ${JSON.stringify(id)})`
+          }
 
           if (path.parse(file.rollup)?.ext === '.json') {
             return `export default ${file.content}`
@@ -264,7 +282,13 @@ let buildApp = async (app) => {
     ],
   })
 
-  let rawOutputs = (await (await bundle).generate({})).output
+  let rawOutputs = (
+    await (
+      await bundle
+    ).generate({
+      //
+    })
+  ).output
 
   let outputs = rawOutputs.map((e) => {
     return {
@@ -272,6 +296,8 @@ let buildApp = async (app) => {
       code: e.code,
     }
   })
+
+  console.log(outputs, 'outputs')
 
   const bc = new BroadcastChannel('editor-runtime-output-signal')
   bc.postMessage({
