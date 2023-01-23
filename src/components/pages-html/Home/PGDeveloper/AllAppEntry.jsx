@@ -78,8 +78,11 @@ function OneEntry({ oid }) {
 
         <div className='inline-block'>
           <div className='inline-block'>
+            <button className='p-2 px-4 border-2 rounded-lg rounded-r-none'>
+              /
+            </button>
             <input
-              className='p-2 mr-2 border-2 rounded-lg'
+              className='p-2 mr-2 border-2 border-l-0 rounded-lg rounded-l-none'
               defaultValue={it?.slug || ''}
               onKeyDown={(ev) => {
                 if (ev.key === 'Enter') {
