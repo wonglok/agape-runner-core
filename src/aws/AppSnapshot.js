@@ -1,20 +1,21 @@
-import { SESSION_ACCESS_KEY, UserEndPoints } from '@/auth/GateConst'
+import { SESSION_ACCESS_KEY } from '@/auth/GateConst'
 import { invalidate } from '@react-three/fiber'
 import { CSData } from './CSData'
+import { UserEndPoints } from './UserEndPoints'
 
 class REST {
   constructor({ table }) {
     this.table = table
   }
-  async create({ displayName }) {
+  async create({ title }) {
     const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
     if (!sToken) {
       console.error('no session token')
       return Promise.reject('no session token')
     }
-    if (!displayName) {
-      console.error('no displayName given')
-      return Promise.reject('no displayName given')
+    if (!title) {
+      console.error('no title given')
+      return Promise.reject('no title given')
     }
 
     const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
@@ -23,7 +24,7 @@ class REST {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
-        displayName: displayName,
+        title: title,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,
@@ -154,10 +155,9 @@ class REST {
   }
   invalidate() {
     this.list({}).then((data) => {
-      //
       CSData.appSnap = data.list
     })
   }
 }
 
-export const AppSnapshot = new REST({ table: `app-snapshot` })
+export const AppEntry = new REST({ table: `AppEntry` })

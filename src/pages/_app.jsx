@@ -18,7 +18,6 @@ function App({ Component, pageProps = { title: 'index' } }) {
     <>
       <ConfirmProvider>
         {pageProps.title && <TitleHeader title={pageProps.title} />}
-
         {<Component {...pageProps}></Component>}
       </ConfirmProvider>
 

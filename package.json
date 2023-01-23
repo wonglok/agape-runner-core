@@ -45,6 +45,7 @@
     "@tensorflow/tfjs-core": "^3.9.0",
     "@thi.ng/geom-resample": "^2.1.25",
     "animejs": "^3.2.1",
+    "antd": "^5.1.6",
     "babel-plugin-glsl": "^1.0.0",
     "cors": "^2.8.5",
     "es-module-shims": "^1.6.3",

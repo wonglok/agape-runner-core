@@ -1,12 +1,9 @@
 import { getID } from '@/lib/getID'
 import { ethers } from 'ethers'
-import {
-  SESSION_ACCESS_KEY,
-  SESSION_REDIRECT_KEY,
-  UserEndPoints,
-} from './GateConst'
+import { SESSION_ACCESS_KEY, SESSION_REDIRECT_KEY } from './GateConst'
 import { GateState } from './GateState.ts'
 import Router from 'next/router'
+import { UserEndPoints } from '@/aws/UserEndPoints'
 
 export const hydration = async () => {
   if (typeof window !== 'undefined') {

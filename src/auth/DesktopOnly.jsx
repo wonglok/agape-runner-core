@@ -1,48 +1,48 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
+// import { useEffect } from 'react'
+// import { useState } from 'react'
 
-export function DesktopOnlyFilter({ children }) {
-  let [st, setST] = useState(children)
-  //
-  useEffect(() => {
-    let desktop = (
-      <>
-        <div className='flex items-center justify-center w-full h-full p-12'>
-          <div>
-            <div className='mb-4'>
-              Sorry Metaverse Editors and Portal are only avaialbe on Larger
-              Screen
-            </div>
-            <div>
-              <button className='p-2 px-12 bg-blue-200 rounded-full'>
-                Go Home
-              </button>
-            </div>
-          </div>
-        </div>
-      </>
-    )
+// export function DesktopOnlyFilter({ children }) {
+//   let [st, setST] = useState(children)
+//   //
+//   useEffect(() => {
+//     let desktop = (
+//       <>
+//         <div className='flex items-center justify-center w-full h-full p-12'>
+//           <div>
+//             <div className='mb-4'>
+//               Sorry Metaverse Editors and Portal are only avaialbe on Larger
+//               Screen
+//             </div>
+//             <div>
+//               <button className='p-2 px-12 bg-blue-200 rounded-full'>
+//                 Go Home
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </>
+//     )
+//     if (window.innerWidth <= 500) {
+//       setST(desktop)
+//     }
+//     let h = () => {
+//       if (window.innerWidth <= 500) {
+//         setST(desktop)
+//       } else {
+//         setST(children)
+//       }
+//     }
+//     window.addEventListener('resize', h)
+//     return () => {
+//       window.removeEventListener('resize', h)
+//     }
+//   }, [children])
 
-    if (window.innerWidth <= 500) {
-      setST(desktop)
-    }
-    let h = () => {
-      if (window.innerWidth <= 500) {
-        setST(desktop)
-      } else {
-        setST(children)
-      }
-    }
-    window.addEventListener('resize', h)
-    return () => {
-      window.removeEventListener('resize', h)
-    }
-  }, [children])
-
-  //
-  return st
-}
+//   //
+//   return st
+// }
+import { StyleProvider } from '@ant-design/cssinjs'
 
 export function DesktopOnly({ children }) {
-  return children
+  return <StyleProvider hashPriority='high'>{children}</StyleProvider>
 }

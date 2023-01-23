@@ -1,11 +1,15 @@
 import { proxy } from 'valtio'
-import { AppFolder } from './app-folder-aws'
-import { AppSnapshot } from './app-snapshot-aws'
 
 // //
+
+declare type EachTag = {
+  oid: string
+  name: string
+}
 declare type AppGroup = {
   oid: string
-  displayName: string
+  title: string
+  tags: EachTag[]
 }
 
 // declare type  = {
@@ -41,11 +45,11 @@ declare type AppSnapshot = {
 
 export const CSData = proxy<{
   //
-  appGroups: AppGroup[]
-  appSnap: AppSnapshot[]
+  appSnapshot: AppSnapshot[]
+  appEntry: AppGroup[]
   // appFiles: AppFile[]
 }>({
-  appGroups: [],
-  appSnap: [],
+  appSnapshot: [],
+  appEntry: [],
   // appFiles: [],
 })

@@ -10,13 +10,12 @@ import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useRouter } from 'next/router'
 import { AppFolder } from './AppFolder'
 import { useEffect } from 'react'
+import { CreateApp } from './CreateApp'
 
 export function PGDeveloper({ content }) {
   //
   let gs = useSnapshot(GateState)
 
-  //
-  //
   //
   let {
     query: { folderID },
@@ -40,18 +39,7 @@ export function PGDeveloper({ content }) {
             bgOffsetY={50}
             bar={
               <>
-                {/*  */}
-                <div className='flex items-center w-full h-full'>
-                  <button
-                    onClick={() => {
-                      //
-                      //
-                    }}
-                    className='inline-block w-20 h-20 p-2 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'
-                  >
-                    Create MetaOS App
-                  </button>
-                </div>
+                <CreateApp />
               </>
             }
           ></SectionHeader>
@@ -62,7 +50,5 @@ export function PGDeveloper({ content }) {
     </>
   )
 }
-
-//
 
 //
