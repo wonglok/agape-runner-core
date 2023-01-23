@@ -133,20 +133,20 @@ export let RawModules = [
 ]
 
 let appContent = {
-  appName: 'wonglok831-app',
-  //
-  appRoutes: [
-    {
-      route: '/',
-      packageName: 'page-home',
-    },
-    {
-      route: '/about',
-      packageName: 'page-about',
-    },
-  ],
+  // appName: 'wonglok831-app',
+  // //
+  // appRoutes: [
+  //   {
+  //     route: '/',
+  //     packageName: 'page-home',
+  //   },
+  //   {
+  //     route: '/about',
+  //     packageName: 'page-about',
+  //   },
+  // ],
   appPackages: [
-    { packageName: 'page-home', modules: RawModules },
+    { packageName: 'my-app', modules: RawModules },
     { packageName: 'page-about', modules: RawModules },
     { packageName: 'lib-webgl', modules: RawModules },
   ],
@@ -155,7 +155,7 @@ let appContent = {
 //
 
 let buildApp = async (input) => {
-  /** @type {{ packageName: '', appPackages: [{[ packageName: '', modules: [{ moduleName: '', files: [{fileName: '', content: ''] }] ]}] }} */
+  /** @type {appContent} */
   let app = input
 
   // const { packageName, appPackages } = input
@@ -180,6 +180,7 @@ let buildApp = async (input) => {
       }
     }
   }
+
   // console.log('fileList', fileList)
 
   let firstPackage = appContent.appPackages[0]
