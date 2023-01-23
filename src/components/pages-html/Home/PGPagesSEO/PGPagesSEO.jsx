@@ -26,8 +26,8 @@ export function PGPagesSEO({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='Pages & SEO'
-            subTitle='Associate Metaverse with Pages'
+            title='My Site & SEO'
+            subTitle='Optimise your content seo & traffic'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
             bar={
@@ -47,7 +47,5 @@ export function PGPagesSEO({ content }) {
     </>
   )
 }
-
-//
 
 //

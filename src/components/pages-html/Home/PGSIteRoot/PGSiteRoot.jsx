@@ -37,7 +37,7 @@ export function PGSiteRoot({ content }) {
               <>
                 {/*  */}
                 <div className='flex items-center h-full'>
-                  <Link href={`/admin/pages-and-seo`}>
+                  {/* <Link href={`/admin/pages-and-seo`}>
                     <button
                       className={getClassNames()}
                     >{`Pages\n& SEO`}</button>
@@ -51,7 +51,7 @@ export function PGSiteRoot({ content }) {
                     <button
                       className={getClassNames()}
                     >{`Discover\nNova Link`}</button>
-                  </Link>
+                  </Link> */}
                 </div>
                 {/*  */}
                 {/*  */}

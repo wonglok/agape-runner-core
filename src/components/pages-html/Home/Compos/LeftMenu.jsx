@@ -79,13 +79,13 @@ export function LeftMenu({ siteID, folderID }) {
               },
               {
                 oid: getID(),
-                link: `/admin/meta-os/pages-and-seo`,
-                name: 'Pages & SEO',
+                link: `/admin/meta-os/my-site-seo`,
+                name: 'My Site & SEO',
               },
               {
                 oid: getID(),
                 link: `/admin/meta-os/app-store`,
-                name: 'Apps Store',
+                name: 'App Store',
               },
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
@@ -93,19 +93,26 @@ export function LeftMenu({ siteID, folderID }) {
 
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                Developer & Creators
+                Developer & Artists
               </h6>
             </li>
-
             {/*  */}
             {/*  */}
             {/*  */}
             {[
               {
                 oid: getID(),
-                link: `/admin/builders/apps-3d-vfx`,
-                name: 'Creation Studio',
+                link: `/admin/builders/app-coder`,
+                name: 'Developer Studio',
               },
+              {
+                oid: getID(),
+                link: `/admin/builders/3d-art`,
+                name: 'Creator Studio',
+              },
+
+              //
+              //
               //
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>

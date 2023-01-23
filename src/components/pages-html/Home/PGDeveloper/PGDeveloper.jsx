@@ -26,7 +26,7 @@ export function PGDeveloper({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='Metaverse Developer Portal'
+            title='App & Code Studio'
             subTitle='Dashboard'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
