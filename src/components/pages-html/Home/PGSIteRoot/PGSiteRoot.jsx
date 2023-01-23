@@ -20,7 +20,7 @@ export function PGSiteRoot({ content }) {
   } = useRouter()
 
   let getClassNames = () =>
-    ` inline-block w-20 h-20 mr-3 text-xs text-center whitespace-pre bg-white border-2 shadow-xl border-cyan-500 hover:bg-cyan-200 transition-all duration-300 rounded-2xl`
+    ` inline-block w-20 h-20 mr-3 p-2 text-xs text-center bg-white border-2 shadow-xl border-cyan-500 hover:bg-cyan-200 transition-all duration-300 rounded-2xl`
 
   return (
     <>
@@ -37,12 +37,10 @@ export function PGSiteRoot({ content }) {
               <>
                 {/*  */}
                 <div className='flex items-center h-full'>
-                  {/* <Link href={`/admin/pages-and-seo`}>
-                    <button
-                      className={getClassNames()}
-                    >{`Pages\n& SEO`}</button>
+                  <Link href={`/admin/meta-os/site-seo`}>
+                    <button className={getClassNames()}>{`Site SEO`}</button>
                   </Link>
-                  <Link href={`/admin/app-store`}>
+                  <Link href={`/admin/meta-os/app-store`}>
                     <button className={getClassNames()}>
                       {`Download\nmOS Apps`}
                     </button>
@@ -51,7 +49,7 @@ export function PGSiteRoot({ content }) {
                     <button
                       className={getClassNames()}
                     >{`Discover\nNova Link`}</button>
-                  </Link> */}
+                  </Link>
                 </div>
                 {/*  */}
                 {/*  */}

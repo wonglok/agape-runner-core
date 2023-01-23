@@ -1,11 +1,11 @@
 import { signOut } from '@/auth/GateMethods'
 import { getID } from '@/lib/getID'
-import Link from 'next/link'
 import { useSnapshot } from 'valtio'
 import { GUIState } from './GUIState'
-import { SitePagesLink } from './SitePagesLink'
 import { useEffect } from 'react'
-import { MetaverseFolders } from './MetaverseFolders'
+import Link from 'next/link'
+// import { SitePagesLink } from './SitePagesLink'
+// import { MetaverseFolders } from './MetaverseFolders'
 // import { GateState } from '@/auth/GateState.ts'
 // import { useSnapshot } from 'valtio'
 
@@ -79,8 +79,8 @@ export function LeftMenu({ siteID, folderID }) {
               },
               {
                 oid: getID(),
-                link: `/admin/meta-os/my-site-seo`,
-                name: 'My Site & SEO',
+                link: `/admin/meta-os/site-seo`,
+                name: 'Site SEO',
               },
               {
                 oid: getID(),
