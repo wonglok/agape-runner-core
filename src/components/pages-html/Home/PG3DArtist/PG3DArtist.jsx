@@ -25,7 +25,7 @@ export function PG3DArtist({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='Creator Studio'
+            title='3D Creator Studio'
             subTitle='3D ART & VFX'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}

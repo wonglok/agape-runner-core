@@ -28,7 +28,7 @@ export function PGDeveloper({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='Developer Studio'
+            title='App Developer Studio'
             subTitle='Apps and Procedural VFX'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}

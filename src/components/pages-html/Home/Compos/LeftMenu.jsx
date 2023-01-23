@@ -62,7 +62,7 @@ export function LeftMenu({ siteID, folderID }) {
           <ul className='flex flex-col pl-0 mb-0'>
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                Metaverse OS
+                META-OS Consumers
               </h6>
             </li>
 
@@ -79,13 +79,13 @@ export function LeftMenu({ siteID, folderID }) {
               },
               {
                 oid: getID(),
-                link: `/admin/meta-os/site-seo`,
-                name: 'Site SEO',
+                link: `/admin/meta-os/app-store`,
+                name: 'App Store',
               },
               {
                 oid: getID(),
-                link: `/admin/meta-os/app-store`,
-                name: 'App Store',
+                link: `/admin/meta-os/site-seo`,
+                name: 'Site SEO',
               },
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
@@ -93,7 +93,7 @@ export function LeftMenu({ siteID, folderID }) {
 
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                Developer & Artists
+                3D Developers and Artists
               </h6>
             </li>
             {/*  */}
@@ -103,12 +103,12 @@ export function LeftMenu({ siteID, folderID }) {
               {
                 oid: getID(),
                 link: `/admin/builders/app-coder`,
-                name: 'Developer Studio',
+                name: 'mOS Coding Studio',
               },
               {
                 oid: getID(),
                 link: `/admin/builders/3d-art`,
-                name: 'Creator Studio',
+                name: 'mOS 3D VFX Studio',
               },
 
               //
