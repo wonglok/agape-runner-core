@@ -313,14 +313,16 @@ export default function Both() {
   let canUse = useRef(false)
 
   useEffect(() => {
-    refStatus.current.innerText = 'Loading Editor Core...'
-    initSwc().then(() => {
-      refStatus.current.innerText = ''
-      canUse.current = true
+    if (!refStatus.current.innerText) {
+      refStatus.current.innerText = 'Loading Editor Core...'
+      initSwc().then(() => {
+        refStatus.current.innerText = ''
+        canUse.current = true
 
-      ///
-      buildApp(appSource)
-    })
+        ///
+        buildApp(appSource)
+      })
+    }
   }, [])
 
   return (
