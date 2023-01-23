@@ -14,6 +14,8 @@ export function PGDeveloper({ content }) {
   let gs = useSnapshot(GateState)
 
   //
+  //
+  //
   let {
     query: { folderID },
   } = useRouter()
@@ -26,8 +28,8 @@ export function PGDeveloper({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='App & Code Studio'
-            subTitle='Dashboard'
+            title='Developer Studio'
+            subTitle='Apps and Procedural VFX'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
             bar={
@@ -36,18 +38,6 @@ export function PGDeveloper({ content }) {
                 <div className='flex items-center w-full h-full'>
                   <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
                     Write MetaApp
-                  </button>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    A/B Test
-                  </button>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    DB Table
-                  </button>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    File Upload
-                  </button>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    REST API
                   </button>
                   <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
                     Socket API
