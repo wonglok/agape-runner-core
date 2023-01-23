@@ -317,7 +317,7 @@ async function compile({ input }) {
   return result.code
 }
 
-export default function IndexCoder() {
+export function BUCodeStudio() {
   let refStatus = useRef()
   let canUse = useRef(false)
 
@@ -333,6 +333,8 @@ export default function IndexCoder() {
       })
     }
   }, [])
+
+  let router = useRouter()
 
   return (
     <div>
@@ -355,7 +357,11 @@ export default function IndexCoder() {
 
       {/*  */}
 
-      <iframe src={`/code/run`}></iframe>
+      {router && (
+        <iframe
+          src={`/apps/${router.query.appGroupID}/${router.query.appOneID}/run`}
+        ></iframe>
+      )}
     </div>
   )
 }

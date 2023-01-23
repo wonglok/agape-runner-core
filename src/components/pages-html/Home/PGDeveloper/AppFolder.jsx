@@ -1,5 +1,6 @@
 import { useSnapshot } from 'valtio'
 import { CSData } from '../aws/CSData'
+import Link from 'next/link'
 
 export function AppFolder() {
   let cs = useSnapshot(CSData)
@@ -12,7 +13,12 @@ export function AppFolder() {
           {cs.appGroups.map((it) => {
             return (
               <p className='mb-3 text-sm leading-normal' key={it.oid}>
-                {it.displayName}
+                {/*  */}
+                <button className='p-2 bg-gray-100'>{it.displayName}</button>
+                {/*  */}
+                <Link href={`/apps/${it.oid}`}>
+                  <button className='p-2 bg-gray-200'>Edit</button>
+                </Link>
               </p>
             )
           })}

@@ -8,9 +8,9 @@ import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useRouter } from 'next/router'
-import { novaFolderCreate } from '../aws/nova-folder-aws'
+import { appFolderCreate } from '../aws/app-folder-aws'
 import { DateTime } from 'luxon'
-import { CSData, invalidateAppGruop } from '../aws/CSData'
+import { CSData, invalidateAppFolder } from '../aws/CSData'
 import { AppFolder } from './AppFolder'
 import { useEffect } from 'react'
 
@@ -26,7 +26,7 @@ export function PGDeveloper({ content }) {
   } = useRouter()
 
   useEffect(() => {
-    invalidateAppGruop()
+    invalidateAppFolder()
   }, [])
 
   //
@@ -49,12 +49,11 @@ export function PGDeveloper({ content }) {
                     onClick={() => {
                       //
                       let dt = DateTime.local()
-                      novaFolderCreate({
+                      appFolderCreate({
                         displayName:
                           'new app - ' + `${dt.toFormat('yyyy LLL dd tt')}`,
                       }).then((done) => {
-                        console.log(done)
-                        invalidateAppGruop()
+                        invalidateAppFolder()
                       })
                       //
                     }}

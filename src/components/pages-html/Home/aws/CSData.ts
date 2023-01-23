@@ -1,8 +1,6 @@
-import { getID } from '@/lib/getID'
 import { proxy } from 'valtio'
-import { novaFolderList } from './nova-folder-aws'
-// import { fetchPages } from './page-aws'
-//
+import { AppFolder } from './app-folder-aws'
+import { AppSnapshot } from './app-snapshot-aws'
 
 // //
 declare type AppGroup = {
@@ -10,7 +8,7 @@ declare type AppGroup = {
   displayName: string
 }
 
-// declare type AppRoute = {
+// declare type  = {
 //   route: string
 //   packageName: string
 // }
@@ -26,14 +24,6 @@ declare type AppGroup = {
 //   modules: AppModules[]
 // }
 
-// declare type AppSnapshot = {
-//   oid: string
-//   appGroupID: string
-//   appName: string
-//   appRoutes: AppRoute[]
-//   appPackages: AppPackage[]
-// }
-
 // declare type AppFile = {
 //   oid: string
 //   appID: string
@@ -41,29 +31,37 @@ declare type AppGroup = {
 //   content: string
 // }
 
-// export const createAppSnapshot = () => {
-//   return {
-//     //
-//     //
-//   }
-// }
+declare type AppSnapshot = {
+  oid: string
+  appFolderID: string
+  appName: string
+  appRoutes: []
+  appPackages: []
+}
 
 export const CSData = proxy<{
   //
   appGroups: AppGroup[]
-  // appSnap: AppSnapshot[]
+  appSnap: AppSnapshot[]
   // appFiles: AppFile[]
 }>({
   appGroups: [],
-  // appSnap: [],
+  appSnap: [],
   // appFiles: [],
 })
 
 //
 
-export const invalidateAppGruop = () => {
+export const invalidateAppFolder = () => {
   //
-  novaFolderList({}).then((data) => {
+  AppFolder.list({}).then((data) => {
     CSData.appGroups = data.list
+  })
+}
+
+export const invalidateAppSnapshot = ({ appID }) => {
+  //
+  AppSnapshot.list({ appID }).then((data) => {
+    CSData.appSnap = data.list
   })
 }

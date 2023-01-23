@@ -164,7 +164,7 @@ export function WelcomeBack() {
                             </button>
                           </div>
 
-                          {process.env.NODE_ENV === 'development' && (
+                          {/* {process.env.NODE_ENV === 'development' && (
                             <>
                               <div className='text-center'>
                                 <button
@@ -192,7 +192,7 @@ export function WelcomeBack() {
                                 </button>
                               </div>
                             </>
-                          )}
+                          )} */}
                         </div>
                         {/* <form role='form'>
                           <label className='mb-2 ml-1 text-xs font-bold text-slate-700'>
