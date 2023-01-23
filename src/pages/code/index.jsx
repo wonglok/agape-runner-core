@@ -7,50 +7,7 @@ import initSwc, { transform } from '@swc/wasm-web'
 // const uglify = require('uglifyjs-browser')
 import * as React from 'react'
 
-async function compile({ input }) {
-  const result = await transform(input, {
-    jsc: {
-      parser: {
-        syntax: 'ecmascript',
-        jsx: true,
-        dynamicImport: true,
-        privateMethod: true,
-        functionBind: true,
-        exportDefaultFrom: false,
-        appNamespaceFrom: false,
-        decorators: false,
-        decoratorsBeforeExport: true,
-        topLevelAwait: true,
-        importMeta: true,
-        preserveAllComments: false,
-      },
-
-      //
-      transform: {
-        react: {
-          pragma: 'window.React.createElement',
-        },
-      },
-
-      // minify: {},
-      //
-      target: 'es2018',
-      loose: false,
-      externalHelpers: false,
-      keepClassNames: true,
-    },
-
-    isModule: true,
-
-    module: {
-      type: 'es6',
-    },
-  })
-
-  return result.code
-}
-
-export let MyCodeModules = [
+export let RawModules = [
   {
     moduleName: 'main',
     files: [
@@ -179,10 +136,16 @@ export let MyCodeModules = [
 //
 // app as an repo
 let appSource = {
-  appName: 'my-awesome-app',
+  appName: 'wonglok-app',
+  appPages: [
+    {
+      route: '/',
+      packageName: 'home',
+    },
+  ],
   appPackages: [
-    { packageName: 'self', modules: MyCodeModules },
-    { packageName: 'webgl', modules: MyCodeModules },
+    { packageName: 'home', modules: RawModules },
+    { packageName: 'webgl', modules: RawModules },
   ],
 }
 
@@ -306,6 +269,49 @@ let buildApp = async (input) => {
   bc.close()
 
   //
+}
+
+async function compile({ input }) {
+  const result = await transform(input, {
+    jsc: {
+      parser: {
+        syntax: 'ecmascript',
+        jsx: true,
+        dynamicImport: true,
+        privateMethod: true,
+        functionBind: true,
+        exportDefaultFrom: false,
+        appNamespaceFrom: false,
+        decorators: false,
+        decoratorsBeforeExport: true,
+        topLevelAwait: true,
+        importMeta: true,
+        preserveAllComments: false,
+      },
+
+      //
+      transform: {
+        react: {
+          pragma: 'window.React.createElement',
+        },
+      },
+
+      // minify: {},
+      //
+      target: 'es2018',
+      loose: false,
+      externalHelpers: false,
+      keepClassNames: true,
+    },
+
+    isModule: true,
+
+    module: {
+      type: 'es6',
+    },
+  })
+
+  return result.code
 }
 
 export default function Both() {

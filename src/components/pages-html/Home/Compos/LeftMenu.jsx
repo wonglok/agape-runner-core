@@ -69,6 +69,17 @@ export function LeftMenu({ siteID, folderID }) {
             {/*  */}
             {/*  */}
             {/*  */}
+            {/*  */}
+            {/*  */}
+            {/*  */}
+            {/*  */}
+            {/*  */}
+            {/*  */}
+            {/*  */}
+            {/*  */}
+            {/*  */}
+            {/*  */}
+            {/*  */}
 
             {[
               // { oid: getID(), link: `/admin`, name: 'All My Sites' },
@@ -103,12 +114,12 @@ export function LeftMenu({ siteID, folderID }) {
               {
                 oid: getID(),
                 link: `/admin/builders/app-coder`,
-                name: 'mOS Coding Studio',
+                name: 'mOS 3D Coding Studio',
               },
               {
                 oid: getID(),
                 link: `/admin/builders/3d-art`,
-                name: 'mOS 3D VFX Studio',
+                name: 'mOS 3D Art Studio',
               },
 
               //
