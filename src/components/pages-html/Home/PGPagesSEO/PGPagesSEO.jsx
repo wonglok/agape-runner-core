@@ -8,6 +8,7 @@ import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useRouter } from 'next/router'
+import { Pages } from './Pages'
 
 export function PGPagesSEO({ content }) {
   //
@@ -41,6 +42,7 @@ export function PGPagesSEO({ content }) {
             }
           ></SectionHeader>
           {/*  */}
+          <Pages></Pages>
           {/* <MyFolders></MyFolders> */}
         </SmartDrawer>
       </DesktopOnly>
