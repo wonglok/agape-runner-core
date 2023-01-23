@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AppEntry } from '@/aws/AppEntry'
 import { Input, Tag } from 'antd'
 import { getID } from '@/lib/getID'
+import { setBGTo } from '@/lib/setBGTo'
 
 export function AllAppEntry() {
   let cs = useSnapshot(CSData)
@@ -58,7 +59,7 @@ function OneEntry({ oid }) {
   let cs = useSnapshot(CSData)
   let it = cs.appEntry.find((e) => e.oid === oid)
 
-  let time = useRef(0)
+  // let time = useRef(0)
   return (
     <div key={it.oid} className='mb-3'>
       <div className='flex items-center mb-3 text-sm leading-normal'>
@@ -79,45 +80,70 @@ function OneEntry({ oid }) {
           <div className='inline-block'>
             <input
               className='p-2 mr-2 border-2 rounded-lg'
-              defaultValue={it.slug}
-              onInput={(ev) => {
-                clearInterval(time.current)
-                time.current = setTimeout(() => {
+              defaultValue={it?.slug || ''}
+              onKeyDown={(ev) => {
+                if (ev.key === 'Enter') {
+                  //
                   let obj = CSData.appEntry.find((e) => e.oid === oid)
                   obj.slug = ev.target.value
 
+                  setBGTo(ev.target, 'bg-yellow-300')
                   AppEntry.update({ object: obj })
                     .then(
                       (e) => {
                         console.log(e)
-                        ev.target.classList.add('bg-green-300')
+                        setBGTo(ev.target, 'bg-green-300')
                       },
                       () => {
-                        ev.target.classList.add('bg-red-300')
+                        setBGTo(ev.target, 'bg-red-300')
                       }
                     )
                     .finally(() => {
                       //
                       setTimeout(() => {
-                        ev.target.classList.remove('bg-green-300')
-                        ev.target.classList.remove('bg-red-300')
+                        setBGTo(ev.target, 'bg-white')
                       }, 1000)
                       //
                     })
-                }, 500)
+                }
+              }}
+              onInput={(ev) => {
+                let obj = CSData.appEntry.find((e) => e.oid === oid)
+                obj.slug = ev.target.value
+
+                setBGTo(ev.target, 'bg-yellow-100')
+
+                //   clearInterval(time.current)
+                // time.current = setTimeout(() => {
+
+                // }, 500)
               }}
             ></input>
           </div>
 
           <button
-            onClick={() => {
+            onClick={(ev) => {
               let obj = CSData.appEntry.find((e) => e.oid === oid)
 
-              AppEntry.update({ object: obj }).then((e) => {
-                console.log(e)
-              })
+              setBGTo(ev.target, 'bg-yellow-300')
+
+              AppEntry.update({ object: obj })
+                .then(
+                  (e) => {
+                    setBGTo(ev.target, 'bg-green-300')
+                  },
+                  () => {
+                    //
+                    setBGTo(ev.target, 'bg-red-300')
+                  }
+                )
+                .finally(() => {
+                  setTimeout(() => {
+                    setBGTo(ev.target, 'bg-white-300')
+                  }, 1000)
+                })
             }}
-            className='p-2 px-4 mr-2 text-white bg-yellow-500 rounded-xl'
+            className='p-2 px-4 mr-2 border-2 border-gray-300 rounded-xl'
           >
             Rename
           </button>
@@ -139,9 +165,26 @@ function OneEntry({ oid }) {
                   name: input,
                 })
 
-                AppEntry.update({ object: obj }).then((e) => {
-                  console.log(e)
-                })
+                setBGTo(ev.target, 'bg-yellow-300')
+                AppEntry.update({ object: obj })
+                  .then(
+                    (e) => {
+                      console.log(e)
+                      setBGTo(ev.target, 'bg-green-300')
+                    },
+                    (er) => {
+                      //
+                      er.then((t) => {
+                        console.log(t)
+                      })
+                      setBGTo(ev.target, 'bg-red-300')
+                    }
+                  )
+                  .finally(() => {
+                    setTimeout(() => {
+                      setBGTo(ev.target, 'bg-white-300')
+                    }, 1000)
+                  })
 
                 setTimeout(() => {
                   ev.target.value = ''
@@ -166,9 +209,14 @@ function OneEntry({ oid }) {
                     1
                   )
 
-                  AppEntry.update({ object: obj }).then((e) => {
-                    console.log(e)
-                  })
+                  AppEntry.update({ object: obj }).then(
+                    (e) => {
+                      console.log(e)
+                    },
+                    () => {
+                      //
+                    }
+                  )
                 }}
               >
                 {t.name}

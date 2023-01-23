@@ -35,7 +35,7 @@ export const CreateApp = ({}) => {
     <>
       <div className='inline-block'>
         <Button type='primary' className='inline-block' onClick={showModal}>
-          Create MetaOS App
+          Create MetaOS App Package
         </Button>
       </div>
 
