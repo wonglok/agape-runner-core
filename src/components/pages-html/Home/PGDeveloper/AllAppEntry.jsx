@@ -17,22 +17,21 @@ export function AllAppEntry() {
 
   let result = cs.appEntry.filter(
     (e) =>
-      e?.title?.includes(query) ||
-      e?.tags?.some((t) => t?.name?.includes(query))
+      e?.slug?.includes(query) || e?.tags?.some((t) => t?.name?.includes(query))
   )
 
   return (
     <div className='flex-none w-full max-w-full px-4 mt-4 mb-6'>
       <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
         <div className='p-4 pb-0 mb-0 rounded-t-2xl'>
-          <h6 className='mb-1 text-xl'>MetaOS Apps</h6>
+          <h6 className=' mb-3 text-xl'>MetaOS App Packages</h6>
 
-          <div className='inline-block mb-3'>
+          <div className='inline-block w-full mb-3 lg:w-1/3'>
             <Input
               onInput={(ev) => {
                 setQuery(ev.target.value)
               }}
-              placeholder='search'
+              placeholder='search and filter hashtags'
             ></Input>
           </div>
 
@@ -64,7 +63,7 @@ function OneEntry({ oid }) {
     <div key={it.oid} className='mb-3'>
       <div className='flex items-center mb-3 text-sm leading-normal'>
         {/* <button className='p-2 px-4 mr-2 bg-gray-100 rounded-xl'>
-          {it.title}
+          {it.slug}
         </button> */}
 
         <button
@@ -73,23 +72,38 @@ function OneEntry({ oid }) {
           }}
           className='inline-block p-2 px-4 mr-2 text-white bg-blue-500 rounded-xl'
         >
-          Edit MetaOS App
+          Edit App Package
         </button>
 
         <div className='inline-block'>
           <div className='inline-block'>
             <input
               className='p-2 mr-2 border-2 rounded-lg'
-              defaultValue={it.title}
+              defaultValue={it.slug}
               onInput={(ev) => {
                 clearInterval(time.current)
                 time.current = setTimeout(() => {
                   let obj = CSData.appEntry.find((e) => e.oid === oid)
-                  obj.title = ev.target.value
+                  obj.slug = ev.target.value
 
-                  AppEntry.update({ object: obj }).then((e) => {
-                    console.log(e)
-                  })
+                  AppEntry.update({ object: obj })
+                    .then(
+                      (e) => {
+                        console.log(e)
+                        ev.target.classList.add('bg-green-300')
+                      },
+                      () => {
+                        ev.target.classList.add('bg-red-300')
+                      }
+                    )
+                    .finally(() => {
+                      //
+                      setTimeout(() => {
+                        ev.target.classList.remove('bg-green-300')
+                        ev.target.classList.remove('bg-red-300')
+                      }, 1000)
+                      //
+                    })
                 }, 500)
               }}
             ></input>

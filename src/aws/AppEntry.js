@@ -7,7 +7,7 @@ class REST {
   constructor({ table }) {
     this.table = table
   }
-  async create({ title, tags }) {
+  async create({ slug, tags = [] }) {
     const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
     if (!sToken) {
       console.error('no session token')
@@ -24,8 +24,8 @@ class REST {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
-        title: title,
-        tags,
+        slug: slug,
+        tags: tags,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,

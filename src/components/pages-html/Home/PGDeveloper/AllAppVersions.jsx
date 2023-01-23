@@ -31,8 +31,8 @@ export function AllAppVersions({}) {
                   onClick={() => {
                     //
                     AppVersion.create({
-                      title: 'new version',
-                      slug: 'happy123' + getID(),
+                      title: new Date().getTime(),
+                      slug: 'version_slug_' + getID(),
                       appEntryID: appEntryOne.oid,
                     }).then((response) => {
                       //
