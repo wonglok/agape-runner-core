@@ -36,13 +36,20 @@ export function PGDeveloper({ content }) {
               <>
                 {/*  */}
                 <div className='flex items-center w-full h-full'>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    Write MetaApp
+                  <button
+                    onClick={() => {
+                      //
+                      //
+                    }}
+                    className='inline-block w-20 h-20 p-2 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'
+                  >
+                    Create MetaOS App
                   </button>
                 </div>
               </>
             }
           ></SectionHeader>
+
           {/* <MyFolders></MyFolders> */}
         </SmartDrawer>
       </DesktopOnly>

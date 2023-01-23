@@ -22,6 +22,7 @@ export default function SlugPage() {
   useEffect(() => {
     if (query && query.slug) {
       //
+      let slugString = query.slug.join('/')
     }
   }, [query])
 
