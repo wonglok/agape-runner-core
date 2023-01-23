@@ -49,19 +49,3 @@ export const CSData = proxy<{
   appSnap: [],
   // appFiles: [],
 })
-
-//
-
-export const invalidateAppFolder = () => {
-  //
-  AppFolder.list({}).then((data) => {
-    CSData.appGroups = data.list
-  })
-}
-
-export const invalidateAppSnapshot = ({ appID }) => {
-  //
-  AppSnapshot.list({ appID }).then((data) => {
-    CSData.appSnap = data.list
-  })
-}

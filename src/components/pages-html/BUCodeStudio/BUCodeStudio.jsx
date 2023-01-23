@@ -115,10 +115,10 @@ export let RawModules = [
       {
         fileName: `b.js`,
         content: /* js */ `
-            export default {
-              b:'bbbbbb'
-            }
-          `,
+          export default {
+            b:'bbbbbb'
+          }
+        `,
       },
       {
         fileName: `vanilla.js`,
@@ -151,6 +151,8 @@ let appContent = {
     { packageName: 'lib-webgl', modules: RawModules },
   ],
 }
+
+//
 
 let buildApp = async (input) => {
   /** @type {{ packageName: '', appPackages: [{[ packageName: '', modules: [{ moduleName: '', files: [{fileName: '', content: ''] }] ]}] }} */
@@ -357,11 +359,7 @@ export function BUCodeStudio() {
 
       {/*  */}
 
-      {router && (
-        <iframe
-          src={`/apps/${router.query.appGroupID}/${router.query.appOneID}/run`}
-        ></iframe>
-      )}
+      {router && <iframe src={`/app/run`}></iframe>}
     </div>
   )
 }

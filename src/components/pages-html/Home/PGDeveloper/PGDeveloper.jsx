@@ -8,9 +8,6 @@ import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useRouter } from 'next/router'
-import { appFolderCreate } from '../aws/app-folder-aws'
-import { DateTime } from 'luxon'
-import { CSData, invalidateAppFolder } from '../aws/CSData'
 import { AppFolder } from './AppFolder'
 import { useEffect } from 'react'
 
@@ -26,7 +23,7 @@ export function PGDeveloper({ content }) {
   } = useRouter()
 
   useEffect(() => {
-    invalidateAppFolder()
+    //
   }, [])
 
   //
@@ -48,13 +45,6 @@ export function PGDeveloper({ content }) {
                   <button
                     onClick={() => {
                       //
-                      let dt = DateTime.local()
-                      appFolderCreate({
-                        displayName:
-                          'new app - ' + `${dt.toFormat('yyyy LLL dd tt')}`,
-                      }).then((done) => {
-                        invalidateAppFolder()
-                      })
                       //
                     }}
                     className='inline-block w-20 h-20 p-2 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'

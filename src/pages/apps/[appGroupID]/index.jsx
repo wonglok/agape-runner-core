@@ -1,3 +1,10 @@
+import { useRouter } from 'next/router'
+
 export default function AppGroup() {
-  return <div>AppGroup</div>
+  let router = useRouter()
+  return (
+    <div>
+      <div>{router.query.appGroupID}</div>
+    </div>
+  )
 }

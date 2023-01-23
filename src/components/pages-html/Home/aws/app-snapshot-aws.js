@@ -1,4 +1,6 @@
 import { SESSION_ACCESS_KEY, UserEndPoints } from '@/auth/GateConst'
+import { invalidate } from '@react-three/fiber'
+import { CSData } from './CSData'
 
 class REST {
   constructor({ table }) {
@@ -149,6 +151,12 @@ class REST {
     } else {
       return Promise.reject(res.json())
     }
+  }
+  invalidate() {
+    this.list({}).then((data) => {
+      //
+      CSData.appSnap = data.list
+    })
   }
 }
 
