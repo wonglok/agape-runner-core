@@ -1,6 +1,6 @@
 import { SESSION_ACCESS_KEY, UserEndPoints } from '@/auth/GateConst'
 
-export async function folderCreate({ displayName }) {
+export async function novaFolderCreate({ displayName }) {
   const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
   if (!sToken) {
     console.error('no session token')
@@ -43,7 +43,7 @@ export async function folderCreate({ displayName }) {
 
 //!SECTION
 
-export async function fetchAllFolders({}) {
+export async function novaFolderList({}) {
   //
   //
   // try {
@@ -79,7 +79,7 @@ export async function fetchAllFolders({}) {
 
 ////////
 
-export async function fetchOneFolder({ oid }) {
+export async function novaFolderGet({ oid }) {
   //
   //
   // try {
@@ -115,11 +115,11 @@ export async function fetchOneFolder({ oid }) {
   // }
 }
 
-export function getFolderEditorURL(folder) {
-  return `/admin/folders/${folder.oid}`
-}
+// export function getFolderEditorURL(folder) {
+//   return `/admin/folders/${folder.oid}`
+// }
 
-export async function updateOneFolder({ object }) {
+export async function novaFolderUpdate({ object }) {
   //
   //
   // try {
@@ -156,7 +156,7 @@ export async function updateOneFolder({ object }) {
 
 ////////
 
-export async function removeOneFolder({ object }) {
+export async function novaFolderRemove({ object }) {
   //
   //
   // try {

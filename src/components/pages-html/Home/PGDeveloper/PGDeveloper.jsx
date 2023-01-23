@@ -8,6 +8,11 @@ import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useRouter } from 'next/router'
+import { novaFolderCreate } from '../aws/nova-folder-aws'
+import { DateTime } from 'luxon'
+import { CSData, invalidateAppGruop } from '../aws/CSData'
+import { AppFolder } from './AppFolder'
+import { useEffect } from 'react'
 
 export function PGDeveloper({ content }) {
   //
@@ -19,6 +24,10 @@ export function PGDeveloper({ content }) {
   let {
     query: { folderID },
   } = useRouter()
+
+  useEffect(() => {
+    invalidateAppGruop()
+  }, [])
 
   //
   return (
@@ -39,6 +48,14 @@ export function PGDeveloper({ content }) {
                   <button
                     onClick={() => {
                       //
+                      let dt = DateTime.local()
+                      novaFolderCreate({
+                        displayName:
+                          'new app - ' + `${dt.toFormat('yyyy LLL dd tt')}`,
+                      }).then((done) => {
+                        console.log(done)
+                        invalidateAppGruop()
+                      })
                       //
                     }}
                     className='inline-block w-20 h-20 p-2 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'
@@ -49,7 +66,7 @@ export function PGDeveloper({ content }) {
               </>
             }
           ></SectionHeader>
-
+          <AppFolder></AppFolder>
           {/* <MyFolders></MyFolders> */}
         </SmartDrawer>
       </DesktopOnly>
