@@ -359,7 +359,7 @@ export function BUCodeStudio() {
 
       {/*  */}
 
-      {router && <iframe src={`/app/run`}></iframe>}
+      {router && <iframe src={`./run`}></iframe>}
     </div>
   )
 }
