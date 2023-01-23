@@ -37,18 +37,16 @@ declare type AppGroup = {
 
 declare type AppSnapshot = {
   oid: string
-  appFolderID: string
-  appName: string
-  appRoutes: []
-  appPackages: []
 }
 
 export const CSData = proxy<{
   //
+  appEntryID: string
   appSnapshot: AppSnapshot[]
   appEntry: AppGroup[]
   // appFiles: AppFile[]
 }>({
+  appEntryID: '',
   appSnapshot: [],
   appEntry: [],
   // appFiles: [],

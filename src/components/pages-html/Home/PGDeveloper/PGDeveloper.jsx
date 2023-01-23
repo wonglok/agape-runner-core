@@ -7,20 +7,17 @@ import { DesktopOnly } from '@/lib/desktop/DesktopOnly'
 import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
-import { useRouter } from 'next/router'
 import { AllAppEntry } from './AllAppEntry'
 import { useEffect } from 'react'
 import { CreateApp } from './CreateApp'
+import { AllAppVersions } from './AllAppVersions'
+import { useRouter } from 'next/router'
 
 export function PGDeveloper({ content }) {
   //
   let gs = useSnapshot(GateState)
 
   //
-  let {
-    query: { folderID },
-  } = useRouter()
-
   useEffect(() => {
     //
   }, [])
@@ -30,7 +27,7 @@ export function PGDeveloper({ content }) {
     <>
       <DesktopOnly>
         <StylesDashboard></StylesDashboard>
-        <LeftMenu folderID={folderID}></LeftMenu>
+        <LeftMenu></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
             title='App Developer Studio'
@@ -44,6 +41,8 @@ export function PGDeveloper({ content }) {
             }
           ></SectionHeader>
           <AllAppEntry></AllAppEntry>
+          <AllAppVersions></AllAppVersions>
+
           {/* <MyFolders></MyFolders> */}
         </SmartDrawer>
       </DesktopOnly>

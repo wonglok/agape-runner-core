@@ -21,7 +21,6 @@ export function AllAppEntry() {
       e?.title?.includes(query) ||
       e?.tags?.some((t) => t?.name?.includes(query))
   )
-  //
 
   return (
     <div className='flex-none w-full max-w-full px-4 mt-4 mb-6'>
@@ -29,7 +28,7 @@ export function AllAppEntry() {
         <div className='p-4 pb-0 mb-0 rounded-t-2xl'>
           <h6 className='mb-1 text-xl'>My Apps</h6>
 
-          <div className='inline-block'>
+          <div className='inline-block mb-3'>
             <Input
               onInput={(ev) => {
                 setQuery(ev.target.value)
@@ -38,8 +37,8 @@ export function AllAppEntry() {
             ></Input>
           </div>
 
-          {result.map((it, idx) => {
-            return <OneEntry key={it.oid} oid={it.oid} idx={idx}></OneEntry>
+          {result.map((it) => {
+            return <OneEntry key={it.oid} oid={it.oid}></OneEntry>
           })}
 
           {/*  */}
@@ -57,23 +56,26 @@ export function AllAppEntry() {
   )
 }
 
-function OneEntry({ idx, oid }) {
+function OneEntry({ oid }) {
   let cs = useSnapshot(CSData)
   let it = cs.appEntry.find((e) => e.oid === oid)
 
   let time = useRef(0)
   return (
-    <div key={it.oid} className='py-3'>
+    <div key={it.oid} className='mb-3'>
       <div className='flex items-center mb-3 text-sm leading-normal'>
         {/* <button className='p-2 px-4 mr-2 bg-gray-100 rounded-xl'>
           {it.title}
         </button> */}
 
-        <Link prefetch={idx === 0} href={`/apps/${it.oid}`}>
-          <button className='inline-block p-2 px-4 mr-2 text-white bg-blue-500 rounded-xl'>
-            Edit App
-          </button>
-        </Link>
+        <button
+          onClick={() => {
+            CSData.appEntryID = it.oid
+          }}
+          className='inline-block p-2 px-4 mr-2 text-white bg-blue-500 rounded-xl'
+        >
+          Edit MetaOS App
+        </button>
 
         <div className='inline-block'>
           <div className='inline-block'>
@@ -118,6 +120,7 @@ function OneEntry({ idx, oid }) {
                 let input = ev.target.value
 
                 let obj = CSData.appEntry.find((e) => e.oid === oid)
+                obj.tags = obj.tags || []
                 obj.tags.push({
                   oid: getID(),
                   name: input,
@@ -134,13 +137,15 @@ function OneEntry({ idx, oid }) {
             }}
           ></input>
 
-          {it.tags.map((t) => {
+          {(it?.tags || []).map((t) => {
             return (
               <Tag
                 key={t.oid}
                 closable
                 onClose={() => {
                   let obj = CSData.appEntry.find((e) => e.oid === oid)
+                  obj.tags = obj.tags || []
+
                   let tags = obj.tags
 
                   tags.splice(
