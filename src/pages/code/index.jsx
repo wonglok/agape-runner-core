@@ -304,6 +304,8 @@ let buildApp = async (input) => {
     outputs,
   })
   bc.close()
+
+  //
 }
 
 export default function Both() {
