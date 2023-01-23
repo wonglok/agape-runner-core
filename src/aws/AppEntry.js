@@ -154,10 +154,21 @@ class REST {
       return Promise.reject(res.json())
     }
   }
+  get data() {
+    return CSData.appEntry
+  }
+  set data(v) {
+    CSData.appEntry = v
+  }
   invalidate() {
-    this.list({}).then((data) => {
-      CSData.appEntry = data.list
-    })
+    this.data = []
+    this.list({})
+      .then((data) => {
+        this.data = data.list
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   }
 }
 

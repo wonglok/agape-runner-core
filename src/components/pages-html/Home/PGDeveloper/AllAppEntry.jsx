@@ -1,5 +1,4 @@
 import { useSnapshot } from 'valtio'
-import Link from 'next/link'
 import { CSData } from '@/aws/CSData'
 import { useEffect, useRef, useState } from 'react'
 import { AppEntry } from '@/aws/AppEntry'
@@ -26,7 +25,7 @@ export function AllAppEntry() {
     <div className='flex-none w-full max-w-full px-4 mt-4 mb-6'>
       <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
         <div className='p-4 pb-0 mb-0 rounded-t-2xl'>
-          <h6 className='mb-1 text-xl'>My Apps</h6>
+          <h6 className='mb-1 text-xl'>MetaOS Apps</h6>
 
           <div className='inline-block mb-3'>
             <Input

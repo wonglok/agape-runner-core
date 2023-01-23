@@ -1,12 +1,21 @@
+import { AppVersion } from '@/aws/AppVersion'
 import { CSData } from '@/aws/CSData'
+import { getID } from '@/lib/getID'
+import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 
 export function AllAppVersions({}) {
-  let { appEntryID, appEntry } = useSnapshot(CSData)
-
+  let cs = useSnapshot(CSData)
+  let { appEntryID, appEntry } = cs
   let appEntryOne = appEntry.find((t) => {
     return t.oid === appEntryID
   })
+
+  useEffect(() => {
+    if (appEntryID) {
+      AppVersion.invalidate({ appEntryID })
+    }
+  }, [appEntryID])
   //
   return (
     <>
@@ -16,10 +25,28 @@ export function AllAppVersions({}) {
             <div className='p-4 pb-4 mb-0 rounded-t-2xl'>
               <h6 className='mb-1 text-xl'>MetaOS App: {appEntryOne.title}</h6>
               <p className='mb-3 text-sm leading-normal'>
-                The Metaverse by you.
+                Versions of this App...
+                <button
+                  className=' ml-3 underline'
+                  onClick={() => {
+                    //
+                    AppVersion.create({
+                      title: 'new version',
+                      slug: 'happy123' + getID(),
+                      appEntryID: appEntryOne.oid,
+                    }).then((response) => {
+                      //
+                      console.log(response)
+                      AppVersion.invalidate({ appEntryID: appEntryOne.oid })
+                    })
+                  }}
+                >
+                  Create a new Version
+                </button>
               </p>
-
-              <div>AppID: {'aa'}</div>
+              <pre className=' whitespace-pre-wrap'>
+                {JSON.stringify(cs.appVersions, null, '  ')}
+              </pre>
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ class REST {
   constructor({ table }) {
     this.table = table
   }
-  async create({ title }) {
+  async create({ title, slug, appEntryID }) {
     const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
     if (!sToken) {
       console.error('no session token')
@@ -17,6 +17,15 @@ class REST {
       console.error('no title given')
       return Promise.reject('no title given')
     }
+    if (!slug) {
+      console.error('no slug given')
+      return Promise.reject('no slug given')
+    }
+    if (!appEntryID) {
+      console.error('no appEntryID given')
+      return Promise.reject('no appEntryID given')
+      //
+    }
 
     const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
 
@@ -25,6 +34,8 @@ class REST {
       mode: 'cors',
       body: JSON.stringify({
         title: title,
+        appEntryID: appEntryID,
+        slug: slug,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,
@@ -43,7 +54,7 @@ class REST {
     }
   }
 
-  async list({}) {
+  async list({ appEntryID }) {
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
@@ -57,6 +68,7 @@ class REST {
       mode: 'cors',
       body: JSON.stringify({
         //
+        appEntryID,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,
@@ -153,11 +165,22 @@ class REST {
       return Promise.reject(res.json())
     }
   }
-  invalidate() {
-    this.list({}).then((data) => {
-      CSData.appSnap = data.list
-    })
+  get data() {
+    return CSData.appVersions
+  }
+  set data(v) {
+    CSData.appVersions = v
+  }
+  invalidate({ appEntryID }) {
+    this.data = []
+    this.list({ appEntryID })
+      .then((data) => {
+        this.data = data.list
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   }
 }
 
-export const AppEntry = new REST({ table: `AppEntry` })
+export const AppVersion = new REST({ table: `AppVersion` })
