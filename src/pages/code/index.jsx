@@ -135,25 +135,32 @@ export let RawModules = [
 
 //
 // app as an repo
+//
 let appSource = {
-  appName: 'wonglok-app',
-  appPages: [
+  appRoutes: [
     {
       route: '/',
-      packageName: 'home',
+      packageName: 'page-home',
+    },
+    {
+      route: '/about',
+      packageName: 'page-about',
     },
   ],
+  //
+  packageName: 'wonglok-app',
   appPackages: [
-    { packageName: 'home', modules: RawModules },
-    { packageName: 'webgl', modules: RawModules },
+    { packageName: 'page-home', modules: RawModules },
+    { packageName: 'page-about', modules: RawModules },
+    { packageName: 'lib-webgl', modules: RawModules },
   ],
 }
 
 let buildApp = async (input) => {
-  /** @type {{ appName: '', appPackages: [{[ packageName: '', modules: [{ moduleName: '', files: [{fileName: '', content: ''] }] ]}] }} */
+  /** @type {{ packageName: '', appPackages: [{[ packageName: '', modules: [{ moduleName: '', files: [{fileName: '', content: ''] }] ]}] }} */
   let app = input
 
-  // const { appName, appPackages } = input
+  // const { packageName, appPackages } = input
 
   const rollupLocalhost = `rollup://localhost/`
 
@@ -183,7 +190,7 @@ let buildApp = async (input) => {
   let bundle = rollup({
     input: [
       getFileName({
-        onePackage: firstPackage, //app.appPackages.find((e) => e.packageName === app.appName),
+        onePackage: firstPackage, //app.appPackages.find((e) => e.packageName === app.packageName),
         moduleName: 'main',
         fileName: 'index.js',
       }),
@@ -281,7 +288,7 @@ async function compile({ input }) {
         privateMethod: true,
         functionBind: true,
         exportDefaultFrom: false,
-        appNamespaceFrom: false,
+        packageNamespaceFrom: false,
         decorators: false,
         decoratorsBeforeExport: true,
         topLevelAwait: true,
