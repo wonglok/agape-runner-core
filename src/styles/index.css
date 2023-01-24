@@ -23,7 +23,8 @@
 }
 
 #nprogress .bar {
-  background: lime;
+  /* background: lime; */
+  background: radial-gradient(circle, lime 0%, cyan 100%);
 
   position: fixed;
   z-index: 1031;
@@ -64,8 +65,8 @@
   box-sizing: border-box;
 
   border: solid 3px transparent;
-  border-top-color: lime;
-  border-left-color: lime;
+  border-top-color: hotpink;
+  border-left-color: hotpink;
   border-radius: 50%;
 
   -webkit-animation: nprogress-spinner 400ms linear infinite;

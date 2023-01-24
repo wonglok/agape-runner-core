@@ -5,6 +5,9 @@ import { getID } from '@/lib/getID'
 import { AppEntry } from '@/aws/AppEntry'
 
 export const CreateApp = ({}) => {
+  let [title, setTitleInput] = useState('')
+  let [tags, setTags] = useState([])
+
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const showModal = () => {
@@ -28,25 +31,26 @@ export const CreateApp = ({}) => {
     setOpen(false)
   }
 
-  let [title, setTitleInput] = useState('')
-  let [tags, setTags] = useState([])
-
   return (
     <>
       <div className='inline-block'>
         <Button type='primary' className='inline-block' onClick={showModal}>
-          Create MetaOS App Package
+          Create your new Metaverse
         </Button>
       </div>
 
-      <Modal open={open} title='Create MetaOS App' footer={[]}>
+      <Modal open={open} title={`Let's create YOUR metaverse.`} footer={[]}>
         <div className='flex items-center mb-2'>
-          <div className='w-32 pr-3 text-right'>App:</div>
+          <div className='w-32 pr-3 text-right'>Page Slug:</div>
           <div className='w-1/2'>
-            <Input
-              placeholder='App Title'
+            <div className='inline-block px-4 py-2 bg-white border-2 border-gray-300 rounded-l-lg'>
+              /
+            </div>
+            <input
+              defaultValue={'about-me'}
+              placeholder='about-me'
+              className='p-2 bg-white border-2 border-l-0 border-gray-300 rounded-l-none rounded-xl'
               onInput={(ev) => {
-                //
                 setTitleInput(ev.target.value)
               }}
             />
@@ -56,12 +60,18 @@ export const CreateApp = ({}) => {
         <div className='flex items-center mb-2'>
           <div className='w-32 pr-3 text-right'>Hastags:</div>
           <div className='w-1/2'>
-            <Input
-              placeholder='add #metaverse tags'
+            <div className='inline-block px-4 py-2 bg-white border-2 border-gray-300 rounded-l-lg'>
+              #
+            </div>
+            <input
+              placeholder='add hashtags'
+              className='p-2 bg-white border-2 border-l-0 border-gray-300 rounded-l-none rounded-xl'
               onKeyDown={(ev) => {
                 if (ev.key === 'Enter') {
                   let input = ev.target.value
-                  ev.target.value = ''
+                  setTimeout(() => {
+                    ev.target.value = ''
+                  })
 
                   if (input) {
                     setTags((s) => {
@@ -75,7 +85,9 @@ export const CreateApp = ({}) => {
               }}
               onBlur={(ev) => {
                 let input = ev.target.value
-                ev.target.value = ''
+                setTimeout(() => {
+                  ev.target.value = ''
+                })
 
                 if (input) {
                   setTags((s) => {

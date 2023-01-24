@@ -17,10 +17,10 @@ class REST {
       nProgress.done()
       throw await Promise.reject('no session token')
     }
-    if (!title) {
-      console.error('no title given')
+    if (!slug) {
+      console.error('no slug given')
       nProgress.done()
-      throw await Promise.reject('no title given')
+      throw await Promise.reject('no slug given')
     }
 
     const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]

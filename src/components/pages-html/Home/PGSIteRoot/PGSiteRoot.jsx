@@ -22,6 +22,11 @@ export function PGSiteRoot({ content }) {
   let getClassNames = () =>
     ` inline-block w-20 h-20 mr-3 p-2 text-xs text-center bg-white border-2 shadow-xl border-cyan-500 hover:bg-cyan-200 transition-all duration-300 rounded-2xl`
 
+  //
+
+  //
+
+  //
   return (
     <>
       <DesktopOnly>
