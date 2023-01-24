@@ -29,23 +29,21 @@ export function PGSiteHome({ content }) {
         <SmartDrawer className=''>
           {/*  */}
           <SectionHeader
-            title='WebNative Metaverse OS'
-            subTitle='Your Own Metaverse OS'
+            root='WebNative MetaverseOS'
+            title='The MetaverseOS'
+            subTitle='Tips: How to create your own Metaverse?'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
             bar={
               <>
+                <div className='mb-1 text-sm'></div>
                 <div className='flex items-center h-full'>
-                  <button className='inline-block w-40 h-20 px-2 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    How to create a your Metaverse?
-                  </button>
-
-                  <button className='inline-block w-40 h-20 px-2 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    1. Create a Page <br /> like /about-me
-                  </button>
-                  <button className='inline-block w-40 h-20 px-4 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
-                    2. Download App <br /> or Write App for that page
-                  </button>
+                  <div className='inline-flex items-center justify-center w-48 h-20 px-4 mr-3 text-xs bg-white border border-gray-400 shadow-xl rounded-xl'>
+                    {`1. Create a New Page like /about-me`}
+                  </div>
+                  <div className='inline-flex items-center justify-center w-48 h-20 px-4 mr-3 text-xs bg-white border border-gray-400 shadow-xl rounded-xl'>
+                    {`2. Download a metaOS App into that page`}
+                  </div>
                 </div>
               </>
             }
