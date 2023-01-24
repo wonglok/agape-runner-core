@@ -33,11 +33,7 @@ export function PGSiteHome({ content }) {
             subTitle='Your Metaverse at hand.'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
-            bar={
-              <>
-                <CreateApp />
-              </>
-            }
+            bar={<></>}
           ></SectionHeader>
           <AllAppEntry></AllAppEntry>
           <AllAppVersions></AllAppVersions>

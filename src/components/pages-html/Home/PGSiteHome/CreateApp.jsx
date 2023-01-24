@@ -34,9 +34,12 @@ export const CreateApp = ({}) => {
   return (
     <>
       <div className='inline-block'>
-        <Button type='primary' className='inline-block' onClick={showModal}>
-          Create your new Metaverse
-        </Button>
+        <button
+          className='inline-block p-3 px-5 text-white bg-blue-500 rounded-lg'
+          onClick={showModal}
+        >
+          Create a New Page
+        </button>
       </div>
 
       <Modal open={open} title={`Let's create YOUR metaverse.`} footer={[]}>
