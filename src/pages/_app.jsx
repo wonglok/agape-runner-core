@@ -43,8 +43,16 @@ function Loading() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const handleStart = (url) => url !== router.asPath && setLoading(true)
-    const handleComplete = (url) => url === router.asPath && setLoading(false)
+    const handleStart = (url) => {
+      if (url !== router.asPath) {
+        setLoading(true)
+      }
+    }
+    const handleComplete = (url) => {
+      if (url === router.asPath) {
+        setLoading(false)
+      }
+    }
 
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleComplete)
@@ -60,7 +68,7 @@ function Loading() {
   return (
     loading && (
       <>
-        <LoaderGrid></LoaderGrid>
+        <LoaderDiv></LoaderDiv>
       </>
     )
   )
@@ -297,6 +305,8 @@ function LoaderDiv() {
   height: 100%;
   margin: 0;
   padding: 0;
+  position: absolute;
+  z-index: 100000000;
 }
 
 .loaderBody {
@@ -305,7 +315,7 @@ function LoaderDiv() {
   align-items: center;
 }
 
-svg {
+#svgyo {
   display: none;
 }
 
@@ -527,6 +537,7 @@ svg {
             <div className='blob'></div>
           </div>
           <svg
+            id={'svgyo'}
             className='hidden'
             xmlns='http://www.w3.org/2000/svg'
             version='1.1'
