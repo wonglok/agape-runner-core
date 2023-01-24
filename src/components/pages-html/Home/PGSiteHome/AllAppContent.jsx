@@ -124,6 +124,7 @@ export function AllAppContent({}) {
               {appEntryOne.type === 'download-app' && (
                 <>"Todo: Add Placeholder for download app"</>
               )}
+
               {appEntryOne.type === 'write-app' && (
                 <>
                   <ExtendWithVersion></ExtendWithVersion>
@@ -131,15 +132,15 @@ export function AllAppContent({}) {
               )}
 
               {appEntryOne.type === 'make-3d' && (
-                <>"Todo: Add Placeholder for download app"</>
+                <>"Todo: Add Placeholder for make-3d"</>
               )}
 
               {appEntryOne.type === 'ab-testing' && (
-                <>"Todo: Add Placeholder for download app"</>
+                <>"Todo: Add Placeholder for ab-testing"</>
               )}
 
               {appEntryOne.type === 'mindmap' && (
-                <>"Todo: Add Placeholder for download app"</>
+                <>"Todo: Add Placeholder for mindmap"</>
               )}
 
               {/*  */}
