@@ -58,7 +58,7 @@ export const CreateAppEntry = ({}) => {
               /
             </div>
             <input
-              defaultValue={'my-new-work'}
+              defaultValue={''}
               placeholder='about-me'
               className='p-2 bg-white border-2 border-l-0 border-gray-300 rounded-l-none rounded-xl'
               onInput={(ev) => {
