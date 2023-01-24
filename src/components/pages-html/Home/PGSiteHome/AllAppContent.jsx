@@ -31,22 +31,34 @@ export function AllAppContent({}) {
               <h6 className=' mb-3 text-xl'>Page: /{appEntryOne.slug}</h6>
 
               <div className='flex flex-wrap mb-4'>
-                <button className='inline-block w-56 h-20 p-2 mr-4 text-xs text-white bg-blue-700 border-2 border-blue-500 rounded-lg'>
+                <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-blue-700 border-2 border-blue-500 rounded-lg'>
                   <span className='text-lg font-bold'> Download 3D App</span>
                   <br />
                   to "/{appEntryOne.slug}" Page
                 </button>
-                <button className='inline-block w-56 h-20 p-2 mr-4 text-xs text-white bg-blue-700 border-2 border-blue-500 rounded-lg'>
-                  <span className='text-lg font-bold'>Develop 3D App</span>
+                <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-green-700 border-2 border-green-500 rounded-lg'>
+                  <span className='text-lg font-bold'> Develop 3D App</span>
                   <br />
-                  for "/{appEntryOne.slug}" Page
+                  for this page
                 </button>
-                <button className='inline-block w-56 h-20 p-2 mr-4 text-xs text-white bg-blue-700 border-2 border-blue-500 rounded-lg'>
-                  <span className='text-lg font-bold'>Create 3D ART / VFX</span>
+                <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-teal-700 border-2 border-teal-500 rounded-lg'>
+                  <span className='text-lg font-bold'>Design 3D ART / VFX</span>
                   <br />
-                  in "/{appEntryOne.slug}" Page
+                  by ARTIST like you 🥰
+                </button>
+                <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white border-2 rounded-lg bg-cyan-700 border-cyan-500'>
+                  <span className='text-lg font-bold'>Do A / B Testing</span>
+                  <br />
+                  for marketing purpose
+                </button>
+                <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-yellow-700 border-2 border-yellow-500 rounded-lg'>
+                  <span className='text-lg font-bold'>Add a MindMap</span>
+                  <br />
+                  for webhook enbaled promotions
                 </button>
               </div>
+
+              {/*  */}
 
               {appEntryOne.type === 'write-code' && (
                 <>
