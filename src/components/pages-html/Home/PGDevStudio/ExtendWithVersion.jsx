@@ -8,7 +8,7 @@ import { useRef } from 'react'
 import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 
-const confirm = Modal.confirm
+// const confirm = Modal.confirm
 
 export function ExtendWithVersion({ appGroupID }) {
   let cs = useSnapshot(CSData)
@@ -74,7 +74,7 @@ function OneVersion({ oid }) {
               <div className='inline-block'>
                 <button
                   onClick={() => {
-                    let { destroy, update } = confirm({
+                    let { destroy, update } = Modal.confirm({
                       closable: true,
                       title: 'Do you want to remove this file?',
                       icon: <ExclamationCircleFilled />,

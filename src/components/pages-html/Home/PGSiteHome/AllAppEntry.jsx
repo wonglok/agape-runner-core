@@ -2,10 +2,11 @@ import { useSnapshot } from 'valtio'
 import { CSData } from '@/aws/CSData'
 import { useEffect, useRef, useState } from 'react'
 import { AppEntry } from '@/aws/AppEntry'
-import { Input, Tag } from 'antd'
+import { Input, Modal, Tag } from 'antd'
 import { getID } from '@/lib/getID'
 import { setBGTo } from '@/lib/setBGTo'
 import { CreateAppEntry } from './CreateAppEntry'
+import { ExclamationCircleFilled } from '@ant-design/icons'
 
 export function AllAppEntry() {
   let cs = useSnapshot(CSData)
@@ -85,7 +86,7 @@ function OneEntry({ oid }) {
               }}
               className='inline-block p-3 px-4 mr-2 text-white bg-blue-500 rounded-xl'
             >
-              Edit Page
+              Edit
             </button>
 
             <div className='inline-flex rounded-xl' ref={renameRef}>
@@ -151,11 +152,82 @@ function OneEntry({ oid }) {
                       }, 1000)
                     })
                 }}
-                className='p-3 px-4 bg-white border-2 border-l-0  rounded-l-none rounded-xl bg-opacity-50'
+                className='p-3 px-4 bg-white border-2 border-l-0 rounded-l-none rounded-r-none rounded-xl bg-opacity-50'
               >
                 Rename
               </button>
             </div>
+
+            <button
+              onClick={() => {
+                let { destroy, update } = Modal.confirm({
+                  closable: true,
+                  title: 'Do you want to remove this file?',
+                  icon: <ExclamationCircleFilled />,
+                  content: `Confirm removal of "${it.title}"`,
+
+                  footer: (
+                    <div className='text-right'>
+                      <button
+                        key={'remove'}
+                        onClick={() => {
+                          new Promise(async (resolve, reject) => {
+                            destroy()
+                            await AppEntry.remove({ object: it })
+                            await setTimeout(resolve, 10)
+                          })
+                            .catch(() => console.log('Oops errors!'))
+                            .finally(() => {
+                              AppEntry.invalidate({
+                                //  appGroupID: it.appGroupID,
+                              })
+                            })
+                        }}
+                        className='inline-block p-3 px-4 mx-2 my-3 text-white bg-red-500 border rounded-lg'
+                      >
+                        Remove
+                      </button>
+                      <button
+                        key={'cancel'}
+                        onClick={() => {
+                          new Promise((resolve, reject) => {
+                            setTimeout(resolve, 10)
+                          })
+                            .catch(() => console.log('Oops errors!'))
+                            .finally(() => {
+                              destroy()
+                            })
+                        }}
+                        className='inline-block p-3 px-4 mx-2 my-3 bg-white border rounded-lg'
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ),
+                  onCancel() {},
+                })
+
+                // let obj = CSData.appEntry.find((e) => e.oid === oid)
+                // setBGTo(renameRef.current, 'bg-yellow-300')
+                // AppEntry.update({ object: obj })
+                //   .then(
+                //     (e) => {
+                //       setBGTo(renameRef.current, 'bg-green-300')
+                //     },
+                //     () => {
+                //       setBGTo(renameRef.current, 'bg-red-300')
+                //     }
+                //   )
+                //   .finally(() => {
+                //     setTimeout(() => {
+                //       setBGTo(renameRef.current, 'bg-transparent')
+                //     }, 1000)
+                //   })
+              }}
+              className='p-3 px-4 bg-red-300 border-2 border-l-0  rounded-l-none rounded-xl bg-opacity-50'
+            >
+              Delete
+            </button>
 
             <div className='inline-block p-2 ml-2  border-2 border-gray-300 rounded-xl'>
               <input
