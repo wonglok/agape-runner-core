@@ -187,7 +187,7 @@ class REST {
   }
   invalidate() {
     this.data = []
-    this.list({})
+    return this.list({})
       .then((data) => {
         this.data = data.list
       })

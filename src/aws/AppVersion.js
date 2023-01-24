@@ -203,7 +203,7 @@ class REST {
   invalidate({ appEntryID }) {
     //
     this.data = []
-    this.list({ appEntryID })
+    return this.list({ appEntryID })
       .then((data) => {
         this.data = data.list
       })

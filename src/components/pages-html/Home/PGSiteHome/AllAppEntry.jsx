@@ -12,7 +12,15 @@ export function AllAppEntry() {
 
   let [query, setQuery] = useState('')
   useEffect(() => {
-    AppEntry.invalidate()
+    AppEntry.invalidate().then(() => {
+      AppEntry.data = AppEntry.data || []
+
+      let preferApp =
+        AppEntry.data.find((e) => e.slug === '/') || AppEntry.data[0]
+      if (preferApp && preferApp.oid) {
+        CSData.appEntryID = preferApp.oid
+      }
+    })
   }, [])
 
   let result = cs.appEntry.filter(
