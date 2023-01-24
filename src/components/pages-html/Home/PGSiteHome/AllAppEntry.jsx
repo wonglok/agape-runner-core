@@ -55,6 +55,7 @@ function OneEntry({ oid }) {
   let cs = useSnapshot(CSData)
   let it = cs.appEntry.find((e) => e.oid === oid)
 
+  let renameRef = useRef()
   // let time = useRef(0)
   return (
     <div key={it.oid} className='mb-3'>
@@ -67,18 +68,18 @@ function OneEntry({ oid }) {
           onClick={() => {
             CSData.appEntryID = it.oid
           }}
-          className='inline-block p-2 px-4 mr-2 text-white bg-blue-500 rounded-xl'
+          className='inline-block p-3 px-4 mr-2 text-white bg-blue-500 rounded-xl'
         >
-          Edit
+          Edit Page
         </button>
 
-        <div className='inline-block'>
+        <div className='inline-block rounded-xl' ref={renameRef}>
           <div className='inline-block'>
-            <button className='p-2 px-4 border-2 rounded-lg rounded-r-none'>
+            <button className='p-3 px-4 border-2 rounded-lg rounded-r-none'>
               /
             </button>
             <input
-              className='p-2 mr-2 border-2 border-l-0 rounded-lg rounded-l-none'
+              className='p-3 border-2 border-l-0 rounded-lg rounded-l-none  rounded-r-none'
               defaultValue={it?.slug || ''}
               onKeyDown={(ev) => {
                 if (ev.key === 'Enter') {
@@ -86,21 +87,21 @@ function OneEntry({ oid }) {
                   let obj = CSData.appEntry.find((e) => e.oid === oid)
                   obj.slug = ev.target.value
 
-                  setBGTo(ev.target, 'bg-yellow-300')
+                  setBGTo(renameRef.current, 'bg-yellow-300')
                   AppEntry.update({ object: obj })
                     .then(
                       (e) => {
                         console.log(e)
-                        setBGTo(ev.target, 'bg-green-300')
+                        setBGTo(renameRef.current, 'bg-green-300')
                       },
                       () => {
-                        setBGTo(ev.target, 'bg-red-300')
+                        setBGTo(renameRef.current, 'bg-red-300')
                       }
                     )
                     .finally(() => {
                       //
                       setTimeout(() => {
-                        setBGTo(ev.target, 'bg-white')
+                        setBGTo(renameRef.current, 'bg-transparent')
                       }, 1000)
                       //
                     })
@@ -110,7 +111,7 @@ function OneEntry({ oid }) {
                 let obj = CSData.appEntry.find((e) => e.oid === oid)
                 obj.slug = ev.target.value
 
-                setBGTo(ev.target, 'bg-yellow-100')
+                setBGTo(renameRef.current, 'bg-yellow-100')
               }}
             ></input>
           </div>
@@ -119,30 +120,30 @@ function OneEntry({ oid }) {
             onClick={(ev) => {
               let obj = CSData.appEntry.find((e) => e.oid === oid)
 
-              setBGTo(ev.target, 'bg-yellow-300')
+              setBGTo(renameRef.current, 'bg-yellow-300')
 
               AppEntry.update({ object: obj })
                 .then(
                   (e) => {
-                    setBGTo(ev.target, 'bg-green-300')
+                    setBGTo(renameRef.current, 'bg-green-300')
                   },
                   () => {
-                    setBGTo(ev.target, 'bg-red-300')
+                    setBGTo(renameRef.current, 'bg-red-300')
                   }
                 )
                 .finally(() => {
                   setTimeout(() => {
-                    setBGTo(ev.target, 'bg-white-300')
+                    setBGTo(renameRef.current, 'bg-transparent')
                   }, 1000)
                 })
             }}
-            className='p-2 px-4 mr-2 border-2 border-gray-300 rounded-xl'
+            className='p-3 px-4 border-2 border-l-0 border-gray-300  rounded-l-none rounded-xl'
           >
             Rename
           </button>
         </div>
 
-        <div className='inline-block p-2 border border-gray-300 rounded-xl'>
+        <div className='inline-block p-2 ml-2  border-2 border-gray-300 rounded-xl'>
           <input
             className='px-2 py-1 mr-3 text-xs border-2 rounded-xl'
             placeholder='+ tags'
@@ -158,21 +159,21 @@ function OneEntry({ oid }) {
                   name: input,
                 })
 
-                setBGTo(ev.target, 'bg-yellow-300')
+                setBGTo(renameRef.current, 'bg-yellow-300')
                 AppEntry.update({ object: obj })
                   .then(
                     (e) => {
                       console.log(e)
-                      setBGTo(ev.target, 'bg-green-300')
+                      setBGTo(renameRef.current, 'bg-green-300')
                     },
                     async (err) => {
                       console.log(await err)
-                      setBGTo(ev.target, 'bg-red-300')
+                      setBGTo(renameRef.current, 'bg-red-300')
                     }
                   )
                   .finally(() => {
                     setTimeout(() => {
-                      setBGTo(ev.target, 'bg-white-300')
+                      setBGTo(renameRef.current, 'bg-transparent')
                     }, 1000)
                   })
 
