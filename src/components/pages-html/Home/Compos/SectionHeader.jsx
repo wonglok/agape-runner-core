@@ -38,7 +38,7 @@ export function SectionHeader({
               <h6 className='mb-2 ml-2 text-3xl font-bold text-white '>
                 {title}
               </h6>
-              <h4 className='mb-2 ml-2 -mt-2 text-xl font-normal text-gray-100 capitalize'>
+              <h4 className='mb-2 ml-2 -mt-2 text-xl font-normal text-gray-100 '>
                 {subTitle}
               </h4>
             </nav>

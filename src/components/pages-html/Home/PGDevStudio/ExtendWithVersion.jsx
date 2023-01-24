@@ -18,6 +18,11 @@ export function ExtendWithVersion({ appGroupID }) {
     return t.oid === appGroupID
   })
 
+  useEffect(() => {
+    if (appGroupID) {
+      AppVersion.invalidate({ appGroupID: appGroupID })
+    }
+  }, [appGroupID])
   return (
     <>
       <p className='mb-3 text-sm leading-normal'>

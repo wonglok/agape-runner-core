@@ -2,7 +2,7 @@ import { useSnapshot } from 'valtio'
 import { CSData } from '@/aws/CSData'
 import { useEffect, useRef, useState } from 'react'
 import { AppGroup } from '@/aws/AppGroup'
-import { Input, Tag } from 'antd'
+import { Input, Modal, Tag } from 'antd'
 import { getID } from '@/lib/getID'
 import { setBGTo } from '@/lib/setBGTo'
 import { CreateAppGroup } from './CreateAppGroup'
@@ -14,7 +14,7 @@ export function AllAppGroup() {
 
   let [query, setQuery] = useState('')
   useEffect(() => {
-    AppGroup.invalidate().then(() => {
+    AppGroup.invalidate({}).then(() => {
       AppGroup.data = AppGroup.data || []
 
       let preferApp =
