@@ -201,6 +201,7 @@ class REST {
     CSData.appVersions = v
   }
   invalidate({ appEntryID }) {
+    //
     this.data = []
     this.list({ appEntryID })
       .then((data) => {

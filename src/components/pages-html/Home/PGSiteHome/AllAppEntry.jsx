@@ -61,12 +61,16 @@ function OneEntry({ oid }) {
   let it = cs?.appEntry?.find((e) => e.oid === oid)
 
   let renameRef = useRef()
+
+  //
+  //
+  //
   // let time = useRef(0)
   return (
     <>
       {it && (
         <div key={it?.oid} className='mb-3'>
-          <div className='flex items-center mb-3 text-sm leading-normal'>
+          <div className='flex flex-wrap items-center mb-3 text-sm leading-normal'>
             <button
               onClick={() => {
                 CSData.appEntryID = it.oid
@@ -76,7 +80,7 @@ function OneEntry({ oid }) {
               Edit Page
             </button>
 
-            <div className='inline-block rounded-xl' ref={renameRef}>
+            <div className='inline-flex rounded-xl' ref={renameRef}>
               <div className='inline-block'>
                 <button className='p-3 px-4 bg-white border-2 rounded-lg rounded-r-none bg-opacity-50'>
                   /

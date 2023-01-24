@@ -9,8 +9,7 @@ import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { AllAppEntry } from './AllAppEntry'
 import { useEffect } from 'react'
-import { CreateApp } from './CreateApp'
-import { AllAppVersions } from './AllAppVersions'
+import { AllAppContent } from './AllAppContent'
 
 export function PGSiteHome({ content }) {
   //
@@ -37,7 +36,7 @@ export function PGSiteHome({ content }) {
             bar={<></>}
           ></SectionHeader>
           <AllAppEntry></AllAppEntry>
-          <AllAppVersions></AllAppVersions>
+          <AllAppContent></AllAppContent>
 
           {/* <MyFolders></MyFolders> */}
         </SmartDrawer>

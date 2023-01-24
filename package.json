@@ -21,6 +21,7 @@
     "lt": "ngrok http 3000 --subdomain wonglok --region ap"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
