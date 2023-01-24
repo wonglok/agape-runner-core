@@ -35,17 +35,18 @@ export function AllAppEntry() {
         <div className='p-4 pb-0 mb-0 rounded-t-2xl'>
           <h6 className=' mb-3 text-xl'>Site Pages</h6>
 
-          <div className='py-2'>
+          <div className='mb-5'>
             <CreateAppEntry />
-          </div>
 
-          <div className='inline-block w-full mb-3 lg:w-1/3'>
-            <Input
-              onInput={(ev) => {
-                setQuery(ev.target.value)
-              }}
-              placeholder='Search pages and filter hashtags'
-            ></Input>
+            <div className='inline-block w-full mx-3 lg:w-1/3'>
+              <input
+                className='w-full px-4 py-3 border border-blue-500 rounded-lg'
+                onInput={(ev) => {
+                  setQuery(ev.target.value)
+                }}
+                placeholder='🔎 Search pages or filter #hashtags'
+              ></input>
+            </div>
           </div>
 
           {result.map((it) => {

@@ -25,6 +25,8 @@ export function ExtendWithVersion({ appGroupID }) {
   }, [appGroupID])
   return (
     <>
+      <h6 className=' mb-3 text-sm'>Different Versions</h6>
+
       <p className='mb-3 text-sm leading-normal'>
         <button
           className='px-6 py-3 text-white bg-blue-500 rounded-xl'
@@ -45,17 +47,24 @@ export function ExtendWithVersion({ appGroupID }) {
           Create an new 3D WebApp Version
         </button>
       </p>
-      <div>
-        {cs?.appVersions?.map((it) => {
-          return (
-            <OneVersion
-              appGroupOne={appGroupOne}
-              key={it.oid}
-              oid={it.oid}
-            ></OneVersion>
-          )
-        })}
-      </div>
+
+      {cs?.appVersions?.length > 0 ? (
+        <>
+          <div>
+            {cs?.appVersions?.map((it) => {
+              return (
+                <OneVersion
+                  appGroupOne={appGroupOne}
+                  key={it.oid}
+                  oid={it.oid}
+                ></OneVersion>
+              )
+            })}
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
     </>
   )
 }

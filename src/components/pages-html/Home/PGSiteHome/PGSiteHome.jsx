@@ -10,12 +10,12 @@ import { SmartDrawer } from '../Compos/SmartDrawer'
 import { AllAppEntry } from './AllAppEntry'
 import { useEffect } from 'react'
 import { AllAppContent } from './AllAppContent'
+import { CSData } from '@/aws/CSData'
 
 export function PGSiteHome({ content }) {
   //
   let gs = useSnapshot(GateState)
 
-  //
   useEffect(() => {
     //
   }, [])
@@ -29,10 +29,10 @@ export function PGSiteHome({ content }) {
         <SmartDrawer className=''>
           {/*  */}
           <SectionHeader
-            // root='3D WebApps Platform'
+            root='3D WebApps Platform'
             // subRoot='Dashboard'
-            title='3D WebApps Platform'
-            subTitle='How to create my own Metaverse?'
+            title='MetaOS'
+            subTitle='How to build my own metaverse?'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
             bar={
@@ -40,17 +40,17 @@ export function PGSiteHome({ content }) {
                 <div className='mb-1 text-sm'></div>
                 <div className='flex items-center h-full'>
                   <div className='inline-flex items-center justify-center w-48 h-20 px-4 mr-3 text-xs bg-white border border-gray-400 shadow-xl rounded-xl'>
-                    {`1. Create a New Page like /about-me`}
+                    {`1. Create a Page like... /about-me`}
                   </div>
                   <div className='inline-flex items-center justify-center w-48 h-20 px-4 mr-3 text-xs bg-white border border-gray-400 shadow-xl rounded-xl'>
-                    {`2. Install an MetaOS App in that page. `}
+                    {`2. Pick an App for that Page...`}
                   </div>
                 </div>
               </>
             }
           ></SectionHeader>
           <AllAppEntry></AllAppEntry>
-          <AllAppContent></AllAppContent>
+          {<AllAppContent></AllAppContent>}
 
           {/* <MyFolders></MyFolders> */}
         </SmartDrawer>

@@ -8,7 +8,13 @@ declare type EachTag = {
 }
 declare type AppGroup = {
   oid: string
-  title: string
+  slug: string
+  tags: EachTag[]
+}
+
+declare type AppEntry = {
+  oid: string
+  slug: string
   tags: EachTag[]
 }
 
@@ -42,7 +48,7 @@ declare type AppSnapshot = {
 export const CSData = proxy<{
   //
   appEntryID: string
-  appEntry: AppGroup[]
+  appEntry: AppEntry[]
 
   //
   appGroupID: string
