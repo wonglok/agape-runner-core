@@ -68,11 +68,9 @@ export function LeftMenu({}) {
           <ul className='flex flex-col pl-0 mb-0'>
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                META-OS Consumers
+                Home
               </h6>
             </li>
-            {/*  */}
-            {/*  */}
             {/*  */}
             {/*  */}
             {/*  */}
@@ -106,14 +104,14 @@ export function LeftMenu({}) {
             {/*  */}
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                3D Development
+                3D WebApp
               </h6>
             </li>
             {[
               {
                 oid: getID(),
                 link: `/admin/dev/studio`,
-                name: 'MetaOS App Studio',
+                name: '3D WebApp Studio',
               },
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
@@ -124,7 +122,7 @@ export function LeftMenu({}) {
             {/*  */}
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                3D Art & VFX
+                WebNative 3D & VFX
               </h6>
             </li>
             {[
