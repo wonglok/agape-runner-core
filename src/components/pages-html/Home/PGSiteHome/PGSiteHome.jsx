@@ -29,8 +29,9 @@ export function PGSiteHome({ content }) {
         <SmartDrawer className=''>
           {/*  */}
           <SectionHeader
-            root='WebNative MetaverseOS'
-            title='The MetaverseOS'
+            root='Dashboard'
+            subRoot='Metaverse Portal'
+            title='3D WebNative Metaverse OS'
             subTitle='Tips: How to create your own Metaverse?'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}

@@ -4,7 +4,8 @@ import { useSnapshot } from 'valtio'
 import { GUIState } from './GUIState'
 
 export function SectionHeader({
-  root = `Creator's Portal`,
+  root = ``,
+  subRoot = ``,
   title = 'Dashboard',
   subTitle = `Metaverse Overview`,
   bgImage = '../assets/img/curved-images/curved0.jpg',
@@ -25,12 +26,14 @@ export function SectionHeader({
                 <li className='text-sm leading-normal ' aria-current='page'>
                   {`${root}`}
                 </li>
-                <li
-                  className="pl-2 text-sm leading-normal  before:float-left before:pr-2 before:content-['/']"
-                  aria-current='page'
-                >
-                  {title}
-                </li>
+                {subRoot && (
+                  <li
+                    className="pl-2 text-sm leading-normal  before:float-left before:pr-2 before:content-['/']"
+                    aria-current='page'
+                  >
+                    {subRoot}
+                  </li>
+                )}
               </ol>
               <h6 className='mb-2 ml-2 text-3xl font-bold text-white '>
                 {title}
