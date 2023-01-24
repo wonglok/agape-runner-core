@@ -38,7 +38,14 @@ export function PGSiteRoot({ content }) {
                 {/*  */}
                 <div className='flex items-center h-full'>
                   <Link href={`/admin/meta-os/site-seo`}>
-                    <button className={getClassNames()}>{`App`}</button>
+                    <button
+                      className={getClassNames()}
+                    >{`Download MetaOS App`}</button>
+                  </Link>
+                  <Link href={`/admin/meta-os/site-seo`}>
+                    <button
+                      className={getClassNames()}
+                    >{`Write an MetaOS App`}</button>
                   </Link>
                 </div>
                 {/*  */}
