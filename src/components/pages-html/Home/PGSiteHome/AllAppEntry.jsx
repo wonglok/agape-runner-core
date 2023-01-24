@@ -86,7 +86,7 @@ function OneEntry({ oid }) {
                   /
                 </button>
                 <input
-                  className='p-3 border-2 border-l-0 rounded-lg rounded-l-none  rounded-r-none'
+                  className='p-3 bg-gray-100 border-2 border-l-0 rounded-lg rounded-l-none rounded-r-none'
                   defaultValue={it?.slug || ''}
                   onKeyDown={(ev) => {
                     if (ev.key === 'Enter') {
