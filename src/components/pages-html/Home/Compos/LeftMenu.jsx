@@ -87,33 +87,16 @@ export function LeftMenu({}) {
                 link: `/admin`,
                 name: 'Dashboard',
               },
-              {
-                oid: getID(),
-                link: `/admin/meta-os/app-store`,
-                name: 'App Store',
-              },
-              {
-                oid: getID(),
-                link: `/admin/meta-os/site-seo`,
-                name: 'Site SEO',
-              },
-            ].map((item) => {
-              return <OneLink key={item.oid} item={item}></OneLink>
-            })}
-            {/*  */}
-            {/*  */}
-            {/*  */}
-            <li className='w-full mt-4'>
-              <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                3D Art & VFX
-              </h6>
-            </li>
-            {[
-              {
-                oid: getID(),
-                link: `/admin/art/studio`,
-                name: '3D Creation Studio',
-              },
+              // {
+              //   oid: getID(),
+              //   link: `/admin/meta-os/app-store`,
+              //   name: 'App Store',
+              // },
+              // {
+              //   oid: getID(),
+              //   link: `/admin/meta-os/site-seo`,
+              //   name: 'Site SEO',
+              // },
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
             })}
@@ -130,7 +113,25 @@ export function LeftMenu({}) {
               {
                 oid: getID(),
                 link: `/admin/dev/studio`,
-                name: '3D Development Studio',
+                name: 'App Coding Studio',
+              },
+            ].map((item) => {
+              return <OneLink key={item.oid} item={item}></OneLink>
+            })}
+
+            {/*  */}
+            {/*  */}
+            {/*  */}
+            <li className='w-full mt-4'>
+              <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
+                3D Art & VFX
+              </h6>
+            </li>
+            {[
+              {
+                oid: getID(),
+                link: `/admin/art/studio`,
+                name: '3D Creation Studio',
               },
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>

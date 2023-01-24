@@ -1,29 +1,30 @@
 import { useSnapshot } from 'valtio'
 import { CSData } from '@/aws/CSData'
 import { useEffect, useRef, useState } from 'react'
-import { AppEntry } from '@/aws/AppEntry'
+import { AppGroup } from '@/aws/AppGroup'
 import { Input, Tag } from 'antd'
 import { getID } from '@/lib/getID'
 import { setBGTo } from '@/lib/setBGTo'
-import { CreateAppEntry } from './CreateAppEntry'
+import { CreateAppGroup } from './CreateAppGroup'
+import { ExtendWithVersion } from './ExtendWithVersion'
 
-export function AllAppEntry() {
+export function AllAppGroup() {
   let cs = useSnapshot(CSData)
 
   let [query, setQuery] = useState('')
   useEffect(() => {
-    AppEntry.invalidate().then(() => {
-      AppEntry.data = AppEntry.data || []
+    AppGroup.invalidate().then(() => {
+      AppGroup.data = AppGroup.data || []
 
       let preferApp =
-        AppEntry.data.find((e) => e.slug === '/') || AppEntry.data[0]
+        AppGroup.data.find((e) => e.slug === '/') || AppGroup.data[0]
       if (preferApp && preferApp.oid) {
-        CSData.appEntryID = preferApp.oid
+        CSData.appGroupID = preferApp.oid
       }
     })
   }, [])
 
-  let result = cs.appEntry.filter(
+  let result = cs.appGroup.filter(
     (e) =>
       e?.slug?.includes(query) || e?.tags?.some((t) => t?.name?.includes(query))
   )
@@ -32,29 +33,29 @@ export function AllAppEntry() {
     <div className='flex-none w-full max-w-full px-4 mt-4 mb-6'>
       <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
         <div className='p-4 pb-0 mb-0 rounded-t-2xl'>
-          <h6 className=' mb-3 text-xl'>Metaverse Pages</h6>
+          <h6 className=' mb-3 text-xl'>Apps</h6>
 
           <div className='py-2'>
-            <CreateAppEntry />
+            <CreateAppGroup />
           </div>
 
           <div className='inline-block w-full mb-3 lg:w-1/3'>
-            <Input
+            <input
               onInput={(ev) => {
                 setQuery(ev.target.value)
               }}
               placeholder='Search pages and filter hashtags'
-            ></Input>
+            ></input>
           </div>
 
           {result.map((it) => {
             return <OneEntry key={it.oid} oid={it.oid}></OneEntry>
           })}
 
-          {cs.appEntry.length === 0 && (
+          {cs.appGroup.length === 0 && (
             <>
               <div className='mb-3 text-sm leading-normal'>
-                Please create a Page.
+                Please create an App.
               </div>
             </>
           )}
@@ -66,12 +67,10 @@ export function AllAppEntry() {
 
 function OneEntry({ oid }) {
   let cs = useSnapshot(CSData)
-  let it = cs?.appEntry?.find((e) => e.oid === oid)
+  let it = cs?.appGroup?.find((e) => e.oid === oid)
 
   let renameRef = useRef()
 
-  //
-  //
   //
   // let time = useRef(0)
   return (
@@ -81,17 +80,17 @@ function OneEntry({ oid }) {
           <div className='flex flex-wrap items-center mb-3 text-sm leading-normal'>
             <button
               onClick={() => {
-                CSData.appEntryID = it.oid
+                CSData.appGroupID = it.oid
               }}
               className='inline-block p-3 px-4 mr-2 text-white bg-blue-500 rounded-xl'
             >
-              Edit Page
+              Edit
             </button>
 
             <div className='inline-flex rounded-xl' ref={renameRef}>
               <div className='inline-block'>
                 <button className='p-3 px-4 bg-white border-2 rounded-lg rounded-r-none bg-opacity-50'>
-                  /
+                  App
                 </button>
                 <input
                   className='p-3 bg-white border-2 border-l-0 rounded-lg rounded-l-none rounded-r-none bg-opacity-50'
@@ -99,11 +98,11 @@ function OneEntry({ oid }) {
                   onKeyDown={(ev) => {
                     if (ev.key === 'Enter') {
                       //
-                      let obj = CSData.appEntry.find((e) => e.oid === oid)
+                      let obj = AppGroup.data.find((e) => e.oid === oid)
                       obj.slug = ev.target.value
 
                       setBGTo(renameRef.current, 'bg-yellow-300')
-                      AppEntry.update({ object: obj })
+                      AppGroup.update({ object: obj })
                         .then(
                           (e) => {
                             console.log(e)
@@ -122,7 +121,7 @@ function OneEntry({ oid }) {
                     }
                   }}
                   onInput={(ev) => {
-                    let obj = CSData.appEntry.find((e) => e.oid === oid)
+                    let obj = AppGroup.data.find((e) => e.oid === oid)
                     obj.slug = ev.target.value
 
                     setBGTo(renameRef.current, 'bg-yellow-100')
@@ -132,11 +131,11 @@ function OneEntry({ oid }) {
 
               <button
                 onClick={(ev) => {
-                  let obj = CSData.appEntry.find((e) => e.oid === oid)
+                  let obj = AppGroup.data.find((e) => e.oid === oid)
 
                   setBGTo(renameRef.current, 'bg-yellow-300')
 
-                  AppEntry.update({ object: obj })
+                  AppGroup.update({ object: obj })
                     .then(
                       (e) => {
                         setBGTo(renameRef.current, 'bg-green-300')
@@ -166,7 +165,7 @@ function OneEntry({ oid }) {
                   if (ev.key === 'Enter') {
                     let input = ev.target.value
 
-                    let obj = CSData.appEntry.find((e) => e.oid === oid)
+                    let obj = AppGroup.data.find((e) => e.oid === oid)
                     obj.tags = obj.tags || []
                     obj.tags.push({
                       oid: getID(),
@@ -174,7 +173,7 @@ function OneEntry({ oid }) {
                     })
 
                     setBGTo(renameRef.current, 'bg-yellow-300')
-                    AppEntry.update({ object: obj })
+                    AppGroup.update({ object: obj })
                       .then(
                         (e) => {
                           console.log(e)
@@ -204,7 +203,7 @@ function OneEntry({ oid }) {
                     key={t.oid}
                     closable
                     onClose={() => {
-                      let obj = CSData.appEntry.find((e) => e.oid === oid)
+                      let obj = AppGroup.data.find((e) => e.oid === oid)
                       obj.tags = obj.tags || []
 
                       let tags = obj.tags
@@ -214,7 +213,7 @@ function OneEntry({ oid }) {
                         1
                       )
 
-                      AppEntry.update({ object: obj }).then(
+                      AppGroup.update({ object: obj }).then(
                         (e) => {
                           console.log(e)
                         },
@@ -230,6 +229,8 @@ function OneEntry({ oid }) {
               })}
             </div>
           </div>
+
+          <div className='mb-3'></div>
         </div>
       )}
     </>

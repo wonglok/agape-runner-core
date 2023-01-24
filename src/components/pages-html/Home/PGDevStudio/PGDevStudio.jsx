@@ -8,6 +8,9 @@ import { SectionHeader } from '../Compos/SectionHeader'
 import { StylesDashboard } from '../Compos/StylesDashboard'
 import { SmartDrawer } from '../Compos/SmartDrawer'
 import { useRouter } from 'next/router'
+import { AllAppGroup } from './AllAppGroup'
+import { ExtendWithVersion } from './ExtendWithVersion'
+import { CSData } from '@/aws/CSData'
 
 export function PGDevStudio({ content }) {
   //
@@ -17,6 +20,7 @@ export function PGDevStudio({ content }) {
     query: { folderID },
   } = useRouter()
 
+  let cs = useSnapshot(CSData)
   //
   return (
     <>
@@ -25,24 +29,38 @@ export function PGDevStudio({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='3D AppDev Studio'
+            title='3D WebApp Dev Studio'
             subTitle='3D Apps and Developers'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
             bar={
               <>
-                {/*  */}
                 <div className='flex items-center w-full h-full'>
-                  <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
+                  {/* <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
                     Import GLB
                   </button>
                   <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
                     Scnee Composition
-                  </button>
+                  </button> */}
                 </div>
               </>
             }
           ></SectionHeader>
+          <AllAppGroup></AllAppGroup>
+
+          <div className='flex-none w-full max-w-full px-4 mt-4 mb-6'>
+            <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
+              <div className='p-4 pb-0 mb-0 rounded-t-2xl'>
+                <h6 className=' mb-3 text-xl'>World Versions</h6>
+                {cs.appGroupID && (
+                  <ExtendWithVersion
+                    appGroupID={cs.appGroupID}
+                  ></ExtendWithVersion>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* <MyFolders></MyFolders> */}
         </SmartDrawer>
       </DesktopOnly>

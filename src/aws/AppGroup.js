@@ -8,29 +8,19 @@ class REST {
   constructor({ table }) {
     this.table = table
   }
-  async create({ title, slug, appGroupID }) {
+  async create({ slug, tags = [] }) {
     nProgress.start()
+
     const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
     if (!sToken) {
       console.error('no session token')
       nProgress.done()
       throw await Promise.reject('no session token')
     }
-    if (!title) {
-      console.error('no title given')
-      nProgress.done()
-      throw await Promise.reject('no title given')
-    }
     if (!slug) {
       console.error('no slug given')
       nProgress.done()
       throw await Promise.reject('no slug given')
-    }
-    if (!appGroupID) {
-      console.error('no appGroupID given')
-      nProgress.done()
-      throw await Promise.reject('no appGroupID given')
-      //
     }
 
     const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
@@ -39,9 +29,8 @@ class REST {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
-        title: title,
-        appGroupID: appGroupID,
         slug: slug,
+        tags: tags,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,
@@ -50,6 +39,7 @@ class REST {
 
     if (response.ok) {
       let data = await response.json()
+
       nProgress.done()
       return data
     } else {
@@ -62,9 +52,8 @@ class REST {
     }
   }
 
-  async list({ appGroupID }) {
+  async list({}) {
     nProgress.start()
-
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
@@ -79,7 +68,6 @@ class REST {
       mode: 'cors',
       body: JSON.stringify({
         //
-        appGroupID,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,
@@ -97,7 +85,6 @@ class REST {
 
   async get({ oid }) {
     nProgress.start()
-
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
@@ -130,7 +117,6 @@ class REST {
 
   async update({ object }) {
     nProgress.start()
-
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
@@ -163,7 +149,6 @@ class REST {
 
   async remove({ object }) {
     nProgress.start()
-
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
@@ -195,15 +180,14 @@ class REST {
   }
   get data() {
     nProgress.done()
-    return CSData.appVersions
+    return CSData.appGroup
   }
   set data(v) {
-    CSData.appVersions = v
+    CSData.appGroup = v
   }
-  invalidate({ appGroupID }) {
-    //
+  invalidate() {
     this.data = []
-    return this.list({ appGroupID })
+    return this.list({})
       .then((data) => {
         this.data = data.list
       })
@@ -213,4 +197,4 @@ class REST {
   }
 }
 
-export const AppVersion = new REST({ table: `AppVersion` })
+export const AppGroup = new REST({ table: `AppGroup` })

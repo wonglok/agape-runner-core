@@ -2,9 +2,9 @@ import { Button, Input, Modal, Table, Tag } from 'antd'
 import { useState } from 'react'
 import { Checkbox, Form } from 'antd'
 import { getID } from '@/lib/getID'
-import { AppEntry } from '@/aws/AppEntry'
+import { AppGroup } from '@/aws/AppGroup'
 
-export const CreateApp = ({}) => {
+export const CreateAppGroup = ({}) => {
   let [title, setTitleInput] = useState('')
   let [tags, setTags] = useState([])
 
@@ -16,10 +16,8 @@ export const CreateApp = ({}) => {
   const handleOk = () => {
     setLoading(true)
 
-    console.log(title, tags)
-
-    AppEntry.create({ slug: title, tags }).then(() => {
-      AppEntry.invalidate()
+    AppGroup.create({ slug: title, tags }).then(() => {
+      AppGroup.invalidate()
     })
 
     setTimeout(() => {
@@ -38,7 +36,7 @@ export const CreateApp = ({}) => {
           className='inline-block p-3 px-5 text-white bg-blue-500 rounded-lg'
           onClick={showModal}
         >
-          Create a New Page
+          Create App
         </button>
       </div>
 
@@ -52,13 +50,13 @@ export const CreateApp = ({}) => {
         footer={[]}
       >
         <div className='flex items-center mb-2'>
-          <div className='w-32 pr-3 text-right'>Page Slug:</div>
+          <div className='w-32 pr-3 text-right'>Title:</div>
           <div className='w-1/2'>
             <div className='inline-block px-4 py-2 bg-white border-2 border-gray-300 rounded-l-lg'>
-              /
+              🌍
             </div>
             <input
-              defaultValue={'my-new-work'}
+              defaultValue={''}
               placeholder='about-me'
               className='p-2 bg-white border-2 border-l-0 border-gray-300 rounded-l-none rounded-xl'
               onInput={(ev) => {
@@ -68,7 +66,7 @@ export const CreateApp = ({}) => {
           </div>
         </div>
 
-        <div className='flex items-center mb-2'>
+        {/* <div className='flex items-center mb-2'>
           <div className='w-32 pr-3 text-right'>Hastags:</div>
           <div className='w-1/2'>
             <div className='inline-block px-4 py-2 bg-white border-2 border-gray-300 rounded-l-lg'>
@@ -132,7 +130,7 @@ export const CreateApp = ({}) => {
               })}
             </div>
           </div>
-        </div>
+        </div> */}
         <div className='flex items-center mb-2'>
           <div className='w-32 pr-3 text-right'></div>
           <div className='w-1/2'>

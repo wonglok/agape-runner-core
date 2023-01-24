@@ -45,11 +45,17 @@ export const CSData = proxy<{
   appEntry: AppGroup[]
 
   //
+  appGroupID: string
+  appGroup: AppGroup[]
+
+  //
   appVersions: AppSnapshot[]
-  // appFiles: AppFile[]
 }>({
   appEntryID: '',
   appEntry: [],
+
+  appGroupID: '',
+  appGroup: [],
 
   //
   appVersions: [],

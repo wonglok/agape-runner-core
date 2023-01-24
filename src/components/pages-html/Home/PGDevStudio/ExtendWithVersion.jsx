@@ -10,12 +10,12 @@ import { useSnapshot } from 'valtio'
 
 const confirm = Modal.confirm
 
-export function ExtendWithVersion({ appEntryID }) {
+export function ExtendWithVersion({ appGroupID }) {
   let cs = useSnapshot(CSData)
-  // let { appEntryID } = cs
+  // let { appGroupID } = cs
 
-  let appEntryOne = CSData.appEntry.find((t) => {
-    return t.oid === appEntryID
+  let appGroupOne = CSData.appEntry.find((t) => {
+    return t.oid === appGroupID
   })
 
   return (
@@ -28,12 +28,12 @@ export function ExtendWithVersion({ appEntryID }) {
             AppVersion.create({
               title: new Date().getTime(),
               slug: getID(),
-              appEntryID: appEntryOne.oid,
+              appGroupID: appGroupID,
             }).then((response) => {
               //
               console.log(response)
               //
-              AppVersion.invalidate({ appEntryID: appEntryOne.oid })
+              AppVersion.invalidate({ appGroupID: appGroupID })
             })
           }}
         >
@@ -44,7 +44,7 @@ export function ExtendWithVersion({ appEntryID }) {
         {cs?.appVersions?.map((it) => {
           return (
             <OneVersion
-              appEntryOne={appEntryOne}
+              appGroupOne={appGroupOne}
               key={it.oid}
               oid={it.oid}
             ></OneVersion>
@@ -93,7 +93,7 @@ function OneVersion({ oid }) {
                                 .catch(() => console.log('Oops errors!'))
                                 .finally(() => {
                                   AppVersion.invalidate({
-                                    appEntryID: it.appEntryID,
+                                    appGroupID: it.appGroupID,
                                   })
                                 })
                             }}
