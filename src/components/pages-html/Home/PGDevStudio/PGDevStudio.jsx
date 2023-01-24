@@ -29,8 +29,8 @@ export function PGDevStudio({ content }) {
         <LeftMenu folderID={folderID}></LeftMenu>
         <SmartDrawer className=''>
           <SectionHeader
-            title='3D WebApp Dev Studio'
-            subTitle='3D Apps and Developers'
+            title='MetaOS App'
+            subTitle='Where Dream and Cod Happens'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
             bar={

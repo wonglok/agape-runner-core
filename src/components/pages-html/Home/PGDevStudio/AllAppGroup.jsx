@@ -33,7 +33,7 @@ export function AllAppGroup() {
     <div className='flex-none w-full max-w-full px-4 mt-4 mb-6'>
       <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
         <div className='p-4 pb-0 mb-0 rounded-t-2xl'>
-          <h6 className=' mb-3 text-xl'>Apps</h6>
+          <h6 className=' mb-3 text-xl'>MetaOS App</h6>
 
           <div className='py-2'>
             <CreateAppGroup />
@@ -68,10 +68,9 @@ export function AllAppGroup() {
 function OneEntry({ oid }) {
   let cs = useSnapshot(CSData)
   let it = cs?.appGroup?.find((e) => e.oid === oid)
-
+  //
   let renameRef = useRef()
 
-  //
   // let time = useRef(0)
   return (
     <>

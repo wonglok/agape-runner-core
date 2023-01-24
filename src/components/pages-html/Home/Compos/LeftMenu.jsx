@@ -113,7 +113,7 @@ export function LeftMenu({}) {
               {
                 oid: getID(),
                 link: `/admin/dev/studio`,
-                name: 'App Coding Studio',
+                name: 'MetaOS App Studio',
               },
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
