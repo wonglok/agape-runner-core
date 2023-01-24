@@ -34,7 +34,7 @@ export function AllAppContent({}) {
                 <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-blue-700 border-2 border-blue-500 rounded-lg'>
                   <span className='text-lg font-bold'> Download 3D App</span>
                   <br />
-                  to "/{appEntryOne.slug}" Page
+                  {`to "/{appEntryOne.slug}" Page`}
                 </button>
                 <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-green-700 border-2 border-green-500 rounded-lg'>
                   <span className='text-lg font-bold'> Develop 3D App</span>
@@ -44,7 +44,7 @@ export function AllAppContent({}) {
                 <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-teal-700 border-2 border-teal-500 rounded-lg'>
                   <span className='text-lg font-bold'>Design 3D ART / VFX</span>
                   <br />
-                  by ARTIST like you 🥰
+                  {`  by ARTIST like you 🥰`}
                 </button>
                 <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white border-2 rounded-lg bg-cyan-700 border-cyan-500'>
                   <span className='text-lg font-bold'>Do A / B Testing</span>
