@@ -10,9 +10,9 @@ import { useSnapshot } from 'valtio'
 
 const confirm = Modal.confirm
 
-export function ExtendWithVersion({}) {
+export function ExtendWithVersion({ appEntryID }) {
   let cs = useSnapshot(CSData)
-  let { appEntryID } = cs
+  // let { appEntryID } = cs
 
   let appEntryOne = CSData.appEntry.find((t) => {
     return t.oid === appEntryID
@@ -37,7 +37,7 @@ export function ExtendWithVersion({}) {
             })
           }}
         >
-          Create a new Version
+          Create an new 3D WebApp Version
         </button>
       </p>
       <div>

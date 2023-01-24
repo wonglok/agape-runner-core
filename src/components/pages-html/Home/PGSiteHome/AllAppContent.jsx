@@ -1,9 +1,7 @@
-import { AppVersion } from '@/aws/AppVersion'
 import { CSData } from '@/aws/CSData'
 import { Modal } from 'antd'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
-import { ExtendWithVersion } from './ExtendWithVersion'
 import { AppEntry } from '@/aws/AppEntry'
 
 const confirm = Modal.confirm
@@ -16,12 +14,6 @@ export function AllAppContent({}) {
   let appEntryOne = cs.appEntry.find((t) => {
     return t.oid === appEntryID
   })
-
-  useEffect(() => {
-    if (appEntryID) {
-      AppVersion.invalidate({ appEntryID })
-    }
-  }, [appEntryID])
 
   return (
     <>
@@ -37,11 +29,13 @@ export function AllAppContent({}) {
                   onClick={() => {
                     let entry = AppEntry.data.find((e) => e.oid === appEntryID)
                     entry.type = 'download-app'
-                    AppEntry.update({ object: entry })
+                    AppEntry.update({ object: entry }).then((v) => {
+                      console.log(v)
+                    })
                   }}
                   className={
                     (appEntryOne.type === 'download-app'
-                      ? 'bg-opacity-20'
+                      ? 'shadow-lg bg-opacity-20'
                       : 'bg-opacity-100') +
                     ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-blue-900 bg-blue-400 border-2 border-blue-400 rounded-lg'
                   }
@@ -54,11 +48,13 @@ export function AllAppContent({}) {
                   onClick={() => {
                     let entry = AppEntry.data.find((e) => e.oid === appEntryID)
                     entry.type = 'write-app'
-                    AppEntry.update({ object: entry })
+                    AppEntry.update({ object: entry }).then((v) => {
+                      console.log(v)
+                    })
                   }}
                   className={
                     (appEntryOne.type === 'write-app'
-                      ? 'bg-opacity-20'
+                      ? 'shadow-lg bg-opacity-20'
                       : 'bg-opacity-100') +
                     ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-green-900 bg-green-400 border-2 border-green-400 rounded-lg'
                   }
@@ -71,33 +67,38 @@ export function AllAppContent({}) {
                   onClick={() => {
                     let entry = AppEntry.data.find((e) => e.oid === appEntryID)
                     entry.type = 'make-3d'
-                    AppEntry.update({ object: entry })
+                    AppEntry.update({ object: entry }).then((v) => {
+                      console.log(v)
+                    })
                   }}
                   className={
                     (appEntryOne.type === 'make-3d'
-                      ? 'bg-opacity-20'
+                      ? 'shadow-lg bg-opacity-20'
                       : 'bg-opacity-100') +
                     ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-teal-900 bg-teal-400 border-2 border-teal-400 rounded-lg'
                   }
                 >
-                  <span className='text-lg font-bold'>Design 3D ART / VFX</span>
+                  <span className='text-lg font-bold'>+ 3D ART / VFX</span>
                   <br />
                   {`  by ARTIST like you 🥰`}
                 </button>
+
                 <button
                   onClick={() => {
                     let entry = AppEntry.data.find((e) => e.oid === appEntryID)
                     entry.type = 'ab-testing'
-                    AppEntry.update({ object: entry })
+                    AppEntry.update({ object: entry }).then((v) => {
+                      console.log(v)
+                    })
                   }}
                   className={
                     (appEntryOne.type === 'ab-testing'
-                      ? 'bg-opacity-20'
+                      ? 'shadow-lg bg-opacity-20'
                       : 'bg-opacity-100') +
                     ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs border-2 rounded-lg text-cyan-900 bg-cyan-400 border-cyan-400'
                   }
                 >
-                  <span className='text-lg font-bold'>Do A / B Testing</span>
+                  <span className='text-lg font-bold'>+ A / B Testing</span>
                   <br />
                   for marketing purpose
                 </button>
@@ -105,11 +106,13 @@ export function AllAppContent({}) {
                   onClick={() => {
                     let entry = AppEntry.data.find((e) => e.oid === appEntryID)
                     entry.type = 'mind-map'
-                    AppEntry.update({ object: entry })
+                    AppEntry.update({ object: entry }).then((v) => {
+                      console.log(v)
+                    })
                   }}
                   className={
                     (appEntryOne.type === 'mind-map'
-                      ? 'bg-opacity-20'
+                      ? 'shadow-lg bg-opacity-20'
                       : 'bg-opacity-100') +
                     ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-yellow-900 bg-yellow-400 border-2 border-yellow-400 rounded-lg'
                   }
@@ -128,7 +131,7 @@ export function AllAppContent({}) {
 
               {appEntryOne.type === 'write-app' && (
                 <>
-                  <ExtendWithVersion></ExtendWithVersion>
+                  <>{'Todo: Add Placeholder for write an app'}</>
                 </>
               )}
 
@@ -140,8 +143,8 @@ export function AllAppContent({}) {
                 <>{'Todo: Add Placeholder for ab-testing'}</>
               )}
 
-              {appEntryOne.type === 'mindmap' && (
-                <>{'Todo: Add Placeholder for mindmap'}</>
+              {appEntryOne.type === 'mind-map' && (
+                <>{'Todo: Add Placeholder for mind-map'}</>
               )}
 
               {/*  */}
