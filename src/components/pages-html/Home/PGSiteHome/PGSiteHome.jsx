@@ -28,9 +28,10 @@ export function PGSiteHome({ content }) {
         <StylesDashboard></StylesDashboard>
         <LeftMenu></LeftMenu>
         <SmartDrawer className=''>
+          {/*  */}
           <SectionHeader
-            title='MetaOS Dashboard'
-            subTitle='Your Metaverse at hand.'
+            title='WebNative Metaverse OS'
+            subTitle='Your Own Metaverse OS'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
             bar={<></>}
