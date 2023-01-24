@@ -42,7 +42,7 @@ export function AllAppContent({}) {
                     (appEntryOne.type === 'download-app'
                       ? 'bg-opacity-20'
                       : 'bg-opacity-100') +
-                    ' transition-all duration-500  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-blue-900 bg-blue-500 border-2 border-blue-400 rounded-lg'
+                    ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-blue-900 bg-blue-400 border-2 border-blue-400 rounded-lg'
                   }
                 >
                   <span className='text-lg font-bold'> Download 3D App</span>
@@ -59,7 +59,7 @@ export function AllAppContent({}) {
                     (appEntryOne.type === 'write-app'
                       ? 'bg-opacity-20'
                       : 'bg-opacity-100') +
-                    ' transition-all duration-500  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-green-900 bg-green-500 border-2 border-green-400 rounded-lg'
+                    ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-green-900 bg-green-400 border-2 border-green-400 rounded-lg'
                   }
                 >
                   <span className='text-lg font-bold'> Develop 3D App</span>
@@ -76,7 +76,7 @@ export function AllAppContent({}) {
                     (appEntryOne.type === 'make-3d'
                       ? 'bg-opacity-20'
                       : 'bg-opacity-100') +
-                    ' transition-all duration-500  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-teal-900 bg-teal-500 border-2 border-teal-400 rounded-lg'
+                    ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-teal-900 bg-teal-400 border-2 border-teal-400 rounded-lg'
                   }
                 >
                   <span className='text-lg font-bold'>Design 3D ART / VFX</span>
@@ -93,7 +93,7 @@ export function AllAppContent({}) {
                     (appEntryOne.type === 'ab-testing'
                       ? 'bg-opacity-20'
                       : 'bg-opacity-100') +
-                    ' transition-all duration-500  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs border-2 rounded-lg text-cyan-900 bg-cyan-400 border-cyan-500'
+                    ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs border-2 rounded-lg text-cyan-900 bg-cyan-400 border-cyan-400'
                   }
                 >
                   <span className='text-lg font-bold'>Do A / B Testing</span>
@@ -110,7 +110,7 @@ export function AllAppContent({}) {
                     (appEntryOne.type === 'mind-map'
                       ? 'bg-opacity-20'
                       : 'bg-opacity-100') +
-                    ' transition-all duration-500  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-yellow-900 bg-yellow-500 border-2 border-yellow-400 rounded-lg'
+                    ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-yellow-900 bg-yellow-400 border-2 border-yellow-400 rounded-lg'
                   }
                 >
                   <span className='text-lg font-bold'>+ AutoSync MindMap</span>
