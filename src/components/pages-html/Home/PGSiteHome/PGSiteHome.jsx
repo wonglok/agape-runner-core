@@ -33,7 +33,19 @@ export function PGSiteHome({ content }) {
             subTitle='Your Own Metaverse OS'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
-            bar={<></>}
+            bar={
+              <>
+                <div className='flex items-center h-full'>
+                  <button className='inline-block w-48 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
+                    1. Create a Page
+                  </button>
+
+                  <button className='inline-block w-48 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
+                    2. Add Metaverse to it
+                  </button>
+                </div>
+              </>
+            }
           ></SectionHeader>
           <AllAppEntry></AllAppEntry>
           <AllAppContent></AllAppContent>

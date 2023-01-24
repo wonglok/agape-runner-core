@@ -34,12 +34,17 @@ export function AllAppContent({}) {
                 <button className='inline-block w-56 h-20 p-2 mr-4 text-xs text-white bg-blue-700 border-2 border-blue-500 rounded-lg'>
                   <span className='text-lg font-bold'> Download 3D App</span>
                   <br />
-                  to this Pages
+                  to "/{appEntryOne.slug}" Page
                 </button>
                 <button className='inline-block w-56 h-20 p-2 mr-4 text-xs text-white bg-blue-700 border-2 border-blue-500 rounded-lg'>
                   <span className='text-lg font-bold'>Develop 3D App</span>
                   <br />
-                  for this Page
+                  for "/{appEntryOne.slug}" Page
+                </button>
+                <button className='inline-block w-56 h-20 p-2 mr-4 text-xs text-white bg-blue-700 border-2 border-blue-500 rounded-lg'>
+                  <span className='text-lg font-bold'>Create 3D ART / VFX</span>
+                  <br />
+                  in "/{appEntryOne.slug}" Page
                 </button>
               </div>
 
@@ -48,6 +53,9 @@ export function AllAppContent({}) {
                   <ExtendWithVersion></ExtendWithVersion>
                 </>
               )}
+
+              {/*  */}
+              {/*  */}
             </div>
           </div>
         </div>
