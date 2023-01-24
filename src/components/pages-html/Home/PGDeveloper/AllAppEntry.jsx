@@ -14,8 +14,6 @@ export function AllAppEntry() {
     AppEntry.invalidate()
   }, [])
 
-  //
-
   let result = cs.appEntry.filter(
     (e) =>
       e?.slug?.includes(query) || e?.tags?.some((t) => t?.name?.includes(query))
@@ -115,11 +113,6 @@ function OneEntry({ oid }) {
                 obj.slug = ev.target.value
 
                 setBGTo(ev.target, 'bg-yellow-100')
-
-                //   clearInterval(time.current)
-                // time.current = setTimeout(() => {
-
-                // }, 500)
               }}
             ></input>
           </div>
@@ -136,7 +129,6 @@ function OneEntry({ oid }) {
                     setBGTo(ev.target, 'bg-green-300')
                   },
                   () => {
-                    //
                     setBGTo(ev.target, 'bg-red-300')
                   }
                 )
@@ -175,11 +167,8 @@ function OneEntry({ oid }) {
                       console.log(e)
                       setBGTo(ev.target, 'bg-green-300')
                     },
-                    (er) => {
-                      //
-                      er.then((t) => {
-                        console.log(t)
-                      })
+                    async (err) => {
+                      console.log(await err)
                       setBGTo(ev.target, 'bg-red-300')
                     }
                   )

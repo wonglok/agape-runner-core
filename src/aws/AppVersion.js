@@ -2,28 +2,34 @@ import { SESSION_ACCESS_KEY } from '@/auth/GateConst'
 import { invalidate } from '@react-three/fiber'
 import { CSData } from './CSData'
 import { UserEndPoints } from './UserEndPoints'
+import nProgress from 'nprogress'
 
 class REST {
   constructor({ table }) {
     this.table = table
   }
   async create({ title, slug, appEntryID }) {
+    nProgress.start()
     const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
     if (!sToken) {
       console.error('no session token')
-      return Promise.reject('no session token')
+      nProgress.done()
+      throw await Promise.reject('no session token')
     }
     if (!title) {
       console.error('no title given')
-      return Promise.reject('no title given')
+      nProgress.done()
+      throw await Promise.reject('no title given')
     }
     if (!slug) {
       console.error('no slug given')
-      return Promise.reject('no slug given')
+      nProgress.done()
+      throw await Promise.reject('no slug given')
     }
     if (!appEntryID) {
       console.error('no appEntryID given')
-      return Promise.reject('no appEntryID given')
+      nProgress.done()
+      throw await Promise.reject('no appEntryID given')
       //
     }
 
@@ -44,21 +50,26 @@ class REST {
 
     if (response.ok) {
       let data = await response.json()
+      nProgress.done()
       return data
     } else {
       let data = await response.json()
 
       console.error('server error', data.reason)
 
-      return Promise.reject('server error ' + data.reason)
+      nProgress.done()
+      throw await Promise.reject('server error ' + data.reason)
     }
   }
 
   async list({ appEntryID }) {
+    nProgress.start()
+
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
-      return Promise.reject('no sToken')
+      nProgress.done()
+      throw await Promise.reject('no sToken')
     }
 
     let ep = UserEndPoints[process.env.NODE_ENV]
@@ -76,17 +87,22 @@ class REST {
     })
 
     if (res.ok) {
+      nProgress.done()
       return await res.json()
     } else {
-      return Promise.reject(res.json())
+      nProgress.done()
+      throw await Promise.reject(res.json())
     }
   }
 
   async get({ oid }) {
+    nProgress.start()
+
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
-      return Promise.reject('no sToken')
+      nProgress.done()
+      throw await Promise.reject('no sToken')
     }
 
     let ep = UserEndPoints[process.env.NODE_ENV]
@@ -104,17 +120,22 @@ class REST {
     })
 
     if (res.ok) {
+      nProgress.done()
       return await res.json()
     } else {
-      return Promise.reject(res.json())
+      nProgress.done()
+      throw await Promise.reject(res.json())
     }
   }
 
   async update({ object }) {
+    nProgress.start()
+
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
-      return Promise.reject('no sToken')
+      nProgress.done()
+      throw await Promise.reject('no sToken')
     }
 
     let ep = UserEndPoints[process.env.NODE_ENV]
@@ -132,17 +153,22 @@ class REST {
     })
 
     if (res.ok) {
+      nProgress.done()
       return await res.json()
     } else {
-      return Promise.reject(res.json())
+      nProgress.done()
+      throw await Promise.reject(res.json())
     }
   }
 
   async remove({ object }) {
+    nProgress.start()
+
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
     if (!sToken) {
-      return Promise.reject('no sToken')
+      nProgress.done()
+      throw await Promise.reject('no sToken')
     }
 
     let ep = UserEndPoints[process.env.NODE_ENV]
@@ -160,12 +186,15 @@ class REST {
     })
 
     if (res.ok) {
+      nProgress.done()
       return await res.json()
     } else {
-      return Promise.reject(res.json())
+      nProgress.done()
+      throw await Promise.reject(res.json())
     }
   }
   get data() {
+    nProgress.done()
     return CSData.appVersions
   }
   set data(v) {
