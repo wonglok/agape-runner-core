@@ -78,11 +78,11 @@ function OneEntry({ oid }) {
 
             <div className='inline-block rounded-xl' ref={renameRef}>
               <div className='inline-block'>
-                <button className='p-3 px-4 border-2 rounded-lg rounded-r-none'>
+                <button className='p-3 px-4 bg-white border-2 rounded-lg rounded-r-none bg-opacity-50'>
                   /
                 </button>
                 <input
-                  className='p-3 bg-gray-100 border-2 border-l-0 rounded-lg rounded-l-none rounded-r-none'
+                  className='p-3 bg-white border-2 border-l-0 rounded-lg rounded-l-none rounded-r-none bg-opacity-50'
                   defaultValue={it?.slug || ''}
                   onKeyDown={(ev) => {
                     if (ev.key === 'Enter') {
@@ -102,7 +102,6 @@ function OneEntry({ oid }) {
                           }
                         )
                         .finally(() => {
-                          //
                           setTimeout(() => {
                             setBGTo(renameRef.current, 'bg-transparent')
                           }, 1000)
@@ -140,7 +139,7 @@ function OneEntry({ oid }) {
                       }, 1000)
                     })
                 }}
-                className='p-3 px-4 border-2 border-l-0 border-gray-300  rounded-l-none rounded-xl'
+                className='p-3 px-4 bg-white border-2 border-l-0  rounded-l-none rounded-xl bg-opacity-50'
               >
                 Rename
               </button>

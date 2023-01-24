@@ -105,7 +105,7 @@ export function LeftMenu({}) {
 
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
-                3D Developers and Artists
+                3D Art & VFX
               </h6>
             </li>
             {/*  */}
@@ -114,15 +114,9 @@ export function LeftMenu({}) {
             {[
               {
                 oid: getID(),
-                link: `/admin/builders/app-coder`,
-                name: 'mOS 3D Coding Studio',
-              },
-              {
-                oid: getID(),
                 link: `/admin/builders/3d-art`,
-                name: 'mOS 3D Art Studio',
+                name: '3D Creation Studio',
               },
-              //
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
             })}
