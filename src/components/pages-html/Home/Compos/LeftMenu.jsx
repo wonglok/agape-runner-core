@@ -71,7 +71,6 @@ export function LeftMenu({}) {
                 META-OS Consumers
               </h6>
             </li>
-
             {/*  */}
             {/*  */}
             {/*  */}
@@ -81,7 +80,6 @@ export function LeftMenu({}) {
             {/*  */}
             {/*  */}
             {/*  */}
-
             {[
               // { oid: getID(), link: `/admin`, name: 'All My Sites' },
               {
@@ -102,19 +100,18 @@ export function LeftMenu({}) {
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
             })}
-
+            {/*  */}
+            {/*  */}
+            {/*  */}
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
                 3D Art & VFX
               </h6>
             </li>
-            {/*  */}
-            {/*  */}
-            {/*  */}
             {[
               {
                 oid: getID(),
-                link: `/admin/builders/3d-art`,
+                link: `/admin/art/studio`,
                 name: '3D Creation Studio',
               },
             ].map((item) => {
@@ -122,12 +119,28 @@ export function LeftMenu({}) {
             })}
 
             {/*  */}
+            {/*  */}
+            {/*  */}
+            <li className='w-full mt-4'>
+              <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
+                3D Development
+              </h6>
+            </li>
+            {[
+              {
+                oid: getID(),
+                link: `/admin/dev/studio`,
+                name: '3D Development Studio',
+              },
+            ].map((item) => {
+              return <OneLink key={item.oid} item={item}></OneLink>
+            })}
+
             {/* AGAPE */}
             {/* Global Sync of Social Graph */}
             {/* Distributed Content Storage */}
             {/* Personal Ownership of your own data */}
             {/*  */}
-
             {/*
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
@@ -157,7 +170,6 @@ export function LeftMenu({}) {
             ].map((item) => {
               return <OneLink key={item.oid} item={item}></OneLink>
             })} */}
-
             {/*
             {siteID && (
               <>
@@ -165,15 +177,12 @@ export function LeftMenu({}) {
               </>
             )}
             */}
-
             {
               // <>
               //   <MetaverseFolders></MetaverseFolders>
               // </>
             }
-
             {/*  */}
-
             <li className='w-full mt-4'>
               <h6 className='pl-6 ml-2 text-xs font-bold leading-tight uppercase opacity-60'>
                 Security
