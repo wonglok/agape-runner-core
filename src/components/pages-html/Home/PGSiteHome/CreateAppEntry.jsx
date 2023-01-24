@@ -38,7 +38,7 @@ export const CreateAppEntry = ({}) => {
           className='inline-block p-3 px-5 text-white bg-blue-500 rounded-lg'
           onClick={showModal}
         >
-          Create a New Page
+          Create Page
         </button>
       </div>
 
