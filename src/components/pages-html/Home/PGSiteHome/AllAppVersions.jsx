@@ -37,6 +37,7 @@ export function AllAppVersions({}) {
                     }).then((response) => {
                       //
                       console.log(response)
+                      //
                       AppVersion.invalidate({ appEntryID: appEntryOne.oid })
                     })
                   }}

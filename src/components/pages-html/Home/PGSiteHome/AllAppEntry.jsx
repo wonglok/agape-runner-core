@@ -46,7 +46,7 @@ export function AllAppEntry() {
           {cs.appEntry.length === 0 && (
             <>
               <div className='mb-3 text-sm leading-normal'>
-                Please create an item.
+                Please create a Page.
               </div>
             </>
           )}
@@ -67,10 +67,6 @@ function OneEntry({ oid }) {
       {it && (
         <div key={it?.oid} className='mb-3'>
           <div className='flex items-center mb-3 text-sm leading-normal'>
-            {/* <button className='p-2 px-4 mr-2 bg-gray-100 rounded-xl'>
-          {it.slug}
-        </button> */}
-
             <button
               onClick={() => {
                 CSData.appEntryID = it.oid
