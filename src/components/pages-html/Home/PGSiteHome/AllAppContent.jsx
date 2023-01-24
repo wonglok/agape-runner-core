@@ -29,10 +29,8 @@ export function AllAppContent({}) {
         <div className='flex-none w-full max-w-full px-4 mt-6 mb-4 '>
           <div className='relative flex flex-col min-w-0 mx-2 break-words bg-white border shadow-inner border-slate-400 shadow-slate-200 shadow-soft-xl rounded-2xl bg-clip-border'>
             <div className='p-4 pb-4 mb-0 rounded-t-2xl'>
-              <h6 className=' mb-3 text-2xl'>Install an App For your Page</h6>
-              <h6 className=' mb-3 text-lg'>
-                Current Page: /{appEntryOne.slug}
-              </h6>
+              <h6 className=' mb-3 text-2xl'>{`Let's Install an App`}</h6>
+              <h6 className=' mb-3 text-lg'>/{appEntryOne.slug}</h6>
 
               <div className='flex flex-wrap mb-4'>
                 <button
@@ -48,9 +46,9 @@ export function AllAppContent({}) {
                     ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-blue-900 bg-blue-400 border-2 border-blue-400 rounded-lg'
                   }
                 >
-                  <span className='text-lg font-bold'> Download 3D App</span>
+                  <span className='text-lg font-bold'>Pick a metaOS App</span>
                   <br />
-                  {`to "/${appEntryOne.slug}" Page`}
+                  {`from AppStore & install here`}
                 </button>
                 <button
                   onClick={() => {
@@ -65,9 +63,9 @@ export function AllAppContent({}) {
                     ' transition-all duration-400  inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-green-900 bg-green-400 border-2 border-green-400 rounded-lg'
                   }
                 >
-                  <span className='text-lg font-bold'> Develop 3D App</span>
+                  <span className='text-lg font-bold'> Develop 3D Apps</span>
                   <br />
-                  for this page
+                  with tools for this page
                 </button>
                 <button
                   onClick={() => {
