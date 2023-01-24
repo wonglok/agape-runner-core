@@ -31,8 +31,8 @@ export function PGSiteHome({ content }) {
           <SectionHeader
             // root='3D WebApps Platform'
             // subRoot='Dashboard'
-            title='MetaOS'
-            subTitle='Tips: How to create your own Metaverse?'
+            title='3D WebApps Platform'
+            subTitle='How to create my own Metaverse?'
             bgImage='/brand/pink-yellow.svg'
             bgOffsetY={50}
             bar={
@@ -43,7 +43,7 @@ export function PGSiteHome({ content }) {
                     {`1. Create a New Page like /about-me`}
                   </div>
                   <div className='inline-flex items-center justify-center w-48 h-20 px-4 mr-3 text-xs bg-white border border-gray-400 shadow-xl rounded-xl'>
-                    {`2. Download a metaOS App into that page`}
+                    {`2. Install an MetaOS App in that page. `}
                   </div>
                 </div>
               </>
