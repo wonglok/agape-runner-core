@@ -4,6 +4,7 @@ import { Modal } from 'antd'
 import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 import { ExtendWithVersion } from './ExtendWithVersion'
+import { AppEntry } from '@/aws/AppEntry'
 
 const confirm = Modal.confirm
 
@@ -12,7 +13,7 @@ export function AllAppContent({}) {
   let { appEntryID } = cs
 
   //
-  let appEntryOne = CSData.appEntry.find((t) => {
+  let appEntryOne = cs.appEntry.find((t) => {
     return t.oid === appEntryID
   })
 
@@ -31,28 +32,88 @@ export function AllAppContent({}) {
               <h6 className=' mb-3 text-xl'>Page: /{appEntryOne.slug}</h6>
 
               <div className='flex flex-wrap mb-4'>
-                <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-blue-700 border-2 border-blue-500 rounded-lg'>
+                <button
+                  onClick={() => {
+                    let entry = AppEntry.data.find((e) => e.oid === appEntryID)
+                    entry.type = 'download-app'
+                    AppEntry.update({ object: entry })
+                  }}
+                  className={
+                    (appEntryOne.type === 'download-app'
+                      ? 'bg-opacity-30'
+                      : 'bg-opacity-100') +
+                    '   inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-blue-900 bg-blue-500 border-2 border-blue-400 rounded-lg'
+                  }
+                >
                   <span className='text-lg font-bold'> Download 3D App</span>
                   <br />
-                  {`to "/{appEntryOne.slug}" Page`}
+                  {`to "/${appEntryOne.slug}" Page`}
                 </button>
-                <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-green-700 border-2 border-green-500 rounded-lg'>
+                <button
+                  onClick={() => {
+                    let entry = AppEntry.data.find((e) => e.oid === appEntryID)
+                    entry.type = 'write-app'
+                    AppEntry.update({ object: entry })
+                  }}
+                  className={
+                    (appEntryOne.type === 'write-app'
+                      ? 'bg-opacity-30'
+                      : 'bg-opacity-100') +
+                    '   inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-green-900 bg-green-500 border-2 border-green-400 rounded-lg'
+                  }
+                >
                   <span className='text-lg font-bold'> Develop 3D App</span>
                   <br />
                   for this page
                 </button>
-                <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-teal-700 border-2 border-teal-500 rounded-lg'>
+                <button
+                  onClick={() => {
+                    let entry = AppEntry.data.find((e) => e.oid === appEntryID)
+                    entry.type = 'make-3d'
+                    AppEntry.update({ object: entry })
+                  }}
+                  className={
+                    (appEntryOne.type === 'make-3d'
+                      ? 'bg-opacity-30'
+                      : 'bg-opacity-100') +
+                    '   inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-teal-900 bg-teal-500 border-2 border-teal-400 rounded-lg'
+                  }
+                >
                   <span className='text-lg font-bold'>Design 3D ART / VFX</span>
                   <br />
                   {`  by ARTIST like you 🥰`}
                 </button>
-                <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white border-2 rounded-lg bg-cyan-700 border-cyan-500'>
+                <button
+                  onClick={() => {
+                    let entry = AppEntry.data.find((e) => e.oid === appEntryID)
+                    entry.type = 'ab-testing'
+                    AppEntry.update({ object: entry })
+                  }}
+                  className={
+                    (appEntryOne.type === 'ab-testing'
+                      ? 'bg-opacity-30'
+                      : 'bg-opacity-100') +
+                    '   inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs border-2 rounded-lg text-cyan-900 bg-cyan-400 border-cyan-500'
+                  }
+                >
                   <span className='text-lg font-bold'>Do A / B Testing</span>
                   <br />
                   for marketing purpose
                 </button>
-                <button className='inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-white bg-yellow-700 border-2 border-yellow-500 rounded-lg'>
-                  <span className='text-lg font-bold'>Add a MindMap</span>
+                <button
+                  onClick={() => {
+                    let entry = AppEntry.data.find((e) => e.oid === appEntryID)
+                    entry.type = 'mind-map'
+                    AppEntry.update({ object: entry })
+                  }}
+                  className={
+                    (appEntryOne.type === 'mind-map'
+                      ? 'bg-opacity-30'
+                      : 'bg-opacity-100') +
+                    '   inline-block w-56 h-16 p-2 mb-3 mr-4 text-xs text-yellow-900 bg-yellow-500 border-2 border-yellow-400 rounded-lg'
+                  }
+                >
+                  <span className='text-lg font-bold'>+ AutoSync MindMap</span>
                   <br />
                   for webhook enbaled promotions
                 </button>
@@ -60,10 +121,25 @@ export function AllAppContent({}) {
 
               {/*  */}
 
-              {appEntryOne.type === 'write-code' && (
+              {appEntryOne.type === 'download-app' && (
+                <>"Todo: Add Placeholder for download app"</>
+              )}
+              {appEntryOne.type === 'write-app' && (
                 <>
                   <ExtendWithVersion></ExtendWithVersion>
                 </>
+              )}
+
+              {appEntryOne.type === 'make-3d' && (
+                <>"Todo: Add Placeholder for download app"</>
+              )}
+
+              {appEntryOne.type === 'ab-testing' && (
+                <>"Todo: Add Placeholder for download app"</>
+              )}
+
+              {appEntryOne.type === 'mindmap' && (
+                <>"Todo: Add Placeholder for download app"</>
               )}
 
               {/*  */}
