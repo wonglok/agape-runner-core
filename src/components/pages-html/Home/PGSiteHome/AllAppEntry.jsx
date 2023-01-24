@@ -164,7 +164,7 @@ function OneEntry({ oid }) {
                   closable: true,
                   title: 'Do you want to remove this file?',
                   icon: <ExclamationCircleFilled />,
-                  content: `Confirm removal of "${it.title}"`,
+                  content: `Confirm removal of "${it.slug}"`,
 
                   footer: (
                     <div className='text-right'>
@@ -206,23 +206,6 @@ function OneEntry({ oid }) {
                   ),
                   onCancel() {},
                 })
-
-                // let obj = CSData.appEntry.find((e) => e.oid === oid)
-                // setBGTo(renameRef.current, 'bg-yellow-300')
-                // AppEntry.update({ object: obj })
-                //   .then(
-                //     (e) => {
-                //       setBGTo(renameRef.current, 'bg-green-300')
-                //     },
-                //     () => {
-                //       setBGTo(renameRef.current, 'bg-red-300')
-                //     }
-                //   )
-                //   .finally(() => {
-                //     setTimeout(() => {
-                //       setBGTo(renameRef.current, 'bg-transparent')
-                //     }, 1000)
-                //   })
               }}
               className='p-3 px-4 bg-red-300 border-2 border-l-0  rounded-l-none rounded-xl bg-opacity-50'
             >

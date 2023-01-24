@@ -7,6 +7,7 @@ import { getID } from '@/lib/getID'
 import { setBGTo } from '@/lib/setBGTo'
 import { CreateAppGroup } from './CreateAppGroup'
 import { ExtendWithVersion } from './ExtendWithVersion'
+import { ExclamationCircleFilled } from '@ant-design/icons'
 
 export function AllAppGroup() {
   let cs = useSnapshot(CSData)
@@ -149,9 +150,63 @@ function OneEntry({ oid }) {
                       }, 1000)
                     })
                 }}
-                className='p-3 px-4 bg-white border-2 border-l-0  rounded-l-none rounded-xl bg-opacity-50'
+                className='p-3 px-4 bg-white border-2 border-l-0  rounded-l-none rounded-r-none rounded-xl bg-opacity-50'
               >
                 Rename
+              </button>
+
+              <button
+                onClick={() => {
+                  let { destroy, update } = Modal.confirm({
+                    closable: true,
+                    title: 'Do you want to remove this file?',
+                    icon: <ExclamationCircleFilled />,
+                    content: `Confirm removal of "${it.slug}"`,
+
+                    footer: (
+                      <div className='text-right'>
+                        <button
+                          key={'remove'}
+                          onClick={() => {
+                            new Promise(async (resolve, reject) => {
+                              destroy()
+                              await AppGroup.remove({ object: it })
+                              await setTimeout(resolve, 10)
+                            })
+                              .catch(() => console.log('Oops errors!'))
+                              .finally(() => {
+                                AppGroup.invalidate({
+                                  //
+                                })
+                              })
+                          }}
+                          className='inline-block p-3 px-4 mx-2 my-3 text-white bg-red-500 border rounded-lg'
+                        >
+                          Remove
+                        </button>
+                        <button
+                          key={'cancel'}
+                          onClick={() => {
+                            new Promise((resolve, reject) => {
+                              setTimeout(resolve, 10)
+                            })
+                              .catch(() => console.log('Oops errors!'))
+                              .finally(() => {
+                                destroy()
+                              })
+                          }}
+                          className='inline-block p-3 px-4 mx-2 my-3 bg-white border rounded-lg'
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ),
+                    onCancel() {},
+                  })
+                }}
+                className='p-3 px-4 bg-red-300 border-2 border-l-0  rounded-l-none rounded-xl bg-opacity-50'
+              >
+                Delete
               </button>
             </div>
 
