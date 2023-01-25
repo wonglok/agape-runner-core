@@ -147,7 +147,54 @@ function MyPakcages({}) {
   )
 }
 
-function OnePackage({ ap }) {
+function Rename({ ap }) {
+  let [renamePop, openRename] = useState(false)
+  let [packageName, setPackageName] = useState('')
+  return (
+    <>
+      <Modal
+        onCancel={() => {
+          openRename(false)
+        }}
+        //
+        open={renamePop}
+        title={`Remove this package?`}
+        footer={[]}
+      >
+        <input
+          className='px-5 py-2 mr-1 text-black bg-green-100 rounded-lg'
+          value={packageName}
+          onChange={(ev) => {
+            setPackageName(ev.target.value)
+          }}
+        ></input>
+        <button
+          className='p-2 text-white bg-blue-500 rounded-lg'
+          onClick={async () => {
+            //
+            let item = AppDev.draft.appPackages.find((e) => e.oid === ap.oid)
+            item.packageName = packageName
+            await AppDev.save({ object: AppDev.draft })
+          }}
+        >
+          Rename
+        </button>
+      </Modal>
+
+      <button
+        className='px-3 py-1 text-white bg-blue-500 rounded-lg'
+        onClick={() => {
+          //
+          openRename(true)
+        }}
+      >
+        Rename
+      </button>
+    </>
+  )
+}
+
+function Remove({ ap }) {
   let [removePop, openRemove] = useState(false)
 
   return (
@@ -177,18 +224,25 @@ function OnePackage({ ap }) {
         </button>
       </Modal>
 
+      <button
+        className='px-3 py-1 text-white bg-red-500 rounded-lg'
+        onClick={() => {
+          //
+          openRemove(true)
+        }}
+      >
+        Remove Package
+      </button>
+    </>
+  )
+}
+
+function OnePackage({ ap }) {
+  return (
+    <>
       <div className='-m-2'>
-        {
-          <button
-            className='px-3 py-1 text-white bg-red-500 rounded-lg'
-            onClick={() => {
-              //
-              openRemove(true)
-            }}
-          >
-            Remove Package
-          </button>
-        }
+        <Rename ap={ap}></Rename>
+        <Remove ap={ap}></Remove>
         <Collapse style={{ padding: '0px' }} accordion>
           {ap.modules.map((mo) => {
             return (
