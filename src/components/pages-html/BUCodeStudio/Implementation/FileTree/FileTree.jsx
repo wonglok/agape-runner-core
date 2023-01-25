@@ -133,7 +133,7 @@ function MyPakcages({}) {
 
       {/*  */}
       <div className='' style={{ height: 'calc(100% - 50px)' }}>
-        <div className='h-full p-2 overflow-scroll overflow-x-hidden'>
+        <div className='h-full px-2 overflow-scroll overflow-x-hidden'>
           <Collapse style={{ padding: '0px' }} accordion>
             {appPackages.map((ap) => {
               return (
