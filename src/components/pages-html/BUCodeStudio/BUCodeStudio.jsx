@@ -1,12 +1,14 @@
-import { ref, useSnapshot } from 'valtio'
+import { useSnapshot } from 'valtio'
 import { useRouter } from 'next/router'
 import { rollup } from 'rollup'
 import { useEffect, useRef } from 'react'
 import path from 'path'
 import initSwc, { transform } from '@swc/wasm-web'
 // const uglify = require('uglifyjs-browser')
-import * as React from 'react'
-import { LeftMenuBar } from './FileTree/LeftMenuBar'
+import { LeftMenuBar } from './LeftMenuBar/LeftMenuBar'
+import { MiddleContent } from './MiddleContent/MiddleContent'
+import { RightSide } from './RightSide/RightSide'
+import { useState } from 'react'
 
 export let RawModules = [
   {
@@ -369,16 +371,42 @@ export function BUCodeStudioLab() {
 }
 
 export function BUCodeStudio() {
+  let [ready, setReady] = useState(() => {
+    return false
+  })
+  useEffect(() => {
+    initSwc().then(() => {
+      setReady(true)
+    })
+  }, [])
   return (
     <div className='w-full h-full bg-gray-200'>
-      {/*  */}
       <div className='h-6 px-1 py-1 text-xs bg-gray-100'>3D WebApp Studio</div>
       <main
-        className='flex text-sm'
+        className='relative flex text-sm'
         style={{ height: `calc(100% - 1.5rem * 2)` }}
       >
-        <LeftMenuBar width={'225px'}></LeftMenuBar>
-
+        {ready ? (
+          <>
+            <LeftMenuBar width={'225px'}></LeftMenuBar>
+            <MiddleContent
+              width={'calc((100% - 225px) * 55 / 100)'}
+            ></MiddleContent>
+            <RightSide width={'calc((100% - 225px) * 45 / 100)'}></RightSide>
+          </>
+        ) : (
+          <>
+            <div
+              className='w-full  h-full '
+              style={{
+                background: `radial-gradient(circle, rgba(193,193,193,1) 0%, rgba(45,45,45,1) 100%)`,
+              }}
+            ></div>
+            <Triangle></Triangle>
+          </>
+        )}
+        {/*  */}
+        {/*  */}
         {/*  */}
         {/*  */}
         {/*  */}
@@ -386,6 +414,103 @@ export function BUCodeStudio() {
       <div className='h-6 px-1 py-1 text-xs bg-gray-100'>Your love</div>
 
       {/*  */}
+    </div>
+  )
+}
+
+// function SaveButton() {
+//   let refStatus = useRef()
+//   let canUse = useRef(false)
+
+//   useEffect(() => {
+//     if (!refStatus.current.innerText) {
+//       refStatus.current.innerText = 'Loading Editor Core...'
+//       initSwc().then(() => {
+//         refStatus.current.innerText = ''
+//         canUse.current = true
+
+//         ///
+
+//         let appContent = {
+//           appLoader: 'my-app',
+//           appPackages: [
+//             { packageName: 'my-app', modules: RawModules },
+//             { packageName: 'page-about', modules: RawModules },
+//             { packageName: 'lib-webgl', modules: RawModules },
+//           ],
+//           appAssets: [],
+//         }
+
+//         //
+//         buildApp(appContent).then((outputs) => {
+//           const bc = new BroadcastChannel('editor-runtime-output-signal')
+//           bc.postMessage({
+//             outputs,
+//           })
+//           bc.close()
+//         })
+//       })
+//     }
+//   }, [])
+
+//   return (
+//     <button
+//       ref={refStatus}
+//       onClick={() => {
+//         let tt = setInterval(() => {
+//           if (canUse.current) {
+//             clearInterval(tt)
+
+//             ///
+//             buildApp(appContent).then((outputs) => {
+//               const bc = new BroadcastChannel('editor-runtime-output-signal')
+//               bc.postMessage({
+//                 outputs,
+//               })
+//               bc.close()
+//             })
+//           }
+//         })
+//         //
+//       }}
+//     >
+//       Save
+//     </button>
+//   )
+// }
+
+function Triangle() {
+  return (
+    <div
+      className='absolute top-0 left-0 flex items-center justify-center w-full h-full bg-white bg-opacity-50 backdrop-blur-md'
+      style={{ zIndex: '1000' }}
+    >
+      <div className='loader-triangle-7'>
+        <svg width='56px' height='50px' viewBox='0 0 226 200' version='1.1'>
+          <g
+            id='Page-1'
+            stroke='none'
+            strokeWidth='2'
+            fill='none'
+            fillRule='evenodd'
+          >
+            <g
+              id='Artboard'
+              fillRule='nonzero'
+              stroke={'black'}
+              // stroke='url(#linearGradient-1)'
+              strokeWidth='10'
+            >
+              <g id='white-bg-logo'>
+                <path
+                  d='M113,5.08219117 L4.28393801,197.5 L221.716062,197.5 L113,5.08219117 Z'
+                  id='Triangle-3-Copy'
+                ></path>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
     </div>
   )
 }
