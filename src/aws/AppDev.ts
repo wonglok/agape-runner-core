@@ -47,11 +47,13 @@ export const AppDev = proxy<{
   draft: AppVersionDraft
   appFiles: AppFile[]
 
+  activeModuleID: string
   save: Function
 }>({
   appFiles: [],
   draft: null,
 
+  activeModuleID: '',
   save: async ({ object = false }) => {
     //
     if (!object) {

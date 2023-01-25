@@ -147,9 +147,41 @@ function MyPakcages({}) {
   )
 }
 
+function OnePackage({ ap }) {
+  return (
+    <>
+      <div className='-m-2'>
+        <Rename ap={ap}></Rename>
+        <Remove ap={ap}></Remove>
+        {ap.modules.map((mo) => {
+          return (
+            <>
+              <div
+                //
+                key={mo.oid}
+              >
+                <button
+                  className='px-3 py-1 text-white bg-green-500 rounded-lg'
+                  onClick={() => {
+                    //
+                    //
+                  }}
+                >
+                  {mo.moduleName}
+                </button>
+                <p>{JSON.stringify(mo.modules)}</p>
+              </div>
+            </>
+          )
+        })}
+      </div>
+    </>
+  )
+}
+
 function Rename({ ap }) {
   let [renamePop, openRename] = useState(false)
-  let [packageName, setPackageName] = useState('')
+  let [packageName, setPackageName] = useState(ap.packageName)
   return (
     <>
       <Modal
@@ -235,33 +267,6 @@ function Remove({ ap }) {
       >
         Remove
       </button>
-    </>
-  )
-}
-
-function OnePackage({ ap }) {
-  return (
-    <>
-      <div className='-m-2'>
-        <Rename ap={ap}></Rename>
-        <Remove ap={ap}></Remove>
-        <Collapse style={{ padding: '0px' }} accordion>
-          {ap.modules.map((mo) => {
-            return (
-              <>
-                <Collapse.Panel
-                  header={
-                    <div className='overflow-hidden'>{mo.moduleName}</div>
-                  }
-                  key={mo.oid}
-                >
-                  <p>{JSON.stringify(mo.modules)}</p>
-                </Collapse.Panel>
-              </>
-            )
-          })}
-        </Collapse>
-      </div>
     </>
   )
 }
