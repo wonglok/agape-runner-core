@@ -3,12 +3,15 @@ import { useRouter } from 'next/router'
 import { rollup } from 'rollup'
 import { useEffect, useRef } from 'react'
 import path from 'path'
-import initSwc, { transform } from '@swc/wasm-web'
+// import initSwc, { transform } from '@swc/wasm-web'
 // const uglify = require('uglifyjs-browser')
 import { LeftMenuBar } from './LeftMenuBar/LeftMenuBar'
 import { MiddleContent } from './MiddleContent/MiddleContent'
 import { RightSide } from './RightSide/RightSide'
 import { useState } from 'react'
+import { transform } from 'sucrase'
+
+let initSwc = async () => {}
 
 export let RawModules = [
   {
@@ -225,7 +228,22 @@ let buildApp = async (input) => {
           }
 
           if (file?.content) {
-            return await compile({ input: file.content || '' })
+            // return await compile({ input: file.content || '' })
+
+            let content = file.content || ''
+            if (content.indexOf('<') !== -1) {
+              let tf = transform(content, {
+                transforms: ['jsx', 'typescript'],
+                preserveDynamicImport: true,
+                jsxPragma: 'React.createElement',
+                jsxFragmentPragma: 'React.Fragment',
+              }).code
+
+              console.log(tf)
+              return tf
+            } else {
+              return content
+            }
           }
 
           return `console.log('not-found',${JSON.stringify(id)})`
@@ -256,119 +274,128 @@ let buildApp = async (input) => {
   //
 }
 
-async function compile({ input }) {
-  const result = await transform(input, {
-    jsc: {
-      parser: {
-        syntax: 'ecmascript',
-        jsx: true,
-        dynamicImport: true,
-        privateMethod: true,
-        functionBind: true,
-        exportDefaultFrom: false,
-        packageNamespaceFrom: false,
-        decorators: false,
-        decoratorsBeforeExport: true,
-        topLevelAwait: true,
-        importMeta: true,
-        preserveAllComments: false,
-      },
+// async function compile({ input }) {
+//   const result = await transform(input, {
+//     jsc: {
+//       parser: {
+//         syntax: 'ecmascript',
+//         jsx: true,
+//         dynamicImport: true,
+//         privateMethod: true,
+//         functionBind: true,
+//         exportDefaultFrom: false,
+//         packageNamespaceFrom: false,
+//         decorators: false,
+//         decoratorsBeforeExport: true,
+//         topLevelAwait: true,
+//         importMeta: true,
+//         preserveAllComments: false,
+//       },
 
-      //
-      transform: {
-        react: {
-          pragma: 'window.React.createElement',
-        },
-      },
+//       //
+//       transform: {
+//         react: {
+//           pragma: 'window.React.createElement',
+//         },
+//       },
 
-      // minify: {},
-      //
-      target: 'es2018',
-      loose: false,
-      externalHelpers: false,
-      keepClassNames: true,
-    },
+//       // minify: {},
+//       //
+//       target: 'es2018',
+//       loose: false,
+//       externalHelpers: false,
+//       keepClassNames: true,
+//     },
 
-    isModule: true,
+//     isModule: true,
 
-    module: {
-      type: 'es6',
-    },
-  })
+//     module: {
+//       type: 'es6',
+//     },
+//   })
 
-  return result.code
-}
+//   return result.code
+// }
 
-export function BUCodeStudioLab() {
-  let router = useRouter()
+// export function BUCodeStudioLab() {
+//   let router = useRouter()
 
-  let refStatus = useRef()
-  let canUse = useRef(false)
+//   let refStatus = useRef()
+//   let canUse = useRef(false)
 
-  useEffect(() => {
-    if (!refStatus.current.innerText) {
-      refStatus.current.innerText = 'Loading Editor Core...'
-      initSwc().then(() => {
-        refStatus.current.innerText = ''
-        canUse.current = true
+//   useEffect(() => {
+//     if (!refStatus.current.innerText) {
+//       refStatus.current.innerText = 'Loading Editor Core...'
+//       initSwc().then(() => {
+//         refStatus.current.innerText = ''
+//         canUse.current = true
 
-        ///
+//         ///
 
-        let appContent = {
-          appLoader: 'my-app',
-          appPackages: [
-            { packageName: 'my-app', modules: RawModules },
-            { packageName: 'page-about', modules: RawModules },
-            { packageName: 'lib-webgl', modules: RawModules },
-          ],
-          appAssets: [],
-        }
+//         let appContent = {
+//           appLoader: 'my-app',
+//           appPackages: [
+//             { packageName: 'my-app', modules: RawModules },
+//             { packageName: 'page-about', modules: RawModules },
+//             { packageName: 'lib-webgl', modules: RawModules },
+//           ],
+//           appAssets: [],
+//         }
 
-        //
-        buildApp(appContent).then((outputs) => {
-          const bc = new BroadcastChannel('editor-runtime-output-signal')
-          bc.postMessage({
-            outputs,
-          })
-          bc.close()
-        })
-      })
-    }
-  }, [])
+//         //
+//         buildApp(appContent).then((outputs) => {
+//           const bc = new BroadcastChannel('editor-runtime-output-signal')
+//           bc.postMessage({
+//             outputs,
+//           })
+//           bc.close()
+//         })
+//       })
+//     }
+//   }, [])
 
-  return (
-    <div>
-      {/* {router?.query?.appVersionID} */}
-      <div
-        onClick={() => {
-          let tt = setInterval(() => {
-            if (canUse.current) {
-              clearInterval(tt)
+//   return (
+//     <div>
+//       {/* {router?.query?.appVersionID} */}
+//       <div
+//         onClick={() => {
+//           let tt = setInterval(() => {
+//             if (canUse.current) {
+//               clearInterval(tt)
 
-              ///
-              buildApp(appContent).then((outputs) => {
-                const bc = new BroadcastChannel('editor-runtime-output-signal')
-                bc.postMessage({
-                  outputs,
-                })
-                bc.close()
-              })
-            }
-          })
-          //
-        }}
-        className='inline-block p-5 bg-gray-200'
-      >
-        Save Button
-      </div>
-      <div ref={refStatus}></div>
+//               let appContent = {
+//                 appLoader: 'my-app',
+//                 appPackages: [
+//                   { packageName: 'my-app', modules: RawModules },
+//                   { packageName: 'page-about', modules: RawModules },
+//                   { packageName: 'lib-webgl', modules: RawModules },
+//                 ],
+//                 appAssets: [],
+//               }
+//               ///
+//               buildApp(appContent).then((outputs) => {
+//                 const bc = new BroadcastChannel('editor-runtime-output-signal')
+//                 bc.postMessage({
+//                   outputs,
+//                 })
+//                 bc.close()
+//               })
+//             }
+//           })
+//           //
+//         }}
+//         className='inline-block p-5 bg-gray-200'
+//       >
+//         Save Button
+//       </div>
+//       <div ref={refStatus}></div>
 
-      {/*  */}
+//       {/*  */}
 
-      {router && <iframe src={`./run`}></iframe>}
-    </div>
-  )
-}
+//       {router && <iframe src={`./run`}></iframe>}
+//     </div>
+//   )
+// }
 
 export function BUCodeStudio() {
   let [ready, setReady] = useState(() => {
@@ -381,6 +408,7 @@ export function BUCodeStudio() {
   }, [])
   return (
     <div className='w-full h-full bg-gray-200'>
+      <TestButton></TestButton>
       <div className='h-6 px-1 py-1 text-xs bg-gray-100'>3D WebApp Studio</div>
       <main
         className='relative flex text-sm'
@@ -416,6 +444,33 @@ export function BUCodeStudio() {
       {/*  */}
     </div>
   )
+}
+
+function TestButton() {
+  let run = () => {
+    let appContent = {
+      appLoader: 'my-app',
+      appPackages: [
+        { packageName: 'my-app', modules: RawModules },
+        { packageName: 'page-about', modules: RawModules },
+        { packageName: 'lib-webgl', modules: RawModules },
+      ],
+      appAssets: [],
+    }
+    ///
+    buildApp(appContent).then((outputs) => {
+      const bc = new BroadcastChannel('editor-runtime-output-signal')
+      bc.postMessage({
+        outputs,
+      })
+      bc.close()
+    })
+  }
+
+  useEffect(() => {
+    run()
+  }, [])
+  return <button onClick={run}>Test</button>
 }
 
 // function SaveButton() {

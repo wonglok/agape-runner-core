@@ -76,6 +76,7 @@
     "react-toastify": "^9.0.8",
     "screen-space-reflections": "^2.5.0",
     "slugify": "^1.6.5",
+    "sucrase": "^3.29.0",
     "swr": "^2.0.0",
     "three": "^0.148.0",
     "three-mesh-bvh": "^0.5.15",
