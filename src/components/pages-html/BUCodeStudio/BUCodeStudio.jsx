@@ -231,19 +231,16 @@ let buildApp = async (input) => {
             // return await compile({ input: file.content || '' })
 
             let content = file.content || ''
-            if (content.indexOf('<') !== -1) {
-              let tf = transform(content, {
-                transforms: ['jsx', 'typescript'],
-                preserveDynamicImport: true,
-                jsxPragma: 'React.createElement',
-                jsxFragmentPragma: 'React.Fragment',
-              }).code
+            let tf = transform(content, {
+              transforms: ['jsx', 'typescript'],
+              preserveDynamicImport: true,
+              production: true,
+              jsxPragma: 'React.createElement',
+              jsxFragmentPragma: 'React.Fragment',
+            }).code
 
-              console.log(tf)
-              return tf
-            } else {
-              return content
-            }
+            // console.log(tf)
+            return tf
           }
 
           return `console.log('not-found',${JSON.stringify(id)})`
@@ -399,12 +396,10 @@ let buildApp = async (input) => {
 
 export function BUCodeStudio() {
   let [ready, setReady] = useState(() => {
-    return false
+    return true
   })
   useEffect(() => {
-    initSwc().then(() => {
-      setReady(true)
-    })
+    //
   }, [])
   return (
     <div className='w-full h-full bg-gray-200'>
@@ -457,13 +452,27 @@ function TestButton() {
       ],
       appAssets: [],
     }
+    const bc = new BroadcastChannel('editor')
+
+    bc.onmessage = (event) => {
+      let action = event?.data?.action
+
+      if (action === 'compile') {
+        ///
+        buildApp(appContent).then((outputs) => {
+          bc.postMessage({
+            outputs,
+          })
+          // bc.close()
+        })
+      }
+    }
     ///
     buildApp(appContent).then((outputs) => {
-      const bc = new BroadcastChannel('editor-runtime-output-signal')
       bc.postMessage({
         outputs,
       })
-      bc.close()
+      // bc.close()
     })
   }
 

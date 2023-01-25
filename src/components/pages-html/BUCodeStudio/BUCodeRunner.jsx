@@ -137,7 +137,13 @@ export function BUCodeRunner({ outputs = false }) {
   let ref = useRef()
 
   useEffect(() => {
-    const bc = new BroadcastChannel('editor-runtime-output-signal')
+    console.log('!!!!')
+
+    const bc = new BroadcastChannel('editor')
+
+    bc.postMessage({
+      action: 'compile',
+    })
 
     let cleans = []
 
@@ -147,7 +153,9 @@ export function BUCodeRunner({ outputs = false }) {
 
     bc.onmessage = (event) => {
       let outputs = event.data.outputs
-      run({ domElement: ref.current, outputs: outputs, onClean })
+      if (outputs) {
+        run({ domElement: ref.current, outputs: outputs, onClean })
+      }
     }
 
     if (outputs) {
