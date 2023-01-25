@@ -23,16 +23,18 @@ function MyPakcages({ dev }) {
 
   return (
     <>
-      <div className='flex items-center justify-between pl-2 bg-gray-100'>
+      <div className='flex items-center justify-between p-1 pl-2 bg-gray-100'>
         <select
-          onSelect={(ev) => {
+          onChange={async (ev) => {
             AppDev.draft.appLoader = ev.target.value
+            await AppDev.save({ object: AppDev.draft })
           }}
-          className='w-full h-8 '
+          defaultValue={AppDev.draft.appLoader}
+          className='w-full h-6 '
         >
           {appPackages.map((ap) => {
             return (
-              <option key={ap.oid} value={ap.packageName}>
+              <option className='p-1' key={ap.oid} value={ap.packageName}>
                 {ap.packageName}
               </option>
             )
@@ -44,7 +46,7 @@ function MyPakcages({ dev }) {
         <div>Packages</div>
         <div
           className='px-1 py-1 cursor-auto'
-          onClick={() => {
+          onClick={async () => {
             //
 
             if (AppDev.draft.appPackages.length == 0) {
@@ -61,10 +63,13 @@ function MyPakcages({ dev }) {
               })
             }
 
+            await AppDev.save({ object: AppDev.draft })
+
             //
             //
           }}
         >
+          {/*  */}
           <img
             className='h-6'
             src={'/code-studio-ui/plus.svg'}
@@ -73,7 +78,15 @@ function MyPakcages({ dev }) {
         </div>
       </div>
       {appPackages.map((ap) => {
-        return <div key={ap.oid}>{ap.packageName}</div>
+        return (
+          <div
+            key={ap.oid}
+            className='flex items-center justify-between w-full h-8'
+          >
+            <div>{ap.packageName}</div>
+            <div></div>
+          </div>
+        )
       })}
     </>
   )

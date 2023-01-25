@@ -1,6 +1,6 @@
 import { proxy } from 'valtio'
+import { AppVersion } from './AppVersion'
 
-//
 /*
 
 export let appContent = {
@@ -46,7 +46,24 @@ declare type AppFile = {
 export const AppDev = proxy<{
   draft: AppVersionDraft
   appFiles: AppFile[]
+
+  save: Function
 }>({
   appFiles: [],
   draft: null,
+
+  save: async ({ object = false }) => {
+    //
+    if (!object) {
+      throw new Error('needs object')
+    }
+    return AppVersion.update({ object }).then(
+      (r) => {
+        console.log(r)
+      },
+      async (err) => {
+        console.log(await err)
+      }
+    )
+  },
 })
