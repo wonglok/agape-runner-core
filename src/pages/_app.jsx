@@ -1,8 +1,9 @@
 import '@/styles/index.css'
 
+import TitleHeader from '@/config'
+
 import { useEffect, useRef, useState } from 'react'
 import { hydration } from '@/auth/GateMethods'
-import TitleHeader from '@/config'
 import { useRouter } from 'next/router'
 
 function App({ Component, pageProps = { title: 'index' } }) {
@@ -16,8 +17,8 @@ function App({ Component, pageProps = { title: 'index' } }) {
 
   return (
     <>
-      <Loading></Loading>
       {pageProps.title && <TitleHeader title={pageProps.title} />}
+
       {<Component {...pageProps}></Component>}
 
       <span
@@ -28,6 +29,8 @@ function App({ Component, pageProps = { title: 'index' } }) {
         }}
         id='myroot'
       ></span>
+
+      <Loading></Loading>
     </>
   )
 }
