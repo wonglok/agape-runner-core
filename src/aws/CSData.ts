@@ -57,7 +57,6 @@ export const CSData = proxy<{
   //
   appVersionID: string
   appVersions: AppSnapshot[]
-  appDev: AppSnapshot | null
 }>({
   appEntryID: '',
   appEntry: [],
@@ -68,6 +67,5 @@ export const CSData = proxy<{
   //
   appVersionID: '',
   appVersions: [],
-  appDev: null,
   // appFiles: [],
 })

@@ -12,17 +12,18 @@ import { RightSide } from './Layout/RightSide/RightSide'
 // import { transform } from 'sucrase'
 import { AppVersion } from '@/aws/AppVersion'
 import { CSData } from '@/aws/CSData'
+import { AppDev } from '@/aws/AppDev'
 
 export function BUCodeStudio() {
   let router = useRouter()
-  let cs = useSnapshot(CSData)
+  let app = useSnapshot(AppDev)
   useEffect(() => {
     //
     CSData.appVersionID = router.query.appVersionID
 
     if (CSData.appVersionID) {
       AppVersion.get({ oid: CSData.appVersionID }).then((object) => {
-        CSData.appDev = object.item
+        AppDev.draft = object.item
       })
     }
   }, [router.query.appVersionID])
@@ -37,16 +38,16 @@ export function BUCodeStudio() {
 
   return (
     <div className='w-full h-full bg-white'>
-      {/* <TestButton></TestButton> */}
       <div className='h-6 px-1 py-1 text-xs text-white bg-cyan-800'>
         3D WebApp Studio
       </div>
+
       {/*  */}
       <main
         className='relative flex text-sm'
         style={{ height: `calc(100% - 1.5rem * 2)` }}
       >
-        {cs.appDev ? (
+        {app.draft ? (
           <>
             <LeftMenuBar width={'225px'}></LeftMenuBar>
             <MiddleContent
