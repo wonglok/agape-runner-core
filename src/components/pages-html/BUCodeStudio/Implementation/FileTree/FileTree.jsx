@@ -8,7 +8,7 @@ import { useSnapshot } from 'valtio'
 export function FileTree() {
   let app = useSnapshot(AppDev)
   let [createPopup, openCreatePopup] = useState(false)
-  let [name, setName] = useState('my-new-module')
+  let [packageName, setPackageName] = useState('my-new-module')
   return (
     <>
       <Modal
@@ -21,46 +21,32 @@ export function FileTree() {
       >
         <input
           className='px-5 py-2 mr-1 text-black bg-green-100 rounded-lg'
-          value={name}
+          value={packageName}
           onChange={(ev) => {
-            setName(ev.target.value)
+            setPackageName(ev.target.value)
           }}
         ></input>
         <button
           className='px-5 py-2 text-white bg-green-500 rounded-lg'
           onClick={async () => {
             //
-
-            let getModules = () => {
-              let mods = [
+            AppDev.draft.appPackages.push({
+              oid: getID(),
+              packageName: packageName,
+              protected: false,
+              modules: [
                 {
                   oid: getID(),
                   moduleName: 'main',
-                  protected: true,
+                  protected: false,
                   files: [],
                 },
-              ]
-              return mods
-            }
+              ],
+            })
 
-            if (AppDev.draft.appPackages.length == 0) {
-              AppDev.draft.appPackages.push({
-                oid: getID(),
-                packageName: 'app-loader',
-                protected: true,
-                modules: getModules(),
-              })
-            } else {
-              AppDev.draft.appPackages.push({
-                oid: getID(),
-                packageName: name,
-                protected: false,
-                modules: getModules(),
-              })
-            }
-
-            openCreatePopup(false)
-            await AppDev.save({ object: AppDev.draft })
+            await AppDev.save({
+              object: AppDev.draft,
+            })
           }}
         >
           Create a new Package
@@ -75,7 +61,26 @@ export function FileTree() {
               className='flex items-center justify-center pl-2 bg-white border-b border-blue-600 cursor-pointer group'
               onClick={async () => {
                 //
-                openCreatePopup(true)
+                if (AppDev.draft.appPackages.length == 0) {
+                  AppDev.draft.appPackages.push({
+                    oid: getID(),
+                    packageName: 'app-loader',
+                    protected: true,
+                    modules: [
+                      {
+                        oid: getID(),
+                        moduleName: 'main',
+                        protected: true,
+                        files: [],
+                      },
+                    ],
+                  })
+                  await AppDev.save({
+                    object: AppDev.draft,
+                  })
+                } else {
+                  openCreatePopup(true)
+                }
               }}
             >
               <div className='text-center'>Create Package</div>
@@ -162,7 +167,7 @@ function OnePackage({ ap }) {
       </Modal>
 
       <div className='-m-2'>
-        {!ap.protected && (
+        {
           <button
             className='px-3 py-1 text-white bg-red-500 rounded-lg'
             onClick={() => {
@@ -172,7 +177,7 @@ function OnePackage({ ap }) {
           >
             Remove Package
           </button>
-        )}
+        }
         <Collapse style={{ padding: '0px' }} accordion>
           {ap.modules.map((mo) => {
             return (
