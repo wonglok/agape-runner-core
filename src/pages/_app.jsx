@@ -5,6 +5,7 @@ import TitleHeader from '@/config'
 import { useEffect, useRef, useState } from 'react'
 import { hydration } from '@/auth/GateMethods'
 import { useRouter } from 'next/router'
+import { DesktopOnly } from '@/auth/DesktopOnly'
 
 function App({ Component, pageProps = { title: 'index' } }) {
   let ref = useRef(false)
@@ -18,8 +19,7 @@ function App({ Component, pageProps = { title: 'index' } }) {
   return (
     <>
       {pageProps.title && <TitleHeader title={pageProps.title} />}
-
-      {<Component {...pageProps}></Component>}
+      <>{<Component {...pageProps}></Component>}</>
 
       <span
         style={{

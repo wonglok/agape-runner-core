@@ -1,118 +1,167 @@
 /* eslint-disable @next/next/no-img-element */
 import { AppDev } from '@/aws/AppDev'
 import { getID } from '@/lib/getID'
-import { Button, Tooltip } from 'antd'
+import { Collapse, Modal, Tooltip } from 'antd'
+import { useState } from 'react'
 import { useSnapshot } from 'valtio'
 
 export function FileTree() {
   let app = useSnapshot(AppDev)
-  let dev = app?.draft
 
   return (
     <>
-      {dev && (
-        <>
-          <MyPakcages dev={dev}></MyPakcages>
-        </>
-      )}
+      <div className='h-full'>
+        {app.draft && (
+          <>
+            <div
+              style={{ height: '40px' }}
+              className='flex items-center justify-center pl-2 bg-white border-b border-blue-600 cursor-pointer group'
+              onClick={async () => {
+                //
+
+                let getModules = () => {
+                  let mods = [
+                    {
+                      oid: getID(),
+                      moduleName: 'main',
+                      protected: true,
+                      files: [],
+                    },
+                  ]
+                  return mods
+                }
+
+                if (AppDev.draft.appPackages.length == 0) {
+                  AppDev.draft.appPackages.push({
+                    oid: getID(),
+                    packageName: 'app-loader',
+                    protected: true,
+                    modules: getModules(),
+                  })
+                } else {
+                  AppDev.draft.appPackages.push({
+                    oid: getID(),
+                    packageName: getID(),
+                    protected: false,
+                    modules: getModules(),
+                  })
+                }
+
+                await AppDev.save({ object: AppDev.draft })
+              }}
+            >
+              <div className='text-center'>Create Package</div>
+              <div className='px-1 py-1 cursor-auto'>
+                <img
+                  className='h-6 group-hover:animate-pulse'
+                  src={'/code-studio-ui/plus.svg'}
+                  alt={'add'}
+                ></img>
+              </div>
+            </div>
+
+            <MyPakcages></MyPakcages>
+          </>
+        )}
+      </div>
     </>
   )
 }
 
-function MyPakcages({ dev }) {
-  let appPackages = dev.appPackages
+function MyPakcages({}) {
+  let app = useSnapshot(AppDev)
+  let appPackages = app.draft.appPackages || []
 
   return (
     <>
-      <div className='flex items-center justify-between pr-1 bg-gray-100 group'>
-        <select
-          onChange={async (ev) => {
-            AppDev.draft.appLoader = ev.target.value
-            await AppDev.save({ object: AppDev.draft })
-          }}
-          defaultValue={AppDev.draft.appLoader}
-          className='w-full py-2 pl-2 bg-transparent appearance-none focus:outline-none'
-        >
-          {appPackages.map((ap) => {
-            return (
-              <option className='' key={ap.oid} value={ap.packageName}>
-                {ap.packageName}
-              </option>
-            )
-          })}
-        </select>
-        <img
-          className='h-6 group-hover:animate-pulse'
-          src={'/code-studio-ui/circle-arrow-left.svg'}
-          alt={'add'}
-        ></img>
-      </div>
+      {/*  */}
+      {/*  */}
+      {/*  */}
 
-      <div className='flex items-center justify-between pl-2 bg-gray-100 group'>
-        <div>Packages</div>
-        <div
-          className='px-1 py-1 cursor-auto'
-          onClick={async () => {
-            //
-
-            if (AppDev.draft.appPackages.length == 0) {
-              AppDev.draft.appPackages.push({
-                oid: getID(),
-                packageName: 'app-loader',
-                modules: [],
-              })
-            } else {
-              AppDev.draft.appPackages.push({
-                oid: getID(),
-                packageName: getID(),
-                modules: [],
-              })
-            }
-
-            await AppDev.save({ object: AppDev.draft })
-          }}
-        >
-          {/*  */}
-          <img
-            className='h-6 group-hover:animate-pulse'
-            src={'/code-studio-ui/plus.svg'}
-            alt={'add'}
-          ></img>
+      {/*  */}
+      <div className='' style={{ height: 'calc(100% - 40px)' }}>
+        <div className='h-full p-1 overflow-scroll overflow-x-hidden'>
+          <Collapse style={{ padding: '0px' }} accordion>
+            {appPackages.map((ap) => {
+              return (
+                <>
+                  <Collapse.Panel
+                    header={
+                      <div className='overflow-hidden'>{ap.packageName}</div>
+                    }
+                    key={ap.oid}
+                  >
+                    <OnePackage ap={ap}></OnePackage>
+                  </Collapse.Panel>
+                </>
+              )
+            })}
+          </Collapse>
         </div>
       </div>
-      {appPackages.map((ap) => {
-        return (
-          <div
-            key={ap.oid}
-            className='flex items-center justify-between w-full h-8 pl-2'
+    </>
+  )
+}
+
+function OnePackage({ ap }) {
+  let [removePop, openRemove] = useState(false)
+
+  return (
+    <>
+      <Modal
+        onCancel={() => {
+          openRemove(false)
+        }}
+        //
+        open={removePop}
+        title={`Remove this package?`}
+        footer={[]}
+      >
+        <button
+          className='p-2 text-white bg-red-500 rounded-lg'
+          onClick={async () => {
+            //
+            let arr = AppDev.draft.appPackages
+            arr.splice(
+              arr.findIndex((e) => e.oid === ap.oid),
+              1
+            )
+            await AppDev.save({ object: AppDev.draft })
+          }}
+        >
+          Remove Package
+        </button>
+      </Modal>
+
+      <div>
+        {!ap.protected && (
+          <button
+            className='px-3 py-1 text-white bg-red-500 rounded-lg'
+            onClick={() => {
+              //
+              openRemove(true)
+            }}
           >
-            <div className='w-full overflow-hidden'>
-              <Tooltip
-                placement='right'
-                title={
-                  <div>
-                    <input
-                      className='p-2 text-white focus:outline-none  '
-                      style={{ backgroundColor: `transparent` }}
-                      defaultValue={ap.packageName}
-                      onInput={(ev) => {
-                        let item = AppDev.draft.appPackages.find(
-                          (e) => e.oid === ap.oid
-                        )
-                        if (item) {
-                          item.packageName = ev.target.value
-                        }
-                      }}
-                    ></input>
-                  </div>
-                }
-              >
-                <div className=' whitespace-pre'>{ap.packageName}</div>
-              </Tooltip>
-            </div>
-          </div>
-        )
-      })}
+            Remove Package
+          </button>
+        )}
+        <Collapse style={{ padding: '0px' }} accordion>
+          {ap.modules.map((mo) => {
+            return (
+              <>
+                <Collapse.Panel
+                  header={
+                    <div className='overflow-hidden'>{mo.moduleName}</div>
+                  }
+                  key={mo.oid}
+                >
+                  <p>{JSON.stringify(mo.modules)}</p>
+                </Collapse.Panel>
+              </>
+            )
+          })}
+        </Collapse>
+      </div>
     </>
   )
 }
