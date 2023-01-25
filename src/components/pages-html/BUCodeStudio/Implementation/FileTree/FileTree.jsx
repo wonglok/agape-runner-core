@@ -27,7 +27,11 @@ export function FileTree() {
           }}
         ></input>
         <button
-          className='px-5 py-2 text-white bg-green-500 rounded-lg'
+          disabled={
+            packageName === 'app-loader' ||
+            app.draft.appPackages.find((e) => e.packageName === packageName)
+          }
+          className='px-5 py-2 text-white bg-green-500 rounded-lg disabled:bg-green-300 disabled:text-gray-300'
           onClick={async () => {
             //
             AppDev.draft.appPackages.push({
@@ -47,10 +51,17 @@ export function FileTree() {
             await AppDev.save({
               object: AppDev.draft,
             })
+            openCreatePopup(false)
           }}
         >
-          Create a new Package
+          Create
         </button>
+        {app.draft.appPackages.find((e) => e.packageName === packageName) && (
+          <span className='p-2 text-red-500'>Name Taken</span>
+        )}
+        {packageName === 'app-loader' && (
+          <span className='p-2 text-red-500'>Reseved name</span>
+        )}
       </Modal>
 
       <div className='h-full'>
