@@ -43,7 +43,6 @@ export function FileTree() {
                   oid: getID(),
                   moduleName: 'main',
                   protected: false,
-                  files: [],
                 },
               ],
             })
