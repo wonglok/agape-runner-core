@@ -5,6 +5,7 @@ import { setBGTo } from '@/lib/setBGTo'
 import { ExclamationCircleFilled } from '@ant-design/icons'
 import { Modal } from 'antd'
 import moment from 'moment'
+import Link from 'next/link'
 import { useRef } from 'react'
 import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
@@ -145,12 +146,14 @@ function OneVersion({ oid }) {
                 >
                   Remove
                 </button>
-                <button
-                  onClick={() => {}}
-                  className='inline-block p-3 px-4 bg-purple-500 border border-l-0 bg-opacity-30'
+                <Link
+                  href={`/admin/apps/${it.appGroupID}/${it.oid}/code`}
+                  target={'_blank'}
                 >
-                  Edit
-                </button>
+                  <button className='inline-block p-3 px-4 bg-purple-500 border border-l-0 bg-opacity-30'>
+                    Edit
+                  </button>
+                </Link>
 
                 <input
                   className='p-3 bg-white border border-l-0 rounded-lg rounded-l-none rounded-r-none w-80 bg-opacity-30'

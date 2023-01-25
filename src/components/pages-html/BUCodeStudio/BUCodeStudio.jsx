@@ -6,6 +6,7 @@ import path from 'path'
 import initSwc, { transform } from '@swc/wasm-web'
 // const uglify = require('uglifyjs-browser')
 import * as React from 'react'
+import { LeftMenuBar } from './FileTree/LeftMenuBar'
 
 export let RawModules = [
   {
@@ -132,28 +133,6 @@ export let RawModules = [
   },
 ]
 
-let appContent = {
-  // appName: 'wonglok831-app',
-  // //
-  // appRoutes: [
-  //   {
-  //     route: '/',
-  //     packageName: 'page-home',
-  //   },
-  //   {
-  //     route: '/about',
-  //     packageName: 'page-about',
-  //   },
-  // ],
-  appPackages: [
-    { packageName: 'my-app', modules: RawModules },
-    { packageName: 'page-about', modules: RawModules },
-    { packageName: 'lib-webgl', modules: RawModules },
-  ],
-}
-
-//
-
 let buildApp = async (input) => {
   /** @type {appContent} */
   let app = input
@@ -183,13 +162,15 @@ let buildApp = async (input) => {
 
   // console.log('fileList', fileList)
 
-  let firstPackage = appContent.appPackages[0]
+  // let firstPackage = appContent.appPackages[0]
 
   //
   let bundle = rollup({
     input: [
       getFileName({
-        onePackage: firstPackage, //app.appPackages.find((e) => e.packageName === app.packageName),
+        onePackage: app.appPackages.find(
+          (e) => e.packageName === app.appLoader
+        ), //firstPackage, //
         moduleName: 'main',
         fileName: 'index.js',
       }),
@@ -268,11 +249,7 @@ let buildApp = async (input) => {
 
   console.log(outputs, 'outputs')
 
-  const bc = new BroadcastChannel('editor-runtime-output-signal')
-  bc.postMessage({
-    outputs,
-  })
-  bc.close()
+  return outputs
 
   //
 }
@@ -320,7 +297,9 @@ async function compile({ input }) {
   return result.code
 }
 
-export function BUCodeStudio() {
+export function BUCodeStudioLab() {
+  let router = useRouter()
+
   let refStatus = useRef()
   let canUse = useRef(false)
 
@@ -332,35 +311,81 @@ export function BUCodeStudio() {
         canUse.current = true
 
         ///
-        buildApp(appContent)
+
+        let appContent = {
+          appLoader: 'my-app',
+          appPackages: [
+            { packageName: 'my-app', modules: RawModules },
+            { packageName: 'page-about', modules: RawModules },
+            { packageName: 'lib-webgl', modules: RawModules },
+          ],
+          appAssets: [],
+        }
+
+        //
+        buildApp(appContent).then((outputs) => {
+          const bc = new BroadcastChannel('editor-runtime-output-signal')
+          bc.postMessage({
+            outputs,
+          })
+          bc.close()
+        })
       })
     }
   }, [])
 
-  let router = useRouter()
-
   return (
     <div>
+      {/* {router?.query?.appVersionID} */}
       <div
         onClick={() => {
           let tt = setInterval(() => {
             if (canUse.current) {
               clearInterval(tt)
 
-              buildApp(appContent)
+              ///
+              buildApp(appContent).then((outputs) => {
+                const bc = new BroadcastChannel('editor-runtime-output-signal')
+                bc.postMessage({
+                  outputs,
+                })
+                bc.close()
+              })
             }
           })
           //
         }}
         className='inline-block p-5 bg-gray-200'
       >
-        Send RunData
+        Save Button
       </div>
       <div ref={refStatus}></div>
 
       {/*  */}
 
       {router && <iframe src={`./run`}></iframe>}
+    </div>
+  )
+}
+
+export function BUCodeStudio() {
+  return (
+    <div className='w-full h-full bg-gray-200'>
+      {/*  */}
+      <div className='h-6 px-1 py-1 text-xs bg-gray-100'>3D WebApp Studio</div>
+      <main
+        className='flex text-sm'
+        style={{ height: `calc(100% - 1.5rem * 2)` }}
+      >
+        <LeftMenuBar width={'225px'}></LeftMenuBar>
+
+        {/*  */}
+        {/*  */}
+        {/*  */}
+      </main>
+      <div className='h-6 px-1 py-1 text-xs bg-gray-100'>Your love</div>
+
+      {/*  */}
     </div>
   )
 }
