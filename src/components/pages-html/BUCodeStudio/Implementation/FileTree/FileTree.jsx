@@ -158,7 +158,7 @@ function Rename({ ap }) {
         }}
         //
         open={renamePop}
-        title={`Remove this package?`}
+        title={`Rename this package?`}
         footer={[]}
       >
         <input
@@ -174,6 +174,7 @@ function Rename({ ap }) {
             //
             let item = AppDev.draft.appPackages.find((e) => e.oid === ap.oid)
             item.packageName = packageName
+            openRename(false)
             await AppDev.save({ object: AppDev.draft })
           }}
         >
@@ -217,6 +218,7 @@ function Remove({ ap }) {
               arr.findIndex((e) => e.oid === ap.oid),
               1
             )
+            openRemove(false)
             await AppDev.save({ object: AppDev.draft })
           }}
         >
@@ -231,7 +233,7 @@ function Remove({ ap }) {
           openRemove(true)
         }}
       >
-        Remove Package
+        Remove
       </button>
     </>
   )
