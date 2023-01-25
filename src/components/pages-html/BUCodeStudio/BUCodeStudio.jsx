@@ -10,6 +10,8 @@ import { MiddleContent } from './MiddleContent/MiddleContent'
 import { RightSide } from './RightSide/RightSide'
 import { useState } from 'react'
 import { transform } from 'sucrase'
+import { AppVersion } from '@/aws/AppVersion'
+import { CSData } from '@/aws/CSData'
 
 let initSwc = async () => {}
 
@@ -395,21 +397,27 @@ let buildApp = async (input) => {
 // }
 
 export function BUCodeStudio() {
-  let [ready, setReady] = useState(() => {
-    return true
-  })
+  let router = useRouter()
+  let cs = useSnapshot(CSData)
   useEffect(() => {
     //
-  }, [])
+    CSData.appVersionID = router.query.appVersionID
+
+    if (CSData.appVersionID) {
+      AppVersion.get({ oid: CSData.appVersionID }).then((object) => {
+        CSData.appDev = object.item
+      })
+    }
+  }, [router.query.appVersionID])
   return (
     <div className='w-full h-full bg-gray-200'>
-      <TestButton></TestButton>
+      {/* <TestButton></TestButton> */}
       <div className='h-6 px-1 py-1 text-xs bg-gray-100'>3D WebApp Studio</div>
       <main
         className='relative flex text-sm'
         style={{ height: `calc(100% - 1.5rem * 2)` }}
       >
-        {ready ? (
+        {cs.appDev ? (
           <>
             <LeftMenuBar width={'225px'}></LeftMenuBar>
             <MiddleContent
@@ -441,46 +449,46 @@ export function BUCodeStudio() {
   )
 }
 
-function TestButton() {
-  let run = () => {
-    let appContent = {
-      appLoader: 'my-app',
-      appPackages: [
-        { packageName: 'my-app', modules: RawModules },
-        { packageName: 'page-about', modules: RawModules },
-        { packageName: 'lib-webgl', modules: RawModules },
-      ],
-      appAssets: [],
-    }
-    const bc = new BroadcastChannel('editor')
+// function TestButton() {
+//   let run = () => {
+//     let appContent = {
+//       appLoader: 'my-app',
+//       appPackages: [
+//         { packageName: 'my-app', modules: RawModules },
+//         { packageName: 'page-about', modules: RawModules },
+//         { packageName: 'lib-webgl', modules: RawModules },
+//       ],
+//       appAssets: [],
+//     }
+//     const bc = new BroadcastChannel('editor')
 
-    bc.onmessage = (event) => {
-      let action = event?.data?.action
+//     bc.onmessage = (event) => {
+//       let action = event?.data?.action
 
-      if (action === 'compile') {
-        ///
-        buildApp(appContent).then((outputs) => {
-          bc.postMessage({
-            outputs,
-          })
-          // bc.close()
-        })
-      }
-    }
-    ///
-    buildApp(appContent).then((outputs) => {
-      bc.postMessage({
-        outputs,
-      })
-      // bc.close()
-    })
-  }
+//       if (action === 'compile') {
+//         ///
+//         buildApp(appContent).then((outputs) => {
+//           bc.postMessage({
+//             outputs,
+//           })
+//           // bc.close()
+//         })
+//       }
+//     }
+//     ///
+//     buildApp(appContent).then((outputs) => {
+//       bc.postMessage({
+//         outputs,
+//       })
+//       // bc.close()
+//     })
+//   }
 
-  useEffect(() => {
-    run()
-  }, [])
-  return <button onClick={run}>Test</button>
-}
+//   useEffect(() => {
+//     run()
+//   }, [])
+//   return <button onClick={run}>Test</button>
+// }
 
 // function SaveButton() {
 //   let refStatus = useRef()
@@ -504,7 +512,6 @@ function TestButton() {
 //           ],
 //           appAssets: [],
 //         }
-
 //         //
 //         buildApp(appContent).then((outputs) => {
 //           const bc = new BroadcastChannel('editor-runtime-output-signal')
@@ -524,7 +531,6 @@ function TestButton() {
 //         let tt = setInterval(() => {
 //           if (canUse.current) {
 //             clearInterval(tt)
-
 //             ///
 //             buildApp(appContent).then((outputs) => {
 //               const bc = new BroadcastChannel('editor-runtime-output-signal')
