@@ -5,9 +5,9 @@ import { useEffect, useRef } from 'react'
 // import path from 'path'
 // import initSwc, { transform } from '@swc/wasm-web'
 // const uglify = require('uglifyjs-browser')
-import { LeftMenuBar } from './LeftMenuBar/LeftMenuBar'
-import { MiddleContent } from './MiddleContent/MiddleContent'
-import { RightSide } from './RightSide/RightSide'
+import { LeftMenuBar } from './Layout/LeftMenuBar/LeftMenuBar'
+import { MiddleContent } from './Layout/MiddleContent/MiddleContent'
+import { RightSide } from './Layout/RightSide/RightSide'
 // import { useState } from 'react'
 // import { transform } from 'sucrase'
 import { AppVersion } from '@/aws/AppVersion'
@@ -26,6 +26,14 @@ export function BUCodeStudio() {
       })
     }
   }, [router.query.appVersionID])
+
+  useEffect(() => {
+    let bg = document.body
+    bg.classList.add('bg-cyan-800')
+    return () => {
+      bg.classList.remove('bg-cyan-800')
+    }
+  }, [])
 
   return (
     <div className='w-full h-full bg-white'>
@@ -49,7 +57,7 @@ export function BUCodeStudio() {
         ) : (
           <>
             <div
-              className='w-full  h-full bg-cyan-800 '
+              className='w-full h-full bg-white bg-gradient-to-r'
               style={
                 {
                   // background: `radial-gradient(circle, rgba(193,193,193,1) 0%, rgba(45,45,45,1) 100%)`,
@@ -75,7 +83,7 @@ export function BUCodeStudio() {
 function Triangle() {
   return (
     <div
-      className='absolute top-0 left-0 flex items-center justify-center w-full h-full bg-white bg-opacity-50 backdrop-blur-md'
+      className='absolute top-0 left-0 flex items-center justify-center w-full h-full backdrop-blur-md'
       style={{ zIndex: '1000' }}
     >
       <div className='loader-triangle-7'>
