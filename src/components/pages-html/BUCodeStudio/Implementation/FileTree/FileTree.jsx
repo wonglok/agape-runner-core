@@ -152,27 +152,30 @@ function OnePackage({ ap }) {
       <div className='-m-2'>
         <Rename ap={ap}></Rename>
         <Remove ap={ap}></Remove>
-        {ap.modules.map((mo) => {
-          return (
-            <>
-              <div
-                //
-                key={mo.oid}
-              >
-                <button
-                  className='px-3 py-1 text-white bg-green-500 rounded-lg'
-                  onClick={() => {
-                    //
-                    //
-                  }}
+
+        <div className='p-2'>
+          {ap.modules.map((mo) => {
+            return (
+              <>
+                <div
+                  //
+                  key={mo.oid}
                 >
-                  {mo.moduleName}
-                </button>
-                <p>{JSON.stringify(mo.modules)}</p>
-              </div>
-            </>
-          )
-        })}
+                  <button
+                    className='px-3 py-1 text-white bg-green-500 rounded-lg'
+                    onClick={() => {
+                      //
+                      //
+                    }}
+                  >
+                    {mo.moduleName}
+                  </button>
+                  <p>{JSON.stringify(mo.modules)}</p>
+                </div>
+              </>
+            )
+          })}
+        </div>
       </div>
     </>
   )
