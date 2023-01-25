@@ -7,9 +7,59 @@ import { useSnapshot } from 'valtio'
 
 export function FileTree() {
   let app = useSnapshot(AppDev)
-
+  let [createPopup, openCreatePopup] = useState(false)
   return (
     <>
+      <Modal
+        onCancel={() => {
+          openCreatePopup(false)
+        }}
+        //
+        open={createPopup}
+        title={`Create a new Package?`}
+        footer={[]}
+      >
+        <button
+          className='px-5 py-2 text-white bg-green-500 rounded-lg'
+          onClick={async () => {
+            //
+
+            let getModules = () => {
+              let mods = [
+                {
+                  oid: getID(),
+                  moduleName: 'main',
+                  protected: true,
+                  files: [],
+                },
+              ]
+              return mods
+            }
+
+            if (AppDev.draft.appPackages.length == 0) {
+              AppDev.draft.appPackages.push({
+                oid: getID(),
+                packageName: 'app-loader',
+                protected: true,
+                modules: getModules(),
+              })
+            } else {
+              AppDev.draft.appPackages.push({
+                oid: getID(),
+                packageName: getID(),
+                protected: false,
+                modules: getModules(),
+              })
+            }
+
+            openCreatePopup(false)
+            await AppDev.save({ object: AppDev.draft })
+          }}
+        >
+          Create a new Package
+        </button>
+      </Modal>
+
       <div className='h-full'>
         {app.draft && (
           <>
@@ -18,36 +68,7 @@ export function FileTree() {
               className='flex items-center justify-center pl-2 bg-white border-b border-blue-600 cursor-pointer group'
               onClick={async () => {
                 //
-
-                let getModules = () => {
-                  let mods = [
-                    {
-                      oid: getID(),
-                      moduleName: 'main',
-                      protected: true,
-                      files: [],
-                    },
-                  ]
-                  return mods
-                }
-
-                if (AppDev.draft.appPackages.length == 0) {
-                  AppDev.draft.appPackages.push({
-                    oid: getID(),
-                    packageName: 'app-loader',
-                    protected: true,
-                    modules: getModules(),
-                  })
-                } else {
-                  AppDev.draft.appPackages.push({
-                    oid: getID(),
-                    packageName: getID(),
-                    protected: false,
-                    modules: getModules(),
-                  })
-                }
-
-                await AppDev.save({ object: AppDev.draft })
+                openCreatePopup(true)
               }}
             >
               <div className='text-center'>Create Package</div>
