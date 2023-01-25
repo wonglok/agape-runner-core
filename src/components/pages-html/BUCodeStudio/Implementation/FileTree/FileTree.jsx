@@ -8,17 +8,24 @@ import { useSnapshot } from 'valtio'
 export function FileTree() {
   let app = useSnapshot(AppDev)
   let [createPopup, openCreatePopup] = useState(false)
+  let [name, setName] = useState('my-new-module')
   return (
     <>
       <Modal
         onCancel={() => {
           openCreatePopup(false)
         }}
-        //
         open={createPopup}
         title={`Create a new Package?`}
         footer={[]}
       >
+        <input
+          className='px-5 py-2 mr-1 text-black bg-green-100 rounded-lg'
+          value={name}
+          onChange={(ev) => {
+            setName(ev.target.value)
+          }}
+        ></input>
         <button
           className='px-5 py-2 text-white bg-green-500 rounded-lg'
           onClick={async () => {
@@ -46,7 +53,7 @@ export function FileTree() {
             } else {
               AppDev.draft.appPackages.push({
                 oid: getID(),
-                packageName: getID(),
+                packageName: name,
                 protected: false,
                 modules: getModules(),
               })
@@ -101,7 +108,7 @@ function MyPakcages({}) {
 
       {/*  */}
       <div className='' style={{ height: 'calc(100% - 40px)' }}>
-        <div className='h-full p-1 overflow-scroll overflow-x-hidden'>
+        <div className='h-full p-2 overflow-scroll overflow-x-hidden'>
           <Collapse style={{ padding: '0px' }} accordion>
             {appPackages.map((ap) => {
               return (
@@ -154,7 +161,7 @@ function OnePackage({ ap }) {
         </button>
       </Modal>
 
-      <div>
+      <div className='-m-2'>
         {!ap.protected && (
           <button
             className='px-3 py-1 text-white bg-red-500 rounded-lg'
