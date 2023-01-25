@@ -140,6 +140,16 @@ export let RawModules = [
   },
 ]
 
+let appContent = {
+  appLoader: 'my-app',
+  appPackages: [
+    { packageName: 'my-app', modules: RawModules },
+    { packageName: 'page-about', modules: RawModules },
+    { packageName: 'lib-webgl', modules: RawModules },
+  ],
+  appAssets: [],
+}
+
 let buildApp = async (input) => {
   /** @type {appContent} */
   let app = input
