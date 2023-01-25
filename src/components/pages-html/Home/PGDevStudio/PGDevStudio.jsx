@@ -38,9 +38,7 @@ export function PGDevStudio({ content }) {
             bar={
               <>
                 <div className='flex items-center w-full h-full'>
-                  <div className='py-2'>
-                    <CreateAppGroup />
-                  </div>
+                  <CreateAppGroup />
                   {/* <button className='inline-block w-20 h-20 mr-3 text-xs bg-white border-2 border-gray-400 shadow-xl rounded-2xl'>
                     Import GLB
                   </button>

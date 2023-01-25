@@ -38,10 +38,11 @@ export function AllAppGroup() {
 
           <div className='inline-block w-full mb-3 lg:w-1/3'>
             <input
+              className='w-full py-1 border-b border-blue-400 placeholder:text-blue-400'
               onInput={(ev) => {
                 setQuery(ev.target.value)
               }}
-              placeholder='Search pages and filter hashtags'
+              placeholder='Filter by hashtags'
             ></input>
           </div>
 
@@ -86,7 +87,7 @@ function OneEntry({ oid }) {
             <div className='inline-flex rounded-xl' ref={renameRef}>
               <div className='inline-block'>
                 <button className='p-3 px-4 bg-white border-2 rounded-lg rounded-r-none bg-opacity-50'>
-                  App
+                  Project
                 </button>
                 <input
                   className='p-3 bg-white border-2 border-l-0 rounded-lg rounded-l-none rounded-r-none bg-opacity-50'

@@ -8,18 +8,13 @@ class REST {
   constructor({ table }) {
     this.table = table
   }
-  async create({ title, slug, appGroupID }) {
+  async create({ slug, appGroupID }) {
     nProgress.start()
     const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
     if (!sToken) {
       console.error('no session token')
       nProgress.done()
       throw await Promise.reject('no session token')
-    }
-    if (!title) {
-      console.error('no title given')
-      nProgress.done()
-      throw await Promise.reject('no title given')
     }
     if (!slug) {
       console.error('no slug given')
@@ -39,7 +34,6 @@ class REST {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
-        title: title,
         appGroupID: appGroupID,
         slug: slug,
       }),

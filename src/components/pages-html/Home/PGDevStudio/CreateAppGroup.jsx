@@ -31,12 +31,12 @@ export const CreateAppGroup = ({}) => {
 
   return (
     <>
-      <div className='inline-block'>
+      <div className='inline-block h-full'>
         <button
-          className='inline-block p-3 px-5 text-white bg-blue-500 rounded-lg'
+          className='h-full p-3 px-5 text-white bg-blue-500 rounded-lg'
           onClick={showModal}
         >
-          Create App
+          Create Project
         </button>
       </div>
 
@@ -46,7 +46,7 @@ export const CreateAppGroup = ({}) => {
         }}
         //
         open={open}
-        title={`Let's create YOUR metaverse.`}
+        title={`Let's create YOUR App.`}
         footer={[]}
       >
         <div className='flex items-center mb-2'>
@@ -57,7 +57,7 @@ export const CreateAppGroup = ({}) => {
             </div>
             <input
               defaultValue={''}
-              placeholder='about-me'
+              placeholder='my-new-app'
               className='p-2 bg-white border-2 border-l-0 border-gray-300 rounded-l-none rounded-xl'
               onInput={(ev) => {
                 setTitleInput(ev.target.value)

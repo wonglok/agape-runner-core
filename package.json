@@ -60,6 +60,7 @@
     "luxon": "^3.2.1",
     "material-ui-confirm": "^3.0.7",
     "md5": "^2.3.0",
+    "moment": "^2.29.4",
     "native-file-system-adapter": "^2.0.4",
     "next": "^12.3.1",
     "next-pwa": "^5.5.4",
