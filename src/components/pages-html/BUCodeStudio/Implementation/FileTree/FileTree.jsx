@@ -4,6 +4,7 @@ import { getID } from '@/lib/getID'
 import { Collapse, Modal, Tooltip } from 'antd'
 import { useState } from 'react'
 import { useSnapshot } from 'valtio'
+import { OneModule } from './OneModule'
 
 export function FileTree() {
   let app = useSnapshot(AppDev)
@@ -67,8 +68,8 @@ export function FileTree() {
         {app.draft && (
           <>
             <div
-              style={{ height: '40px' }}
-              className='flex items-center justify-center pl-2 bg-white border-b border-blue-600 cursor-pointer group'
+              style={{ height: '50px' }}
+              className='flex items-center justify-center px-2 bg-white cursor-pointer group'
               onClick={async () => {
                 //
                 if (AppDev.draft.appPackages.length == 0) {
@@ -93,14 +94,23 @@ export function FileTree() {
                 }
               }}
             >
-              <div className='text-center'>Create Package</div>
+              <button
+                className='w-full px-5 py-2 text-white bg-blue-500 rounded-lg'
+                onClick={() => {
+                  //
+                  // openCreateModule(true)
+                }}
+              >
+                + Package
+              </button>
+              {/* <div className='text-center'>Create Package</div>
               <div className='px-1 py-1 cursor-auto'>
                 <img
                   className='h-6 group-hover:animate-pulse'
                   src={'/code-studio-ui/plus.svg'}
                   alt={'add'}
                 ></img>
-              </div>
+              </div> */}
             </div>
 
             <MyPakcages></MyPakcages>
@@ -122,7 +132,7 @@ function MyPakcages({}) {
       {/*  */}
 
       {/*  */}
-      <div className='' style={{ height: 'calc(100% - 40px)' }}>
+      <div className='' style={{ height: 'calc(100% - 50px)' }}>
         <div className='h-full p-2 overflow-scroll overflow-x-hidden'>
           <Collapse style={{ padding: '0px' }} accordion>
             {appPackages.map((ap) => {
@@ -130,7 +140,26 @@ function MyPakcages({}) {
                 <>
                   <Collapse.Panel
                     header={
-                      <div className='overflow-hidden'>{ap.packageName}</div>
+                      <div className='flex items-center justify-between overflow-hidden'>
+                        {ap.packageName}
+
+                        <div>
+                          <Tooltip
+                            placement={'right'}
+                            title={
+                              <>
+                                <Rename ap={ap}></Rename>
+                                <Remove ap={ap}></Remove>
+                              </>
+                            }
+                          >
+                            <img
+                              className='h-6 ml-2 cursor-pointer hover:animate-spin'
+                              src={`/code-studio-ui/gear.svg`}
+                            ></img>
+                          </Tooltip>
+                        </div>
+                      </div>
                     }
                     key={ap.oid}
                   >
@@ -150,33 +179,72 @@ function OnePackage({ ap }) {
   return (
     <>
       <div className='-m-2'>
-        <Rename ap={ap}></Rename>
-        <Remove ap={ap}></Remove>
+        <div className='flex items-center justify-between w-full'>
+          <CreateModule ap={ap}></CreateModule>
+        </div>
 
-        <div className='p-2'>
+        <div className='flex flex-col items-end mt-3'>
           {ap.modules.map((mo) => {
-            return (
-              <>
-                <div
-                  //
-                  key={mo.oid}
-                >
-                  <button
-                    className='px-3 py-1 text-white bg-green-500 rounded-lg'
-                    onClick={() => {
-                      //
-                      //
-                    }}
-                  >
-                    {mo.moduleName}
-                  </button>
-                  <p>{JSON.stringify(mo.modules)}</p>
-                </div>
-              </>
-            )
+            return <OneModule key={mo.oid} ap={ap} mo={mo}></OneModule>
           })}
         </div>
       </div>
+    </>
+  )
+}
+
+function CreateModule({ ap }) {
+  let [renamePop, openCreateModule] = useState(false)
+  let [moduleName, setModuleName] = useState('my-new-mod')
+  return (
+    <>
+      <Modal
+        onCancel={() => {
+          openCreateModule(false)
+        }}
+        //
+        open={renamePop}
+        title={`CreateModule this package?`}
+        footer={[]}
+      >
+        <input
+          className='px-5 py-2 mr-1 text-black bg-green-100 rounded-lg'
+          value={moduleName}
+          onChange={(ev) => {
+            setModuleName(ev.target.value)
+          }}
+        ></input>
+        <button
+          className='p-2 text-white bg-blue-500 rounded-lg'
+          onClick={async () => {
+            //
+            let item = AppDev.draft.appPackages.find((e) => e.oid === ap.oid)
+            if (item) {
+              item.modules = item.modules || []
+              item.modules.push({
+                oid: getID(),
+                moduleName: moduleName,
+                protected: false,
+              })
+            }
+
+            openCreateModule(false)
+            await AppDev.save({ object: AppDev.draft })
+          }}
+        >
+          Create Module
+        </button>
+      </Modal>
+
+      <button
+        className='w-full px-5 py-2 text-white bg-blue-500 rounded-lg'
+        onClick={() => {
+          //
+          openCreateModule(true)
+        }}
+      >
+        + Module
+      </button>
     </>
   )
 }
@@ -217,7 +285,7 @@ function Rename({ ap }) {
       </Modal>
 
       <button
-        className='px-3 py-1 text-white bg-blue-500 rounded-lg'
+        className='px-3 py-1 mr-2 text-white bg-blue-500 rounded-lg'
         onClick={() => {
           //
           openRename(true)
