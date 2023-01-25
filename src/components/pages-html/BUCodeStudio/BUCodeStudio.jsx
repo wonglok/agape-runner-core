@@ -141,9 +141,9 @@ export let RawModules = [
 ]
 
 let appContent = {
-  appLoader: 'my-app',
+  appLoader: 'app-loader',
   appPackages: [
-    { packageName: 'my-app', modules: RawModules },
+    { packageName: 'app-loader', modules: RawModules },
     { packageName: 'page-about', modules: RawModules },
     { packageName: 'lib-webgl', modules: RawModules },
   ],
