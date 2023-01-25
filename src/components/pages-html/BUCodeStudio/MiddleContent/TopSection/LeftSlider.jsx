@@ -1,6 +1,6 @@
 export function LeftSider({ width = '225px' }) {
   return (
-    <div className='h-full bg-green-200' style={{ width: width }}>
+    <div className='h-full border-r border-cyan-800' style={{ width: width }}>
       LeftSider
     </div>
   )

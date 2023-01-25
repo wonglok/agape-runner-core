@@ -28,9 +28,11 @@ export function BUCodeStudio() {
   }, [router.query.appVersionID])
 
   return (
-    <div className='w-full h-full bg-gray-200'>
+    <div className='w-full h-full bg-white'>
       {/* <TestButton></TestButton> */}
-      <div className='h-6 px-1 py-1 text-xs bg-gray-100'>3D WebApp Studio</div>
+      <div className='h-6 px-1 py-1 text-xs text-white bg-cyan-800'>
+        3D WebApp Studio
+      </div>
       {/*  */}
       <main
         className='relative flex text-sm'
@@ -47,10 +49,12 @@ export function BUCodeStudio() {
         ) : (
           <>
             <div
-              className='w-full  h-full '
-              style={{
-                background: `radial-gradient(circle, rgba(193,193,193,1) 0%, rgba(45,45,45,1) 100%)`,
-              }}
+              className='w-full  h-full bg-cyan-800 '
+              style={
+                {
+                  // background: `radial-gradient(circle, rgba(193,193,193,1) 0%, rgba(45,45,45,1) 100%)`,
+                }
+              }
             ></div>
             <Triangle></Triangle>
           </>
@@ -61,9 +65,9 @@ export function BUCodeStudio() {
         {/*  */}
         {/*  */}
       </main>
-      <div className='h-6 px-1 py-1 text-xs bg-gray-100'>Your love</div>
-
-      {/*  */}
+      <div className='h-6 px-1 py-1 text-xs text-white bg-cyan-800'>
+        Your love
+      </div>
     </div>
   )
 }
