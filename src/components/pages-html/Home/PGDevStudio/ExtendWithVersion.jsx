@@ -146,10 +146,7 @@ function OneVersion({ oid }) {
                 >
                   Remove
                 </button>
-                <Link
-                  href={`/admin/apps/${it.appGroupID}/${it.oid}/code`}
-                  target={'_blank'}
-                >
+                <Link href={`/admin/apps/${it.oid}/code`} target={'_blank'}>
                   <button className='inline-block p-3 px-4 bg-purple-500 border border-l-0 bg-opacity-30'>
                     Edit
                   </button>
