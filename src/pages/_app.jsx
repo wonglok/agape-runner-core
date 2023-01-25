@@ -3,7 +3,6 @@ import '@/styles/index.css'
 import { useEffect, useRef, useState } from 'react'
 import { hydration } from '@/auth/GateMethods'
 import TitleHeader from '@/config'
-import { ConfirmProvider } from 'material-ui-confirm'
 import { useRouter } from 'next/router'
 
 function App({ Component, pageProps = { title: 'index' } }) {
@@ -18,10 +17,8 @@ function App({ Component, pageProps = { title: 'index' } }) {
   return (
     <>
       <Loading></Loading>
-      <ConfirmProvider>
-        {pageProps.title && <TitleHeader title={pageProps.title} />}
-        {<Component {...pageProps}></Component>}
-      </ConfirmProvider>
+      {pageProps.title && <TitleHeader title={pageProps.title} />}
+      {<Component {...pageProps}></Component>}
 
       <span
         style={{
@@ -114,6 +111,7 @@ function Triangle() {
     </div>
   )
 }
+
 function LoaderGrid() {
   return (
     <>
