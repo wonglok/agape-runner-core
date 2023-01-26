@@ -49,11 +49,31 @@ export const AppDev = proxy<{
 
   activeModuleID: string
   save: Function
+  getModules: Function
 }>({
   appFiles: [],
   draft: null,
 
   activeModuleID: '',
+
+  getModules: () => {
+    //
+    // let modules = [...AppDev.draft.appPackages.map((r) => r.modules)]
+    //
+    let modules = []
+
+    let draft = AppDev.draft
+
+    if (draft && draft.appPackages) {
+      draft.appPackages.forEach((pack) => {
+        modules.push(...(pack.modules || []))
+      })
+    }
+
+    console.log(modules)
+
+    return modules
+  },
   save: async ({ object = false }) => {
     //
     if (!object) {

@@ -1,11 +1,14 @@
-import { BottomSection } from './BottomSection/BottomSection'
-import { TopSection } from './TopSection/TopSection'
+import { LeftSider } from './VerticalSection/LeftSlider'
+import { RightCoder } from './VerticalSection/RightCoder'
 
 export function MiddleContent({ width = '225px' }) {
   return (
-    <div className='h-full border-r border-cyan-800' style={{ width: width }}>
-      <TopSection height='calc(100% - 200px * 1)'></TopSection>
-      <BottomSection height='200px'></BottomSection>
+    <div
+      className='flex h-full border-r border-cyan-800'
+      style={{ width: width }}
+    >
+      <LeftSider width='180px' />
+      <RightCoder width='calc(100% - 180px)'></RightCoder>
     </div>
   )
 }

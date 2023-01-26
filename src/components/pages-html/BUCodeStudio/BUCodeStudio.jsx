@@ -5,15 +5,12 @@ import { useEffect, useRef } from 'react'
 // import path from 'path'
 // import initSwc, { transform } from '@swc/wasm-web'
 // const uglify = require('uglifyjs-browser')
-import { LeftMenuBar } from './Layout/LeftMenuBar/LeftMenuBar'
-import { MiddleContent } from './Layout/MiddleContent/MiddleContent'
-import { RightSide } from './Layout/RightSide/RightSide'
 // import { useState } from 'react'
 // import { transform } from 'sucrase'
 import { AppVersion } from '@/aws/AppVersion'
 import { CSData } from '@/aws/CSData'
 import { AppDev } from '@/aws/AppDev'
-
+import { TabCoding } from './Tabs/TabCoding'
 export function BUCodeStudio() {
   let router = useRouter()
   let app = useSnapshot(AppDev)
@@ -37,23 +34,19 @@ export function BUCodeStudio() {
   }, [])
 
   return (
-    <div className='w-full h-full bg-white'>
+    <div className='w-full h-full overflow-hidden bg-white'>
       <div className='h-6 px-1 py-1 text-xs text-white bg-cyan-800'>
         3D WebApp Studio
       </div>
 
       {/*  */}
       <main
-        className='relative flex text-sm'
+        className='relative text-sm'
         style={{ height: `calc(100% - 1.5rem * 2)` }}
       >
         {app.draft ? (
           <>
-            <LeftMenuBar width={'225px'}></LeftMenuBar>
-            <MiddleContent
-              width={'calc((100% - 225px) * 55 / 100)'}
-            ></MiddleContent>
-            <RightSide width={'calc((100% - 225px) * 45 / 100)'}></RightSide>
+            <TabCoding></TabCoding>
           </>
         ) : (
           <>

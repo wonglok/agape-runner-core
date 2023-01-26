@@ -135,37 +135,35 @@ function MyPakcages({}) {
       <div className='' style={{ height: 'calc(100% - 50px)' }}>
         <div className='h-full px-2 overflow-scroll overflow-x-hidden'>
           <Collapse style={{ padding: '0px' }} accordion>
-            {appPackages.map((ap) => {
+            {appPackages.map((ap, idx) => {
               return (
-                <>
-                  <Collapse.Panel
-                    header={
-                      <div className='flex items-center justify-between overflow-hidden'>
-                        {ap.packageName}
+                <Collapse.Panel
+                  key={ap.oid + idx + ap.packageName}
+                  header={
+                    <div className='flex items-center justify-between overflow-hidden'>
+                      {ap.packageName}
 
-                        <div>
-                          <Tooltip
-                            placement={'right'}
-                            title={
-                              <>
-                                <Rename ap={ap}></Rename>
-                                <Remove ap={ap}></Remove>
-                              </>
-                            }
-                          >
-                            <img
-                              className='h-6 ml-2 cursor-pointer hover:animate-spin'
-                              src={`/code-studio-ui/gear.svg`}
-                            ></img>
-                          </Tooltip>
-                        </div>
+                      <div>
+                        <Tooltip
+                          placement={'right'}
+                          title={
+                            <>
+                              <Rename ap={ap}></Rename>
+                              <Remove ap={ap}></Remove>
+                            </>
+                          }
+                        >
+                          <img
+                            className='h-6 ml-2 cursor-pointer hover:animate-spin'
+                            src={`/code-studio-ui/gear.svg`}
+                          ></img>
+                        </Tooltip>
                       </div>
-                    }
-                    key={ap.oid}
-                  >
-                    <OnePackage ap={ap}></OnePackage>
-                  </Collapse.Panel>
-                </>
+                    </div>
+                  }
+                >
+                  <OnePackage ap={ap}></OnePackage>
+                </Collapse.Panel>
               )
             })}
           </Collapse>

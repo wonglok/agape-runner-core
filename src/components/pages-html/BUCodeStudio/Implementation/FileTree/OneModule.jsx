@@ -25,7 +25,13 @@ export function OneModule({ ap, mo }) {
             ></img>
           </Tooltip>
         </div>
-        <div className='inline-flex items-center justify-between'>
+        <div
+          className='inline-flex items-center justify-between cursor-pointer'
+          onClick={() => {
+            //
+            AppDev.activeModuleID = mo.oid
+          }}
+        >
           {mo.moduleName}
           <img
             className='h-5 ml-2'
@@ -38,8 +44,11 @@ export function OneModule({ ap, mo }) {
 }
 
 function Rename({ ap, mo }) {
+  //
   let [renamePop, openRename] = useState(false)
   let [moduleName, setNewName] = useState(mo.moduleName)
+
+  //
   return (
     <>
       <Modal
