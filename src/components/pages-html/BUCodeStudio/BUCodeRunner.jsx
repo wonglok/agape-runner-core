@@ -1,4 +1,4 @@
-import { UserEndPoints } from '@/aws/UserEndPoints'
+// import { UserEndPoints } from '@/aws/UserEndPoints'
 import { useEffect, useRef } from 'react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
@@ -52,7 +52,7 @@ export const getLoader = async ({
       // Don't retrigger load events on module scripts
       noLoadEventRetriggers: true, // default false
       // Skip source analysis of certain URLs for full native passthrough
-      skip: /^https:\/\/cdn\.com/, // defaults to null
+      // skip: /^https:\/\/cdn\.com/, // defaults to null
       // Clean up blob URLs after execution
       revokeBlobURLs: true, // default false
       // Secure mode to not support loading modules without integrity (integrity is always verified though)
@@ -87,45 +87,45 @@ export const getLoader = async ({
 
     await import('es-module-shims')
 
-    let getEndPoint = () => UserEndPoints[process.env.NODE_ENV]
-    //
-    let getImportMap = async (myPackages) => {
-      return fetch(`${getEndPoint()}/import-map`, {
-        method: 'POST',
-        body: JSON.stringify({
-          packages: myPackages,
-        }),
-        mode: 'cors',
-      }).then((r) => {
-        if (r.ok) {
-          return r.json()
-        } else {
-          return Promise.reject()
-        }
-      })
-    }
+    // let getEndPoint = () => UserEndPoints[process.env.NODE_ENV]
+    // //
+    // let getImportMap = async (myPackages) => {
+    //   return fetch(`${getEndPoint()}/import-map`, {
+    //     method: 'POST',
+    //     body: JSON.stringify({
+    //       packages: myPackages,
+    //     }),
+    //     mode: 'cors',
+    //   }).then((r) => {
+    //     if (r.ok) {
+    //       return r.json()
+    //     } else {
+    //       return Promise.reject()
+    //     }
+    //   })
+    // }
 
     let tt = setInterval(() => {
       if (window.importShim) {
         clearInterval(tt)
         resolve({
-          addNPMs: (myPackages = ['three']) => {
-            //
-            return getImportMap(myPackages).then((r) => {
-              window.importShim.addImportMap(r)
+          // addNPMs: (myPackages = ['three']) => {
+          //   //
+          //   return getImportMap(myPackages).then((r) => {
+          //     window.importShim.addImportMap(r)
 
-              return Promise.all(
-                myPackages.map((it) => {
-                  return window.importShim(it)
-                })
-              ).then((result) => {
-                //
-                // console.log(result)
-                //
-                return result
-              })
-            })
-          },
+          //     return Promise.all(
+          //       myPackages.map((it) => {
+          //         return window.importShim(it)
+          //       })
+          //     ).then((result) => {
+          //       //
+          //       // console.log(result)
+          //       //
+          //       return result
+          //     })
+          //   })
+          // },
           load: window.importShim,
           addImportMap: window.importShim.addImportMap,
         })
