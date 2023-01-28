@@ -56,10 +56,30 @@ export let buildApp = async (input) => {
             return `${rollupLocalhost}${address}`
           }
 
+          if (importee === 'three') {
+            return `${location.origin}/vendor/three-r149/build/three.module.js`
+          }
+          if (importee.indexOf('three/examples/') === 0) {
+            return `${
+              location.origin
+            }/vendor/three-r149/examples/${importee.replace(
+              'three/examples/',
+              ''
+            )}`
+          }
+
           return new URL(importee, importer).href
         },
 
         async load(id) {
+          if (id.indexOf('http') === 0) {
+            return fetch(id)
+              .then((r) => r.text())
+              .then((t) => {
+                return `${t}`
+              })
+          }
+
           if (id.indexOf('network:') === 0) {
             let url = id.replace('network:', '').replace(rollupLocalhost, '')
 

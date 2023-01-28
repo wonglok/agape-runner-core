@@ -158,7 +158,7 @@ let run = async ({ domElement, outputs, onClean }) => {
   loaderUtils.addImportMap({
     imports: {
       [`three`]: '/vendor/three-r149/build/three.module.js',
-      [`three/examples`]: '/vendor/three-r149/examples',
+      [`three/examples/`]: '/vendor/three-r149/examples/',
     },
   })
 
