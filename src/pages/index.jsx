@@ -29,5 +29,3 @@ export default function SlugPage() {
 
   return <>{outputs && <BUCodeRunner outputs={outputs}></BUCodeRunner>}</>
 }
-
-//
