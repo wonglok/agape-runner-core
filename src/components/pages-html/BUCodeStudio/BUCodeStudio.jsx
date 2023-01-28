@@ -22,7 +22,15 @@ export function BUCodeStudio() {
     if (CSData.appVersionID) {
       AppVersion.get({ oid: CSData.appVersionID }).then((object) => {
         AppDev.draft = object.item
-        AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid })
+        AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid }).then(() => {
+          try {
+            AppDev.buildCode().catch((e) => {
+              console.log(e)
+            })
+          } catch (e) {
+            console.log(e)
+          }
+        })
       })
     }
   }, [router.query.appVersionID])

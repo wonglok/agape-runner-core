@@ -155,7 +155,7 @@ export let buildApp = async (input) => {
 
   //
 
-  // console.log(outputs, 'outputs')
+  console.log(outputs, 'outputs')
 
   return outputs
 

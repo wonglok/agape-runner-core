@@ -3,6 +3,7 @@ import { UserEndPoints } from '@/aws/UserEndPoints'
 import { useEffect, useRef } from 'react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
+// import * as R3F from
 
 export const DefaultSetting = {
   onFetch: ({ url, options }) => {
@@ -139,6 +140,10 @@ export const getLoader = async ({
 let run = async ({ domElement, outputs, onClean }) => {
   window.React = React
   window.ReactDOM = ReactDOM
+  window.getR3F = () => import('@react-three/fiber')
+  window.getDrei = () => import('@react-three/drei')
+  window.getPost = () => import('@react-three/postprocessing')
+  window.getXR = () => import('@react-three/xr')
 
   let loaderUtils = await getLoader()
 
@@ -224,5 +229,5 @@ export function BUCodeRunner({ outputsJSON = false }) {
     }
   }, [outputsJSON])
   //
-  return <div ref={ref}></div>
+  return <div className='w-full h-full' ref={ref}></div>
 }
