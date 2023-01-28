@@ -19,7 +19,6 @@ export function ModulesList() {
   let packageOID = pack?.oid
   let moduleOID = mod?.oid
 
-  console.log(AppDev.appCodeFiles)
   let content = app.appCodeFiles.filter(
     (e) => e.packageOID === packageOID && e.moduleOID === moduleOID
   )
@@ -54,9 +53,6 @@ export function ModulesList() {
                   }).then(() => {
                     AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid })
                   })
-
-                  // console.log('code file')
-                  //
                 }}
               >
                 + Code File
@@ -103,7 +99,11 @@ export function OneFile({ file }) {
         </div>
         <div
           className='inline-flex items-center justify-between cursor-pointer'
-          onClick={() => {}}
+          onClick={() => {
+            AppDev.activeFileID = file.oid
+            AppDev.activeModuleID = file.moduleOID
+            AppDev.activePackageID = file.packageOID
+          }}
         >
           {file.fileName}
           <img
