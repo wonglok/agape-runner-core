@@ -66,8 +66,6 @@ export function BUCodeStudio() {
         {/*  */}
         {/*  */}
         {/*  */}
-        {/*  */}
-        {/*  */}
       </main>
       <div className='h-6 px-1 py-1 text-xs text-white bg-cyan-800'>
         Your love

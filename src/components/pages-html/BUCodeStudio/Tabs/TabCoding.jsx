@@ -5,6 +5,7 @@ import { FileTree } from '@/components/pages-html/BUCodeStudio/Implementation/Fi
 import { ModulesList } from '@/components/pages-html/BUCodeStudio/Implementation/ModulesList/ModulesList'
 import { ColumnFiles } from '@/components/pages-html/BUCodeStudio/Implementation/ColumnFiles/ColumnFiles'
 import { CodeEdtior } from '../Implementation/CodeEditor/CodeEditor'
+import { RunWindow } from '../Implementation/RunWindow/RunWindow'
 
 export function TabCoding() {
   return (
@@ -40,7 +41,9 @@ export function TabCoding() {
         <HorizontalSection
           border
           width={'calc((100% - 225px - 225px) * 45 / 100)'}
-        ></HorizontalSection>
+        >
+          <RunWindow></RunWindow>
+        </HorizontalSection>
       </HorizontalParent>
       {/*  */}
     </>

@@ -2,7 +2,7 @@
 import { AppDev } from '@/aws/AppDev'
 import { getID } from '@/lib/getID'
 import { Collapse, Modal, Tooltip } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import { OneModule } from './OneModule'
 
@@ -125,6 +125,13 @@ function MyPakcages({}) {
   let app = useSnapshot(AppDev)
   let appPackages = app.draft.appPackages || []
 
+  useEffect(() => {
+    AppDev.activePackageID = app.draft?.appPackages[0]?.oid
+    AppDev.activeModuleID = app.draft.appPackages[0]?.modules[0].oid
+    AppDev.activeFileID = app.appCodeFiles.find(
+      (e) => e.fileName === 'index.js'
+    )?.oid
+  }, [app])
   return (
     <>
       {/*  */}

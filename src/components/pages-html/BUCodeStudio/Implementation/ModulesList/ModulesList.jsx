@@ -38,9 +38,11 @@ export function ModulesList() {
 
   useEffect(() => {
     if (moduleOID) {
-      AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid })
+      AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid }).then(() => {
+        //
+      })
     }
-  }, [moduleOID])
+  }, [mod?.files, moduleOID])
   //
   return (
     <>

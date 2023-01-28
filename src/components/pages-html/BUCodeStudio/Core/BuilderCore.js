@@ -160,12 +160,12 @@ export let RawModules = [
             export const GUI = {
               fala: 1234,
               yo: ({ domElement, onClean }) => {
-                window.appRoot = window.appRoot || ReactDOM.createRoot(domElement)
+                domElement.appRoot = domElement.appRoot || ReactDOM.createRoot(domElement)
 
-                window.appRoot.render(<YoTeachApp></YoTeachApp>)
+                domElement.appRoot.render(<YoTeachApp></YoTeachApp>)
 
                 onClean(() => {
-                  window.appRoot.unmount()
+                  domElement.appRoot.unmount()
                 })
               }
             }
@@ -266,7 +266,6 @@ export let appContent = {
     { packageName: 'page-about', modules: RawModules },
     { packageName: 'lib-webgl', modules: RawModules },
   ],
-  appAssets: [],
 }
 
 export function TestButton() {

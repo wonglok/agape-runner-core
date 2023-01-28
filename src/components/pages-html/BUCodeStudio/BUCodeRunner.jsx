@@ -118,18 +118,25 @@ let run = async ({ domElement, outputs, onClean }) => {
   }
 
   loaderUtils.load('index.js').then((r) => {
-    r.GUI.yo({
-      domElement: domElement,
-      onClean,
-      // load3D: async () => {
-      //   return {
-      //     r3f: await import('@react-three/fiber'),
-      //     post: await import('@react-three/postprocessing'),
-      //     drei: await import('@react-three/drei'),
-      //     three: await import('three'),
-      //   }
-      // },
-    })
+    let runner = r.default
+    if (typeof runner === 'function') {
+      runner({ domElement, onClean })
+    } else {
+      console.log('cannot find default function for entry index.js')
+    }
+
+    // r.GUI.yo({
+    //   domElement: domElement,
+    //   onClean,
+    //   // load3D: async () => {
+    //   //   return {
+    //   //     r3f: await import('@react-three/fiber'),
+    //   //     post: await import('@react-three/postprocessing'),
+    //   //     drei: await import('@react-three/drei'),
+    //   //     three: await import('three'),
+    //   //   }
+    //   // },
+    // })
   })
 }
 
@@ -154,6 +161,7 @@ export function BUCodeRunner({ outputs = false }) {
     bc.onmessage = (event) => {
       let outputs = event.data.outputs
       if (outputs) {
+        console.log(outputs)
         run({ domElement: ref.current, outputs: outputs, onClean })
       }
     }

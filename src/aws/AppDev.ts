@@ -1,6 +1,7 @@
 import { proxy } from 'valtio'
 import { AppVersion } from './AppVersion'
 import { AppCodeFile } from './AppCodeFile'
+import { buildApp } from '@/components/pages-html/BUCodeStudio/Core/BuilderCore'
 
 /*
 
@@ -62,6 +63,7 @@ export const AppDev = proxy<{
   activeModuleID: string
   activeFileID: string
   save: Function
+  buildCode: Function
   saveCodeFile: Function
 }>({
   appCodeFiles: [],
@@ -71,10 +73,37 @@ export const AppDev = proxy<{
   activeModuleID: '',
   activeFileID: '',
 
+  buildCode: async ({}) => {
+    //
+    let AppPackages = JSON.parse(JSON.stringify(AppDev.draft.appPackages))
+
+    buildApp({
+      appLoader: 'app-loader',
+      appPackages: AppPackages.map((pack) => {
+        pack.modules.forEach((mod) => {
+          mod.files = AppCodeFile.data.filter((e) => {
+            return (
+              AppDev.activePackageID === e.packageOID &&
+              AppDev.activeModuleID === e.moduleOID
+            )
+          })
+        })
+
+        return pack
+      }),
+    }).then((outputs) => {
+      const bc = new BroadcastChannel('editor')
+      bc.postMessage({
+        outputs,
+      })
+    })
+  },
+
   saveCodeFile: async ({ object }) => {
     if (!object) {
       throw new Error('needs object')
     }
+    AppDev.buildCode()
     return AppCodeFile.update({ object }).then(
       (r) => {
         console.log(r)
