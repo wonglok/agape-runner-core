@@ -176,7 +176,7 @@ let run = async ({ domElement, outputs, onClean }) => {
   })
 }
 
-export function BUCodeRunner({ outputs = false }) {
+export function BUCodeRunner({ outputsJSON = false }) {
   let ref = useRef()
 
   useEffect(() => {
@@ -197,20 +197,23 @@ export function BUCodeRunner({ outputs = false }) {
     bc.onmessage = (event) => {
       let outputs = event.data.outputs
       if (outputs) {
-        console.log(outputs)
+        cleans.forEach((v) => v())
+        cleans = []
         run({ domElement: ref.current, outputs: outputs, onClean })
       }
     }
 
-    if (outputs) {
-      run({ domElement: ref.current, outputs: outputs, onClean })
+    if (outputsJSON) {
+      run({ domElement: ref.current, outputs: outputsJSON, onClean })
     }
 
     return () => {
-      bc.close()
       cleans.forEach((v) => v())
+      cleans = []
+
+      bc.close()
     }
-  }, [outputs])
+  }, [outputsJSON])
   //
   return <div ref={ref}></div>
 }
