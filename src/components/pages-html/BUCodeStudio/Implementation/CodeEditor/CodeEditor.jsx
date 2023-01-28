@@ -1,5 +1,6 @@
 import { AppDev } from '@/aws/AppDev'
 import Editor from '@monaco-editor/react'
+import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
 import { useSnapshot } from 'valtio'
@@ -26,23 +27,27 @@ export function CodeEdtior() {
   //   console.log(editorRef.current.getValue())
   // }
 
-  let timeout = useRef(0)
+  let [msg, setMessage] = useState('')
+
   function handleEditorChange(value, event) {
     console.log('here is the current model value:', value, event)
 
     file.content = value
 
-    clearTimeout(timeout.current)
-    timeout.current = setTimeout(() => {
-      AppDev.saveCodeFile({ object: file })
-    }, 500)
+    setMessage('dirty')
   }
 
   useEffect(() => {
     let hh = (ev) => {
       if (ev.key === 's' && (ev.metaKey || ev.ctrlKey)) {
         ev.preventDefault()
-        AppDev.saveCodeFile({ object: file })
+        setMessage('loading')
+        AppDev.saveCodeFile({ object: file }).then(() => {
+          setMessage('done')
+          setTimeout(() => {
+            setMessage('')
+          }, 1000)
+        })
       }
     }
 
@@ -58,16 +63,30 @@ export function CodeEdtior() {
     <>
       {/*  */}
       {file && (
-        <Editor
-          height='100%'
-          theme='vs-dark'
-          path={file.oid}
-          defaultLanguage={file.language || 'javascript'}
-          defaultValue={file.content}
-          onMount={handleEditorDidMount}
-          onChange={handleEditorChange}
-          onValidate={handleEditorValidation}
-        ></Editor>
+        <>
+          <div
+            className={
+              'flex items-center justify-center text-center text-white ' +
+              `bg-teal-800`
+            }
+            style={{ height: '30px' }}
+          >
+            {msg === '' && `${file?.fileName}`}
+            {msg === 'dirty' && ` 💾 Needs to save...`}
+            {msg === 'loading' && ` 🌩️ Saving...`}
+            {msg === 'done' && ` 👌🏻 Done...`}
+          </div>
+          <Editor
+            height='calc(100% - 30px)'
+            theme='vs-dark'
+            path={file.oid}
+            defaultLanguage={file.language || 'javascript'}
+            defaultValue={file.content}
+            onMount={handleEditorDidMount}
+            onChange={handleEditorChange}
+            onValidate={handleEditorValidation}
+          ></Editor>
+        </>
       )}
       {/*  */}
     </>
