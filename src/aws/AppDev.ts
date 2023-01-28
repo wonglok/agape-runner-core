@@ -23,7 +23,6 @@ declare type AppVersionDraft = {
   appLoader: 'string'
   appPackages: AppPackage[]
   appAssets: []
-  appFiles: AppFile[]
   //
 }
 
@@ -36,11 +35,19 @@ declare type AppPackage = {
 declare type RawModule = {
   oid: string
   moduleName: string
-  files: AppFile[]
+  files: AppCodeFile[]
 }
 
-declare type AppFile = {
+declare type AppCodeFile = {
+  appGroupID: string
+  appVersionID: string
+
+  //
   oid: string
+
+  packageOID: string
+  moduleOID: string
+
   fileName: string
   content: string
 }
@@ -48,18 +55,24 @@ declare type AppFile = {
 
 export const AppDev = proxy<{
   draft: AppVersionDraft
-  appFiles: AppFile[]
+  appCodeFiles: AppCodeFile[]
 
   activePackageID: string
   activeModuleID: string
+  activeFileID: string
   save: Function
+  saveCodeFile: Function
 }>({
-  appFiles: [],
+  appCodeFiles: [],
   draft: null,
 
   activePackageID: '',
   activeModuleID: '',
+  activeFileID: '',
 
+  saveCodeFile: ({ object }) => {
+    //
+  },
   save: async ({ object = false }) => {
     //
     if (!object) {

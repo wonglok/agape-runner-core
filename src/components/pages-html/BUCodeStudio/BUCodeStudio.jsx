@@ -11,6 +11,7 @@ import { AppVersion } from '@/aws/AppVersion'
 import { CSData } from '@/aws/CSData'
 import { AppDev } from '@/aws/AppDev'
 import { TabCoding } from './Tabs/TabCoding'
+import { AppCodeFile } from '@/aws/AppCodeFile'
 export function BUCodeStudio() {
   let router = useRouter()
   let app = useSnapshot(AppDev)
@@ -21,6 +22,7 @@ export function BUCodeStudio() {
     if (CSData.appVersionID) {
       AppVersion.get({ oid: CSData.appVersionID }).then((object) => {
         AppDev.draft = object.item
+        AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid })
       })
     }
   }, [router.query.appVersionID])

@@ -3,12 +3,20 @@ import { invalidate } from '@react-three/fiber'
 import { CSData } from './CSData'
 import { UserEndPoints } from './UserEndPoints'
 import nProgress from 'nprogress'
+import { AppDev } from './AppDev'
 
 class REST {
   constructor({ table }) {
     this.table = table
   }
-  async create({ slug, appGroupID }) {
+  async create({
+    appGroupID,
+    appVersionID,
+    packageOID,
+    moduleOID,
+    fileName,
+    content,
+  }) {
     nProgress.start()
     const sToken = window.localStorage.getItem(SESSION_ACCESS_KEY)
     if (!sToken) {
@@ -16,16 +24,37 @@ class REST {
       nProgress.done()
       throw await Promise.reject('no session token')
     }
-    if (!slug) {
-      console.error('no slug given')
+    if (!appVersionID) {
+      console.error('no appVersionID given')
       nProgress.done()
-      throw await Promise.reject('no slug given')
+      throw await Promise.reject('no appVersionID given')
     }
     if (!appGroupID) {
       console.error('no appGroupID given')
       nProgress.done()
       throw await Promise.reject('no appGroupID given')
-      //
+    }
+
+    if (!packageOID) {
+      console.error('no packageOID given')
+      nProgress.done()
+      throw await Promise.reject('no packageOID given')
+    }
+    if (!moduleOID) {
+      console.error('no moduleOID given')
+      nProgress.done()
+      throw await Promise.reject('no moduleOID given')
+    }
+
+    if (!fileName) {
+      console.error('no fileName given')
+      nProgress.done()
+      throw await Promise.reject('no fileName given')
+    }
+    if (typeof content === 'undefined') {
+      console.error('no content given')
+      nProgress.done()
+      throw await Promise.reject('no content given')
     }
 
     const myAPIEndPoint = UserEndPoints[process.env.NODE_ENV]
@@ -34,8 +63,12 @@ class REST {
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify({
-        appGroupID: appGroupID,
-        slug: slug,
+        appGroupID,
+        appVersionID,
+        packageOID,
+        moduleOID,
+        fileName,
+        content,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,
@@ -56,7 +89,7 @@ class REST {
     }
   }
 
-  async list({ appGroupID }) {
+  async list({ appVersionID }) {
     nProgress.start()
 
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
@@ -73,7 +106,7 @@ class REST {
       mode: 'cors',
       body: JSON.stringify({
         //
-        appGroupID,
+        appVersionID,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,
@@ -189,15 +222,15 @@ class REST {
   }
   get data() {
     nProgress.done()
-    return CSData.appVersions
+    return AppDev.appCodeFiles
   }
   set data(v) {
-    CSData.appVersions = v
+    AppDev.appCodeFiles = v
   }
-  invalidate({ appGroupID }) {
+  invalidate({ appVersionID }) {
     //
-    this.data = this.data || []
-    return this.list({ appGroupID })
+    this.data = []
+    return this.list({ appVersionID })
       .then((data) => {
         this.data = data.list
       })
@@ -207,4 +240,4 @@ class REST {
   }
 }
 
-export const AppVersion = new REST({ table: `AppVersion` })
+export const AppCodeFile = new REST({ table: `AppCodeFile` })
