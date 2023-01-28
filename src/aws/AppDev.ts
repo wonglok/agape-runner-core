@@ -1,5 +1,6 @@
 import { proxy } from 'valtio'
 import { AppVersion } from './AppVersion'
+import { AppCodeFile } from './AppCodeFile'
 
 /*
 
@@ -70,8 +71,20 @@ export const AppDev = proxy<{
   activeModuleID: '',
   activeFileID: '',
 
-  saveCodeFile: ({ object }) => {
-    //
+  saveCodeFile: async ({ object }) => {
+    if (!object) {
+      throw new Error('needs object')
+    }
+    return AppCodeFile.update({ object }).then(
+      (r) => {
+        console.log(r)
+
+        return r
+      },
+      async (err) => {
+        console.log(await err)
+      }
+    )
   },
   save: async ({ object = false }) => {
     //

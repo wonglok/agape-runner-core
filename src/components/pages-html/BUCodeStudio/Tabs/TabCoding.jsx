@@ -4,6 +4,7 @@ import { HorizontalParent } from '@/components/pages-html/BUCodeStudio/Layout/Ge
 import { FileTree } from '@/components/pages-html/BUCodeStudio/Implementation/FileTree/FileTree'
 import { ModulesList } from '@/components/pages-html/BUCodeStudio/Implementation/ModulesList/ModulesList'
 import { ColumnFiles } from '@/components/pages-html/BUCodeStudio/Implementation/ColumnFiles/ColumnFiles'
+import { CodeEdtior } from '../Implementation/CodeEditor/CodeEditor'
 
 export function TabCoding() {
   return (
@@ -29,7 +30,9 @@ export function TabCoding() {
           border
           width={'calc((100% - 225px - 225px) * 55 / 100)'}
         >
-          <VerticalSection border height='calc(100% - 225px)'></VerticalSection>
+          <VerticalSection border height='calc(100% - 225px)'>
+            <CodeEdtior></CodeEdtior>
+          </VerticalSection>
           <VerticalSection border height='calc(225px)'>
             Value Slider
           </VerticalSection>
