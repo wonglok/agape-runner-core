@@ -140,6 +140,7 @@ export const getLoader = async ({
 let run = async ({ domElement, outputs, onClean }) => {
   window.React = React
   window.ReactDOM = ReactDOM
+  window.getThree = () => import('three')
   window.getR3F = () => import('@react-three/fiber')
   window.getDrei = () => import('@react-three/drei')
   window.getPost = () => import('@react-three/postprocessing')
