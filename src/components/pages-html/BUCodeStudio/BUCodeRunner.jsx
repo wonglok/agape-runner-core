@@ -195,7 +195,7 @@ export function BUCodeRunner({ outputsJSON = false }) {
   let ref = useRef()
 
   useEffect(() => {
-    console.log('!!!!')
+    // console.log('!!!!')
 
     const bc = new BroadcastChannel('editor')
 
