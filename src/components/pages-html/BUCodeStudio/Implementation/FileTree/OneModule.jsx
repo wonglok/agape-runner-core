@@ -29,6 +29,7 @@ export function OneModule({ ap, mo }) {
           className='inline-flex items-center justify-between cursor-pointer'
           onClick={() => {
             //
+            AppDev.activePackageID = ap.oid
             AppDev.activeModuleID = mo.oid
           }}
         >

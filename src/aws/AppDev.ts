@@ -23,15 +23,18 @@ declare type AppVersionDraft = {
   appLoader: 'string'
   appPackages: AppPackage[]
   appAssets: []
+  appFiles: AppFile[]
   //
 }
 
 declare type AppPackage = {
+  oid: string
   packageName: string
   modules: RawModule[]
 }
 
 declare type RawModule = {
+  oid: string
   moduleName: string
   files: AppFile[]
 }
@@ -47,33 +50,16 @@ export const AppDev = proxy<{
   draft: AppVersionDraft
   appFiles: AppFile[]
 
+  activePackageID: string
   activeModuleID: string
   save: Function
-  getModules: Function
 }>({
   appFiles: [],
   draft: null,
 
+  activePackageID: '',
   activeModuleID: '',
 
-  getModules: () => {
-    //
-    // let modules = [...AppDev.draft.appPackages.map((r) => r.modules)]
-    //
-    let modules = []
-
-    let draft = AppDev.draft
-
-    if (draft && draft.appPackages) {
-      draft.appPackages.forEach((pack) => {
-        modules.push(...(pack.modules || []))
-      })
-    }
-
-    console.log(modules)
-
-    return modules
-  },
   save: async ({ object = false }) => {
     //
     if (!object) {
