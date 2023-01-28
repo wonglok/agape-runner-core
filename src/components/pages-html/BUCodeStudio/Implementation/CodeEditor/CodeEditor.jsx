@@ -7,7 +7,6 @@ import { useSnapshot } from 'valtio'
 export function CodeEdtior() {
   useSnapshot(AppDev)
 
-  //
   let file = AppDev.appCodeFiles.find((f) => f.oid === AppDev.activeFileID)
 
   function handleEditorValidation(markers) {
