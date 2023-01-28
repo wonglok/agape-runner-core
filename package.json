@@ -29,7 +29,7 @@
     "@google/model-viewer": "^2.0.0-rc1",
     "@jspm/generator": "^1.0.2",
     "@monaco-editor/react": "^4.4.5",
-    "@react-three/drei": "^9.51.15",
+    "@react-three/drei": "^9.56.5",
     "@react-three/fiber": "^8.10.0",
     "@react-three/postprocessing": "^2.6.2",
     "@react-three/xr": "^5.0.4",
