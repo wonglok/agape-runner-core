@@ -126,11 +126,13 @@ function MyPakcages({}) {
   let appPackages = app.draft.appPackages || []
 
   useEffect(() => {
-    AppDev.activePackageID = app.draft?.appPackages[0]?.oid
-    AppDev.activeModuleID = app.draft.appPackages[0]?.modules[0].oid
-    AppDev.activeFileID = app.appCodeFiles.find(
-      (e) => e.fileName === 'index.js'
-    )?.oid
+    if (!AppDev.activePackageID) {
+      AppDev.activePackageID = app.draft?.appPackages[0]?.oid
+      AppDev.activeModuleID = app.draft.appPackages[0]?.modules[0].oid
+      AppDev.activeFileID = app.appCodeFiles.find(
+        (e) => e.fileName === 'index.js'
+      )?.oid
+    }
   }, [app])
   return (
     <>
@@ -147,7 +149,10 @@ function MyPakcages({}) {
                 <Collapse.Panel
                   key={ap.oid + idx + ap.packageName}
                   header={
-                    <div className='flex items-center justify-between overflow-hidden'>
+                    <div
+                      onClick={() => {}}
+                      className='flex items-center justify-between overflow-hidden'
+                    >
                       {ap.packageName}
 
                       <div>

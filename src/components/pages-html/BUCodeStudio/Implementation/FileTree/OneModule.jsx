@@ -31,6 +31,7 @@ export function OneModule({ ap, mo }) {
             //
             AppDev.activePackageID = ap.oid
             AppDev.activeModuleID = mo.oid
+            AppDev.activeFileID = ''
           }}
         >
           {mo.moduleName}

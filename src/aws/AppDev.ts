@@ -76,27 +76,34 @@ export const AppDev = proxy<{
   buildCode: async ({}) => {
     //
     let AppPackages = JSON.parse(JSON.stringify(AppDev.draft.appPackages))
+    try {
+      buildApp({
+        appLoader: 'app-loader',
+        appPackages: AppPackages.map((pack) => {
+          pack.modules.forEach((mod) => {
+            mod.files = AppCodeFile.data.filter((e) => {
+              return (
+                AppDev.activePackageID === e.packageOID &&
+                AppDev.activeModuleID === e.moduleOID
+              )
+            })
+          })
 
-    buildApp({
-      appLoader: 'app-loader',
-      appPackages: AppPackages.map((pack) => {
-        pack.modules.forEach((mod) => {
-          mod.files = AppCodeFile.data.filter((e) => {
-            return (
-              AppDev.activePackageID === e.packageOID &&
-              AppDev.activeModuleID === e.moduleOID
-            )
+          return pack
+        }),
+      })
+        .then((outputs) => {
+          const bc = new BroadcastChannel('editor')
+          bc.postMessage({
+            outputs,
           })
         })
-
-        return pack
-      }),
-    }).then((outputs) => {
-      const bc = new BroadcastChannel('editor')
-      bc.postMessage({
-        outputs,
-      })
-    })
+        .catch((e) => {
+          console.log(e)
+        })
+    } catch (e) {
+      console.log(e)
+    }
   },
 
   saveCodeFile: async ({ object }) => {
