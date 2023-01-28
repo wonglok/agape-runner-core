@@ -19,9 +19,23 @@ export function ModulesList() {
   let packageOID = pack?.oid
   let moduleOID = mod?.oid
 
-  let content = app.appCodeFiles.filter(
-    (e) => e.packageOID === packageOID && e.moduleOID === moduleOID
-  )
+  let content = app.appCodeFiles
+    .filter((e) => e.packageOID === packageOID && e.moduleOID === moduleOID)
+    .slice()
+    .sort((a, b) => {
+      if (a.fileName === 'index.js') {
+        return -1000
+      }
+
+      if (a.fileName > b.fileName) {
+        return 1
+      }
+      if (a.fileName <= b.fileName) {
+        return -1
+      }
+      return 0
+    })
+
   useEffect(() => {
     if (moduleOID) {
       AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid })
@@ -43,12 +57,16 @@ export function ModulesList() {
                 className='w-full px-5 py-2 text-white bg-blue-500 rounded-lg'
                 onClick={() => {
                   //
+
                   AppCodeFile.create({
                     appGroupID,
                     appVersionID,
                     packageOID,
                     moduleOID,
-                    fileName: 'app.js',
+                    fileName:
+                      content.length === 0
+                        ? 'index.js'
+                        : `code-file-${content.length}.js`,
                     content: '',
                   }).then(() => {
                     AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid })
@@ -122,6 +140,13 @@ function Rename({ file }) {
   let [fileName, setNewName] = useState(file.fileName)
 
   //
+
+  let save = async () => {
+    let item = AppDev.appCodeFiles.find((e) => e.oid === file.oid)
+    item.fileName = fileName
+    await AppCodeFile.update({ object: item })
+    AppCodeFile.invalidate({ appVersionID: item.appVersionID })
+  }
   return (
     <>
       <Modal
@@ -139,14 +164,16 @@ function Rename({ file }) {
           onChange={(ev) => {
             setNewName(ev.target.value)
           }}
+          onKeyDown={(ev) => {
+            if (ev.key === 'Enter') {
+              save()
+            }
+          }}
         ></input>
         <button
           className='p-2 text-white bg-blue-500 rounded-lg'
           onClick={async () => {
-            let item = AppDev.appCodeFiles.find((e) => e.oid === file.oid)
-            item.fileName = fileName
-            await AppCodeFile.update({ object: item })
-            AppCodeFile.invalidate({ appVersionID: item.appVersionID })
+            save()
 
             //
             // let item = AppDev.draft.appPackages.find((e) => e.oid === ap.oid)
@@ -192,9 +219,15 @@ function Remove({ file }) {
           onClick={async () => {
             // //
 
+            let itemIDX = AppDev.appCodeFiles.findIndex(
+              (e) => e.oid === file.oid
+            )
             let item = AppDev.appCodeFiles.find((e) => e.oid === file.oid)
             await AppCodeFile.remove({ object: item })
-            AppCodeFile.invalidate({ appVersionID: item.appVersionID })
+
+            AppDev.appCodeFiles.splice(itemIDX, 1)
+
+            // AppCodeFile.invalidate({ appVersionID: item.appVersionID })
           }}
         >
           Remove {`"${file.fileName}"`}
