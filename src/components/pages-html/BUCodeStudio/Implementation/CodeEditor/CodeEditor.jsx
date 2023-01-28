@@ -20,7 +20,7 @@ export function CodeEdtior() {
 
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor
-    console.log(monaco)
+    // console.log(monaco)
   }
 
   // function showValue() {
@@ -30,7 +30,7 @@ export function CodeEdtior() {
   let [msg, setMessage] = useState('')
 
   function handleEditorChange(value, event) {
-    console.log('here is the current model value:', value, event)
+    // console.log('here is the current model value:', value, event)
 
     file.content = value
 
