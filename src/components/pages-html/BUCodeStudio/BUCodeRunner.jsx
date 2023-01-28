@@ -100,7 +100,7 @@ export const getLoader = async ({
         mode: 'cors',
       }).then((r) => {
         if (r.ok) {
-          return r.json()
+          return r.json()s
         } else {
           return Promise.reject()
         }
