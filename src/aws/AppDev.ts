@@ -103,7 +103,11 @@ export const AppDev = proxy<{
     if (!object) {
       throw new Error('needs object')
     }
-    AppDev.buildCode()
+    AppDev.buildCode().catch((e) => {
+      console.log(e)
+    })
+
+    //
     return AppCodeFile.update({ object }).then(
       (r) => {
         console.log(r)

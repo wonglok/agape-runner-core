@@ -27,6 +27,7 @@
     "@gltf-transform/extensions": "^2.4.1",
     "@gltf-transform/functions": "^2.4.1",
     "@google/model-viewer": "^2.0.0-rc1",
+    "@jspm/generator": "^1.0.2",
     "@monaco-editor/react": "^4.4.5",
     "@react-three/drei": "^9.51.15",
     "@react-three/fiber": "^8.10.0",
