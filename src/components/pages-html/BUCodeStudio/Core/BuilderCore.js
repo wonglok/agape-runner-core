@@ -77,6 +77,12 @@ export let buildApp = async (input) => {
                 .then((t) => {
                   return `${t}`
                 })
+            } else if (url.indexOf('/') === 0) {
+              return fetch(url)
+                .then((r) => r.text())
+                .then((t) => {
+                  return `${t}`
+                })
             }
           }
 
