@@ -3,6 +3,10 @@ import { useEffect, useRef, useState } from 'react'
 
 import { BUCodeRunner } from '@/components/pages-html/BUCodeStudio/BUCodeRunner'
 import { AppEntry } from '@/aws/AppEntry'
+import { AppVersion } from '@/aws/AppVersion'
+import { AppCodeFile } from '@/aws/AppCodeFile'
+import { buildApp } from '@/components/pages-html/BUCodeStudio/Core/BuilderCore'
+import { InstancedMesh } from 'three'
 
 export default function SlugPage() {
   //
@@ -24,8 +28,58 @@ export default function SlugPage() {
 
       console.log(slugString)
     } else {
-      AppEntry.querySlug({ slug: '' }).then(({ list }) => {
+      AppEntry.querySlug({ slug: '' }).then(async ({ list }) => {
         console.log(list)
+
+        /** @type {{slug:string, oid: string, type: string, payload: { apGroupID: '', appVersionID: '' }}} */
+        let first = list[0]
+
+        //
+
+        first.payload.appVersionID
+
+        if (first.type === 'write-app') {
+          console.log(first.payload)
+
+          let appRaw = await AppVersion.get({
+            oid: first.payload.appVersionID,
+          }).then(({ item }) => {
+            //
+            return item
+          })
+
+          let AppPackages = JSON.parse(JSON.stringify(appRaw.appPackages))
+
+          let appCodeFiles = await AppCodeFile.list({
+            appVersionID: first.payload.appVersionID,
+          }).then(({ list }) => {
+            return list
+          })
+
+          try {
+            buildApp({
+              appLoader: 'app-loader',
+              appPackages: AppPackages.map((pack) => {
+                pack.modules.forEach((mod) => {
+                  mod.files = appCodeFiles.filter((e) => {
+                    return pack.oid === e.packageOID && mod.oid === e.moduleOID
+                  })
+                })
+                return pack
+              }),
+            })
+              .then((outputs) => {
+                setOutputs(outputs)
+              })
+              .catch((e) => {
+                console.log(e)
+              })
+          } catch (e) {
+            console.log(e)
+          }
+
+          //
+        }
       })
 
       //!SECTION
