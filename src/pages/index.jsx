@@ -36,47 +36,10 @@ export default function SlugPage() {
 
         //
 
-        first.payload.appVersionID
-
         if (first.type === 'write-app') {
           console.log(first.payload)
 
-          let appRaw = await AppVersion.get({
-            oid: first.payload.appVersionID,
-          }).then(({ item }) => {
-            //
-            return item
-          })
-
-          let AppPackages = JSON.parse(JSON.stringify(appRaw.appPackages))
-
-          let appCodeFiles = await AppCodeFile.list({
-            appVersionID: first.payload.appVersionID,
-          }).then(({ list }) => {
-            return list
-          })
-
-          try {
-            buildApp({
-              appLoader: 'app-loader',
-              appPackages: AppPackages.map((pack) => {
-                pack.modules.forEach((mod) => {
-                  mod.files = appCodeFiles.filter((e) => {
-                    return pack.oid === e.packageOID && mod.oid === e.moduleOID
-                  })
-                })
-                return pack
-              }),
-            })
-              .then((outputs) => {
-                setOutputs(outputs)
-              })
-              .catch((e) => {
-                console.log(e)
-              })
-          } catch (e) {
-            console.log(e)
-          }
+          loadMyApp({ appEntry: first, setOutputs })
 
           //
         }
@@ -94,4 +57,43 @@ export default function SlugPage() {
   }, [query])
 
   return <>{outputs && <BUCodeRunner outputsJSON={outputs}></BUCodeRunner>}</>
+}
+
+async function loadMyApp({ appEntry, setOutputs }) {
+  let appRaw = await AppVersion.get({
+    oid: appEntry.payload.appVersionID,
+  }).then(({ item }) => {
+    //
+    return item
+  })
+
+  let AppPackages = JSON.parse(JSON.stringify(appRaw.appPackages))
+
+  let appCodeFiles = await AppCodeFile.list({
+    appVersionID: appEntry.payload.appVersionID,
+  }).then(({ list }) => {
+    return list
+  })
+
+  try {
+    buildApp({
+      appLoader: 'app-loader',
+      appPackages: AppPackages.map((pack) => {
+        pack.modules.forEach((mod) => {
+          mod.files = appCodeFiles.filter((e) => {
+            return pack.oid === e.packageOID && mod.oid === e.moduleOID
+          })
+        })
+        return pack
+      }),
+    })
+      .then((outputs) => {
+        setOutputs(outputs)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  } catch (e) {
+    console.log(e)
+  }
 }
