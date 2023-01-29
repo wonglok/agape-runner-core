@@ -34,9 +34,7 @@ export default function SlugPage() {
         /** @type {{slug:string, oid: string, type: string, payload: { apGroupID: '', appVersionID: '' }}} */
         let first = list[0]
 
-        //
-
-        if (first.type === 'write-app') {
+        if (first && first.type === 'write-app') {
           console.log(first.payload)
 
           loadMyApp({ appEntry: first, setOutputs })
