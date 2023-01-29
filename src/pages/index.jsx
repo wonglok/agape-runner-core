@@ -40,8 +40,6 @@ export default function SlugPage() {
           console.log(first.payload)
 
           loadMyApp({ appEntry: first, setOutputs })
-
-          //
         }
       })
 
