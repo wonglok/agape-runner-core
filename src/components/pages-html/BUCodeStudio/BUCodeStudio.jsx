@@ -22,15 +22,9 @@ export function BUCodeStudio() {
     if (CSData.appVersionID) {
       AppVersion.get({ oid: CSData.appVersionID }).then((object) => {
         AppDev.draft = object.item
-        AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid }).then(() => {
-          try {
-            AppDev.buildCode().catch((e) => {
-              console.log(e)
-            })
-          } catch (e) {
-            console.log(e)
-          }
-        })
+        AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid }).then(
+          () => {}
+        )
       })
     }
   }, [router.query.appVersionID])
@@ -45,8 +39,21 @@ export function BUCodeStudio() {
 
   return (
     <div className='w-full h-full overflow-hidden bg-white'>
-      <div className='h-6 px-1 py-1 text-xs text-white bg-cyan-800'>
+      <div className='flex justify-between h-6 px-1 py-1 text-xs text-white bg-cyan-800'>
         3D WebApp Studio
+        <button
+          onClick={() => {
+            try {
+              AppDev.buildCode().catch((e) => {
+                console.log(e)
+              })
+            } catch (e) {
+              console.log(e)
+            }
+          }}
+        >
+          Run Code 💨
+        </button>
       </div>
 
       {/*  */}
