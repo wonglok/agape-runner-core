@@ -18,7 +18,8 @@
     "export": "EXPORT=true next build && EXPORT=true next export",
     "analyze": "ANALYZE=true next build",
     "start": "next start",
-    "lt": "ngrok http 3000 --subdomain wonglok --region ap"
+    "lt": "ngrok http 3000 --subdomain wonglok --region ap",
+    "html": "next build && next export"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",

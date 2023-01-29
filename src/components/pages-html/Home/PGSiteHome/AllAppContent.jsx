@@ -3,7 +3,7 @@ import { Modal } from 'antd'
 // import { useEffect } from 'react'
 import { useSnapshot } from 'valtio'
 import { AppEntry } from '@/aws/AppEntry'
-
+import { LoaderWriteApp } from './LoaderWriteApp'
 const confirm = Modal.confirm
 
 export function AllAppContent({}) {
@@ -131,7 +131,10 @@ export function AllAppContent({}) {
 
               {appEntryOne.type === 'write-app' && (
                 <>
-                  <>{'Todo: Add Placeholder for write an app'}</>
+                  <h1 className='mb-3 text-2xl font-bold'>
+                    {`Pick Your App & It's Draft Version`}
+                  </h1>
+                  <LoaderWriteApp appEntryID={appEntryOne.oid}></LoaderWriteApp>
                 </>
               )}
 

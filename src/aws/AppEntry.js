@@ -83,6 +83,38 @@ class REST {
     }
   }
 
+  async querySlug({ slug }) {
+    nProgress.start()
+    let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+
+    if (!sToken) {
+      nProgress.done()
+      throw await Promise.reject('no sToken')
+    }
+
+    let ep = UserEndPoints[process.env.NODE_ENV]
+
+    let res = await fetch(`${ep}/${this.table}-querySlug`, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        //
+        slug,
+      }),
+      headers: {
+        Authorization: `Bearer ${sToken}`,
+      },
+    })
+
+    if (res.ok) {
+      nProgress.done()
+      return await res.json()
+    } else {
+      nProgress.done()
+      throw await Promise.reject(res.json())
+    }
+  }
+
   async get({ oid }) {
     nProgress.start()
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
