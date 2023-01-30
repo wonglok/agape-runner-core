@@ -4,7 +4,6 @@ import { AppCodeFile } from './AppCodeFile'
 import { buildApp } from '@/components/pages-html/BUCodeStudio/Core/BuilderCore'
 
 /*
-
 export let appContent = {
   appLoader: 'app-loader',
   appPackages: [
@@ -14,7 +13,6 @@ export let appContent = {
   ],
   appAssets: [],
 }
-
 */
 
 declare type AppVersionDraft = {
