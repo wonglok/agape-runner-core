@@ -58,6 +58,15 @@ export function CodeEdtior() {
     }
   }, [file])
 
+  let getExt = (file) => {
+    let name = 'javascript'
+
+    if (file.fileName.includes('.json')) {
+      name = 'json'
+    }
+
+    return name
+  }
   //
   return (
     <>
@@ -80,7 +89,7 @@ export function CodeEdtior() {
             height='calc(100% - 30px)'
             theme='vs-dark'
             path={file.oid}
-            defaultLanguage={file.language || 'javascript'}
+            defaultLanguage={getExt(file) || 'javascript'}
             defaultValue={file.content}
             onMount={handleEditorDidMount}
             onChange={handleEditorChange}
