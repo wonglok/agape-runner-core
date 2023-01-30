@@ -16,6 +16,7 @@ export const DefaultSetting = {
     return resolve(id, parentUrl)
   },
 }
+
 export const getLoader = async ({
   onResolve = () => {},
   onFetch = () => {},
@@ -147,6 +148,7 @@ let run = async ({ domElement, outputs, onClean }) => {
   window.getDrei = () => import('@react-three/drei')
   window.getPost = () => import('@react-three/postprocessing')
   window.getXR = () => import('@react-three/xr')
+  window.getValtio = () => import('valtio')
 
   let loaderUtils = await getLoader()
 
@@ -162,9 +164,8 @@ let run = async ({ domElement, outputs, onClean }) => {
     })
   }
 
-  console.log(outputs)
+  // console.log(outputs)
 
-  //
   loaderUtils.addImportMap({
     imports: {
       [`three`]: '/vendor/three-r149/build/three.module.js',
@@ -199,6 +200,7 @@ export function BUCodeRunner({ outputsJSON = false }) {
   let ref = useRef()
 
   useEffect(() => {
+    /// inputGUI
     // console.log('!!!!')
 
     const bc = new BroadcastChannel('editor')

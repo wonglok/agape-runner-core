@@ -29,18 +29,16 @@ export function TabCoding() {
         </HorizontalSection>
         <HorizontalSection
           border
-          width={'calc((100% - 225px - 225px) * 55 / 100)'}
+          width={'calc((100% - 225px - 225px) * 50 / 100)'}
         >
           <VerticalSection border height='calc(100% - 225px)'>
             <CodeEdtior></CodeEdtior>
           </VerticalSection>
-          <VerticalSection border height='calc(225px)'>
-            Value Slider
-          </VerticalSection>
+          <VerticalSection height='calc(225px)'>Value Slider</VerticalSection>
         </HorizontalSection>
         <HorizontalSection
           border
-          width={'calc((100% - 225px - 225px) * 45 / 100)'}
+          width={'calc((100% - 225px - 225px) * 50 / 100)'}
         >
           <RunWindow></RunWindow>
         </HorizontalSection>

@@ -48,19 +48,6 @@ export function BUCodeStudio() {
     <div className='w-full h-full overflow-hidden bg-white'>
       <div className='flex justify-between h-6 px-1 py-1 text-xs text-white bg-cyan-800'>
         3D WebApp Studio
-        <button
-          onClick={() => {
-            try {
-              AppDev.buildCode().catch((e) => {
-                console.log(e)
-              })
-            } catch (e) {
-              console.log(e)
-            }
-          }}
-        >
-          Run Code 💨
-        </button>
       </div>
 
       {/*  */}
