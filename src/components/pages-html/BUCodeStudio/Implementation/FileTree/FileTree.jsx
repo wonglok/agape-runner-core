@@ -214,11 +214,15 @@ function ExportButton({ ap }) {
           }
 
           clonePackage.packageName = clonePackage.packageName + getID()
+          clonePackage.modules
+            .filter((e) => {
+              return e.packageOID === ap.oid
+            })
+            .forEach((mod) => {
+              mod.oid = provideKey(mod.oid)
+            })
 
           clonePackage.oid = provideKey(clonePackage.oid)
-          clonePackage.modules.forEach((mod) => {
-            mod.oid = provideKey(mod.oid)
-          })
 
           let files = AppDev.appCodeFiles.map((r) => {
             let r2 = { ...r }
