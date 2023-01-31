@@ -30,6 +30,7 @@ export function ModulesList() {
       if (a.fileName > b.fileName) {
         return 1
       }
+
       if (a.fileName <= b.fileName) {
         return -1
       }
@@ -37,12 +38,12 @@ export function ModulesList() {
     })
 
   useEffect(() => {
-    if (moduleOID) {
+    if (AppDev.draft.oid) {
       AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid }).then(() => {
         //
       })
     }
-  }, [mod?.files, moduleOID])
+  }, [])
   //
   return (
     <>

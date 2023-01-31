@@ -7,8 +7,12 @@ export function RunWindow() {
 
   return (
     <div className='w-full h-full'>
-      <div style={{ height: 'calc(20px)' }} className=' text-white bg-cyan-900'>
+      <div
+        style={{ height: 'calc(30px)' }}
+        className='flex items-center text-white bg-cyan-900'
+      >
         <button
+          className='ml-2 mr-2'
           onClick={() => {
             try {
               AppDev.buildCode().catch((e) => {
@@ -26,12 +30,12 @@ export function RunWindow() {
             ref.current.src = `/admin/apps/run`
           }}
         >
-          Reload
+          Reload ✨
         </button>
       </div>
       <iframe
         className='w-full '
-        style={{ height: 'calc(100% - 20px)' }}
+        style={{ height: 'calc(100% - 30px)' }}
         ref={ref}
         onLoad={() => {
           setTimeout(() => {

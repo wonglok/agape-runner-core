@@ -5,6 +5,7 @@ import { Collapse, Modal, Tooltip } from 'antd'
 import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import { OneModule } from './OneModule'
+import { AppCodeFile } from '@/aws/AppCodeFile'
 
 export function FileTree() {
   let app = useSnapshot(AppDev)
@@ -103,6 +104,7 @@ export function FileTree() {
               >
                 + Package
               </button>
+
               {/* <div className='text-center'>Create Package</div>
               <div className='px-1 py-1 cursor-auto'>
                 <img
@@ -111,6 +113,10 @@ export function FileTree() {
                   alt={'add'}
                 ></img>
               </div> */}
+            </div>
+
+            <div className='px-2' style={{ height: '50px' }}>
+              <ImportButton></ImportButton>
             </div>
 
             <MyPakcages></MyPakcages>
@@ -160,6 +166,7 @@ function MyPakcages({}) {
                           placement={'right'}
                           title={
                             <>
+                              <ExportButton ap={ap}></ExportButton>
                               <Rename ap={ap}></Rename>
                               <Remove ap={ap}></Remove>
                             </>
@@ -182,6 +189,208 @@ function MyPakcages({}) {
         </div>
       </div>
     </>
+  )
+}
+
+function ExportButton({ ap }) {
+  return (
+    <div className='block w-full mb-2'>
+      <button
+        className='w-full px-2 py-1 text-white bg-purple-500 rounded-lg'
+        onClick={() => {
+          // let originalPackage = JSON.parse(JSON.stringify(ap))
+          /** @type {ap} */
+          let clonePackage = JSON.parse(JSON.stringify(ap))
+
+          let map = new Map()
+
+          let provideKey = (key) => {
+            if (map.has(key)) {
+              return map.get(key)
+            } else {
+              map.set(key, getID())
+              return map.get(key)
+            }
+          }
+
+          clonePackage.packageName = 'export_' + clonePackage.packageName
+
+          clonePackage.oid = provideKey(clonePackage.oid)
+          clonePackage.modules.forEach((mod) => {
+            mod.oid = provideKey(mod.oid)
+          })
+
+          let files = AppDev.appCodeFiles.map((r) => {
+            let r2 = { ...r }
+            //
+
+            r2.appGroupID = '____NEEDS____UPDATE_____' + getID()
+            r2.appVersionID = '____NEEDS____UPDATE_____' + getID()
+
+            r2.moduleOID = provideKey(r2.moduleOID)
+            r2.packageOID = provideKey(r2.packageOID)
+
+            r2.oid = provideKey(r2.oid)
+            //
+            return JSON.parse(JSON.stringify(r2))
+          })
+
+          let payload = {
+            codePackage: clonePackage,
+            codeFiles: files,
+          }
+
+          let url = URL.createObjectURL(new Blob([JSON.stringify(payload)]))
+
+          let an = document.createElement('a')
+          an.download = clonePackage.packageName + '.json'
+          an.target = '_blank'
+          an.href = url
+          an.click()
+        }}
+      >
+        Export Package
+      </button>
+    </div>
+  )
+}
+
+function ImportButton({}) {
+  return (
+    <div className='block w-full h-full mb-2'>
+      <button
+        className='w-full px-2 py-2 text-white bg-purple-500 rounded-lg disabled:opacity-50'
+        onClick={(ev) => {
+          let input = document.createElement('input')
+          input.type = 'file'
+          input.onchange = ({
+            target: {
+              files: [first],
+            },
+          }) => {
+            if (first) {
+              //
+              let reader = new FileReader()
+              reader.onload = async () => {
+                try {
+                  let json = JSON.parse(reader.result)
+
+                  let appGroupID = AppDev.draft.appGroupID
+                  let appVersionID = AppDev.draft.oid
+
+                  let codeFiles = json.codeFiles.map((it) => {
+                    it.appGroupID = appGroupID
+                    it.appVersionID = appVersionID
+
+                    return it
+                  })
+
+                  let codePackage = json.codePackage
+
+                  ev.target.disabled = true
+
+                  AppDev.draft.appPackages.push(codePackage)
+
+                  let total = codeFiles.length + 1 // +1 is for package
+                  let inc = 0
+                  for (let file of codeFiles) {
+                    ev.target.innerText = `Import Package ${(
+                      (inc / total) *
+                      100
+                    ).toFixed(0)}%`
+                    await AppCodeFile.create(file).then((saved) => {
+                      console.log(saved)
+                    })
+                    inc++
+                  }
+
+                  ev.target.innerText = `Import Package ${(
+                    (inc / total) *
+                    100
+                  ).toFixed(0)}%`
+
+                  await AppDev.save({ object: AppDev.draft }).then(
+                    (packgeSaved) => {
+                      console.log(packgeSaved)
+                    }
+                  )
+
+                  ev.target.innerText = `Done!`
+
+                  setTimeout(() => {
+                    ev.target.innerText = `Import Package`
+                  }, 1000)
+
+                  console.log('done')
+
+                  //
+                  //
+                  //
+                } catch (e) {
+                  console.log(e)
+                } finally {
+                  ev.target.disabled = false
+                }
+              }
+              reader.readAsText(first, 'utf8')
+            }
+          }
+          input.click()
+
+          // // let originalPackage = JSON.parse(JSON.stringify(ap))
+          // /** @type {ap} */
+          // let clonePackage = JSON.parse(JSON.stringify(ap))
+
+          // let map = new Map()
+
+          // let provideKey = (key) => {
+          //   if (map.has(key)) {
+          //     return map.get(key)
+          //   } else {
+          //     map.set(key, getID())
+          //     return map.get(key)
+          //   }
+          // }
+
+          // clonePackage.packageName = 'export_' + clonePackage.packageName
+
+          // clonePackage.oid = provideKey(clonePackage.oid)
+          // clonePackage.modules.forEach((mod) => {
+          //   mod.oid = provideKey(mod.oid)
+          // })
+
+          // let files = AppDev.appCodeFiles.map((r) => {
+          //   let r2 = { ...r }
+          //   //
+
+          //   r2.appGroupID = '____NEEDS____UPDATE_____' + getID()
+          //   r2.appVersionID = '____NEEDS____UPDATE_____' + getID()
+
+          //   r2.moduleOID = provideKey(r2.moduleOID)
+          //   r2.packageOID = provideKey(r2.packageOID)
+
+          //   r2.oid = provideKey(r2.oid)
+          //   //
+          //   return JSON.parse(JSON.stringify(r2))
+          // })
+
+          // let payload = {
+          //   codePackage: clonePackage,
+          //   codeFiles: files,
+          // }
+
+          // let url = URL.createObjectURL(new Blob([JSON.stringify(payload)]))
+
+          // let an = document.createElement('a')
+          // an.download = clonePackage.packageName + '.json'
+          // an.target = '_blank'
+          // an.href = url
+          // an.click()
+        }}
+      >
+        Import Package
+      </button>
+    </div>
   )
 }
 
@@ -331,7 +540,15 @@ function Remove({ ap }) {
               1
             )
             openRemove(false)
+
             await AppDev.save({ object: AppDev.draft })
+
+            let files = AppCodeFile.data
+            for (let file of files) {
+              if (file && file.packageOID === ap.oid) {
+                await AppCodeFile.remove({ object: file })
+              }
+            }
           }}
         >
           Remove Package

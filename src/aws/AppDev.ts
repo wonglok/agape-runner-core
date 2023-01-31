@@ -134,9 +134,15 @@ export const AppDev = proxy<{
     return AppVersion.update({ object }).then(
       (r) => {
         console.log(r)
+
+        return r
       },
       async (err) => {
-        console.log(await err)
+        let res = await err
+
+        console.log(res)
+
+        return res
       }
     )
   },
