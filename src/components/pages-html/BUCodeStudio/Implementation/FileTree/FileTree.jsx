@@ -227,10 +227,11 @@ function ExportButton({ ap }) {
             r2.appGroupID = '____NEEDS____UPDATE_____' + getID()
             r2.appVersionID = '____NEEDS____UPDATE_____' + getID()
 
+            r2.oid = provideKey(r2.oid)
+
             r2.moduleOID = provideKey(r2.moduleOID)
             r2.packageOID = provideKey(r2.packageOID)
 
-            r2.oid = provideKey(r2.oid)
             //
             return JSON.parse(JSON.stringify(r2))
           })
