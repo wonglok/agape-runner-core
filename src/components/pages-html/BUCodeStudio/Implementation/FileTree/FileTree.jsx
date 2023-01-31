@@ -134,7 +134,7 @@ function MyPakcages({}) {
   useEffect(() => {
     if (!AppDev.activePackageID) {
       AppDev.activePackageID = app.draft?.appPackages[0]?.oid
-      AppDev.activeModuleID = app.draft.appPackages[0]?.modules[0].oid
+      AppDev.activeModuleID = app.draft.appPackages[0]?.modules[0]?.oid
       AppDev.activeFileID = app.appCodeFiles.find(
         (e) => e.fileName === 'index.js'
       )?.oid
@@ -202,48 +202,16 @@ function ExportButton({ ap }) {
           /** @type {ap} */
           let clonePackage = JSON.parse(JSON.stringify(ap))
 
-          let map = new Map()
-
-          let provideKey = (key) => {
-            if (map.has(key)) {
-              return map.get(key)
-            } else {
-              map.set(key, getID())
-              return map.get(key)
-            }
-          }
-
-          clonePackage.packageName = 'i_' + clonePackage.packageName
-          clonePackage.modules.forEach((mod) => {
-            mod.oid = provideKey(mod.oid)
-          })
-
-          clonePackage.oid = provideKey(clonePackage.oid)
-
-          let files = JSON.parse(JSON.stringify(AppDev.appCodeFiles))
-            .filter((e) => {
+          let files = JSON.parse(JSON.stringify(AppDev.appCodeFiles)).filter(
+            (e) => {
               return (
-                e.packageOID === ap.oid &&
-                ap.modules.some((s) => {
-                  return s.oid === e.moduleOID
+                ap.oid === e.packageOID &&
+                ap.modules.some((mo) => {
+                  return mo.oid === e.moduleOID
                 })
               )
-            })
-            .map((r) => {
-              let r2 = { ...r }
-              //
-
-              r2.appGroupID = '____NEEDS____UPDATE_____' + getID()
-              r2.appVersionID = '____NEEDS____UPDATE_____' + getID()
-
-              r2.oid = provideKey(r2.oid)
-
-              r2.moduleOID = provideKey(r2.moduleOID)
-              r2.packageOID = provideKey(r2.packageOID)
-
-              //
-              return JSON.parse(JSON.stringify(r2))
-            })
+            }
+          )
 
           let payload = {
             codePackage: clonePackage,
@@ -253,8 +221,7 @@ function ExportButton({ ap }) {
           let url = URL.createObjectURL(new Blob([JSON.stringify(payload)]))
 
           let an = document.createElement('a')
-          an.download =
-            clonePackage.packageName + new Date().getTime() + '.json'
+          an.download = clonePackage.packageName + '.json'
           an.target = '_blank'
           an.href = url
           an.click()
@@ -298,6 +265,41 @@ function ImportButton({}) {
 
                   let codePackage = json.codePackage
 
+                  // // let originalPackage = JSON.parse(JSON.stringify(ap))
+                  // /** @type {ap} */
+                  let map = new Map()
+
+                  let provideKey = (key) => {
+                    if (map.has(key)) {
+                      return map.get(key)
+                    } else {
+                      map.set(key, getID())
+                      return map.get(key)
+                    }
+                  }
+
+                  // codePackage.packageName = 'i_' + codePackage.packageName
+                  codePackage.oid = provideKey(codePackage.oid)
+                  codePackage.modules.forEach((mod) => {
+                    mod.oid = provideKey(mod.oid)
+                  })
+
+                  // codeFiles.map((r) => {
+                  //   let r2 = { ...r }
+                  //   //
+
+                  //   r2.appGroupID = appGroupID
+                  //   r2.appVersionID = appVersionID
+
+                  //   r2.oid = provideKey(r2.oid)
+
+                  //   r2.moduleOID = provideKey(r2.moduleOID)
+                  //   r2.packageOID = provideKey(r2.packageOID)
+
+                  //   //
+                  //   return JSON.parse(JSON.stringify(r2))
+                  // })
+
                   ev.target.disabled = true
 
                   AppDev.draft.appPackages.push(codePackage)
@@ -314,8 +316,16 @@ function ImportButton({}) {
                       setTimeout(r, 100)
                     })
 
-                    await AppCodeFile.create(file).then((saved) => {
-                      console.log(saved)
+                    file.oid = provideKey(file.oid)
+                    file.appGroupID = appGroupID
+                    file.appVersionID = appVersionID
+                    file.packageOID = provideKey(file.packageOID)
+                    file.moduleOID = provideKey(file.moduleOID)
+
+                    await AppCodeFile.update({ object: file })
+
+                    await new Promise((r) => {
+                      setTimeout(r, 100)
                     })
 
                     inc++

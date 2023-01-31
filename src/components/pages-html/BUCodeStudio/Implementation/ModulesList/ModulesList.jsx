@@ -38,12 +38,12 @@ export function ModulesList() {
     })
 
   useEffect(() => {
-    if (AppDev.draft.oid) {
+    if (moduleOID) {
       AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid }).then(() => {
         //
       })
     }
-  }, [])
+  }, [moduleOID])
   //
   return (
     <>
