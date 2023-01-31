@@ -103,11 +103,17 @@ export function CodeEdtior() {
 
                 <span
                   className=' cursor-pointer'
-                  onClick={() => {
+                  onClick={(ev) => {
                     //
                     copy(
-                      `import 'package:${myPackage?.packageName}/${moduleName}/${file?.fileName}'`
+                      `import { } from 'package:${myPackage?.packageName}/${moduleName}/${file?.fileName}'`
                     )
+
+                    ev.target.innerText = `🔗 Copied!`
+
+                    setTimeout(() => {
+                      ev.target.innerText = `🔗 `
+                    }, 1000)
                   }}
                 >
                   🔗
