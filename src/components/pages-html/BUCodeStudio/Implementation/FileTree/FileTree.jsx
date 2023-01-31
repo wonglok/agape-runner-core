@@ -299,13 +299,23 @@ function ImportButton({}) {
                       (inc / total) *
                       100
                     ).toFixed(0)}%`
+
+                    await new Promise((r) => {
+                      setTimeout(r, 100)
+                    })
+
                     await AppCodeFile.create(file).then((saved) => {
                       console.log(saved)
                     })
+
                     inc++
                   }
 
                   ev.target.innerText = `Finishing up....`
+
+                  await new Promise((r) => {
+                    setTimeout(r, 100)
+                  })
 
                   await AppDev.save({ object: AppDev.draft }).then(
                     (packgeSaved) => {
