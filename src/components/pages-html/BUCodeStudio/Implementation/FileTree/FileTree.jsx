@@ -243,7 +243,8 @@ function ExportButton({ ap }) {
           let url = URL.createObjectURL(new Blob([JSON.stringify(payload)]))
 
           let an = document.createElement('a')
-          an.download = clonePackage.packageName + '.json'
+          an.download =
+            clonePackage.packageName + new Date().getTime() + '.json'
           an.target = '_blank'
           an.href = url
           an.click()
@@ -291,7 +292,7 @@ function ImportButton({}) {
 
                   AppDev.draft.appPackages.push(codePackage)
 
-                  let total = codeFiles.length + 1 // +1 is for package
+                  let total = codeFiles.length //
                   let inc = 0
                   for (let file of codeFiles) {
                     ev.target.innerText = `Import Package ${(
@@ -304,10 +305,7 @@ function ImportButton({}) {
                     inc++
                   }
 
-                  ev.target.innerText = `Import Package ${(
-                    (inc / total) *
-                    100
-                  ).toFixed(0)}%`
+                  ev.target.innerText = `Finishing up....`
 
                   await AppDev.save({ object: AppDev.draft }).then(
                     (packgeSaved) => {
@@ -319,12 +317,23 @@ function ImportButton({}) {
 
                   setTimeout(() => {
                     ev.target.innerText = `Import Package`
+
+                    AppCodeFile.invalidate({ appVersionID }).then(() => {
+                      try {
+                        AppDev.buildCode().catch((e) => {
+                          console.log(e)
+                        })
+                      } catch (e) {
+                        console.log(e)
+                      }
+                    })
                   }, 1000)
 
                   console.log('done')
 
                   //
                   //
+
                   //
                 } catch (e) {
                   console.log(e)
@@ -336,56 +345,6 @@ function ImportButton({}) {
             }
           }
           input.click()
-
-          // // let originalPackage = JSON.parse(JSON.stringify(ap))
-          // /** @type {ap} */
-          // let clonePackage = JSON.parse(JSON.stringify(ap))
-
-          // let map = new Map()
-
-          // let provideKey = (key) => {
-          //   if (map.has(key)) {
-          //     return map.get(key)
-          //   } else {
-          //     map.set(key, getID())
-          //     return map.get(key)
-          //   }
-          // }
-
-          // clonePackage.packageName = 'export_' + clonePackage.packageName
-
-          // clonePackage.oid = provideKey(clonePackage.oid)
-          // clonePackage.modules.forEach((mod) => {
-          //   mod.oid = provideKey(mod.oid)
-          // })
-
-          // let files = AppDev.appCodeFiles.map((r) => {
-          //   let r2 = { ...r }
-          //   //
-
-          //   r2.appGroupID = '____NEEDS____UPDATE_____' + getID()
-          //   r2.appVersionID = '____NEEDS____UPDATE_____' + getID()
-
-          //   r2.moduleOID = provideKey(r2.moduleOID)
-          //   r2.packageOID = provideKey(r2.packageOID)
-
-          //   r2.oid = provideKey(r2.oid)
-          //   //
-          //   return JSON.parse(JSON.stringify(r2))
-          // })
-
-          // let payload = {
-          //   codePackage: clonePackage,
-          //   codeFiles: files,
-          // }
-
-          // let url = URL.createObjectURL(new Blob([JSON.stringify(payload)]))
-
-          // let an = document.createElement('a')
-          // an.download = clonePackage.packageName + '.json'
-          // an.target = '_blank'
-          // an.href = url
-          // an.click()
         }}
       >
         Import Package
