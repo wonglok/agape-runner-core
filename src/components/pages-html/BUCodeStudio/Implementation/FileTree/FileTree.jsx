@@ -214,31 +214,31 @@ function ExportButton({ ap }) {
           }
 
           clonePackage.packageName = clonePackage.packageName + getID()
-          clonePackage.modules
-            .filter((e) => {
-              return e.packageOID === ap.oid
-            })
-            .forEach((mod) => {
-              mod.oid = provideKey(mod.oid)
-            })
+          clonePackage.modules.forEach((mod) => {
+            mod.oid = provideKey(mod.oid)
+          })
 
           clonePackage.oid = provideKey(clonePackage.oid)
 
-          let files = AppDev.appCodeFiles.map((r) => {
-            let r2 = { ...r }
-            //
+          let files = AppDev.appCodeFiles
+            .filter((e) => {
+              return e.packageOID === ap.oid
+            })
+            .map((r) => {
+              let r2 = { ...r }
+              //
 
-            r2.appGroupID = '____NEEDS____UPDATE_____' + getID()
-            r2.appVersionID = '____NEEDS____UPDATE_____' + getID()
+              r2.appGroupID = '____NEEDS____UPDATE_____' + getID()
+              r2.appVersionID = '____NEEDS____UPDATE_____' + getID()
 
-            r2.oid = provideKey(r2.oid)
+              r2.oid = provideKey(r2.oid)
 
-            r2.moduleOID = provideKey(r2.moduleOID)
-            r2.packageOID = provideKey(r2.packageOID)
+              r2.moduleOID = provideKey(r2.moduleOID)
+              r2.packageOID = provideKey(r2.packageOID)
 
-            //
-            return JSON.parse(JSON.stringify(r2))
-          })
+              //
+              return JSON.parse(JSON.stringify(r2))
+            })
 
           let payload = {
             codePackage: clonePackage,
