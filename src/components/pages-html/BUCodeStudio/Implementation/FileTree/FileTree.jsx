@@ -492,9 +492,11 @@ function Remove({ ap }) {
         <button
           className='p-2 text-white bg-red-500 rounded-lg'
           onClick={async () => {
+            let apOID = ap.oid
+
             let arr = AppDev.draft.appPackages
             arr.splice(
-              arr.findIndex((e) => e.oid === ap.oid),
+              arr.findIndex((e) => e.oid === apOID),
               1
             )
 
@@ -503,8 +505,9 @@ function Remove({ ap }) {
             await AppDev.save({ object: AppDev.draft })
 
             let files = AppCodeFile.data
+
             for (let file of files) {
-              if (file && file.packageOID === ap.oid) {
+              if (file && file.packageOID === apOID) {
                 await AppCodeFile.remove({ object: file })
               }
             }
