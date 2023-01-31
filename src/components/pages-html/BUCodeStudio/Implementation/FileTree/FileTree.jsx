@@ -533,12 +533,12 @@ function Remove({ ap }) {
         <button
           className='p-2 text-white bg-red-500 rounded-lg'
           onClick={async () => {
-            //
             let arr = AppDev.draft.appPackages
             arr.splice(
               arr.findIndex((e) => e.oid === ap.oid),
               1
             )
+
             openRemove(false)
 
             await AppDev.save({ object: AppDev.draft })
