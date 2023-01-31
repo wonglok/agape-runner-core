@@ -166,12 +166,12 @@ let run = async ({ domElement, outputs, onClean }) => {
 
   // console.log(outputs)
 
-  loaderUtils.addImportMap({
-    imports: {
-      [`three`]: '/vendor/three-r149/build/three.module.js',
-      [`three/examples/`]: '/vendor/three-r149/examples/',
-    },
-  })
+  // loaderUtils.addImportMap({
+  //   imports: {
+  //     [`three`]: '/vendor/three-r149/build/three.module.js',
+  //     [`three/examples/`]: '/vendor/three-r149/examples/',
+  //   },
+  // })
 
   loaderUtils.load('bundle-output.js').then((r) => {
     let runner = r.default
