@@ -502,6 +502,7 @@ function Remove({ ap }) {
         <button
           className='p-2 text-white bg-red-500 rounded-lg'
           onClick={async () => {
+            AppDev.activeFileID = ''
             let apOID = ap.oid
 
             let arr = AppDev.draft.appPackages
