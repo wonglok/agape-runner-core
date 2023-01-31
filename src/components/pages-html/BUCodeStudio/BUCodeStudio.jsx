@@ -24,7 +24,6 @@ export function BUCodeStudio() {
     CSData.appVersionID = router.query.appVersionID
 
     if (CSData.appVersionID) {
-      s
       AppVersion.get({ oid: CSData.appVersionID }).then((object) => {
         AppDev.draft = object.item
         AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid }).then(() => {
