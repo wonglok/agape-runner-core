@@ -47,11 +47,11 @@ export function FileTree() {
                 },
               ],
             })
+            openCreatePopup(false)
 
             await AppDev.save({
               object: AppDev.draft,
             })
-            openCreatePopup(false)
           }}
         >
           Create

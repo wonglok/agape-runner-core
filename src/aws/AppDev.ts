@@ -80,10 +80,7 @@ export const AppDev = proxy<{
         appPackages: AppPackages.map((pack) => {
           pack.modules.forEach((mod) => {
             mod.files = AppCodeFile.data.filter((e) => {
-              return (
-                AppDev.activePackageID === e.packageOID &&
-                AppDev.activeModuleID === e.moduleOID
-              )
+              return pack.oid === e.packageOID && mod.oid === e.moduleOID
             })
           })
 

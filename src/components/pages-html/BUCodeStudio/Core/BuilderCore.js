@@ -10,11 +10,11 @@ export let buildApp = async (input) => {
 
   const rollupLocalhost = `rollup://localhost/`
 
-  const getFileName = ({ onePackage, moduleName, fileName }) => {
-    let oneModule = onePackage.modules.find((e) => e.moduleName === moduleName)
-    let file = oneModule.files.find((e) => e.fileName === fileName)
-    return `${rollupLocalhost}${onePackage.packageName}/${oneModule.moduleName}/${file.fileName}`
-  }
+  // const getFileName = ({ onePackage, moduleName, fileName }) => {
+  //   // let oneModule = onePackage.modules.find((e) => e.moduleName === moduleName)
+  //   // let file = oneModule.files.find((e) => e.fileName === fileName)
+  //   return `${rollupLocalhost}${onePackage.packageName}/${moduleName}/${fileName}`
+  // }
 
   let fileList = []
 
@@ -22,6 +22,7 @@ export let buildApp = async (input) => {
     for (let mod of onePackage.modules) {
       for (let file of mod.files) {
         fileList.push({
+          file: JSON.parse(JSON.stringify(file)),
           rollup: `${rollupLocalhost}${onePackage.packageName}/${mod.moduleName}/${file.fileName}`,
           content: file.content,
         })
@@ -34,27 +35,35 @@ export let buildApp = async (input) => {
   // let firstPackage = appContent.appPackages[0]
 
   let bundle = rollup({
-    input: [
-      getFileName({
-        onePackage: app.appPackages.find(
-          (e) => e.packageName === app.appLoader
-        ), //firstPackage, //
-        moduleName: 'main',
-        fileName: 'index.js',
-      }),
-    ],
+    input: `${rollupLocalhost}${app.appLoader}/main/index.js`,
+    // input: [
+    //   getFileName({
+    //     // onePackage: firstPackage,
+    //     onePackage: app.appPackages.find(
+    //       (e) => e.packageName === app.appLoader
+    //     ),
+    //     moduleName: 'main',
+    //     fileName: 'index.js',
+    //   }),
+    // ],
     plugins: [
       {
         name: 'rollup-in-browser-example',
         resolveId(importee, importer) {
           if (!importer) {
+            // console.log(importee, 'importee')
             return importee
           }
 
-          if (importee.indexOf('@') === 0) {
-            let address = importee.replace('@', '')
-            return `${rollupLocalhost}${address}`
+          if (importee.indexOf('package:') === 0) {
+            importee = importee.replace('package:', rollupLocalhost)
+            return new URL(importee).href
           }
+
+          // if (importee.indexOf('@:') === 0) {
+          //   let address = importee.replace('@:', '')
+          //   return `${rollupLocalhost}${address}`
+          // }
 
           if (importee === 'three') {
             return `${location.origin}/vendor/three-r149/build/three.module.js`
@@ -72,6 +81,26 @@ export let buildApp = async (input) => {
         },
 
         async load(id) {
+          // console.log(id)
+
+          // if (id.indexOf('') === 0) {
+          //   let myURL = `${id.replace('', '')}`
+
+          //   let file = fileList.find((e) => e.rollup === myURL)
+
+          //   let content = file.content || ''
+
+          //   let tf = transform(content, {
+          //     transforms: ['jsx', 'typescript'],
+          //     preserveDynamicImport: true,
+          //     production: true,
+          //     jsxPragma: 'React.createElement',
+          //     jsxFragmentPragma: 'React.Fragment',
+          //   }).code
+
+          //   return tf
+          // }
+
           if (id.indexOf('http') === 0) {
             return fetch(id)
               .then((r) => r.text())
@@ -106,6 +135,10 @@ export let buildApp = async (input) => {
             }
           }
 
+          if (id.indexOf('package:') === 0) {
+            id = id.replace('package:', `${rollupLocalhost}`)
+          }
+
           let file = fileList.find((e) => e.rollup === id)
 
           if (!file) {
@@ -121,8 +154,8 @@ export let buildApp = async (input) => {
 
             let content = file.content || ''
             let tf = transform(content, {
-              transforms: ['jsx', 'typescript'],
-              preserveDynamicImport: true,
+              transforms: ['jsx'],
+              // preserveDynamicImport: true,
               production: true,
               jsxPragma: 'React.createElement',
               jsxFragmentPragma: 'React.Fragment',
@@ -143,6 +176,9 @@ export let buildApp = async (input) => {
       await bundle
     ).generate({
       //
+      format: 'esm',
+      file: 'bundle-output.js',
+      // esModule: true,
     })
   ).output
 

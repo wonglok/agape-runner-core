@@ -173,12 +173,12 @@ let run = async ({ domElement, outputs, onClean }) => {
     },
   })
 
-  loaderUtils.load('index.js').then((r) => {
+  loaderUtils.load('bundle-output.js').then((r) => {
     let runner = r.default
     if (typeof runner === 'function') {
       runner({ domElement, onClean, loader: loaderUtils })
     } else {
-      console.log('cannot find default function for entry index.js')
+      console.log('cannot find default function for entry bundle-output.js')
     }
 
     // r.GUI.yo({
