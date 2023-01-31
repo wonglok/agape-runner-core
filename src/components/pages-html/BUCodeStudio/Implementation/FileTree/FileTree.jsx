@@ -222,7 +222,12 @@ function ExportButton({ ap }) {
 
           let files = AppDev.appCodeFiles
             .filter((e) => {
-              return e.packageOID === ap.oid
+              return (
+                e.packageOID === ap.oid &&
+                ap.modules.some((s) => {
+                  return s.oid === e.moduleOID
+                })
+              )
             })
             .map((r) => {
               let r2 = { ...r }
