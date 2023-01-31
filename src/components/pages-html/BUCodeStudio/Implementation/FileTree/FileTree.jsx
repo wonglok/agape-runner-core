@@ -213,14 +213,14 @@ function ExportButton({ ap }) {
             }
           }
 
-          clonePackage.packageName = clonePackage.packageName + getID()
+          clonePackage.packageName = 'i_' + clonePackage.packageName
           clonePackage.modules.forEach((mod) => {
             mod.oid = provideKey(mod.oid)
           })
 
           clonePackage.oid = provideKey(clonePackage.oid)
 
-          let files = AppDev.appCodeFiles
+          let files = JSON.parse(JSON.stringify(AppDev.appCodeFiles))
             .filter((e) => {
               return (
                 e.packageOID === ap.oid &&
