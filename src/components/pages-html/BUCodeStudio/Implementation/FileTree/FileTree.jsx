@@ -278,27 +278,11 @@ function ImportButton({}) {
                     }
                   }
 
-                  // codePackage.packageName = 'i_' + codePackage.packageName
+                  codePackage.packageName = 'i_' + codePackage.packageName
                   codePackage.oid = provideKey(codePackage.oid)
                   codePackage.modules.forEach((mod) => {
                     mod.oid = provideKey(mod.oid)
                   })
-
-                  // codeFiles.map((r) => {
-                  //   let r2 = { ...r }
-                  //   //
-
-                  //   r2.appGroupID = appGroupID
-                  //   r2.appVersionID = appVersionID
-
-                  //   r2.oid = provideKey(r2.oid)
-
-                  //   r2.moduleOID = provideKey(r2.moduleOID)
-                  //   r2.packageOID = provideKey(r2.packageOID)
-
-                  //   //
-                  //   return JSON.parse(JSON.stringify(r2))
-                  // })
 
                   ev.target.disabled = true
 
