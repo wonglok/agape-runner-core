@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
 import { useSnapshot } from 'valtio'
+import copy from 'copy-to-clipboard'
 
 export function CodeEdtior() {
   useSnapshot(AppDev)
@@ -67,6 +68,17 @@ export function CodeEdtior() {
 
     return name
   }
+
+  let myPackage = AppDev.draft.appPackages.find(
+    (e) => e.oid === file?.packageOID
+  )
+  let moduleName = '___'
+  if (myPackage) {
+    let mod = myPackage.modules.find((e) => e.oid === file.moduleOID)
+    if (mod) {
+      moduleName = mod.moduleName
+    }
+  }
   //
   return (
     <>
@@ -80,7 +92,28 @@ export function CodeEdtior() {
             }
             style={{ height: '30px' }}
           >
-            {msg === '' && `${file?.fileName}`}
+            {msg === '' && (
+              <>
+                <span className='mr-1'>{`package:`}</span>
+                <span className='mr-1'>{`${myPackage?.packageName}`}</span>
+                <span className='mr-1'>{`/`}</span>
+                <span className='mr-1'>{`${moduleName}`}</span>
+                <span className='mr-1'>{`/`}</span>
+                <span className='mr-1'>{`${file?.fileName}`}</span>
+
+                <span
+                  className=' cursor-pointer'
+                  onClick={() => {
+                    //
+                    copy(
+                      `import 'package:${myPackage?.packageName}/${moduleName}/${file?.fileName}'`
+                    )
+                  }}
+                >
+                  🔗
+                </span>
+              </>
+            )}
             {msg === 'dirty' && ` 💾 Needs to save...`}
             {msg === 'loading' && ` 🌩️ Saving...`}
             {msg === 'done' && ` 👌🏻 Done...`}
