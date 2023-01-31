@@ -213,7 +213,7 @@ function ExportButton({ ap }) {
             }
           }
 
-          clonePackage.packageName = 'export_' + clonePackage.packageName
+          clonePackage.packageName = clonePackage.packageName + getID()
 
           clonePackage.oid = provideKey(clonePackage.oid)
           clonePackage.modules.forEach((mod) => {
