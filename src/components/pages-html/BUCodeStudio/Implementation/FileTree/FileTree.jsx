@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import { OneModule } from './OneModule'
 import { AppCodeFile } from '@/aws/AppCodeFile'
+import { AppVersion } from '@/aws/AppVersion'
+import { CSData } from '@/aws/CSData'
 
 export function FileTree() {
   let app = useSnapshot(AppDev)
@@ -271,7 +273,15 @@ function ImportButton({}) {
                     return map.get(key)
                   }
 
-                  codePackage.packageName = 'i_' + codePackage.packageName
+                  if (
+                    AppDev.draft.appPackages
+                      .map((e) => e.packageName)
+                      .includes(codePackage.packageName)
+                  ) {
+                    codePackage.packageName =
+                      'imported_' + codePackage.packageName
+                  }
+
                   codePackage.oid = setKey(codePackage.oid)
                   codePackage.modules.forEach((mod) => {
                     mod.oid = setKey(mod.oid)
@@ -320,21 +330,42 @@ function ImportButton({}) {
                       console.log(packgeSaved)
                     }
                   )
+                  await new Promise((r) => {
+                    setTimeout(r, 100)
+                  })
 
                   ev.target.innerText = `Done!`
 
                   setTimeout(() => {
                     ev.target.innerText = `Import Package`
 
-                    AppCodeFile.invalidate({ appVersionID }).then(() => {
-                      try {
-                        AppDev.buildCode().catch((e) => {
-                          console.log(e)
+                    AppVersion.get({ oid: CSData.appVersionID }).then(
+                      (object) => {
+                        AppDev.draft = object.item
+                        AppCodeFile.invalidate({
+                          appVersionID: AppDev.draft.oid,
+                        }).then(() => {
+                          //
+                          try {
+                            AppDev.buildCode().catch((e) => {
+                              console.log(e)
+                            })
+                          } catch (e) {
+                            console.log(e)
+                          }
                         })
-                      } catch (e) {
-                        console.log(e)
                       }
-                    })
+                    )
+
+                    // AppCodeFile.invalidate({ appVersionID }).then(() => {
+                    //   try {
+                    //     AppDev.buildCode().catch((e) => {
+                    //       console.log(e)
+                    //     })
+                    //   } catch (e) {
+                    //     console.log(e)
+                    //   }
+                    // })
                   }, 1000)
 
                   console.log('done')

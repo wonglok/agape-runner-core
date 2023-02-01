@@ -78,6 +78,7 @@ export function ExtendWithVersion({ appGroupID }) {
 
 function OneVersion({ oid }) {
   //
+  let ref = useRef()
   let av = useSnapshot(AppVersion.data)
 
   let it = (av || []).find((ver) => {
@@ -153,6 +154,7 @@ function OneVersion({ oid }) {
                 </Link>
 
                 <input
+                  ref={ref}
                   className='p-3 bg-white border border-l-0 rounded-lg rounded-l-none rounded-r-none w-80 bg-opacity-30'
                   defaultValue={it?.slug || ''}
                   onKeyDown={(ev) => {
@@ -195,6 +197,7 @@ function OneVersion({ oid }) {
                 onClick={(ev) => {
                   let obj = CSData.appVersions.find((e) => e.oid === oid)
 
+                  obj.slug = ref.current.value
                   setBGTo(renameRef.current, 'bg-yellow-300')
 
                   AppVersion.update({ object: obj })
