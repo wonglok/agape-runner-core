@@ -240,7 +240,9 @@ function ExportButton({ ap }) {
             codeFiles: files,
           }
 
-          let url = URL.createObjectURL(new Blob([JSON.stringify(payload)]))
+          let url = URL.createObjectURL(
+            new Blob([JSON.stringify(payload, null, '  ')])
+          )
 
           let an = document.createElement('a')
           an.download = clonePackage.packageName + '.json'
