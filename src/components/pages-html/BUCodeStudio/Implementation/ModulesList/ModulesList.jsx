@@ -13,8 +13,8 @@ export function ModulesList() {
 
   let mod = pack?.modules?.find((e) => e.oid === app.activeModuleID)
 
-  let appGroupID = AppDev.draft.appGroupID
-  let appVersionID = AppDev.draft.oid
+  let appGroupID = AppDev.draft?.appGroupID
+  let appVersionID = AppDev.draft?.oid
 
   let packageOID = pack?.oid
   let moduleOID = mod?.oid
@@ -38,12 +38,12 @@ export function ModulesList() {
     })
 
   useEffect(() => {
-    if (moduleOID) {
-      AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid }).then(() => {
+    if (moduleOID && appVersionID) {
+      AppCodeFile.invalidate({ appVersionID: appVersionID }).then(() => {
         //
       })
     }
-  }, [moduleOID])
+  }, [moduleOID, appVersionID])
   //
   return (
     <>
