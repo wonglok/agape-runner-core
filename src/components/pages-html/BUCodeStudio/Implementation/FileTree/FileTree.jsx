@@ -293,9 +293,10 @@ function ImportButton({}) {
                       setTimeout(r, 100)
                     })
 
-                    file.oid = setKey(file.oid)
                     file.appGroupID = appGroupID
                     file.appVersionID = appVersionID
+
+                    file.oid = setKey(file.oid)
                     file.packageOID = getKey(file.packageOID)
                     file.moduleOID = getKey(file.moduleOID)
 
