@@ -34,7 +34,7 @@ export default function SlugPage() {
         }
       })
     } else {
-      AppEntry.querySlug({ slug: 'home' }).then(async ({ list }) => {
+      AppEntry.querySlug({ slug: '' }).then(async ({ list }) => {
         console.log(list)
 
         /** @type {{slug:string, oid: string, type: string, payload: { apGroupID: '', appVersionID: '' }}} */
