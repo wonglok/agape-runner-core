@@ -20,12 +20,14 @@ export function TabCoding() {
                 <FileTree></FileTree>
               </HorizontalSection>
               <HorizontalSection width={'calc(225px'}>
-                <VerticalSection border height='calc(100% - 300px)'>
-                  <ModulesList></ModulesList>
-                </VerticalSection>
+                <ModulesList></ModulesList>
+                {/* <VerticalSection
+                  border
+                  height='calc(100% - 300px)'
+                ></VerticalSection>
                 <VerticalSection height='calc(300px)'>
                   <AllFiles height='300px'></AllFiles>
-                </VerticalSection>
+                </VerticalSection> */}
               </HorizontalSection>
             </HorizontalParent>
           </VerticalSection>
