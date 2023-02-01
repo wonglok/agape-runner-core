@@ -16,14 +16,14 @@ export function BUCodeStudio() {
   let router = useRouter()
   let app = useSnapshot(AppDev)
   useEffect(() => {
-    AppDev.activeFileID = ''
-    AppDev.activeModuleID = ''
-    AppDev.activePackageID = ''
-
     //
     CSData.appVersionID = router.query.appVersionID
 
     if (CSData.appVersionID) {
+      AppDev.activeFileID = ''
+      AppDev.activeModuleID = ''
+      AppDev.activePackageID = ''
+
       AppVersion.get({ oid: CSData.appVersionID }).then((object) => {
         AppDev.draft = object.item
         AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid }).then(() => {
