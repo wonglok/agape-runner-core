@@ -214,27 +214,6 @@ function ExportButton({ ap }) {
             )
           })
 
-          let map = new Map()
-
-          let setKey = (key) => {
-            map.set(key, getID())
-            return map.get(key)
-          }
-          let getKey = (key) => {
-            return map.get(key)
-          }
-
-          codePackage.oid = setKey(codePackage.oid)
-          codePackage.modules.forEach((mod) => {
-            mod.oid = setKey(mod.oid)
-          })
-
-          codeFiles.forEach((it) => {
-            it.oid = setKey(it.oid)
-            it.packageOID = getKey(it.packageOID)
-            it.moduleOID = getKey(it.moduleOID)
-          })
-
           let payload = {
             codePackage: codePackage,
             codeFiles: codeFiles,
@@ -272,111 +251,62 @@ function ImportButton({}) {
           }) => {
             if (first) {
               //
+              let appGroupID = AppDev.draft.appGroupID
+              let appVersionID = AppDev.draft.oid
+
+              console.log(appGroupID, appVersionID)
+
               let reader = new FileReader()
               reader.onload = async () => {
                 try {
                   let json = JSON.parse(reader.result)
 
-                  let appGroupID = AppDev.draft.appGroupID
-                  let appVersionID = AppDev.draft.oid
-
-                  let codePackage = json.codePackage
-                  let codeFiles = json.codeFiles
-
-                  let map = new Map()
-
-                  let setKey = (key) => {
-                    map.set(key, getID())
-                    return map.get(key)
-                  }
-                  let getKey = (key) => {
-                    return map.get(key)
-                  }
-
-                  codePackage.oid = setKey(codePackage.oid)
-                  codePackage.modules.forEach((mod) => {
-                    mod.oid = setKey(mod.oid)
+                  let res = await AppDev.importCode({
+                    appVersionID: appVersionID,
+                    appGroupID,
+                    codeFiles: json.codeFiles,
+                    codePackage: json.codePackage,
                   })
 
-                  codeFiles.forEach((it) => {
-                    it.oid = setKey(it.oid)
+                  console.log(res)
 
-                    it.packageOID = getKey(it.packageOID)
-                    it.moduleOID = getKey(it.moduleOID)
+                  ev.target.innerText = 'Finishing up'
 
-                    it.appVersionID = appVersionID
-                    it.appGroupID = appGroupID
-                  })
-
-                  //
-
-                  if (
-                    AppDev.draft.appPackages
-                      .map((e) => e.packageName)
-                      .includes(codePackage.packageName)
-                  ) {
-                    codePackage.packageName =
-                      'imported_' + codePackage.packageName
-                  }
-
-                  ev.target.disabled = true
-                  AppDev.draft.appPackages.push(codePackage)
-
-                  let total = codeFiles.length
-                  let inc = 0
-                  for (let file of codeFiles) {
-                    ev.target.innerText = `Import Package ${(
-                      (inc / total) *
-                      100
-                    ).toFixed(0)}%`
-
-                    await AppCodeFile.update({ object: file })
-
-                    inc++
-                  }
-
-                  ev.target.innerText = `Finishing up....`
-                  await AppVersion.update({ object: AppDev.draft })
-
-                  // await new Promise((r) => {
-                  //   setTimeout(r, 100)
-                  // })
-
-                  await new Promise((resolve) => {
-                    //
+                  await new Promise((rrr) => {
                     AppVersion.get({ oid: CSData.appVersionID }).then(
                       (object) => {
                         AppDev.draft = object.item
-
                         AppCodeFile.invalidate({
-                          appVersionID: object.item.oid,
+                          appVersionID: appVersionID,
                         }).then(() => {
                           //
                           try {
-                            AppDev.buildCode().catch((e) => {
-                              console.log(e)
-                            })
-                            ev.target.innerText = `Import Package`
+                            AppDev.buildCode()
+                              .catch((e) => {
+                                console.log(e)
+                              })
+                              .then(() => {
+                                rrr()
+                              })
                           } catch (e) {
-                            ev.target.innerText = `Import Package`
                             console.log(e)
-                          } finally {
-                            resolve()
+                            rrr()
                           }
                         })
                       }
                     )
                   })
 
-                  console.log('done')
+                  ev.target.innerText = 'Done!'
 
-                  //
-
-                  //
+                  await new Promise((r) => {
+                    setTimeout(() => {
+                      ev.target.innerText = 'Import Package'
+                      r()
+                    }, 1000)
+                  })
                 } catch (e) {
                   console.log(e)
-                } finally {
-                  ev.target.disabled = false
                 }
               }
               reader.readAsText(first, 'utf8')
@@ -542,14 +472,6 @@ function Remove({ ap }) {
             openRemove(false)
 
             await AppDev.save({ object: AppDev.draft })
-
-            let files = AppCodeFile.data
-
-            for (let file of files) {
-              if (file && file.packageOID === apOID) {
-                await AppCodeFile.remove({ object: file })
-              }
-            }
           }}
         >
           Remove Package

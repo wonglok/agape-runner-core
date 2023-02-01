@@ -2,6 +2,9 @@ import { proxy } from 'valtio'
 import { AppVersion } from './AppVersion'
 import { AppCodeFile } from './AppCodeFile'
 import { buildApp } from '@/components/pages-html/BUCodeStudio/Core/BuilderCore'
+import nProgress from 'nprogress'
+import { SESSION_ACCESS_KEY } from '@/auth/GateConst'
+import { UserEndPoints } from './UserEndPoints'
 
 /*
 export let appContent = {
@@ -57,19 +60,58 @@ export const AppDev = proxy<{
   draft: AppVersionDraft
   appCodeFiles: AppCodeFile[]
 
-  activePackageID: string
-  activeModuleID: string
-  activeFileID: string
+  activePackageID: string | null
+  activeModuleID: string | null
+  activeFileID: string | null
   save: Function
   buildCode: Function
   saveCodeFile: Function
+  importCode: Function
 }>({
   appCodeFiles: [],
   draft: null,
 
-  activePackageID: '',
-  activeModuleID: '',
-  activeFileID: '',
+  activePackageID: null,
+  activeModuleID: null,
+  activeFileID: null,
+
+  importCode: async ({ appVersionID, appGroupID, codeFiles, codePackage }) => {
+    //
+
+    nProgress.start()
+
+    let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+
+    if (!sToken) {
+      nProgress.done()
+      throw await Promise.reject('no sToken')
+    }
+
+    let ep = UserEndPoints[process.env.NODE_ENV]
+
+    let res = await fetch(`${ep}/AppPackage-importCode`, {
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify({
+        //
+        appVersionID,
+        appGroupID,
+        codeFiles,
+        codePackage,
+      }),
+      headers: {
+        Authorization: `Bearer ${sToken}`,
+      },
+    })
+
+    if (res.ok) {
+      nProgress.done()
+      return await res.json()
+    } else {
+      nProgress.done()
+      throw await Promise.reject(res.json())
+    }
+  },
 
   buildCode: async ({}) => {
     //

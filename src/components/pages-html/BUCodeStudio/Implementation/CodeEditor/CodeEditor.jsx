@@ -9,7 +9,11 @@ import copy from 'copy-to-clipboard'
 export function CodeEdtior() {
   useSnapshot(AppDev)
 
-  let file = AppDev.appCodeFiles.find((f) => f.oid === AppDev.activeFileID)
+  let file = AppDev.appCodeFiles
+    .filter((e) => {
+      return AppDev.activeFileID && e && e.oid
+    })
+    .find((f) => f.oid === AppDev.activeFileID)
 
   function handleEditorValidation(markers) {
     markers.forEach((marker) => {
@@ -72,7 +76,7 @@ export function CodeEdtior() {
   let myPackage = AppDev.draft.appPackages.find(
     (e) => e.oid === file?.packageOID
   )
-  let moduleName = '___'
+  let moduleName = '' + Math.random()
   if (myPackage) {
     let mod = myPackage.modules.find((e) => e.oid === file.moduleOID)
     if (mod) {

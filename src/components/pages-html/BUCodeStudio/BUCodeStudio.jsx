@@ -20,9 +20,9 @@ export function BUCodeStudio() {
     CSData.appVersionID = router.query.appVersionID
 
     if (CSData.appVersionID) {
-      AppDev.activeFileID = ''
-      AppDev.activeModuleID = ''
-      AppDev.activePackageID = ''
+      AppDev.activeFileID = null
+      AppDev.activeModuleID = null
+      AppDev.activePackageID = null
       AppDev.draft = null
       AppDev.appCodeFiles = []
 
