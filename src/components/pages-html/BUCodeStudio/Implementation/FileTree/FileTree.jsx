@@ -203,7 +203,6 @@ function ExportButton({ ap }) {
           // let originalPackage = JSON.parse(JSON.stringify(ap))
           /** @type {ap} */
           let clonePackage = JSON.parse(JSON.stringify(ap))
-
           let files = JSON.parse(JSON.stringify(AppDev.appCodeFiles)).filter(
             (e) => {
               return (
@@ -214,6 +213,27 @@ function ExportButton({ ap }) {
               )
             }
           )
+
+          let map = new Map()
+
+          let setKey = (key) => {
+            map.set(key, getID())
+            return map.get(key)
+          }
+          let getKey = (key) => {
+            return map.get(key)
+          }
+
+          clonePackage.oid = setKey(clonePackage.oid)
+          clonePackage.modules.forEach((mod) => {
+            mod.oid = setKey(mod.oid)
+          })
+
+          files.forEach((it) => {
+            it.oid = setKey(it.oid)
+            it.packageOID = getKey(it.packageOID)
+            it.moduleOID = getKey(it.moduleOID)
+          })
 
           let payload = {
             codePackage: clonePackage,
@@ -261,18 +281,6 @@ function ImportButton({}) {
                   let codePackage = json.codePackage
                   let codeFiles = json.codeFiles
 
-                  // // let originalPackage = JSON.parse(JSON.stringify(ap))
-                  // /** @type {ap} */
-                  let map = new Map()
-
-                  let setKey = (key) => {
-                    map.set(key, getID())
-                    return map.get(key)
-                  }
-                  let getKey = (key) => {
-                    return map.get(key)
-                  }
-
                   if (
                     AppDev.draft.appPackages
                       .map((e) => e.packageName)
@@ -281,25 +289,6 @@ function ImportButton({}) {
                     codePackage.packageName =
                       'imported_' + codePackage.packageName
                   }
-
-                  let oldPackageKey = codePackage.oid
-                  let newPackageKey = getID()
-                  codePackage.oid = newPackageKey
-                  codePackage.modules.forEach((mod) => {
-                    let oldModuleKey = mod.oid
-                    let newModuleKey = getID()
-
-                    codeFiles.forEach((code) => {
-                      if (
-                        code.moduleOID === oldModuleKey &&
-                        code.packageOID === oldPackageKey
-                      ) {
-                        code.moduleOID = newModuleKey
-                        code.packageOID = newPackageKey
-                      }
-                    })
-                    mod.oid = newModuleKey
-                  })
 
                   ev.target.disabled = true
 
@@ -313,8 +302,8 @@ function ImportButton({}) {
                       100
                     ).toFixed(0)}%`
 
-                    file.appGroupID = appGroupID
                     file.appVersionID = appVersionID
+                    file.appGroupID = appGroupID
 
                     await AppCodeFile.create(file)
 
