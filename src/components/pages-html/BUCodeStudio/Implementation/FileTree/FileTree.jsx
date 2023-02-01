@@ -300,6 +300,7 @@ function ImportButton({}) {
 
                   codeFiles.forEach((it) => {
                     it.oid = setKey(it.oid)
+
                     it.packageOID = getKey(it.packageOID)
                     it.moduleOID = getKey(it.moduleOID)
 
@@ -321,8 +322,6 @@ function ImportButton({}) {
                   ev.target.disabled = true
                   AppDev.draft.appPackages.push(codePackage)
 
-                  await AppVersion.update({ object: AppDev.draft })
-
                   let total = codeFiles.length
                   let inc = 0
                   for (let file of codeFiles) {
@@ -337,6 +336,7 @@ function ImportButton({}) {
                   }
 
                   ev.target.innerText = `Finishing up....`
+                  await AppVersion.update({ object: AppDev.draft })
 
                   // await new Promise((r) => {
                   //   setTimeout(r, 100)

@@ -20,8 +20,21 @@ export default function SlugPage() {
       let slugString = query.slug.join('/')
 
       console.log(slugString)
+
+      AppEntry.querySlug({ slug: slugString }).then(async ({ list }) => {
+        console.log(list)
+
+        /** @type {{slug:string, oid: string, type: string, payload: { apGroupID: '', appVersionID: '' }}} */
+        let first = list[0]
+
+        if (first && first.type === 'write-app') {
+          console.log(first.payload)
+
+          loadMyApp({ appEntry: first, setOutputs })
+        }
+      })
     } else {
-      AppEntry.querySlug({ slug: '' }).then(async ({ list }) => {
+      AppEntry.querySlug({ slug: 'home' }).then(async ({ list }) => {
         console.log(list)
 
         /** @type {{slug:string, oid: string, type: string, payload: { apGroupID: '', appVersionID: '' }}} */
