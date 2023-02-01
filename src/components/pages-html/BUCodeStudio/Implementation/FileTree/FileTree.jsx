@@ -279,7 +279,7 @@ function ImportButton({}) {
                   }
 
                   codePackage.packageName = 'i_' + codePackage.packageName
-                  codePackage.oid = provideKey(codePackage.oid)
+                  codePackage.oid = getID()
                   codePackage.modules.forEach((mod) => {
                     mod.oid = provideKey(mod.oid)
                   })
@@ -288,7 +288,7 @@ function ImportButton({}) {
 
                   AppDev.draft.appPackages.push(codePackage)
 
-                  let total = codeFiles.length //
+                  let total = codeFiles.length
                   let inc = 0
                   for (let file of codeFiles) {
                     ev.target.innerText = `Import Package ${(
@@ -300,13 +300,13 @@ function ImportButton({}) {
                       setTimeout(r, 100)
                     })
 
-                    file.oid = provideKey(file.oid)
+                    file.oid = getID()
                     file.appGroupID = appGroupID
                     file.appVersionID = appVersionID
-                    file.packageOID = provideKey(file.packageOID)
+                    file.packageOID = codePackage.oid
                     file.moduleOID = provideKey(file.moduleOID)
 
-                    await AppCodeFile.update({ object: file })
+                    await AppCodeFile.create(file)
 
                     await new Promise((r) => {
                       setTimeout(r, 100)
