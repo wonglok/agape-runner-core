@@ -202,17 +202,17 @@ function ExportButton({ ap }) {
         onClick={() => {
           // let originalPackage = JSON.parse(JSON.stringify(ap))
           /** @type {ap} */
-          let clonePackage = JSON.parse(JSON.stringify(ap))
-          let files = JSON.parse(JSON.stringify(AppDev.appCodeFiles)).filter(
-            (e) => {
-              return (
-                ap.oid === e.packageOID &&
-                ap.modules.some((mo) => {
-                  return mo.oid === e.moduleOID
-                })
-              )
-            }
-          )
+          let codePackage = JSON.parse(JSON.stringify(ap))
+          let codeFiles = JSON.parse(
+            JSON.stringify(AppDev.appCodeFiles)
+          ).filter((e) => {
+            return (
+              ap.oid === e.packageOID &&
+              ap.modules.some((mo) => {
+                return mo.oid === e.moduleOID
+              })
+            )
+          })
 
           let map = new Map()
 
@@ -224,20 +224,20 @@ function ExportButton({ ap }) {
             return map.get(key)
           }
 
-          clonePackage.oid = setKey(clonePackage.oid)
-          clonePackage.modules.forEach((mod) => {
+          codePackage.oid = setKey(codePackage.oid)
+          codePackage.modules.forEach((mod) => {
             mod.oid = setKey(mod.oid)
           })
 
-          files.forEach((it) => {
+          codeFiles.forEach((it) => {
             it.oid = setKey(it.oid)
             it.packageOID = getKey(it.packageOID)
             it.moduleOID = getKey(it.moduleOID)
           })
 
           let payload = {
-            codePackage: clonePackage,
-            codeFiles: files,
+            codePackage: codePackage,
+            codeFiles: codeFiles,
           }
 
           let url = URL.createObjectURL(
@@ -245,7 +245,7 @@ function ExportButton({ ap }) {
           )
 
           let an = document.createElement('a')
-          an.download = clonePackage.packageName + '.json'
+          an.download = codePackage.packageName + '.json'
           an.target = '_blank'
           an.href = url
           an.click()
@@ -283,6 +283,32 @@ function ImportButton({}) {
                   let codePackage = json.codePackage
                   let codeFiles = json.codeFiles
 
+                  let map = new Map()
+
+                  let setKey = (key) => {
+                    map.set(key, getID())
+                    return map.get(key)
+                  }
+                  let getKey = (key) => {
+                    return map.get(key)
+                  }
+
+                  codePackage.oid = setKey(codePackage.oid)
+                  codePackage.modules.forEach((mod) => {
+                    mod.oid = setKey(mod.oid)
+                  })
+
+                  codeFiles.forEach((it) => {
+                    it.oid = setKey(it.oid)
+                    it.packageOID = getKey(it.packageOID)
+                    it.moduleOID = getKey(it.moduleOID)
+
+                    it.appVersionID = appVersionID
+                    it.appGroupID = appGroupID
+                  })
+
+                  //
+
                   if (
                     AppDev.draft.appPackages
                       .map((e) => e.packageName)
@@ -293,8 +319,9 @@ function ImportButton({}) {
                   }
 
                   ev.target.disabled = true
-
                   AppDev.draft.appPackages.push(codePackage)
+
+                  await AppVersion.update({ object: AppDev.draft })
 
                   let total = codeFiles.length
                   let inc = 0
@@ -304,62 +331,45 @@ function ImportButton({}) {
                       100
                     ).toFixed(0)}%`
 
-                    file.appVersionID = appVersionID
-                    file.appGroupID = appGroupID
-
-                    await AppCodeFile.create(file)
+                    await AppCodeFile.update({ object: file })
 
                     inc++
                   }
 
                   ev.target.innerText = `Finishing up....`
 
-                  await AppDev.save({ object: AppDev.draft }).then(
-                    (packgeSaved) => {
-                      console.log(packgeSaved)
-                    }
-                  )
                   // await new Promise((r) => {
                   //   setTimeout(r, 100)
                   // })
 
-                  ev.target.innerText = `Done!`
-
-                  setTimeout(() => {
-                    ev.target.innerText = `Import Package`
-
+                  await new Promise((resolve) => {
+                    //
                     AppVersion.get({ oid: CSData.appVersionID }).then(
                       (object) => {
                         AppDev.draft = object.item
+
                         AppCodeFile.invalidate({
-                          appVersionID: AppDev.draft.oid,
+                          appVersionID: object.item.oid,
                         }).then(() => {
                           //
                           try {
                             AppDev.buildCode().catch((e) => {
                               console.log(e)
                             })
+                            ev.target.innerText = `Import Package`
                           } catch (e) {
+                            ev.target.innerText = `Import Package`
                             console.log(e)
+                          } finally {
+                            resolve()
                           }
                         })
                       }
                     )
-
-                    // AppCodeFile.invalidate({ appVersionID }).then(() => {
-                    //   try {
-                    //     AppDev.buildCode().catch((e) => {
-                    //       console.log(e)
-                    //     })
-                    //   } catch (e) {
-                    //     console.log(e)
-                    //   }
-                    // })
-                  }, 1000)
+                  })
 
                   console.log('done')
 
-                  //
                   //
 
                   //
