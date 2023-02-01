@@ -37,6 +37,7 @@ export function ModulesList() {
       return 0
     })
 
+  //
   useEffect(() => {
     if (moduleOID && appVersionID) {
       AppCodeFile.invalidate({ appVersionID: appVersionID }).then(() => {
