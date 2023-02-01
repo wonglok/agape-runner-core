@@ -6,6 +6,7 @@ import { ModulesList } from '@/components/pages-html/BUCodeStudio/Implementation
 import { ColumnFiles } from '@/components/pages-html/BUCodeStudio/Implementation/ColumnFiles/ColumnFiles'
 import { CodeEdtior } from '../Implementation/CodeEditor/CodeEditor'
 import { RunWindow } from '../Implementation/RunWindow/RunWindow'
+import { AllFiles } from '../Implementation/AllFiles/AllFiles'
 
 export function TabCoding() {
   return (
@@ -19,7 +20,12 @@ export function TabCoding() {
                 <FileTree></FileTree>
               </HorizontalSection>
               <HorizontalSection width={'calc(225px'}>
-                <ModulesList></ModulesList>
+                <VerticalSection border height='calc(100% - 300px)'>
+                  <ModulesList></ModulesList>
+                </VerticalSection>
+                <VerticalSection height='calc(300px)'>
+                  <AllFiles height='300px'></AllFiles>
+                </VerticalSection>
               </HorizontalSection>
             </HorizontalParent>
           </VerticalSection>

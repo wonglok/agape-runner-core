@@ -472,6 +472,33 @@ function Remove({ ap }) {
             openRemove(false)
 
             await AppDev.save({ object: AppDev.draft })
+
+            let allModules = []
+
+            AppDev.draft.appPackages.forEach((r) => {
+              r.modules.forEach((m) => {
+                allModules.push(m)
+              })
+            })
+
+            let removeList = []
+            AppCodeFile.data.forEach((it) => {
+              if (
+                !allModules.some((m) => {
+                  return m.oid === it.moduleOID
+                })
+              ) {
+                removeList.push(it)
+              }
+            })
+
+            for (let r of removeList) {
+              await AppCodeFile.remove({ object: r })
+            }
+
+            await AppCodeFile.invalidate({ appVersionID: AppDev.draft.oid })
+
+            //
           }}
         >
           Remove Package

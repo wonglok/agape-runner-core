@@ -4,7 +4,7 @@ import { Modal, Tooltip } from 'antd'
 import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 
-export function ModulesList() {
+export function AllFiles({ height }) {
   let app = useSnapshot(AppDev)
 
   let pack = AppDev.draft.appPackages.find(
@@ -20,7 +20,7 @@ export function ModulesList() {
   let moduleOID = mod?.oid
 
   let content = app.appCodeFiles
-    .filter((e) => e.packageOID === packageOID && e.moduleOID === moduleOID)
+    // .filter((e) => e.packageOID === packageOID && e.moduleOID === moduleOID)
     .slice()
     .sort((a, b) => {
       if (a.fileName === 'index.js') {
@@ -48,7 +48,10 @@ export function ModulesList() {
   return (
     <>
       {moduleOID && (
-        <div className='overflow-scroll f-full'>
+        <div
+          style={{ height: height }}
+          className='w-full overflow-y-scroll f-full'
+        >
           <div className='m-2'>
             <div className='w-full px-2 py-2 text-xs text-center text-black bg-gray-200 rounded-lg'>
               {/*  */}
