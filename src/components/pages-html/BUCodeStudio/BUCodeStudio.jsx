@@ -23,6 +23,8 @@ export function BUCodeStudio() {
       AppDev.activeFileID = ''
       AppDev.activeModuleID = ''
       AppDev.activePackageID = ''
+      AppDev.draft = null
+      AppDev.appCodeFiles = []
 
       AppVersion.get({ oid: CSData.appVersionID }).then((object) => {
         AppDev.draft = object.item
