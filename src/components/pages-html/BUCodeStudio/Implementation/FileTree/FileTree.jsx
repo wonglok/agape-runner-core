@@ -282,9 +282,23 @@ function ImportButton({}) {
                       'imported_' + codePackage.packageName
                   }
 
-                  codePackage.oid = setKey(codePackage.oid)
+                  let oldPackageKey = codePackage.oid
+                  let newPackageKey = getID()
+                  codePackage.oid = newPackageKey
                   codePackage.modules.forEach((mod) => {
-                    mod.oid = setKey(mod.oid)
+                    let oldModuleKey = mod.oid
+                    let newModuleKey = getID()
+
+                    codeFiles.forEach((code) => {
+                      if (
+                        code.moduleOID === oldModuleKey &&
+                        code.packageOID === oldPackageKey
+                      ) {
+                        code.moduleOID = newModuleKey
+                        code.packageOID = newPackageKey
+                      }
+                    })
+                    mod.oid = newModuleKey
                   })
 
                   ev.target.disabled = true
@@ -299,40 +313,24 @@ function ImportButton({}) {
                       100
                     ).toFixed(0)}%`
 
-                    await new Promise((r) => {
-                      setTimeout(r, 100)
-                    })
-
                     file.appGroupID = appGroupID
                     file.appVersionID = appVersionID
 
-                    file.oid = setKey(file.oid)
-                    file.packageOID = getKey(file.packageOID)
-                    file.moduleOID = getKey(file.moduleOID)
-
                     await AppCodeFile.create(file)
-
-                    await new Promise((r) => {
-                      setTimeout(r, 100)
-                    })
 
                     inc++
                   }
 
                   ev.target.innerText = `Finishing up....`
 
-                  await new Promise((r) => {
-                    setTimeout(r, 100)
-                  })
-
                   await AppDev.save({ object: AppDev.draft }).then(
                     (packgeSaved) => {
                       console.log(packgeSaved)
                     }
                   )
-                  await new Promise((r) => {
-                    setTimeout(r, 100)
-                  })
+                  // await new Promise((r) => {
+                  //   setTimeout(r, 100)
+                  // })
 
                   ev.target.innerText = `Done!`
 
