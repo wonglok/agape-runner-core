@@ -256,32 +256,25 @@ function ImportButton({}) {
                   let appGroupID = AppDev.draft.appGroupID
                   let appVersionID = AppDev.draft.oid
 
-                  let codeFiles = json.codeFiles.map((it) => {
-                    it.appGroupID = appGroupID
-                    it.appVersionID = appVersionID
-
-                    return it
-                  })
-
                   let codePackage = json.codePackage
+                  let codeFiles = json.codeFiles
 
                   // // let originalPackage = JSON.parse(JSON.stringify(ap))
                   // /** @type {ap} */
                   let map = new Map()
 
-                  let provideKey = (key) => {
-                    if (map.has(key)) {
-                      return map.get(key)
-                    } else {
-                      map.set(key, getID())
-                      return map.get(key)
-                    }
+                  let setKey = (key) => {
+                    map.set(key, getID())
+                    return map.get(key)
+                  }
+                  let getKey = (key) => {
+                    return map.get(key)
                   }
 
                   codePackage.packageName = 'i_' + codePackage.packageName
-                  codePackage.oid = getID()
+                  codePackage.oid = setKey(codePackage.oid)
                   codePackage.modules.forEach((mod) => {
-                    mod.oid = provideKey(mod.oid)
+                    mod.oid = setKey(mod.oid)
                   })
 
                   ev.target.disabled = true
@@ -300,11 +293,11 @@ function ImportButton({}) {
                       setTimeout(r, 100)
                     })
 
-                    file.oid = getID()
+                    file.oid = setKey(file.oid)
                     file.appGroupID = appGroupID
                     file.appVersionID = appVersionID
-                    file.packageOID = codePackage.oid
-                    file.moduleOID = provideKey(file.moduleOID)
+                    file.packageOID = getKey(file.packageOID)
+                    file.moduleOID = getKey(file.moduleOID)
 
                     await AppCodeFile.create(file)
 
