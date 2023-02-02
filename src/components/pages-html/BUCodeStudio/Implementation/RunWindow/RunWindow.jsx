@@ -1,5 +1,5 @@
 import { AppDev } from '@/aws/AppDev'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 import { useRef } from 'react'
 
 export function RunWindow() {
@@ -27,7 +27,9 @@ export function RunWindow() {
         </button>
         <button
           onClick={() => {
-            ref.current.src = `/admin/apps/run`
+            ref.current.src = `/admin/apps/run?id=${encodeURIComponent(
+              AppDev.draft.oid
+            )}`
           }}
         >
           Reload ✨
@@ -48,7 +50,7 @@ export function RunWindow() {
             }
           }, 500)
         }}
-        src={`/admin/apps/run`}
+        src={`/admin/apps/run?id=${encodeURIComponent(AppDev.draft.oid)}`}
       ></iframe>
     </div>
   )

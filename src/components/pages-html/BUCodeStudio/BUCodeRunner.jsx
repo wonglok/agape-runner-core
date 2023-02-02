@@ -203,7 +203,13 @@ export function BUCodeRunner({ outputsJSON = false }) {
     /// inputGUI
     // console.log('!!!!')
 
-    const bc = new BroadcastChannel('editor')
+    //
+    let id = ''
+
+    let params = new URLSearchParams(window.location.search)
+    id = params.get('id') || ''
+
+    const bc = new BroadcastChannel('editor' + id)
 
     bc.postMessage({
       action: 'compile',

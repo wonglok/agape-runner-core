@@ -12,6 +12,7 @@ import { CSData } from '@/aws/CSData'
 import { AppDev } from '@/aws/AppDev'
 import { TabCoding } from './Tabs/TabCoding'
 import { AppCodeFile } from '@/aws/AppCodeFile'
+import Link from 'next/link'
 export function BUCodeStudio() {
   let router = useRouter()
   let app = useSnapshot(AppDev)
@@ -52,8 +53,32 @@ export function BUCodeStudio() {
 
   return (
     <div className='w-full h-full overflow-hidden bg-white'>
-      <div className='flex justify-between h-6 px-1 py-1 text-xs text-white bg-cyan-800'>
-        3D WebApp Studio
+      <div className='flex items-center justify-between h-6 px-1 py-1 text-xs text-white bg-cyan-800'>
+        <a
+          target={'_blank'}
+          href={'/admin/dev/studio'}
+          referrerPolicy='no-referrer'
+          rel='noreferrer'
+        >
+          <div className='flex items-center cursor-pointer'>
+            <div className='inline-block w-4  mr-1'>
+              <svg
+                clipRule='evenodd'
+                fillRule='evenodd'
+                strokeLinejoin='round'
+                strokeMiterlimit='2'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  fill='white'
+                  d='m9.474 5.209s-4.501 4.505-6.254 6.259c-.147.146-.22.338-.22.53s.073.384.22.53c1.752 1.754 6.252 6.257 6.252 6.257.145.145.336.217.527.217.191-.001.383-.074.53-.221.293-.293.294-.766.004-1.057l-4.976-4.976h14.692c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-14.692l4.978-4.979c.289-.289.287-.761-.006-1.054-.147-.147-.339-.221-.53-.221-.191-.001-.38.071-.525.215z'
+                  fillRule='nonzero'
+                />
+              </svg>
+            </div>
+            Home
+          </div>
+        </a>
       </div>
 
       {/*  */}

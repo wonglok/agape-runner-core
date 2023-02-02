@@ -133,12 +133,12 @@ export const AppDev = proxy<{
     return appSource
   },
 
-  buildCode: async ({}) => {
+  buildCode: async () => {
     //
     try {
       buildApp(AppDev.getAppSource())
         .then((outputs) => {
-          const bc = new BroadcastChannel('editor')
+          const bc = new BroadcastChannel('editor' + AppDev.draft.oid)
           bc.postMessage({
             outputs,
           })

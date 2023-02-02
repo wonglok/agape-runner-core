@@ -198,163 +198,163 @@ export let buildApp = async (input) => {
   //
 }
 
-export let RawModules = [
-  {
-    moduleName: 'main',
-    files: [
-      {
-        fileName: `index.js`,
-        content: /* js */ `
-            import b from './b.js';
+// export let RawModules = [
+//   {
+//     moduleName: 'main',
+//     files: [
+//       {
+//         fileName: `index.js`,
+//         content: /* js */ `
+//             import b from './b.js';
 
-            import('./codesplit.js').then((r) => {
-              console.log(r.default);
-            })
-            import('network:/manifest.json').then((v) => {
-              console.log(v.default)
-            })
-            import('@lib-webgl/main/share.js').then((v) => {
-              console.log(v.default)
-            })
+//             import('./codesplit.js').then((r) => {
+//               console.log(r.default);
+//             })
+//             import('network:/manifest.json').then((v) => {
+//               console.log(v.default)
+//             })
+//             import('@lib-webgl/main/share.js').then((v) => {
+//               console.log(v.default)
+//             })
 
-            function YoTeachApp () {
-              return <div>{Math.random()}</div>
-            }
+//             function YoTeachApp () {
+//               return <div>{Math.random()}</div>
+//             }
 
-            export const GUI = {
-              fala: 1234,
-              yo: ({ domElement, onClean }) => {
-                domElement.appRoot = domElement.appRoot || ReactDOM.createRoot(domElement)
+//             export const GUI = {
+//               fala: 1234,
+//               yo: ({ domElement, onClean }) => {
+//                 domElement.appRoot = domElement.appRoot || ReactDOM.createRoot(domElement)
 
-                domElement.appRoot.render(<YoTeachApp></YoTeachApp>)
+//                 domElement.appRoot.render(<YoTeachApp></YoTeachApp>)
 
-                onClean(() => {
-                  domElement.appRoot.unmount()
-                })
-              }
-            }
+//                 onClean(() => {
+//                   domElement.appRoot.unmount()
+//                 })
+//               }
+//             }
 
-            console.log('GUI')
+//             console.log('GUI')
 
-            import('../engine-v001/index.js').then((r)=>{
-              console.log(r.default)
-            })
-            import('./json.json').then((r)=>{
-              console.log(r.default)
-            })
+//             import('../engine-v001/index.js').then((r)=>{
+//               console.log(r.default)
+//             })
+//             import('./json.json').then((r)=>{
+//               console.log(r.default)
+//             })
 
-            export default {
-              mod: 'main',
-              a:b
-            };
-          `,
-      },
-      {
-        fileName: `b.js`,
-        content: /* js */ `
-            export default {
-              b:'bbbbbb'
-            }
-          `,
-      },
-      {
-        fileName: `share.js`,
-        content: /* js */ `
-          export default 'sharing is caring'
-        `,
-      },
-      {
-        fileName: `json.json`,
-        content: JSON.stringify({ yo: 1234 }),
-      },
-      {
-        fileName: `codesplit.js`,
-        content: /* js */ `
-            export default {
-              yaya:'codesplit'
-            }
-          `,
-      },
-    ],
-  },
-  //
-  //
-  {
-    moduleName: 'engine-v001',
-    files: [
-      {
-        fileName: `index.js`,
-        content: /* js */ `
-            import b from './b.js';
+//             export default {
+//               mod: 'main',
+//               a:b
+//             };
+//           `,
+//       },
+//       {
+//         fileName: `b.js`,
+//         content: /* js */ `
+//             export default {
+//               b:'bbbbbb'
+//             }
+//           `,
+//       },
+//       {
+//         fileName: `share.js`,
+//         content: /* js */ `
+//           export default 'sharing is caring'
+//         `,
+//       },
+//       {
+//         fileName: `json.json`,
+//         content: JSON.stringify({ yo: 1234 }),
+//       },
+//       {
+//         fileName: `codesplit.js`,
+//         content: /* js */ `
+//             export default {
+//               yaya:'codesplit'
+//             }
+//           `,
+//       },
+//     ],
+//   },
+//   //
+//   //
+//   {
+//     moduleName: 'engine-v001',
+//     files: [
+//       {
+//         fileName: `index.js`,
+//         content: /* js */ `
+//             import b from './b.js';
 
-            import('./vanilla.js').then((r) => {
-              console.log(r.default)
-            })
+//             import('./vanilla.js').then((r) => {
+//               console.log(r.default)
+//             })
 
-            export const GUI = {
-              fala: 1234
-            }
+//             export const GUI = {
+//               fala: 1234
+//             }
 
-            console.log('GUI', GUI)
+//             console.log('GUI', GUI)
 
-            export default {
-              mod: 'engine-v001',
-              a:b
-            };
-          `,
-      },
-      {
-        fileName: `b.js`,
-        content: /* js */ `
-          export default {
-            b:'bbbbbb'
-          }
-        `,
-      },
-      {
-        fileName: `vanilla.js`,
-        content: /* js */ `
-          export default {
-            yaya:'yayayayayayayaya'
-          }
-        `,
-      },
-    ],
-  },
-]
+//             export default {
+//               mod: 'engine-v001',
+//               a:b
+//             };
+//           `,
+//       },
+//       {
+//         fileName: `b.js`,
+//         content: /* js */ `
+//           export default {
+//             b:'bbbbbb'
+//           }
+//         `,
+//       },
+//       {
+//         fileName: `vanilla.js`,
+//         content: /* js */ `
+//           export default {
+//             yaya:'yayayayayayayaya'
+//           }
+//         `,
+//       },
+//     ],
+//   },
+// ]
 
-export let appContent = {
-  appLoader: 'app-loader',
-  appPackages: [
-    { packageName: 'app-loader', modules: RawModules },
-    { packageName: 'page-about', modules: RawModules },
-    { packageName: 'lib-webgl', modules: RawModules },
-  ],
-}
+// export let appContent = {
+//   appLoader: 'app-loader',
+//   appPackages: [
+//     { packageName: 'app-loader', modules: RawModules },
+//     { packageName: 'page-about', modules: RawModules },
+//     { packageName: 'lib-webgl', modules: RawModules },
+//   ],
+// }
 
-export function TestButton() {
-  let run = (bc) => {
-    ///
-    buildApp(appContent).then((outputs) => {
-      bc.postMessage({
-        outputs,
-      })
-      // bc.close()
-    })
-  }
+// export function TestButton() {
+//   let run = (bc) => {
+//     ///
+//     buildApp(appContent).then((outputs) => {
+//       bc.postMessage({
+//         outputs,
+//       })
+//       // bc.close()
+//     })
+//   }
 
-  useEffect(() => {
-    const bc = new BroadcastChannel('editor')
-    bc.onmessage = (event) => {
-      let action = event?.data?.action
-      if (action === 'compile') {
-        run(bc)
-      }
-    }
+//   useEffect(() => {
+//     const bc = new BroadcastChannel('editor')
+//     bc.onmessage = (event) => {
+//       let action = event?.data?.action
+//       if (action === 'compile') {
+//         run(bc)
+//       }
+//     }
 
-    return () => {
-      bc.close()
-    }
-  }, [])
-  return <button onClick={run}>Test</button>
-}
+//     return () => {
+//       bc.close()
+//     }
+//   }, [])
+//   return <button onClick={run}>Test</button>
+// }
