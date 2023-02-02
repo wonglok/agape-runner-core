@@ -26,6 +26,7 @@ export function RunWindow() {
           Run Code 💨
         </button>
         <button
+          className='mr-2'
           onClick={() => {
             ref.current.src = `/admin/apps/run?id=${encodeURIComponent(
               AppDev.draft.oid
@@ -34,6 +35,16 @@ export function RunWindow() {
         >
           Reload ✨
         </button>
+
+        <a
+          href={`/admin/apps/open?id=${encodeURIComponent(AppDev.draft.oid)}`}
+          referrerPolicy='no-referrer'
+          target={'_blank'}
+          rel='noreferrer'
+        >
+          <button>Open ✨</button>
+        </a>
+        {/* `/admin/apps/run?id=${encodeURIComponent(AppDev.draft.oid)}` */}
       </div>
       <iframe
         className='w-full '

@@ -117,12 +117,12 @@ class REST {
 
   async get({ oid }) {
     nProgress.start()
-    let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
+    // let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
 
-    if (!sToken) {
-      nProgress.done()
-      throw await Promise.reject('no sToken')
-    }
+    // if (!sToken) {
+    //   nProgress.done()
+    //   throw await Promise.reject('no sToken')
+    // }
 
     let ep = UserEndPoints[process.env.NODE_ENV]
 
@@ -133,9 +133,9 @@ class REST {
         //
         oid,
       }),
-      headers: {
-        Authorization: `Bearer ${sToken}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${sToken}`,
+      // },
     })
 
     if (res.ok) {
