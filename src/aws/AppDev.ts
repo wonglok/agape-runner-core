@@ -23,7 +23,7 @@ declare type AppVersionDraft = {
   appGroupID: string
   slug: string
 
-  appLoader: 'string'
+  appLoader: string
   appPackages: AppPackage[]
   appAssets: []
   //
@@ -67,6 +67,10 @@ export const AppDev = proxy<{
   buildCode: Function
   saveCodeFile: Function
   importCode: Function
+  getAppSource: () => {
+    appLoader: string
+    appPackages: AppPackage[]
+  }
 }>({
   appCodeFiles: [],
   draft: null,
@@ -75,9 +79,7 @@ export const AppDev = proxy<{
   activeModuleID: null,
   activeFileID: null,
 
-  importCode: async ({ appVersionID, appGroupID, codeFiles, codePackage }) => {
-    //
-
+  importCode: async ({ appVersionID, appGroupID, codePackage }) => {
     nProgress.start()
 
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
@@ -96,7 +98,6 @@ export const AppDev = proxy<{
         //
         appVersionID,
         appGroupID,
-        codeFiles,
         codePackage,
       }),
       headers: {
@@ -113,22 +114,29 @@ export const AppDev = proxy<{
     }
   },
 
+  getAppSource: () => {
+    let AppPackages = JSON.parse(JSON.stringify(AppDev.draft.appPackages))
+
+    let appSource = {
+      appLoader: 'app-loader',
+      appPackages: AppPackages.map((pack) => {
+        pack.modules.forEach((mod) => {
+          mod.files = AppCodeFile.data.filter((e) => {
+            return pack.oid === e.packageOID && mod.oid === e.moduleOID
+          })
+        })
+
+        return pack
+      }),
+    }
+
+    return appSource
+  },
+
   buildCode: async ({}) => {
     //
-    let AppPackages = JSON.parse(JSON.stringify(AppDev.draft.appPackages))
     try {
-      buildApp({
-        appLoader: 'app-loader',
-        appPackages: AppPackages.map((pack) => {
-          pack.modules.forEach((mod) => {
-            mod.files = AppCodeFile.data.filter((e) => {
-              return pack.oid === e.packageOID && mod.oid === e.moduleOID
-            })
-          })
-
-          return pack
-        }),
-      })
+      buildApp(AppDev.getAppSource())
         .then((outputs) => {
           const bc = new BroadcastChannel('editor')
           bc.postMessage({

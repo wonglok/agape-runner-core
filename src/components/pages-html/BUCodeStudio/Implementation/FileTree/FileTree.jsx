@@ -200,34 +200,48 @@ function ExportButton({ ap }) {
       <button
         className='w-full px-2 py-1 text-white bg-purple-500 rounded-lg'
         onClick={() => {
-          // let originalPackage = JSON.parse(JSON.stringify(ap))
-          /** @type {ap} */
-          let codePackage = JSON.parse(JSON.stringify(ap))
-          let codeFiles = JSON.parse(
-            JSON.stringify(AppDev.appCodeFiles)
-          ).filter((e) => {
-            return (
-              ap.oid === e.packageOID &&
-              ap.modules.some((mo) => {
-                return mo.oid === e.moduleOID
-              })
-            )
-          })
+          let appSource = AppDev.getAppSource()
 
-          let payload = {
-            codePackage: codePackage,
-            codeFiles: codeFiles,
-          }
+          let payload = appSource.appPackages.find((e) => e.oid === ap.oid)
 
           let url = URL.createObjectURL(
             new Blob([JSON.stringify(payload, null, '  ')])
           )
 
           let an = document.createElement('a')
-          an.download = codePackage.packageName + '.json'
+          an.download = ap.packageName + '.json'
           an.target = '_blank'
           an.href = url
           an.click()
+
+          // // let originalPackage = JSON.parse(JSON.stringify(ap))
+          // /** @type {ap} */
+          // let codePackage = JSON.parse(JSON.stringify(ap))
+          // let codeFiles = JSON.parse(
+          //   JSON.stringify(AppDev.appCodeFiles)
+          // ).filter((e) => {
+          //   return (
+          //     ap.oid === e.packageOID &&
+          //     ap.modules.some((mo) => {
+          //       return mo.oid === e.moduleOID
+          //     })
+          //   )
+          // })
+
+          // let payload = {
+          //   codePackage: codePackage,
+          //   codeFiles: codeFiles,
+          // }
+
+          // let url = URL.createObjectURL(
+          //   new Blob([JSON.stringify(payload, null, '  ')])
+          // )
+
+          // let an = document.createElement('a')
+          // an.download = codePackage.packageName + '.json'
+          // an.target = '_blank'
+          // an.href = url
+          // an.click()
         }}
       >
         Export Package
@@ -264,11 +278,8 @@ function ImportButton({}) {
                   let res = await AppDev.importCode({
                     appVersionID: appVersionID,
                     appGroupID,
-                    codeFiles: json.codeFiles,
-                    codePackage: json.codePackage,
+                    codePackage: json,
                   })
-
-                  console.log(res)
 
                   ev.target.innerText = 'Finishing up'
 
