@@ -79,7 +79,7 @@ export const AppDev = proxy<{
   activeModuleID: null,
   activeFileID: null,
 
-  importCode: async ({ appVersionID, appGroupID, codePackage }) => {
+  importCode: async ({ appVersionID, appGroupID, appSource }) => {
     nProgress.start()
 
     let sToken = localStorage.getItem(SESSION_ACCESS_KEY)
@@ -98,7 +98,7 @@ export const AppDev = proxy<{
         //
         appVersionID,
         appGroupID,
-        codePackage,
+        appSource,
       }),
       headers: {
         Authorization: `Bearer ${sToken}`,

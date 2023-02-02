@@ -117,8 +117,11 @@ export function FileTree() {
               </div> */}
             </div>
 
-            <div className='px-2' style={{ height: '50px' }}>
+            <div className='px-2' style={{ height: '45px' }}>
               <ImportButton></ImportButton>
+            </div>
+            <div className='px-2' style={{ height: '45px' }}>
+              <ExportEntireAppButton></ExportEntireAppButton>
             </div>
 
             <MyPakcages></MyPakcages>
@@ -149,7 +152,7 @@ function MyPakcages({}) {
       {/*  */}
 
       {/*  */}
-      <div className='' style={{ height: 'calc(100% - 50px)' }}>
+      <div className='' style={{ height: 'calc(100% - 50px * 2)' }}>
         <div className='h-full px-2 overflow-scroll overflow-x-hidden'>
           <Collapse style={{ padding: '0px' }} accordion>
             {appPackages.map((ap, idx) => {
@@ -168,7 +171,9 @@ function MyPakcages({}) {
                           placement={'right'}
                           title={
                             <>
-                              <ExportButton ap={ap}></ExportButton>
+                              <ExportOnePackageButton
+                                ap={ap}
+                              ></ExportOnePackageButton>
                               <Rename ap={ap}></Rename>
                               <Remove ap={ap}></Remove>
                             </>
@@ -194,7 +199,7 @@ function MyPakcages({}) {
   )
 }
 
-function ExportButton({ ap }) {
+function ExportOnePackageButton({ ap }) {
   return (
     <div className='block w-full mb-2'>
       <button
@@ -202,7 +207,13 @@ function ExportButton({ ap }) {
         onClick={() => {
           let appSource = AppDev.getAppSource()
 
-          let payload = appSource.appPackages.find((e) => e.oid === ap.oid)
+          appSource.exportType = 'app-package-export'
+
+          appSource.appPackages = appSource.appPackages.filter(
+            (e) => e.oid === ap.oid
+          )
+
+          let payload = appSource
 
           let url = URL.createObjectURL(
             new Blob([JSON.stringify(payload, null, '  ')])
@@ -213,38 +224,38 @@ function ExportButton({ ap }) {
           an.target = '_blank'
           an.href = url
           an.click()
-
-          // // let originalPackage = JSON.parse(JSON.stringify(ap))
-          // /** @type {ap} */
-          // let codePackage = JSON.parse(JSON.stringify(ap))
-          // let codeFiles = JSON.parse(
-          //   JSON.stringify(AppDev.appCodeFiles)
-          // ).filter((e) => {
-          //   return (
-          //     ap.oid === e.packageOID &&
-          //     ap.modules.some((mo) => {
-          //       return mo.oid === e.moduleOID
-          //     })
-          //   )
-          // })
-
-          // let payload = {
-          //   codePackage: codePackage,
-          //   codeFiles: codeFiles,
-          // }
-
-          // let url = URL.createObjectURL(
-          //   new Blob([JSON.stringify(payload, null, '  ')])
-          // )
-
-          // let an = document.createElement('a')
-          // an.download = codePackage.packageName + '.json'
-          // an.target = '_blank'
-          // an.href = url
-          // an.click()
         }}
       >
-        Export Package
+        Export This Package
+      </button>
+    </div>
+  )
+}
+
+function ExportEntireAppButton({}) {
+  return (
+    <div className='block w-full mb-2'>
+      <button
+        className='w-full px-2 py-2 text-white bg-purple-500 rounded-lg'
+        onClick={() => {
+          let appSource = AppDev.getAppSource()
+
+          appSource.exportType = 'entire-app-export'
+
+          let payload = appSource
+
+          let url = URL.createObjectURL(
+            new Blob([JSON.stringify(payload, null, '  ')])
+          )
+
+          let an = document.createElement('a')
+          an.download = AppDev.draft.slug + '.app.json'
+          an.target = '_blank'
+          an.href = url
+          an.click()
+        }}
+      >
+        Export App
       </button>
     </div>
   )
@@ -278,7 +289,7 @@ function ImportButton({}) {
                   let res = await AppDev.importCode({
                     appVersionID: appVersionID,
                     appGroupID,
-                    codePackage: json,
+                    appSource: json,
                   })
 
                   ev.target.innerText = 'Finishing up'
@@ -326,7 +337,7 @@ function ImportButton({}) {
           input.click()
         }}
       >
-        Import Package
+        Import App
       </button>
     </div>
   )
