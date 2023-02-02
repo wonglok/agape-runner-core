@@ -337,7 +337,7 @@ function ImportButton({}) {
           input.click()
         }}
       >
-        Import App
+        Import App / Packages
       </button>
     </div>
   )
