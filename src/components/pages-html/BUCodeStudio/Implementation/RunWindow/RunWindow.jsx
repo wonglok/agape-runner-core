@@ -42,7 +42,7 @@ export function RunWindow() {
           target={'_blank'}
           rel='noreferrer'
         >
-          <button>Open ✨</button>
+          <button>Open 🔗</button>
         </a>
         {/* `/admin/apps/run?id=${encodeURIComponent(AppDev.draft.oid)}` */}
       </div>
