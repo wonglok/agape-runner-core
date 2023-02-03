@@ -232,6 +232,8 @@ function ExportOnePackageButton({ ap }) {
   )
 }
 
+//
+
 function ExportEntireAppButton({}) {
   return (
     <div className='block w-full mb-2'>
@@ -288,7 +290,7 @@ function ImportButton({}) {
 
                   let res = await AppDev.importCode({
                     appVersionID: appVersionID,
-                    appGroupID,
+                    appGroupID: appGroupID,
                     appSource: json,
                   })
 
