@@ -297,28 +297,26 @@ function ImportButton({}) {
                   ev.target.innerText = 'Finishing up'
 
                   await new Promise((rrr) => {
-                    AppVersion.get({ oid: CSData.appVersionID }).then(
-                      (object) => {
-                        AppDev.draft = object.item
-                        AppCodeFile.invalidate({
-                          appVersionID: appVersionID,
-                        }).then(() => {
-                          //
-                          try {
-                            AppDev.buildCode()
-                              .catch((e) => {
-                                console.log(e)
-                              })
-                              .then(() => {
-                                rrr()
-                              })
-                          } catch (e) {
-                            console.log(e)
-                            rrr()
-                          }
-                        })
-                      }
-                    )
+                    AppVersion.get({ oid: appVersionID }).then((object) => {
+                      AppDev.draft = object.item
+                      AppCodeFile.invalidate({
+                        appVersionID: appVersionID,
+                      }).then(() => {
+                        //
+                        try {
+                          AppDev.buildCode()
+                            .catch((e) => {
+                              console.log(e)
+                            })
+                            .then(() => {
+                              rrr()
+                            })
+                        } catch (e) {
+                          console.log(e)
+                          rrr()
+                        }
+                      })
+                    })
                   })
 
                   ev.target.innerText = 'Done!'
